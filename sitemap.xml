@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://bxtkezhan.xyz/</loc>
+    <lastmod>2021-03-06T21:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://bxtkezhan.xyz/post/my-first-post/</loc>
+    <lastmod>2021-03-06T21:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://bxtkezhan.xyz/post/</loc>
+    <lastmod>2021-03-06T21:26:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://bxtkezhan.xyz/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>http://bxtkezhan.xyz/tags/</loc>
+  </url>
+  
+</urlset>

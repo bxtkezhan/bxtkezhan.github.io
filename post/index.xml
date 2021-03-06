@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.xyz/post/</link>
+    <description>Recent content in Posts on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Mar 2021 21:26:02 +0800</lastBuildDate>
+    
+	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My First Post</title>
+      <link>http://bxtkezhan.xyz/post/my-first-post/</link>
+      <pubDate>Sat, 06 Mar 2021 21:26:02 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/my-first-post/</guid>
+      <description>Hello Hugo! print(&amp;#39;hello hugo&amp;#39;) </description>
+    </item>
+    
+  </channel>
+</rss>
