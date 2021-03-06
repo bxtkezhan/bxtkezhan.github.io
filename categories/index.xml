@@ -6,9 +6,19 @@
     <description>Recent content in Categories on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sat, 06 Mar 2021 21:26:02 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>编译</title>
+      <link>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sat, 06 Mar 2021 21:26:02 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
