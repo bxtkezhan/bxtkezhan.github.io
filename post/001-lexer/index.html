@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>词法分析器 - bxtkezhan@kk</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-03-06">March 06, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/%E7%BC%96%E8%AF%91">编译</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">词法分析器</h1>
+  <section class="body" itemprop="articleBody">
+    <p>维基百科介绍：词法分析是计算机科学中将字符序列转换为标记序列的过程。
+进行词法分析的程序或者函数叫作词法分析器。️</p>
+<p><a href="-"></a></p>
+<p>有如下原始程序代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">add_result <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+</code></pre></div><p>通过词法分析得到以下结果</p>
+<pre><code>NAME   `add_result` 0,  0
+SYMBOL `=`          0, 11
+INT    `1`          0, 13
+SYMBOL `+`          0, 15
+INT    `2`          0, 17
+</code></pre><p><a href="-"></a></p>
+<p>整理成表格形式</p>
+<table>
+<thead>
+<tr>
+<th align="center">标记类型</th>
+<th align="center">字面值</th>
+<th align="center">行号</th>
+<th align="center">列号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">NAME</td>
+<td align="center">add_result</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">SYMBOL</td>
+<td align="center">=</td>
+<td align="center">0</td>
+<td align="center">11</td>
+</tr>
+<tr>
+<td align="center">INT</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">13</td>
+</tr>
+<tr>
+<td align="center">SYMBOL</td>
+<td align="center">+</td>
+<td align="center">0</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">INT</td>
+<td align="center">2</td>
+<td align="center">0</td>
+<td align="center">17</td>
+</tr>
+</tbody>
+</table>
+<p><a href="-"></a></p>
+<p>我们可以利用Go语言轻松实现可用的词法分析器 😃️</p>
+<hr>
+<h2 id="go语言实现词法分析器">Go语言实现词法分析器</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;regexp&#34;</span>
+	<span style="color:#e6db74">&#34;unicode/utf8&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">exprs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;\\d+&#34;</span>, <span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;[\\+-=]&#34;</span>}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">names</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;INT&#34;</span>,  <span style="color:#e6db74">&#34;NAME&#34;</span>,         <span style="color:#e6db74">&#34;SYMBOL&#34;</span>}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">rules</span> <span style="color:#f92672">:=</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">regexp</span>.<span style="color:#a6e22e">Regexp</span>{}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">expr</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">exprs</span> {
+		<span style="color:#a6e22e">rule</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">regexp</span>.<span style="color:#a6e22e">Compile</span>(<span style="color:#e6db74">&#34;^&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">expr</span>)
+		<span style="color:#a6e22e">rules</span> = append(<span style="color:#a6e22e">rules</span>, <span style="color:#a6e22e">rule</span>)
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">names</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">rule</span>)
+	}
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;--------------------------------&#34;</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">row</span>, <span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>:] {
+		<span style="color:#a6e22e">position</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+		<span style="color:#a6e22e">col</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+		<span style="color:#66d9ef">for</span> <span style="color:#66d9ef">true</span> {
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">position</span> &lt; len(<span style="color:#a6e22e">code</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#a6e22e">code</span>[<span style="color:#a6e22e">position</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">code</span>[<span style="color:#a6e22e">position</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\t&#39;</span>) {
+				<span style="color:#a6e22e">position</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+				<span style="color:#a6e22e">col</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+			}
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">position</span> <span style="color:#f92672">&gt;=</span> len(<span style="color:#a6e22e">code</span>) {
+				<span style="color:#66d9ef">break</span>
+			}
+			<span style="color:#a6e22e">source</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;&#34;</span>
+			<span style="color:#a6e22e">tokenType</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">rule</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">rules</span> {
+				<span style="color:#a6e22e">source</span> = <span style="color:#a6e22e">rule</span>.<span style="color:#a6e22e">FindString</span>(<span style="color:#a6e22e">code</span>[<span style="color:#a6e22e">position</span>:])
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">source</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+					<span style="color:#a6e22e">tokenType</span> = <span style="color:#a6e22e">i</span>
+					<span style="color:#66d9ef">break</span>
+				}
+			}
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tokenType</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> {
+				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s\t`%s`\t%d\t%d\n&#34;</span>, <span style="color:#a6e22e">names</span>[<span style="color:#a6e22e">tokenType</span>], <span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">row</span>, <span style="color:#a6e22e">col</span>)
+				<span style="color:#a6e22e">position</span> <span style="color:#f92672">+=</span> len(<span style="color:#a6e22e">source</span>)
+				<span style="color:#a6e22e">col</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">utf8</span>.<span style="color:#a6e22e">RuneCountInString</span>(<span style="color:#a6e22e">source</span>)
+			} <span style="color:#66d9ef">else</span> {
+				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;error in: %d, %d\n&#34;</span>, <span style="color:#a6e22e">row</span>, <span style="color:#a6e22e">col</span>)
+				<span style="color:#66d9ef">break</span>
+			}
+		}
+	}
+
+}
+</code></pre></div><p><a href="-"></a></p>
+<p>Python使用者也可以轻松的实现 😁️</p>
+<hr>
+<h2 id="python词法分析器">Python词法分析器</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> sys
+
+
+exprs <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#39;</span>, <span style="color:#e6db74">&#39;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+-=]&#39;</span>]
+names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;INT&#39;</span>,  <span style="color:#e6db74">&#39;NAME&#39;</span>, <span style="color:#e6db74">&#39;SYMBOL&#39;</span>]
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    rules <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> i, expr <span style="color:#f92672">in</span> enumerate(exprs):
+        rules<span style="color:#f92672">.</span>append(re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">&#39;^&#39;</span> <span style="color:#f92672">+</span> expr))
+        <span style="color:#66d9ef">print</span>(names[i], rules[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>pattern)
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span>)
+    <span style="color:#66d9ef">for</span> row, code <span style="color:#f92672">in</span> enumerate(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>:]):
+        position <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">while</span> True:
+            <span style="color:#66d9ef">while</span> position <span style="color:#f92672">&lt;</span> len(code) <span style="color:#f92672">and</span> (code[position] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">or</span> code[position] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>):
+                position <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">if</span> position <span style="color:#f92672">&gt;=</span> len(code):
+                <span style="color:#66d9ef">break</span>
+
+            source <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+            tokenType <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">for</span> i, rule <span style="color:#f92672">in</span> enumerate(rules):
+                result <span style="color:#f92672">=</span> rule<span style="color:#f92672">.</span>findall(code[position:])
+                <span style="color:#66d9ef">if</span> len(result) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+                    source <span style="color:#f92672">=</span> result[<span style="color:#ae81ff">0</span>]
+                    tokenType <span style="color:#f92672">=</span> i
+                    <span style="color:#66d9ef">break</span>
+            <span style="color:#66d9ef">if</span> tokenType <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{names[tokenType]}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">`{source}`</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{row}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{position}&#39;</span>)
+                position <span style="color:#f92672">+=</span> len(source)
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;error in {row}, {position}&#39;</span>)
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    main()
+</code></pre></div><p><a href="-"></a></p>
+<p>作为补充内容这里也提供C++方案 😆️</p>
+<hr>
+<h2 id="c实现词法分析器">C++实现词法分析器</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;locale&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;regex&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;codecvt&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>wstring<span style="color:#f92672">&gt;</span> exprs{<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+-=]&#34;</span>};
+std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> names{<span style="color:#e6db74">&#34;INT&#34;</span>,  <span style="color:#e6db74">&#34;NAME&#34;</span>, <span style="color:#e6db74">&#34;SYMBOL&#34;</span>};
+
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[]) {
+    std<span style="color:#f92672">::</span>locale old;
+    std<span style="color:#f92672">::</span>locale<span style="color:#f92672">::</span>global(std<span style="color:#f92672">::</span>locale(<span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>));
+    std<span style="color:#f92672">::</span>wstring_convert<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>codecvt_utf8<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">wchar_t</span><span style="color:#f92672">&gt;&gt;</span> codecvt_utf8;
+
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>wregex<span style="color:#f92672">&gt;</span> rules;
+    <span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, count <span style="color:#f92672">=</span> exprs.size(); i <span style="color:#f92672">&lt;</span> count; <span style="color:#f92672">++</span>i) {
+        rules.push_back(std<span style="color:#f92672">::</span>wregex(<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;^&#34;</span> <span style="color:#f92672">+</span> exprs[i]));
+        printf(<span style="color:#e6db74">&#34;%s ^%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, names[i].c_str(), codecvt_utf8.to_bytes(exprs[i]).c_str());
+    }
+
+    printf(<span style="color:#e6db74">&#34;--------------------------------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> row <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; row <span style="color:#f92672">&lt;</span> argc <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; <span style="color:#f92672">++</span>row) {
+        std<span style="color:#f92672">::</span>wstring code <span style="color:#f92672">=</span> codecvt_utf8.from_bytes(argv[row <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]);
+        size_t position <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        <span style="color:#66d9ef">while</span> (true) {
+            <span style="color:#66d9ef">while</span> (position <span style="color:#f92672">&lt;</span> code.size() <span style="color:#f92672">&amp;&amp;</span> (code[position] <span style="color:#f92672">==</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">||</span> code[position] <span style="color:#f92672">==</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;\t&#39;</span>))
+                position <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+            <span style="color:#66d9ef">if</span> (position <span style="color:#f92672">&gt;=</span> code.size())
+                <span style="color:#66d9ef">break</span>;
+
+            <span style="color:#66d9ef">auto</span> subcode <span style="color:#f92672">=</span> code.substr(position);
+            std<span style="color:#f92672">::</span>wsmatch match;
+            <span style="color:#66d9ef">int</span> tokenType <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+            <span style="color:#66d9ef">for</span> (size_t i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, count <span style="color:#f92672">=</span> rules.size(); i <span style="color:#f92672">&lt;</span> count; <span style="color:#f92672">++</span>i) {
+                <span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>regex_search(subcode, match, rules[i])) {
+                    tokenType <span style="color:#f92672">=</span> i;
+                    <span style="color:#66d9ef">break</span>;
+                }
+            }
+
+            <span style="color:#66d9ef">if</span> (tokenType <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>) {
+                <span style="color:#66d9ef">auto</span> source <span style="color:#f92672">=</span> match.str(<span style="color:#ae81ff">0</span>);
+                printf(<span style="color:#e6db74">&#34;%s</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">`%s`</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">%d</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">%ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,
+                    names[tokenType].c_str(), codecvt_utf8.to_bytes(source).c_str(), row, position);
+                position <span style="color:#f92672">+=</span> source.size();
+            } <span style="color:#66d9ef">else</span> {
+                printf(<span style="color:#e6db74">&#34;error in: %d, %ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, row, position);
+                <span style="color:#66d9ef">break</span>;
+            }
+        }
+    }
+
+    std<span style="color:#f92672">::</span>locale<span style="color:#f92672">::</span>global(old);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
