@@ -368,7 +368,8 @@ article.single pre {
   margin-bottom: 1rem;
   overflow-x: scroll;
   border-radius: 3px;
-  padding: 2rem;
+  /* padding: 2rem; */
+  padding: 1rem;
 }
 
 article.single p code {
