@@ -248,6 +248,13 @@ footer a {
   color: var(--base0a);
 }
 
+@media (max-width: 52em) {
+  .article-list h1.list-title {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 .article-list article {
   padding-top: 4rem;
   padding-bottom: 4rem;
