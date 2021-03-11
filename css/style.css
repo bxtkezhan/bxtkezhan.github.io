@@ -215,8 +215,8 @@ footer a {
 
 @media (max-width: 52em) {
   .homepage h1.headline {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -250,8 +250,8 @@ footer a {
 
 @media (max-width: 52em) {
   .article-list h1.list-title {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -336,8 +336,8 @@ article.single h1.headline {
 
 @media (max-width: 52em) {
   article.single h1.headline {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
