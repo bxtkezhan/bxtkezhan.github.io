@@ -13,10 +13,10 @@
     
     <item>
       <title>使用BKLexer进行词法分析</title>
-      <link>http://bxtkezhan.xyz/post/02-bklexer/</link>
+      <link>http://bxtkezhan.xyz/post/002-bklexer/</link>
       <pubDate>Sat, 13 Mar 2021 22:55:41 +0800</pubDate>
       
-      <guid>http://bxtkezhan.xyz/post/02-bklexer/</guid>
+      <guid>http://bxtkezhan.xyz/post/002-bklexer/</guid>
       <description>前几天我已经封装好了词法分析器并命名&lt;code&gt;BKLexer&lt;/code&gt;，当前&lt;code&gt;BKLexer&lt;/code&gt;分别支持Go/C++/Python。</description>
     </item>
     
