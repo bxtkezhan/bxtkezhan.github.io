@@ -130,3 +130,6 @@ dmypy.json
 
 # coding md
 coding/*.md
+
+# vim swp
+*.swp
