@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>递归向下算法实现Calc【上】</title>
-      <link>http://bxtkezhan.xyz/post/003-calc-p1/</link>
+      <title>递归向下算法实现Calc</title>
+      <link>http://bxtkezhan.xyz/post/003-calc/</link>
       <pubDate>Wed, 17 Mar 2021 21:26:32 +0800</pubDate>
       
-      <guid>http://bxtkezhan.xyz/post/003-calc-p1/</guid>
+      <guid>http://bxtkezhan.xyz/post/003-calc/</guid>
       <description>利用递归向下算法结合我们的&lt;code&gt;BKLexer&lt;/code&gt;实现支持四则运算与括号优先级的计算器程序。</description>
     </item>
     

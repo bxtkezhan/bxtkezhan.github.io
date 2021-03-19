@@ -123,7 +123,7 @@ func main() {
     lexer.AddRule("/", "DIV")
     lexer.AddRule("\\(", "LPAR")
     lexer.AddRule("\\)", "RPAR")
-    lexer.AddIgnores("[ \\f\\f]+")
+    lexer.AddIgnores("[ \\f\\t]+")
 
     reader := bufio.NewReader(os.Stdin)
     for true {
@@ -143,8 +143,6 @@ func main() {
             }
             fmt.Println("out =", result.GetValue())
         }
-
     }
-
     fmt.Println("bye!")
 }
