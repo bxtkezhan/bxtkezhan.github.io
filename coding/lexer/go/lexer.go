@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-var exprs = []string{"\\d+", "[\\p{L}\\d_]+", "[\\+-=]"}
+var exprs = []string{"\\d+", "[\\p{L}\\d_]+", "[\\+\\-=]"}
 var names = []string{"INT",  "NAME",         "SYMBOL"}
 
 func main() {

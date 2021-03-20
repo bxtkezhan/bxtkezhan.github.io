@@ -118,7 +118,7 @@ INT    `2`          0, 17
 	<span style="color:#e6db74">&#34;os&#34;</span>
 )
 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">exprs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;\\d+&#34;</span>, <span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;[\\+-=]&#34;</span>}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">exprs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;\\d+&#34;</span>, <span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;[\\+\\-=]&#34;</span>}
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">names</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;INT&#34;</span>,  <span style="color:#e6db74">&#34;NAME&#34;</span>,         <span style="color:#e6db74">&#34;SYMBOL&#34;</span>}
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
@@ -194,7 +194,7 @@ INT	    <span style="color:#e6db74">`</span>100<span style="color:#e6db74">`</sp
 </ul>
 <p><a href="-"></a></p>
 <h4 id="指定正则表达式和字段类型名称">指定正则表达式和字段类型名称:</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">exprs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;\\d+&#34;</span>, <span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;[\\+-=]&#34;</span>}
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">exprs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;\\d+&#34;</span>, <span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;[\\+\\-=]&#34;</span>}
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">names</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;INT&#34;</span>,  <span style="color:#e6db74">&#34;NAME&#34;</span>,         <span style="color:#e6db74">&#34;SYMBOL&#34;</span>}
 </code></pre></div><p>创建两个字符串数组分别用于存储正则表达式与对应的字段类型名称。</p>
 <p><a href="-"></a></p>
@@ -284,7 +284,7 @@ INT	    <span style="color:#e6db74">`</span>100<span style="color:#e6db74">`</sp
 <span style="color:#f92672">import</span> sys
 
 
-exprs <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#39;</span>, <span style="color:#e6db74">&#39;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+-=]&#39;</span>]
+exprs <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#39;</span>, <span style="color:#e6db74">&#39;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">-=]&#39;</span>]
 names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;INT&#39;</span>,  <span style="color:#e6db74">&#39;NAME&#39;</span>, <span style="color:#e6db74">&#39;SYMBOL&#39;</span>]
 
 
@@ -316,6 +316,7 @@ names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;INT
                 position <span style="color:#f92672">+=</span> len(source)
             <span style="color:#66d9ef">else</span>:
                 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;error in {row}, {position}&#39;</span>)
+				<span style="color:#66d9ef">break</span>
 
 
 <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
@@ -331,7 +332,7 @@ names <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;INT
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;codecvt&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 
-std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>wstring<span style="color:#f92672">&gt;</span> exprs{<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+-=]&#34;</span>};
+std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>wstring<span style="color:#f92672">&gt;</span> exprs{<span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">w+&#34;</span>, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">+</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">-=]&#34;</span>};
 std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> names{<span style="color:#e6db74">&#34;INT&#34;</span>,  <span style="color:#e6db74">&#34;NAME&#34;</span>, <span style="color:#e6db74">&#34;SYMBOL&#34;</span>};
 
 

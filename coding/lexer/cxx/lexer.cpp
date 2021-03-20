@@ -5,7 +5,7 @@
 #include <codecvt>
 
 
-std::vector<std::wstring> exprs{L"\\d+", L"\\w+", L"[\\+-=]"};
+std::vector<std::wstring> exprs{L"\\d+", L"\\w+", L"[\\+\\-=]"};
 std::vector<std::string> names{"INT",  "NAME", "SYMBOL"};
 
 

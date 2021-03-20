@@ -2,7 +2,7 @@ import re
 import sys
 
 
-exprs = ['\\d+', '\\w+', '[\\+-=]']
+exprs = ['\\d+', '\\w+', '[\\+\\-=]']
 names = ['INT',  'NAME', 'SYMBOL']
 
 
@@ -34,6 +34,7 @@ def main():
                 position += len(source)
             else:
                 print(f'error in {row}, {position}')
+                break
 
 
 if __name__ == "__main__":
