@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="欢迎来到 `bxtkezhan`, 一个独立、开放的技术分享小站。">
+        <meta name="keywords" content="计算机,编程,数据分析,人工智能,python,golang,c语言">
+        <meta name="author" content="bxtkezhan@kk">
+        <meta name="generator" content="Hugo 0.68.3" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+        <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <title>widle - bxtkezhan@kk</title>
+        <style type="text/css" media="screen">
+        pre {
+            background-color: var(--base00);
+            color: var(--base0b);
+            -webkit-tab-size:4;
+            -moz-tab-size:4;
+            -o-tab-size:4;
+            tab-size:4;
+            overflow: scroll;
+        }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container clearfix">
+                <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+                <span class="caret"># _</span>
+                <div class="right">
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <main role="main" class="homepage">
+				<div id="editorArea"></div>
+                <button style="margin: 0.1rem" type="button" onclick="runPython();"><b>RUN</b></button>
+				<pre><code id="pythonLog">&gt;&gt;&gt;&nbsp;Hello WIDLE(Py3) ´ ▽ ` )ﾉ</code></pre>
+
+                <h1 class="site-title">
+                    <span class="base05">[</span><span class="base07">b</span><span class="base08">x</span><span class="base09">t</span><span class="base0a">k</span><span class="base0b">e</span><span class="base0c">z</span><span class="base0d">h</span><span class="base0e">a</span><span class="base0f">n</span><span class="base05">]</span>
+                    <span class="base05"># _</span>
+                </h1>
+                <div class="hero-logo">
+                    <img src="/img/base16-eighties.svg">
+                </div>
+                <div style="text-align: center;">
+                    欢迎来到 <code>`bxtkezhan`</code>, 一个独立、开放的技术分享小站。
+                </div>
+                <h1 class="headline">Categories</h1>
+                <section class="categories">
+                    <h2 class="category">
+                        <a href="http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91">编译</a>
+                        <small>(3)</small>
+                    </h2>
+                </section>
+            </main>
+        </div>
+        <footer>
+            <div class="container">
+                <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+            </div>
+        </footer>
+    </body>
+</html>
+<script src="lib/codemirror.js"></script>
+<script src="lib/python_mode.js"></script>
+<script charset="utf-8">
+var editorArea = document.getElementById("editorArea");
+var editor = CodeMirror(editorArea, {
+	mode: "python",
+	indentUnit: 4,
+	lineNumbers: true
+});
+</script>
+
+<script src="lib/brython.js"></script>
+<script src="lib/brython_stdlib.js"></script>
+<script id="pythonTmp" type="text/python3">
+</script>
+<script charset="utf-8">
+var pythonTmp = document.querySelector("#pythonTmp");
+var pythonLog = document.querySelector("#pythonLog");
+var oldLog = console.log;
+function runPython() {
+	pythonTmp.innerHTML = editor.getValue();
+	console.log = function (message) {
+		pythonLog.innerText += message;
+	}
+	pythonLog.innerText = "";
+	brython();
+	console.log = oldLog;
+}
+</script>
+
+<script charset="utf-8">
+window.onresize = function () {
+    var height = window.innerHeight * 0.5;
+    editor.setSize(editorArea.offsetWidth, height);
+    pythonLog.parentNode.style.maxHeight = height + "px";
+};
+window.onresize();
+</script>
