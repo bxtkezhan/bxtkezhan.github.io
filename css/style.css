@@ -445,7 +445,7 @@ article.single tr:last-child td {
 }
 
 article.single th {
-  text-align: left;
+  /* text-align: left; */
   font-weight: bold;
   vertical-align: bottom;
 }
