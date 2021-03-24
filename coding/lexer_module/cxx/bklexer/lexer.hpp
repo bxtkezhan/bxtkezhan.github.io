@@ -39,7 +39,8 @@ class Lexer {
         int col;
         std::vector<std::wregex> exprs;
         std::vector<std::string> names;
-        std::wregex ignores;
+        std::vector<std::string> reserves;
+        std::string ignores;
 
     public:
         Lexer() {
@@ -52,7 +53,14 @@ class Lexer {
         }
 
         void add_ignores(const std::string &expr) {
-            this->ignores = codecvt_utf8.from_bytes("^" + expr);
+            if (this->ignores.length())
+                this->ignores += "|(^" + expr + ")";
+            else
+                this->ignores += "(^" + expr + ")";
+        }
+
+        void add_reserve(const std::string &reserve) {
+            this->reserves.push_back(reserve);
         }
 
         void build(std::string &code) {
@@ -76,7 +84,18 @@ class Lexer {
         }
 
         Token get_token() {
-            return Token(position, source, ttype, row, col, get_token_name());
+            auto name = get_token_name();
+            auto _ttype = ttype;
+            if (name == "NAME") {
+                for (int i = 0, count = reserves.size(); i < count; ++i) {
+                    if (source == reserves[i]) {
+                        name.clear(); for (auto c : source) name += std::toupper(c);
+                        _ttype = names.size() + i;
+                        break;
+                    }
+                }
+            }
+            return Token(position, source, _ttype, row, col, name);
         }
 
         Token next_token() {
@@ -89,19 +108,21 @@ class Lexer {
                 col = 0;
             }
 
+            static std::wregex ignores_regex = std::wregex(codecvt_utf8.from_bytes(ignores));
             auto subcode = code.substr(position);
             std::wsmatch match;
-            if (std::regex_search(subcode, match, ignores)) {
+            while (true) {
+                if (!std::regex_search(subcode, match, ignores_regex)) break;
                 int match_size = match.str(0).size();
                 position += match_size;
                 col += match_size;
+                subcode = code.substr(position);
             }
             if (position >= (int)code.size()) {
                 ttype = -1;
                 return get_token();
             }
             ttype = -2;
-            subcode = code.substr(position);
             for (size_t i = 0, count = exprs.size(); i < count; ++i) {
                 if (std::regex_search(subcode, match, exprs[i])) {
                     source = codecvt_utf8.to_bytes(match.str(0));

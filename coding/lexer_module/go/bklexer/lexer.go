@@ -3,6 +3,7 @@ package BKLexer
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"unicode/utf8"
 )
 
@@ -24,6 +25,7 @@ type Lexer struct {
 	col int
 	exprs []*regexp.Regexp
 	names []string
+    reserves []string
 	ignores *regexp.Regexp
 }
 
@@ -61,12 +63,21 @@ func (lexer *Lexer) AddRule(expr string, name string) {
 }
 
 func (lexer *Lexer) AddIgnores(expr string) {
-	rule, err := regexp.Compile("^" + expr)
+    if lexer.ignores != nil {
+        expr = lexer.ignores.String() + "|(^" + expr + ")"
+    } else {
+        expr = "(^" + expr + ")"
+    }
+	rule, err := regexp.Compile(expr)
 	if (err != nil) {
 		fmt.Println(err)
 	} else {
 		lexer.ignores = rule
 	}
+}
+
+func (lexer *Lexer) AddReserve(reserve string) {
+    lexer.reserves = append(lexer.reserves, reserve);
 }
 
 func (lexer *Lexer) Build(code string) {
@@ -87,9 +98,20 @@ func (lexer *Lexer) GetTokenName() string {
 }
 
 func (lexer *Lexer) GetToken() *Token {
+    name := lexer.GetTokenName()
+    ttype := lexer.ttype
+    if name == "NAME" {
+        for i, reserved := range lexer.reserves {
+            if lexer.source == reserved {
+                name = strings.ToUpper(reserved)
+                ttype = len(lexer.names) + i
+                break
+            }
+        }
+    }
 	return NewToken(
-		lexer.position, lexer.source, lexer.ttype,
-		lexer.row, lexer.col, lexer.GetTokenName())
+		lexer.position, lexer.source, ttype,
+		lexer.row, lexer.col, name)
 }
 
 func (lexer *Lexer) NextToken() *Token {
@@ -101,9 +123,14 @@ func (lexer *Lexer) NextToken() *Token {
 		lexer.col = 0
 	}
 
-	source := lexer.ignores.FindString(lexer.code[lexer.position:])
-	lexer.position += len(source)
-	lexer.col += utf8.RuneCountInString(source)
+    for true {
+        source := lexer.ignores.FindString(lexer.code[lexer.position:])
+        if source == "" {
+            break
+        }
+        lexer.position += len(source)
+        lexer.col += utf8.RuneCountInString(source)
+    }
 	if lexer.position >= len(lexer.code) {
 		lexer.ttype = -1
 		return lexer.GetToken()

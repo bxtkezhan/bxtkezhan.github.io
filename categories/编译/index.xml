@@ -6,10 +6,19 @@
     <description>Recent content in 编译 on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Mar 2021 21:26:32 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Mar 2021 18:45:28 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使计算器支持语句块</title>
+      <link>http://bxtkezhan.xyz/post/004-block/</link>
+      <pubDate>Wed, 24 Mar 2021 18:45:28 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/004-block/</guid>
+      <description>下面我们来为计算器程序增加语句块功能，使得程序可以做批量运算，类似于程序语言中的代码块。</description>
+    </item>
     
     <item>
       <title>递归向下算法实现Calc</title>

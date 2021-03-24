@@ -25,6 +25,7 @@ class Lexer:
         self.col = 0
         self.exprs = []
         self.names = []
+        self.reserves = []
         self.ignores:re.Pattern = None
 
         self.add_rule("\n", "NEWLINE")
@@ -34,7 +35,13 @@ class Lexer:
         self.names.append(name)
 
     def add_ignores(self, expr:str):
-        self.ignores = re.compile("^" + expr)
+        if self.ignores is not None:
+            self.ignores = re.compile(self.ignores.pattern + f"|(^{expr})")
+        else:
+            self.ignores = re.compile(f"(^{expr})")
+
+    def add_reserve(self, reserve:str):
+        self.reserves.append(reserve)
 
     def build(self, code:str):
         self.code = code
@@ -52,9 +59,17 @@ class Lexer:
         return self.names[self.ttype]
 
     def get_token(self):
+        name = self.get_token_name()
+        ttype = self.ttype
+        if name == "NAME":
+            for i, reserved in enumerate(self.reserves):
+                if self.source == reserved:
+                    name = reserved.upper()
+                    ttype = len(self.names) + i
+                    break
         return Token(
-            self.position, self.source, self.ttype,
-            self.row, self.col, self.get_token_name())
+            self.position, self.source, ttype,
+            self.row, self.col, name)
 
     def next_token(self) -> Token:
         self.position += len(self.source)
@@ -64,10 +79,12 @@ class Lexer:
             self.row += 1
             self.col = 0
 
-        result = self.ignores.findall(self.code[self.position:])
-        source = result[0] if len(result) else ''
-        self.position += len(source)
-        self.col += len(source)
+        while True:
+            result = self.ignores.findall(self.code[self.position:])
+            if len(result) == 0: break
+            match_size = max([len(item) for item in result[0]])
+            self.position += match_size
+            self.col += match_size
         if self.position >= len(self.code):
             self.ttype = -1
             return self.get_token()

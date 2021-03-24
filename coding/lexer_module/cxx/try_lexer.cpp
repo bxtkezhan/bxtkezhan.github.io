@@ -28,7 +28,8 @@ int main() {
         auto token = lexer.next_token();
         if (token.ttype != TOKEN_TYPE_EOF) {
             printf("%s\t%s\tt%d\t%d\t%d,%d\n",
-            token.name.c_str(), bklexer::quote(token.source).c_str(), token.ttype, token.position, token.row, token.col);
+            token.name.c_str(), bklexer::quote(token.source).c_str(),
+            token.ttype, token.position, token.row, token.col);
         }
         if (token.ttype == TOKEN_TYPE_EOF || token.ttype == TOKEN_TYPE_ERROR) {
             break;
