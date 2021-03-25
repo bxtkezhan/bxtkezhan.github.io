@@ -66,6 +66,9 @@ func (binaryOpt *BinaryOpt) GetValue() float64 {
 func parse(lexer *BKLexer.Lexer) *Block {
     block := NewBlock()
     token := lexer.NextToken()
+    for token.TType == BKLexer.TOKEN_TYPE_NEWLINE {
+        token = lexer.NextToken()
+    }
     for token.TType != BKLexer.TOKEN_TYPE_EOF {
         statement := parse_binary_add(lexer)
         if statement == nil {

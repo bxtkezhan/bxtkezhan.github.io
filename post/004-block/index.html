@@ -124,6 +124,9 @@
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Block</span> {
     <span style="color:#a6e22e">block</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewBlock</span>()
     <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_NEWLINE</span> {
+        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    }
     <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
         <span style="color:#a6e22e">statement</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
@@ -271,6 +274,9 @@
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Block</span> {
     <span style="color:#a6e22e">block</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewBlock</span>()
     <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_NEWLINE</span> {
+        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    }
     <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
         <span style="color:#a6e22e">statement</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
@@ -317,6 +323,9 @@
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Block</span> {
     <span style="color:#f92672">......</span>
     <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_NEWLINE</span> {
+        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+    }
     <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
         <span style="color:#a6e22e">statement</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
 <span style="color:#f92672">......</span>
