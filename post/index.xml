@@ -6,10 +6,19 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 24 Mar 2021 18:45:28 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 26 Mar 2021 14:49:43 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使程序语言支持变量</title>
+      <link>http://bxtkezhan.xyz/post/005-assign/</link>
+      <pubDate>Fri, 26 Mar 2021 14:49:43 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/005-assign/</guid>
+      <description>下面我们来让计算器程序支持变量的使用，使得程序可以设置和获取变量的值。从现在开始我将不掩藏我们要实现的是一个程序语言，因为出自计算器所以命名为 &lt;strong&gt;bkcalclang&lt;/strong&gt;</description>
+    </item>
     
     <item>
       <title>使计算器支持语句块</title>
