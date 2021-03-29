@@ -6,10 +6,19 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 29 Mar 2021 16:42:47 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Mar 2021 20:26:01 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>推荐几本Python书籍【免费下载】</title>
+      <link>http://bxtkezhan.xyz/post/books_001/</link>
+      <pubDate>Mon, 29 Mar 2021 20:26:01 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/books_001/</guid>
+      <description>根据投票结果，Python为票数最多的选项，那么这里推荐几本Python书籍。</description>
+    </item>
     
     <item>
       <title>支持If语句</title>
