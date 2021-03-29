@@ -1,0 +1,13 @@
+echo 1 + 2 # plus
+echo 3 - 4
+
+# here is a comment
+
+echo 5 * 6 # mul
+echo 7 / 8
+
+echo 1 + (2 - 3) * 4 / 5 # composite
+
+set pi = 3.14
+set r = 5
+echo 2 * pi * r * r

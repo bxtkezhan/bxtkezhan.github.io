@@ -1,0 +1,14 @@
+set a = 2
+if a then
+    echo a
+    set a = a - 1
+    if a then
+        echo a
+        set a = a - 1
+        if a then
+            echo a
+        end
+    end
+end
+
+echo a
