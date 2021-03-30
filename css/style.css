@@ -48,7 +48,7 @@ body {
 }
 
 .container {
-  max-width: 61em;
+  max-width: 60em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -465,6 +465,29 @@ article.single hr {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: var(--base04);
+}
+
+/* bxtkezhan exts */
+div.tutorials div{
+  max-width: 19.5em;
+  display: inline-block;
+}
+
+div.tutorial a {
+  color: var(--base0d);
+}
+
+div.tutorial img {
+ width: 100%;
+}
+
+@media (max-width: 52em) {
+    div.tutorials div {
+        margin-bottom: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: unset;
+    }
 }
 
 /* Pygments template by Jan T. Sott (https://github.com/idleberg) */
