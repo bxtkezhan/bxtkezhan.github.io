@@ -470,6 +470,7 @@ article.single hr {
 /* bxtkezhan exts */
 div.tutorials div{
   max-width: 19.5em;
+  margin-bottom: 0.5rem;
   display: inline-block;
 }
 
@@ -483,7 +484,6 @@ div.tutorial img {
 
 @media (max-width: 52em) {
     div.tutorials div {
-        margin-bottom: 0.5rem;
         padding-left: 1rem;
         padding-right: 1rem;
         max-width: unset;
