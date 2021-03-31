@@ -1,0 +1,10 @@
+set n = 15
+set a = 0
+set b = 1
+
+while n then
+    set n = n - 1
+    set b = a + b
+    set a = b - a
+    echo a
+end
