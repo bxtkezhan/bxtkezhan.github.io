@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="`if`语句用以根据条件判断如何执行代码: 如果条件为真`True`，我们将运行一块语句(称作 if-block 或 if 块)，否则我们将运行另一块语句(称作 else-block 或 else 块)。其中`else`从句是可选的。">
+<meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>初学篇・条件控制语句 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-03">April 03, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">初学篇・条件控制语句</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/010-logic-compare/">上篇 初学篇・逻辑运算&amp;比较运算</a></p>
+<p><code>if</code>语句用以根据条件判断如何执行代码: 如果条件为真<code>True</code>，我们将运行一块语句(称作 if-block 或 if 块)，否则我们将运行另一块语句(称作 else-block 或 else 块)。其中<code>else</code>从句是可选的。</p>
+<p><code>if</code>语句大大致形式如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">条件表达式</span><span style="color:#f92672">&gt;</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+</code></pre></div><h3 id="单一的if">单一的if</h3>
+<p>一般来说具有同样的左缩进的行会被当作一个语句块，使用一个简单的<code>if</code>语句就可以根据条件来判断是否需要运行某个语句块，例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;*&#39;</span>)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;*&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;*&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;*&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>)
+</code></pre></div><h3 id="if配合else">if配合else</h3>
+<p>if-else的组合可以根据条件判断是执行哪一个语句块:如果条件为真则执行紧跟<code>if</code>的语句块，否则执行紧跟<code>else</code>的语句块:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;100 &gt; 0&#39;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;100 &lt;= 0&#39;</span>)
+    
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;-100 &gt; 0&#39;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;-100 &lt;= 0&#39;</span>)
+</code></pre></div><h3 id="插入elif">插入elif</h3>
+<p><code>if</code>与<code>else</code>之间可以插入一个或多个<code>elif</code>来增加判断条件和对应的语句块，若<code>if</code>与<code>elif</code>中任意一个被匹配执行将不再执行其它语句块:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+b <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>
+c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">if</span> a <span style="color:#f92672">&gt;</span> b <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;block 1&#39;</span>)
+<span style="color:#66d9ef">elif</span> a <span style="color:#f92672">&gt;</span> c <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;block 2&#39;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;block 3&#39;</span>)
+</code></pre></div><h3 id="嵌套">嵌套</h3>
+<p>我们可以让判断语句进行嵌套实现更加复杂的判断:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+b <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">if</span> a <span style="color:#f92672">&gt;</span> b:
+    <span style="color:#66d9ef">if</span> a <span style="color:#f92672">&gt;</span> b <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;good!&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;en..?&#39;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;what?&#39;</span>)
+</code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

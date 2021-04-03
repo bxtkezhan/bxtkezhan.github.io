@@ -6,10 +6,19 @@
     <description>Recent content in Categories on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 31 Mar 2021 14:17:49 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Apr 2021 22:55:25 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python</title>
+      <link>http://bxtkezhan.xyz/categories/python/</link>
+      <pubDate>Sat, 03 Apr 2021 22:55:25 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/categories/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>编译</title>

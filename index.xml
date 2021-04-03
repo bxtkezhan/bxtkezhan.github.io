@@ -6,10 +6,46 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 31 Mar 2021 23:21:44 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Apr 2021 22:55:25 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>初学篇・条件控制语句</title>
+      <link>http://bxtkezhan.xyz/post/011-if/</link>
+      <pubDate>Sat, 03 Apr 2021 22:55:25 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/011-if/</guid>
+      <description>&lt;code&gt;if&lt;/code&gt;语句用以根据条件判断如何执行代码: 如果条件为真&lt;code&gt;True&lt;/code&gt;，我们将运行一块语句(称作 if-block 或 if 块)，否则我们将运行另一块语句(称作 else-block 或 else 块)。其中&lt;code&gt;else&lt;/code&gt;从句是可选的。</description>
+    </item>
+    
+    <item>
+      <title>初学篇・逻辑运算&amp;比较运算</title>
+      <link>http://bxtkezhan.xyz/post/010-logic-compare/</link>
+      <pubDate>Sat, 03 Apr 2021 22:05:14 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/010-logic-compare/</guid>
+      <description>Python当中可以用&lt;code&gt;and&lt;/code&gt;、&lt;code&gt;or&lt;/code&gt;、&lt;code&gt;not&lt;/code&gt;关键字来进行与、或、非逻辑运算，而&lt;code&gt;True&lt;/code&gt;、&lt;code&gt;False&lt;/code&gt;则用于表示布尔值中的真与假</description>
+    </item>
+    
+    <item>
+      <title>初学篇・Python计算器</title>
+      <link>http://bxtkezhan.xyz/post/009-calc/</link>
+      <pubDate>Sat, 03 Apr 2021 20:43:12 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/009-calc/</guid>
+      <description>我们可以使用Python来进行一系列的计算器操作，如果足够熟悉Python，那么它将胜过许多高级计算器，甚至某些高级计算器就内置了Python，例如: Casio 卡西欧 FX-9860 GIII 图形计算器。</description>
+    </item>
+    
+    <item>
+      <title>初学篇・第一步“你好世界”</title>
+      <link>http://bxtkezhan.xyz/post/008-first/</link>
+      <pubDate>Sat, 03 Apr 2021 19:25:30 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/008-first/</guid>
+      <description>Python是一种广泛使用的直译式、进阶和通用的程式语言。Python支援多种程式设计范式，包括函数式、指令式、结构化、物件导向和反射式程式。它拥有动态型别系统和垃圾回收功能，能够自动管理记忆体使用，并且其本身拥有一个巨大而广泛的标准库。</description>
+    </item>
     
     <item>
       <title>黑客之路・编译原理</title>
@@ -35,7 +71,7 @@
       <pubDate>Wed, 31 Mar 2021 23:21:39 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/tutorial_001/</guid>
-      <description>正在制作中&amp;hellip;</description>
+      <description>围绕Python程序语言展开的一系列或有趣或实用的技术，欢迎喜欢计算机，软硬件，Python编程技术的朋友参与学习。</description>
     </item>
     
     <item>
