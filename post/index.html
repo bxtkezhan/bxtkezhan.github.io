@@ -41,6 +41,56 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/014-object-struct/">初学篇・面向对象&amp;数据结构</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    返回教程主页
+上篇 初学篇・函数的定义与调用
+在Python当中，我们常常使用到的基本数据类型有整型int、浮点型float、字符串类型str……，以及结构类型列表list、元祖tuple，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。
+类的定义与实例化 我们可以借助关键字class定义我们自己的数据结构类型:
+class &lt;类名称&gt;: &lt;类成员&gt; 在完成类的定义后我们可以借助类名称来实例化我们的类型，即产生一个该类型的对象:
+class Calc: pass # pass 用于站位，并无具体操作 calc = Calc() print(type(calc)) 我们可以在类中定义一些变量作为该类的成员变量，并且使用点.进行调取:
+class Number: one = 1 two = 2 pi = 3.14159 number = Number() print(number.one, number.two, number.pi) 我们也可以在类中定义一些函数作为该类的成员方法，并使用点.进行调用:
+class Computer: def add(self, a, b): return a + b def sub(self, a, b): return a - b computer = Computer() print(computer.add(100, 100)) print(computer.sub(100, 100)) 成员方法的第一个参数代表该对象本身，通常取名self，调用某对象的成员方法时该参数无须设定。借助这个参数，我们可以在某个成员方法中操作其它该类的成员变量或成员方法:
+class Man: name = &#34;kk&#34; def say(self): print(&#34;I&#39;m&#34;, self.  <a href="/post/014-object-struct/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/013-function/">初学篇・函数的定义与调用</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    函数是指可重复使用的程序片段。被用来为某个代码块赋予名字，通过这一特殊的名字可以在程序的任何地方来运行代码块，并可重复任何次数。这就是所谓的调用函数。我们已经使用过了许多内置的函数，例如: <code>print</code>、<code>len</code>和<code>range</code>。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/012-loop/">初学篇・循环控制语句</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    在Python中可以通过<code>while</code>与<code>for</code>两种循环语句来处理循环问题。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/011-if/">初学篇・条件控制语句</a></h2>
   <div class="meta">
 
@@ -63,7 +113,7 @@
 
   </div>
   <section class="summary">
-    Python当中可以用<code>and</code>、<code>or</code>、<code>not</code>关键字来进行与、或、非逻辑运算，而<code>True</code>、<code>False</code>则用于表示布尔值中的真与假 
+    Python当中可以用<code>and</code>、<code>or</code>、<code>not</code>关键字来进行与、或、非逻辑运算，而<code>True</code>、<code>False</code>则用于表示布尔值中的真与假；Python当中可以使用<code>&gt;</code>、<code>&gt;=</code>、<code>==</code>、<code>&lt;=</code>、<code>&lt;</code>、<code>!=</code>符号来进行值的比较。 
   </section>
 </article>
 
@@ -92,48 +142,6 @@
   </div>
   <section class="summary">
     Python是一种广泛使用的直译式、进阶和通用的程式语言。Python支援多种程式设计范式，包括函数式、指令式、结构化、物件导向和反射式程式。它拥有动态型别系统和垃圾回收功能，能够自动管理记忆体使用，并且其本身拥有一个巨大而广泛的标准库。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/tutorial_003/">黑客之路・编译原理</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-03-31">March 31, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    正在制作中&hellip; 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/tutorial_002/">黑客之路・C/C&#43;&#43;篇</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-03-31">March 31, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    正在制作中&hellip; 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/tutorial_001/">黑客之路・Python篇</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-03-31">March 31, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    围绕Python程序语言展开的一系列或有趣或实用的技术，欢迎喜欢计算机，软硬件，Python编程技术的朋友参与学习。 
   </section>
 </article>
 

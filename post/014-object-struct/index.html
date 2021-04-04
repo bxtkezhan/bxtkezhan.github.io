@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="欢迎来到 `bxtkezhan`, 一个独立、开放的技术分享小站。">
+<meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>初学篇・面向对象&amp;数据结构 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">初学篇・面向对象&amp;数据结构</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/013-function/">上篇 初学篇・函数的定义与调用</a></p>
+<p>在Python当中，我们常常使用到的基本数据类型有整型<code>int</code>、浮点型<code>float</code>、字符串类型<code>str</code>……，以及结构类型列表<code>list</code>、元祖<code>tuple</code>，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。</p>
+<h3 id="类的定义与实例化">类的定义与实例化</h3>
+<p>我们可以借助关键字<code>class</code>定义我们自己的数据结构类型:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&lt;类名称&gt;:</span>
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">类成员</span><span style="color:#f92672">&gt;</span>
+</code></pre></div><p>在完成类的定义后我们可以借助类名称来实例化我们的类型，即产生一个该类型的对象:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Calc</span>:
+    <span style="color:#66d9ef">pass</span> <span style="color:#75715e"># pass 用于站位，并无具体操作</span>
+    
+calc <span style="color:#f92672">=</span> Calc()
+<span style="color:#66d9ef">print</span>(type(calc))
+</code></pre></div><p>我们可以在类中定义一些变量作为该类的成员变量，并且使用点<code>.</code>进行调取:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Number</span>:
+    one <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    two <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+    pi <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14159</span>
+
+number <span style="color:#f92672">=</span> Number()
+<span style="color:#66d9ef">print</span>(number<span style="color:#f92672">.</span>one, number<span style="color:#f92672">.</span>two, number<span style="color:#f92672">.</span>pi)
+</code></pre></div><p>我们也可以在类中定义一些函数作为该类的成员方法，并使用点<code>.</code>进行调用:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Computer</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add</span>(self, a, b):
+        <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> b
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sub</span>(self, a, b):
+        <span style="color:#66d9ef">return</span> a <span style="color:#f92672">-</span> b
+        
+computer <span style="color:#f92672">=</span> Computer()
+<span style="color:#66d9ef">print</span>(computer<span style="color:#f92672">.</span>add(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>))
+<span style="color:#66d9ef">print</span>(computer<span style="color:#f92672">.</span>sub(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>))
+</code></pre></div><p>成员方法的第一个参数代表该对象本身，通常取名<code>self</code>，调用某对象的成员方法时该参数无须设定。借助这个参数，我们可以在某个成员方法中操作其它该类的成员变量或成员方法:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Man</span>:
+    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;kk&#34;</span>
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">say</span>(self):
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;I&#39;m&#34;</span>, self<span style="color:#f92672">.</span>name)
+
+man <span style="color:#f92672">=</span> Man()
+man<span style="color:#f92672">.</span>say()
+</code></pre></div><h3 id="构造方法">构造方法</h3>
+<p>实例化类的时候会调用到该类的构造方法<code>__init__</code>，如果编码人员没有自己设定Python将启用默认的设定。借助构造方法我们可以在实例化类的时候传入参数:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassOne</span>:
+    <span style="color:#66d9ef">def</span> __init__(self):
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;New a object&#39;</span>)
+
+mc1 <span style="color:#f92672">=</span> MyClassOne()
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassTwo</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, message):
+        <span style="color:#66d9ef">print</span>(message)
+        
+mc2 <span style="color:#f92672">=</span> MyClassTwo(<span style="color:#e6db74">&#39;Init message&#39;</span>)
+</code></pre></div><p>在构造方法中使用<code>self</code>参数设置类的成员:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Man</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, name):
+        self<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> name
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">say</span>(self):
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;I&#39;m&#34;</span>, self<span style="color:#f92672">.</span>name)
+
+man <span style="color:#f92672">=</span> Man()
+man<span style="color:#f92672">.</span>say()
+</code></pre></div><h3 id="序列结构类型">序列结构类型</h3>
+<p>Python当中最常用的序列结构类型就是: 列表<code>list</code>、元祖<code>tuple</code>、字符串<code>str</code>，除了遍历的方法，我们也可以通过下标索引的方式将序列结构中的元素取出:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]
+<span style="color:#66d9ef">print</span>(a[<span style="color:#ae81ff">0</span>], a[<span style="color:#ae81ff">1</span>], a[<span style="color:#ae81ff">2</span>])
+b <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#66d9ef">print</span>(b[<span style="color:#ae81ff">0</span>], b[<span style="color:#ae81ff">1</span>], b[<span style="color:#ae81ff">2</span>])
+c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123&#34;</span>
+<span style="color:#66d9ef">print</span>(c[<span style="color:#ae81ff">0</span>], c[<span style="color:#ae81ff">1</span>], c[<span style="color:#ae81ff">2</span>])
+</code></pre></div><p>索引对象时需要注意: Python中的下标从0开始计数，也就是下标0的位置其实是序列的第一个:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;abcdefg&#39;</span>[<span style="color:#ae81ff">0</span>])
+<span style="color:#66d9ef">print</span>((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>])
+<span style="color:#66d9ef">print</span>([<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">0</span>])
+</code></pre></div><p>列表与元祖和字符串有一个比较大的区别就是列表中的元素允许被修改:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(_list)
+_list[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">print</span>(_list)
+_list[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+<span style="color:#66d9ef">print</span>(_list)
+_list[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+<span style="color:#66d9ef">print</span>(_list)
+</code></pre></div><p>Python中可以使用切片<code>slice</code>的方法来取得序列结构中的某一部分:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123456789&#34;</span>
+<span style="color:#66d9ef">print</span>(_str[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">3</span>])
+_tuple <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>)
+<span style="color:#66d9ef">print</span>(_tuple[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">4</span>])
+_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>]
+<span style="color:#66d9ef">print</span>(_list[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">5</span>])
+</code></pre></div><p>切片索引具有以下形式:</p>
+<ul>
+<li><code>[n:]</code>: 取序列第n个到最后一个；</li>
+<li><code>[:n]</code>: 取序列第0个到第n-1个；</li>
+<li><code>[a:b]</code>: 取序列第a个到第b-1个；</li>
+<li><code>[n::s]</code>: 从序列第n个开始到序列最后，每隔s个元素进行取出；</li>
+<li><code>[:n:s]</code>: 从序列第0个开始到第n-1个，每隔s个元素进行取出；</li>
+<li><code>[a:b:s]</code>: 从序列第a个开始到第b-1个，每隔s个元素进行取出；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sequence <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>]
+<span style="color:#66d9ef">print</span>(sequence[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">9</span>:<span style="color:#ae81ff">2</span>])
+</code></pre></div><p>Python当中的索引可以使用负数来表示倒数开始的位置，例如最后一位<code>[-1]</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">word <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sequnece&#34;</span>
+<span style="color:#66d9ef">print</span>(word[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+<span style="color:#66d9ef">print</span>(word[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>])
+<span style="color:#66d9ef">print</span>(word[<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>])
+</code></pre></div><p>可以使用列表<code>list</code>的<code>append</code>成员方法动态的为列表加入新的元素:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_list <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">print</span>(len(_list), _list)
+_list<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(len(_list), _list)
+_list<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">print</span>(len(_list), _list)
+</code></pre></div><h3 id="集合结构">集合结构</h3>
+<p>Python还支持集合<code>set</code>类型。集合是由不重复元素组成的无序容器。基本用法包括成员检测、消除重复元素。集合对象支持合集、交集、差集、对称差分等数学运算。创建集合用花括号或<code>set()</code>函数，注意，创建空集合只能用<code>set()</code>，不能用<code>{}</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">set_a <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+<span style="color:#66d9ef">print</span>(set_a)
+set_b <span style="color:#f92672">=</span> {<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}
+<span style="color:#66d9ef">print</span>(set_b)
+</code></pre></div><h3 id="字典结构">字典结构</h3>
+<p>如果集合中的每一个元素都有自己对应的值，那么这种由集合与值映射所组成的结构就被称作字典<code>dict</code>，字典在定义时可以使用冒号<code>:</code>来指定对应关系，并且也支持索引、赋值、修改:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_dict <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;a&#39;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;b&#39;</span>: <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;c&#39;</span>: <span style="color:#ae81ff">3</span>}
+<span style="color:#66d9ef">print</span>(_dict)
+<span style="color:#66d9ef">print</span>(_dict[<span style="color:#e6db74">&#39;a&#39;</span>])
+<span style="color:#66d9ef">print</span>(_dict[<span style="color:#e6db74">&#39;b&#39;</span>])
+<span style="color:#66d9ef">print</span>(_dict[<span style="color:#e6db74">&#39;c&#39;</span>])
+_dict[<span style="color:#e6db74">&#39;a&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+_dict[<span style="color:#e6db74">&#39;b&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+_dict[<span style="color:#e6db74">&#39;c&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">print</span>(_dict)
+</code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

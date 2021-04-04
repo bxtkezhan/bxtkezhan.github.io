@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="在Python中可以通过`while`与`for`两种循环语句来处理循环问题。">
+<meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>初学篇・循环控制语句 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">初学篇・循环控制语句</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/011-if/">上篇 初学篇・条件控制语句</a></p>
+<p>在Python中可以通过<code>while</code>与<code>for</code>两种循环语句来处理循环问题。</p>
+<h3 id="while循环">while循环</h3>
+<p><code>while</code>语句用于在表达式保持为真的情况下重复地执行语句块，和<code>if</code>语句类似可以选择性加上<code>else</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">while</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">判断表达式</span><span style="color:#f92672">&gt;</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+</code></pre></div><p>在<code>while</code>语句中会重复地检验表达式，并且如果其值为真就执行第一个子语句块；
+如果表达式值为假（这可能在第一次检验时就发生）则如果<code>else</code>子句体存在就会被执行并终止循环:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">while</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;then&#39;</span>, n)
+    n <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;else&#39;</span>, n)
+</code></pre></div><p>可以使用<code>break</code>中断循环，当某个循环语句中运行到<code>break</code>时将立即跳出当前循环且不执行<code>else</code>的子语句块:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">while</span> True:
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>:
+        <span style="color:#66d9ef">break</span>
+    n <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;else entry&#39;</span>)
+</code></pre></div><p>可以使用<code>continue</code>跳过当前循环的子语句块中剩下的语句直接回到判断表达式的位置进行下一轮循环:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">n <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">while</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+    n <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;before&#39;</span>)
+    <span style="color:#66d9ef">continue</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;after&#39;</span>)
+</code></pre></div><h3 id="for循环">for循环</h3>
+<p><code>for</code>语句用于对序列（例如字符串、元组或列表）或其他可迭代对象中的元素进行迭代，<code>for</code>语句也可以选择性的加入<code>else</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">单个或多个变量</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">可以被迭代的对象</span><span style="color:#f92672">&gt;</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">语句块</span><span style="color:#f92672">&gt;</span>
+</code></pre></div><p>Python中常见的序列有列表<code>list</code>、元祖<code>tuple</code>、字符串<code>str</code>。关于字符串之前有过描述；
+所谓元祖<code>tuple</code>可以看作是由圆括号<code>()</code>括起来并通过逗号<code>,</code>分隔的一串对象；
+而<code>list</code>则可以看作是用方括号<code>[]</code>括起来并通过逗号<code>,</code>分隔的一串对象；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]
+<span style="color:#66d9ef">print</span>(_list, type(_list))
+_tuple <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#66d9ef">print</span>(_tuple, type(_tuple))
+_str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123&#34;</span>
+<span style="color:#66d9ef">print</span>(_str, type(_str))
+</code></pre></div><p>可以通过<code>for</code>语句轻松将序列结构中的每一个元素取出实现遍历序列元素:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> number <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]:
+    <span style="color:#66d9ef">print</span>(number)
+    
+<span style="color:#66d9ef">for</span> character <span style="color:#f92672">in</span> <span style="color:#e6db74">&#34;abcdefg&#34;</span>:
+    <span style="color:#66d9ef">print</span>(character)
+</code></pre></div><p>类似<code>while</code>，在<code>for</code>循环过程中如果在子语句块遇到<code>break</code>则会立刻中断循环，
+如果遇到<code>continue</code>则会跳过当前子语句块的剩余部分进入下一次循环:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]:
+    <span style="color:#66d9ef">print</span>(i)
+    <span style="color:#66d9ef">break</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;end of for&#39;</span>)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;before&#39;</span>)
+    <span style="color:#66d9ef">continue</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;after&#39;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;end of for&#39;</span>)
+</code></pre></div><p>有时候为了方便我们会用<code>range</code>函数去构造一个可以遍历的对象来进行循环操作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+    <span style="color:#66d9ef">print</span>(i)
+    
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">7</span>):
+    <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> i)
+</code></pre></div><p><code>range</code>函数可以接收三个整数类型的参数，具有以下几种形式:</p>
+<ul>
+<li><code>range(n)</code>: 生成0到n的整数序列，注意不包含n；</li>
+<li><code>range(a, b)</code>: 生成范围在a与b之间的整数序列，包含a不包含b；</li>
+<li><code>range(a, b, s)</code>: 生成范围在a于b之间的整数序列，且跨度为s，包含a不包含b；</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#66d9ef">print</span>(i)
+    
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>):
+    <span style="color:#66d9ef">print</span>(i)
+    
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">2</span>):
+    <span style="color:#66d9ef">print</span>(i)
+</code></pre></div><p><a href="/post/013-function/">下篇 初学篇・函数的定义与调用</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
