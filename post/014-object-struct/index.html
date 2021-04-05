@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="在Python当中，我们常常使用到的基本数据类型有整型`int`、浮点型`float`、字符串类型`str`……，以及结构类型列表`list`、元祖`tuple`，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。">
+<meta name="description" content="在Python当中，我们常常使用到的基本数据类型有整型`int`、浮点型`float`、字符串类型`str`……，以及结构类型列表`list`、元组`tuple`，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。">
 <meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
@@ -59,7 +59,7 @@
   <section class="body" itemprop="articleBody">
     <p><a href="/post/tutorial_001/">返回教程主页</a></p>
 <p><a href="/post/013-function/">上篇 初学篇・函数的定义与调用</a></p>
-<p>在Python当中，我们常常使用到的基本数据类型有整型<code>int</code>、浮点型<code>float</code>、字符串类型<code>str</code>……，以及结构类型列表<code>list</code>、元祖<code>tuple</code>，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。</p>
+<p>在Python当中，我们常常使用到的基本数据类型有整型<code>int</code>、浮点型<code>float</code>、字符串类型<code>str</code>……，以及结构类型列表<code>list</code>、元组<code>tuple</code>，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。</p>
 <h3 id="类的定义与实例化">类的定义与实例化</h3>
 <p>我们可以借助关键字<code>class</code>定义我们自己的数据结构类型:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&lt;类名称&gt;:</span>
@@ -119,10 +119,10 @@ mc2 <span style="color:#f92672">=</span> MyClassTwo(<span style="color:#e6db74">
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">say</span>(self):
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;I&#39;m&#34;</span>, self<span style="color:#f92672">.</span>name)
 
-man <span style="color:#f92672">=</span> Man()
+man <span style="color:#f92672">=</span> Man(<span style="color:#e6db74">&#34;jojo&#34;</span>)
 man<span style="color:#f92672">.</span>say()
 </code></pre></div><h3 id="序列结构类型">序列结构类型</h3>
-<p>Python当中最常用的序列结构类型就是: 列表<code>list</code>、元祖<code>tuple</code>、字符串<code>str</code>，除了遍历的方法，我们也可以通过下标索引的方式将序列结构中的元素取出:</p>
+<p>Python当中最常用的序列结构类型就是: 列表<code>list</code>、元组<code>tuple</code>、字符串<code>str</code>，除了遍历的方法，我们也可以通过下标索引的方式将序列结构中的元素取出:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]
 <span style="color:#66d9ef">print</span>(a[<span style="color:#ae81ff">0</span>], a[<span style="color:#ae81ff">1</span>], a[<span style="color:#ae81ff">2</span>])
 b <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
@@ -133,7 +133,7 @@ c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123&#34;
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;abcdefg&#39;</span>[<span style="color:#ae81ff">0</span>])
 <span style="color:#66d9ef">print</span>((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>])
 <span style="color:#66d9ef">print</span>([<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>][<span style="color:#ae81ff">0</span>])
-</code></pre></div><p>列表与元祖和字符串有一个比较大的区别就是列表中的元素允许被修改:</p>
+</code></pre></div><p>列表与元组和字符串有一个比较大的区别就是列表中的元素允许被修改:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]
 <span style="color:#66d9ef">print</span>(_list)
 _list[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>

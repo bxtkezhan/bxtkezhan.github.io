@@ -17,7 +17,7 @@
       <pubDate>Sun, 04 Apr 2021 19:04:02 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/014-object-struct/</guid>
-      <description>在Python当中，我们常常使用到的基本数据类型有整型&lt;code&gt;int&lt;/code&gt;、浮点型&lt;code&gt;float&lt;/code&gt;、字符串类型&lt;code&gt;str&lt;/code&gt;……，以及结构类型列表&lt;code&gt;list&lt;/code&gt;、元祖&lt;code&gt;tuple&lt;/code&gt;，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。</description>
+      <description>在Python当中，我们常常使用到的基本数据类型有整型&lt;code&gt;int&lt;/code&gt;、浮点型&lt;code&gt;float&lt;/code&gt;、字符串类型&lt;code&gt;str&lt;/code&gt;……，以及结构类型列表&lt;code&gt;list&lt;/code&gt;、元组&lt;code&gt;tuple&lt;/code&gt;，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。</description>
     </item>
     
     <item>
