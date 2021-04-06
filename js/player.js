@@ -42,5 +42,7 @@ function setPlayer(in_chinese) {
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-    isInChineseMainland(setPlayer);
+    if (document.querySelectorAll('.player').length > 0) {
+        isInChineseMainland(setPlayer);
+    }
 });
