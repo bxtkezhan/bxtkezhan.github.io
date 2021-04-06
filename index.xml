@@ -6,10 +6,19 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 04 Apr 2021 19:04:02 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Apr 2021 13:58:16 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>初学篇・猜字游戏「阶段练习」</title>
+      <link>http://bxtkezhan.xyz/post/015-digit-game/</link>
+      <pubDate>Tue, 06 Apr 2021 13:58:16 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/015-digit-game/</guid>
+      <description>猜字游戏涉及的Python基础知识比较丰富且十分容易实现，可以作为《黑客之路・Python篇・初学者篇》的阶段性练习“项目”。</description>
+    </item>
     
     <item>
       <title>初学篇・面向对象&amp;数据结构</title>
