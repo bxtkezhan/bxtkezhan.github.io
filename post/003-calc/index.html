@@ -270,8 +270,7 @@ bye!
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span> {
     <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BinaryOpt</span>{<span style="color:#a6e22e">opt</span>: <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">lhs</span>: <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>: <span style="color:#a6e22e">rhs</span>}
 }
-</code></pre></div><p><code>BinaryOpt</code>作为运算操作节点，成员<code>opt</code>记录运算符号，<code>lhs</code>、<code>rhs</code>分别为表达式左、右两边的内容，如1+2中的1与2。
-使用<code>NewBinaryOpt</code>函数实例它。</p>
+</code></pre></div><p><code>BinaryOpt</code>作为运算操作节点，成员<code>opt</code>记录运算符号，<code>lhs</code>、<code>rhs</code>分别为表达式左、右两边的内容，如1+2中的1与2。使用<code>NewBinaryOpt</code>函数实例它。</p>
 <p><a href="-"></a></p>
 <h4 id="实现运算节点的接口方法">实现运算节点的接口方法</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">binaryOpt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
@@ -295,9 +294,7 @@ bye!
     }
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
 }
-</code></pre></div><p>入口函数<code>parse</code>接收到<code>*BKLexer.Lexer</code>类型的参数后，立即将其发送到<code>parse_binary_add</code>中，
-尝试解析运算等级与加法操作相同的运算操作。
-最后判断当前<code>token</code>是否为结尾，若不是则返回<code>nil</code>否则返回解析结果。</p>
+</code></pre></div><p>入口函数<code>parse</code>接收到<code>*BKLexer.Lexer</code>类型的参数后，立即将其发送到<code>parse_binary_add</code>中，尝试解析运算等级与加法操作相同的运算操作。最后判断当前<code>token</code>是否为结尾，若不是则返回<code>nil</code>否则返回解析结果。</p>
 <p><a href="-"></a></p>
 <h4 id="定义加法等级运算操作的解析函数">定义加法等级运算操作的解析函数</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
@@ -317,9 +314,7 @@ bye!
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
 }
 </code></pre></div><p><a href="-"></a></p>
-<p>当函数接收到参数<code>lexer</code>并运行时会先尝试解析乘法等级的运算操作，
-如果解析完毕并成功返回则判断当前<code>token</code>的字面量决定是否需要构建加法等级运算节点，
-如果需要则尝试进行另一个乘法等级的运算操作解析，解析成功则根据<code>opt</code>构建当前运算等级的节点对象。</p>
+<p>当函数接收到参数<code>lexer</code>并运行时会先尝试解析乘法等级的运算操作，如果解析完毕并成功返回则判断当前<code>token</code>的字面量决定是否需要构建加法等级运算节点，如果需要则尝试进行另一个乘法等级的运算操作解析，解析成功则根据<code>opt</code>构建当前运算等级的节点对象。</p>
 <p><a href="-"></a></p>
 <h4 id="定义乘法等级运算操作的解析函数">定义乘法等级运算操作的解析函数</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
@@ -339,8 +334,7 @@ bye!
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
 }
 </code></pre></div><p><a href="-"></a></p>
-<p><code>parse_binary_mul</code>基本和<code>parse_binary_add</code>一样，只是在运行开始是尝试解析数字或括号表达式的内容，
-在判断需要构建乘法等级运算节点的时候也是尝试解析另一个数字或括号表达式的内容。</p>
+<p><code>parse_binary_mul</code>基本和<code>parse_binary_add</code>一样，只是在运行开始是尝试解析数字或括号表达式的内容，在判断需要构建乘法等级运算节点的时候也是尝试解析另一个数字或括号表达式的内容。</p>
 <p><a href="-"></a></p>
 <h4 id="定义数字与括号表达式的解析函数">定义数字与括号表达式的解析函数</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
@@ -365,10 +359,7 @@ bye!
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 }
 </code></pre></div><p><a href="-"></a></p>
-<p>首先取得下一个<code>token</code>，判断是否是左括号，如果是则可能为括号表达式，需要尝试进行解析，
-如果解析成功还需要判断结尾是否为右括号，全部成功则返回解析的表达式节点，否则返回<code>nil</code>。
-若一开始的<code>token</code>不是左括号而是数字则实例一个数字节点并返回。
-若既不是左括号又不是数字则返回<code>nil</code>。</p>
+<p>首先取得下一个<code>token</code>，判断是否是左括号，如果是则可能为括号表达式，需要尝试进行解析，如果解析成功还需要判断结尾是否为右括号，全部成功则返回解析的表达式节点，否则返回<code>nil</code>。若一开始的<code>token</code>不是左括号而是数字则实例一个数字节点并返回。若既不是左括号又不是数字则返回<code>nil</code>。</p>
 <p><a href="-"></a></p>
 <h4 id="定义词法分析器规则">定义词法分析器规则</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()

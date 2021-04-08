@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 06 Apr 2021 13:58:16 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Apr 2021 23:43:25 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・操作环境准备</title>
+      <link>http://bxtkezhan.xyz/post/016-python-install/</link>
+      <pubDate>Thu, 08 Apr 2021 23:43:25 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/016-python-install/</guid>
+      <description>Python作为一门流行的脚本语言很早就被Mac OS、主流Linux发行版所预装，一般来说只需要确保自己系统的Python版本不要太旧「建议高于3.5」，如果是Windows用户可以去往Python的官方网站 &lt;a href=&#34;https://www.python.org&#34;&gt;www.python.org&lt;/a&gt; 进行下载安装。</description>
+    </item>
     
     <item>
       <title>初学篇・猜字游戏「阶段练习」</title>

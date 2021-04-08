@@ -60,9 +60,7 @@
   <section class="body" itemprop="articleBody">
     <p>下面我们来让程序语言支持If语句，这会使得<strong>bkcalclang</strong>能够处理更加复杂的问题。</p>
 <p><a href="-"></a></p>
-<p>这次的代码以上一篇<a href="https://www.bxtkezhan.xyz/post/005-assign/">《使程序语言支持变量
-》</a>
-的代码为基础编写，如果发现不熟悉当下的内容可以回顾一下之前的篇章。</p>
+<p>这次的代码以上一篇<a href="https://www.bxtkezhan.xyz/post/005-assign/">《使程序语言支持变量》</a>的代码为基础编写，如果发现不熟悉当下的内容可以回顾一下之前的篇章。</p>
 <p><a href="-"></a></p>
 <p>直接放出<a href="#%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%95">代码清单</a>有点劝退，先进行内容讲解。</p>
 <p><a href="-"></a></p>
@@ -111,8 +109,7 @@
     }
 </code></pre></div><p>我们在<code>parse_statement</code>函数中编写处理If语句的内容。</p>
 <p><a href="-"></a></p>
-<p>如果检测到<code>token.Name</code>为<code>IF</code>则尝试进行<code>If</code>语法解析，先跳过当前<code>token</code>然后进行表达式解析，
-若解析成功则将其作为<code>If</code>结构的<code>condition</code>成员:</p>
+<p>如果检测到<code>token.Name</code>为<code>IF</code>则尝试进行<code>If</code>语法解析，先跳过当前<code>token</code>然后进行表达式解析，若解析成功则将其作为<code>If</code>结构的<code>condition</code>成员:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;IF&#34;</span> {
         <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#a6e22e">condition</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
@@ -120,8 +117,7 @@
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
         }
 </code></pre></div><p><a href="-"></a></p>
-<p>接下来取出下一个<code>token</code>判断如果为<code>THEN</code>就进行代码块解析，否则返回<code>nil</code>，在返回<code>NewIf</code>前，
-我们需要设定<code>isBlockEnd</code>为<code>false</code>，它是一个用于<code>parse</code>函数判断是否需要提前返回的全局变量:</p>
+<p>接下来取出下一个<code>token</code>判断如果为<code>THEN</code>就进行代码块解析，否则返回<code>nil</code>，在返回<code>NewIf</code>前，我们需要设定<code>isBlockEnd</code>为<code>false</code>，它是一个用于<code>parse</code>函数判断是否需要提前返回的全局变量:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;THEN&#34;</span> {
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>

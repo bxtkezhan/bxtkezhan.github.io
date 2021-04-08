@@ -60,8 +60,7 @@
   <section class="body" itemprop="articleBody">
     <p>下面我们来为计算器程序增加语句块功能，使得程序可以做批量运算，类似于程序语言中的代码块。</p>
 <p><a href="-"></a></p>
-<p>这次的代码以上一篇<a href="https://www.bxtkezhan.xyz/post/003-calc/">《递归向下算法实现Calc》</a>
-的代码为基础编写，如果发现不熟悉当下的内容可以回顾一下之前的篇章。</p>
+<p>这次的代码以上一篇<a href="https://www.bxtkezhan.xyz/post/003-calc/">《递归向下算法实现Calc》</a>的代码为基础编写，如果发现不熟悉当下的内容可以回顾一下之前的篇章。</p>
 <p><a href="-"></a></p>
 <h4 id="代码清单go语言为例">代码清单【go语言为例】</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
@@ -302,8 +301,7 @@
     }
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">block</span>
 }
-</code></pre></div><p><code>parse</code>中首先实例一个<code>block</code>结构对象，然后开始解析<code>Token</code>，
-使用循环解析的方法依序解析得到每一条<code>statement</code>并插入<code>block</code>中，最后返回block。</p>
+</code></pre></div><p><code>parse</code>中首先实例一个<code>block</code>结构对象，然后开始解析<code>Token</code>，使用循环解析的方法依序解析得到每一条<code>statement</code>并插入<code>block</code>中，最后返回block。</p>
 <p><a href="-"></a></p>
 <p>需要注意的是我们每一条语句的末尾要么是换行要么是结尾，否则将被视为解析错误并返回<code>nil</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
@@ -322,9 +320,7 @@
     <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
     
     <span style="color:#f92672">......</span>
-</code></pre></div><p>在<code>parse_number</code>函数中，
-<code>token := lexer.NextToken()</code>变为<code>token := lexer.GetToken()</code>，
-因此我们需要确保各个解析函数互相调用时需要先主动在当前函数中调用<code>NextToken()</code>方法。</p>
+</code></pre></div><p>在<code>parse_number</code>函数中，<code>token := lexer.NextToken()</code>变为<code>token := lexer.GetToken()</code>，因此我们需要确保各个解析函数互相调用时需要先主动在当前函数中调用<code>NextToken()</code>方法。</p>
 <p><a href="-"></a></p>
 <p>例如:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">......</span>
@@ -355,8 +351,7 @@
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\)&#34;</span>, <span style="color:#e6db74">&#34;RPAR&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;[ \\f\\t]+&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;#[^\\r\\n]*&#34;</span>)
-</code></pre></div><p>需要注意的是这里对无效字符的设定还增加了新的规则<code>lexer.AddIgnores(&quot;#[^\\r\\n]*&quot;)</code>，
-这使得程序支持Python的注释语法。</p>
+</code></pre></div><p>需要注意的是这里对无效字符的设定还增加了新的规则<code>lexer.AddIgnores(&quot;#[^\\r\\n]*&quot;)</code>，这使得程序支持Python的注释语法。</p>
 <p><a href="-"></a></p>
 <h4 id="读取文件进行解析计算">读取文件进行解析计算</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">bytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;../test.txt&#34;</span>)
