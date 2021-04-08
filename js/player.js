@@ -20,15 +20,12 @@ function isInChineseMainland(callback) {
 
 function setPlayer(in_chinese) {
     document.querySelectorAll('.player').forEach(function(frame) {
-        if (in_chinese) {
-            var video_id = frame.getAttribute('bilibili');
-            frame.setAttribute('src', '//player.bilibili.com/player.html?bvid=' + video_id);
+        var videos = frame.getAttribute('data').split('-');
+        if (!in_chinese) {
+            frame.setAttribute('src', '//www.youtube.com/embed/' + videos[0]);
         } else {
-            var video_id = frame.getAttribute('youtube');
-            frame.setAttribute('src', '//www.youtube.com/embed/' + video_id);
+            frame.setAttribute('src', '//player.bilibili.com/player.html?bvid=' + videos[1]);
         }
-        frame.removeAttribute('youtube');
-        frame.removeAttribute('bilibili');
         frame.setAttribute('width', '880');
         frame.setAttribute('height', '495');
         frame.setAttribute('frameborder', '0');
