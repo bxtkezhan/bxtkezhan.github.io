@@ -1,4 +1,8 @@
-function isInChineseMainland(callback) {
+function inChineseMainland(callback) {
+    if (localStorage.getItem('isinchinesemainland')) {
+        callback(true);
+        return;
+    }
     var url = 'https://graph.facebook.com/feed?callback=t';
     var xhr = new XMLHttpRequest();
     var called = false;
@@ -13,6 +17,7 @@ function isInChineseMainland(callback) {
     setTimeout(function() {
         if (!called) {
             xhr.abort();
+            localStorage.setItem('isinchinesemainland', 'Y');
             callback(true);
         }
     }, 1000);
@@ -40,6 +45,6 @@ function setPlayer(in_chinese) {
 
 document.addEventListener('DOMContentLoaded', function(event) {
     if (document.querySelectorAll('.player').length > 0) {
-        isInChineseMainland(setPlayer);
+        inChineseMainland(setPlayer);
     }
 });
