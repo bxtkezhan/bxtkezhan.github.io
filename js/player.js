@@ -1,5 +1,5 @@
-function inChineseMainland(callback) {
-    if (localStorage.getItem('isinchinesemainland')) {
+function innerCFW(callback) {
+    if (localStorage.getItem('isInnerCFW')) {
         callback(true);
         return;
     }
@@ -17,16 +17,16 @@ function inChineseMainland(callback) {
     setTimeout(function() {
         if (!called) {
             xhr.abort();
-            localStorage.setItem('isinchinesemainland', 'Y');
+            localStorage.setItem('isInnerCFW', 'Y');
             callback(true);
         }
     }, 1000);
 }
 
-function setPlayer(in_chinese) {
+function setPlayer(isInnerCFW) {
     document.querySelectorAll('.player').forEach(function(frame) {
         var videos = frame.getAttribute('data').split('-');
-        if (!in_chinese) {
+        if (!isInnerCFW) {
             frame.setAttribute('src', '//www.youtube.com/embed/' + videos[0]);
         } else {
             frame.setAttribute('src', '//player.bilibili.com/player.html?bvid=' + videos[1]);
@@ -37,7 +37,7 @@ function setPlayer(in_chinese) {
         frame.setAttribute('allow',
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
     });
-    if (in_chinese) {
+    if (isInnerCFW) {
         ;
     } else {
     }
@@ -45,6 +45,6 @@ function setPlayer(in_chinese) {
 
 document.addEventListener('DOMContentLoaded', function(event) {
     if (document.querySelectorAll('.player').length > 0) {
-        inChineseMainland(setPlayer);
+        innerCFW(setPlayer);
     }
 });
