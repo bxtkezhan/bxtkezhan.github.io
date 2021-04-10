@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。">
+<meta name="keywords" content="python,密码学,凯撒密码,替换式密码,黑客,简单,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・密码学简介 - bxtkezhan@kk</title>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-10">April 10, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・密码学简介</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/016-python-install/">上篇 密码篇・操作环境准备</a></p>
+<p>密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。</p>
+<h3 id="古典密码凯撒密码">古典密码・凯撒密码</h3>
+<p>凯撒密码（英语：Caesar cipher），或称凯撒加密、凯撒变换、变换加密，是一种最简单且最广为人知的加密技术。凯撒密码是一种替换加密技术，明文中的所有字母都在字母表上向后（或向前）按照一个固定数目进行偏移后被替换成密文。</p>
+<p>例如确定偏移量为3，英文字母A被D替代，B被E替代，C被F替代并以此类推:</p>
+<table>
+<thead>
+<tr>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+<th align="center">D</th>
+<th align="center">E</th>
+<th align="center">F</th>
+<th align="center">&hellip;</th>
+<th align="center">X</th>
+<th align="center">Y</th>
+<th align="center">Z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">D</td>
+<td align="center">E</td>
+<td align="center">F</td>
+<td align="center">G</td>
+<td align="center">H</td>
+<td align="center">I</td>
+<td align="center">&hellip;</td>
+<td align="center">A</td>
+<td align="center">B</td>
+<td align="center">C</td>
+</tr>
+</tbody>
+</table>
+<p>根据上述表格所示的规则，我们可以将<strong>明文</strong>&ldquo;HELLO WORLD&quot;加密成<strong>密文</strong>&ldquo;KHOOR ZRUOG&rdquo;。</p>
+<p>使用Python实现凯撒加密:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<span style="color:#75715e"># 取出string模块内置的大写英文字母</span>
+case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
+length <span style="color:#f92672">=</span> len(case)
+
+bias <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;偏移: &#39;</span>)<span style="color:#f92672">.</span>strip())
+src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper() <span style="color:#75715e"># upper方法转换字母为大写</span>
+dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
+    <span style="color:#75715e"># 使用字符串的find方法找出字符c在字符串case中的位置</span>
+    <span style="color:#75715e"># 如果没有找到将返回-1，否则返回所在位置的下标</span>
+    i <span style="color:#f92672">=</span> case<span style="color:#f92672">.</span>find(c)
+    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#75715e"># 如果没有找到就直接将字符拼接到dst</span>
+        dst <span style="color:#f92672">+=</span> c
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#75715e"># 如果找到了，就通过转换得到偏移后的位置j</span>
+        j <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> bias) <span style="color:#f92672">%</span> length
+        dst <span style="color:#f92672">+=</span> case[j] <span style="color:#75715e"># 将偏移后的字母拼接到dst</span>
+<span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
+</code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">偏移: <span style="color:#ae81ff">3</span>
+文本: hello world
+HELLO WORLD -&gt; KHOOR ZRUOG
+</code></pre></div><h3 id="古典密码简易替换密码">古典密码・简易替换密码</h3>
+<p>简易替换加密是一种以特定方式改变字母表上字母顺序，并以此顺序书写的加密方式。这样一张改变了字母次序的字母表即为‘替换表’。传统上会先把一个关键词写在字母表最前面，再删去重复字母，这样就能得到一个混合表。</p>
+<p>例如使用混合表系统，关键字为“zebras”:</p>
+<p>明文字母表 ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+密文字母表 ZEBRASCDFGHIJKLMNOPQTUVWXY</p>
+<p>对&quot;flee at once. we are discovered!&ldquo;进行加密得到结果&quot;SIAA ZQ LKBA. VA ZOA RFPBLUAOAR!&quot;。</p>
+<p>使用Python实现简易替换密码:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+
+p_case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
+c_case <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;单词: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> p_case:
+    <span style="color:#66d9ef">if</span> c <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> c_case:
+        c_case <span style="color:#f92672">+=</span> c
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;明文字母表:&#39;</span>, p_case)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;密文字母表:&#39;</span>, c_case)
+
+src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
+    i <span style="color:#f92672">=</span> p_case<span style="color:#f92672">.</span>find(c)
+    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+        dst <span style="color:#f92672">+=</span> c
+    <span style="color:#66d9ef">else</span>:
+        dst <span style="color:#f92672">+=</span> c_case[i]
+<span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
+<span style="color:#66d9ef">print</span>(dst)
+</code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">单词: zebras
+明文字母表: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+密文字母表: ZEBRASCDFGHIJKLMNOPQTUVWXY
+文本: flee at once. we are discovered!
+FLEE AT ONCE. WE ARE DISCOVERED! -&gt;
+SIAA ZQ LKBA. VA ZOA RFPBLUAOAR!
+</code></pre></div><p>除了简易替换密码，还有谐音替换法、多表替换加密、表格式替换加密、机械替换加密、一次性密码本等不同形式的替换式密码，如果大家感兴趣，可以在网上搜集资料扩展更多的知识。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

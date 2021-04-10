@@ -6,10 +6,19 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Apr 2021 17:41:20 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 10 Apr 2021 22:20:15 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・密码学简介</title>
+      <link>http://bxtkezhan.xyz/post/018-cryptography-info/</link>
+      <pubDate>Sat, 10 Apr 2021 22:20:15 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/018-cryptography-info/</guid>
+      <description>密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。</description>
+    </item>
     
     <item>
       <title>你的泉源岂可涨溢在外？</title>
