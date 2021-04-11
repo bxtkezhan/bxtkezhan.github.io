@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 10 Apr 2021 22:20:15 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 11 Apr 2021 14:18:23 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・对称密钥加密</title>
+      <link>http://bxtkezhan.xyz/post/019-symmetric-key/</link>
+      <pubDate>Sun, 11 Apr 2021 14:18:23 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/019-symmetric-key/</guid>
+      <description>对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。</description>
+    </item>
     
     <item>
       <title>密码篇・密码学简介</title>

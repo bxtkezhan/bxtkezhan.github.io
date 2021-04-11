@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。">
+<meta name="keywords" content="python,密码学,对称密钥加密,feistel,des,黑客,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・对称密钥加密 - bxtkezhan@kk</title>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-11">April 11, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・对称密钥加密</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/018-cryptography-info/">上篇 密码篇・密码学简介</a></p>
+<p>维基百科: 对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。</p>
+<h3 id="文本内容的数字化">文本内容的数字化</h3>
+<p>在Python当中文本字符串可以被轻易转换为字节形式，转换后的字节序列的每一个元素都是一个数值，我们可以将其看作是一个数组，而这个数组就是原本字符串内容的数位形式。</p>
+<p>使用字符串的<code>encode</code>方法可以将字符串转换为字节数组，使用字符串的<code>format</code>格式化方法可以将其打印成0、1组合的二进制格式:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;hello world&#39;</span>
+text_bytes <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>encode()
+<span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> text_bytes:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;{:08b}&#39;</span><span style="color:#f92672">.</span>format(b))
+</code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">01101000</span>
+<span style="color:#ae81ff">01100101</span>
+<span style="color:#ae81ff">01101100</span>
+<span style="color:#ae81ff">01101100</span>
+<span style="color:#ae81ff">01101111</span>
+<span style="color:#ae81ff">00100000</span>
+<span style="color:#ae81ff">01110111</span>
+<span style="color:#ae81ff">01101111</span>
+<span style="color:#ae81ff">01110010</span>
+<span style="color:#ae81ff">01101100</span>
+<span style="color:#ae81ff">01100100</span>
+</code></pre></div><h3 id="加密操作的数字化">加密操作的数字化</h3>
+<p>有一种特殊的运算方式可以非常简单的实现数字化的加密操作那便是“按位异或运算”<code>^</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">k <span style="color:#f92672">=</span> <span style="color:#ae81ff">49</span>
+a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1234</span>
+b <span style="color:#f92672">=</span> <span style="color:#ae81ff">1234</span> <span style="color:#f92672">^</span> k
+c <span style="color:#f92672">=</span> b <span style="color:#f92672">^</span> k
+<span style="color:#66d9ef">print</span>(k, a, b, c)
+</code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">49</span> <span style="color:#ae81ff">1234</span> <span style="color:#ae81ff">1251</span> <span style="color:#ae81ff">1234</span>
+</code></pre></div><p>我们首先对<code>a</code>与<code>k</code>进行按位异或运算得到<code>b</code>，然后对<code>b</code>与<code>k</code>进行按位异或运算得到<code>c</code>，发现<code>c</code>与<code>a</code>相等，如果你愿意尝试更多的数字就会发现规律，<code>a ^ k ^ k</code>会等于<code>a</code>，那么这时我们可以将一个数字<code>k</code>作为密钥，对某个数字<code>a</code>进行加密得到密文数字<code>b</code>，然后使用作为密钥的数字<code>k</code>来解密。</p>
+<p>先前我们知道了字符串可以转换成一串数字，那么我们完全可以使用按位异或的方法对字符串进行加密:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()
+key <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;密钥: &#39;</span>)<span style="color:#f92672">.</span>strip())
+dst <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;key={:08b}({})&#39;</span><span style="color:#f92672">.</span>format(key, key))
+<span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> src<span style="color:#f92672">.</span>encode():
+    b <span style="color:#f92672">=</span> a <span style="color:#f92672">^</span> key
+    dst<span style="color:#f92672">.</span>append(b)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;{:08b} -&gt; {:08b}&#39;</span><span style="color:#f92672">.</span>format(a, b))
+<span style="color:#75715e"># bytes函数可以将数字列表转换为字节序列</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;密文:&#39;</span>, bytes(dst))
+
+src_bytes <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> dst:
+    a <span style="color:#f92672">=</span> b <span style="color:#f92672">^</span> key
+    src_bytes<span style="color:#f92672">.</span>append(a)
+<span style="color:#75715e"># 使用字节序列的decode方法可以将其转回字符串</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;明文:&#39;</span>, bytes(src_bytes)<span style="color:#f92672">.</span>decode())
+</code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">文本: hello world
+密钥: <span style="color:#ae81ff">49</span>
+key<span style="color:#f92672">=</span>00110001<span style="color:#f92672">(</span>49<span style="color:#f92672">)</span>
+<span style="color:#ae81ff">01101000</span> -&gt; <span style="color:#ae81ff">01011001</span>
+<span style="color:#ae81ff">01100101</span> -&gt; <span style="color:#ae81ff">01010100</span>
+<span style="color:#ae81ff">01101100</span> -&gt; <span style="color:#ae81ff">01011101</span>
+<span style="color:#ae81ff">01101100</span> -&gt; <span style="color:#ae81ff">01011101</span>
+<span style="color:#ae81ff">01101111</span> -&gt; <span style="color:#ae81ff">01011110</span>
+<span style="color:#ae81ff">00100000</span> -&gt; <span style="color:#ae81ff">00010001</span>
+<span style="color:#ae81ff">01110111</span> -&gt; <span style="color:#ae81ff">01000110</span>
+<span style="color:#ae81ff">01101111</span> -&gt; <span style="color:#ae81ff">01011110</span>
+<span style="color:#ae81ff">01110010</span> -&gt; <span style="color:#ae81ff">01000011</span>
+<span style="color:#ae81ff">01101100</span> -&gt; <span style="color:#ae81ff">01011101</span>
+<span style="color:#ae81ff">01100100</span> -&gt; <span style="color:#ae81ff">01010101</span>
+密文: b<span style="color:#e6db74">&#39;YT]]^\x11F^C]U&#39;</span>
+明文: hello world
+</code></pre></div><p>不难发现使用按位异或加密在加密过程和解密过程中所使用的密钥都是一样的，因此该方法也被归入对称密钥加密。</p>
+<h3 id="子密钥">子密钥</h3>
+<p>为了增加密码破译难度，我们可以使用多个密钥对明文进行加密。为了方便，通常我们会使用一个母密钥去生成多个子密钥，而不是每次去输入一堆密钥。</p>
+<p>字符串可以被转换成一系列的数字，我们可以将字符串作为母密钥用来生成一系列的数字作为子密钥:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">key <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;密钥: &#39;</span>)<span style="color:#f92672">.</span>strip()
+sub_keys <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>encode()
+</code></pre></div><p>使用子密钥进行加密的Python实现:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()
+key <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;密钥: &#39;</span>)<span style="color:#f92672">.</span>strip()
+sub_keys <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>encode()
+dst <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> src<span style="color:#f92672">.</span>encode():
+    b <span style="color:#f92672">=</span> a
+    <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> sub_keys:
+        b <span style="color:#f92672">=</span> b <span style="color:#f92672">^</span> k
+    dst<span style="color:#f92672">.</span>append(b)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;密文:&#39;</span>, bytes(dst))
+
+src_bytes <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> dst:
+    a <span style="color:#f92672">=</span> b
+    <span style="color:#75715e"># [::-1] 用于将序列对象反向，例如: 1, 2, 3 -&gt; 3, 2, 1</span>
+    <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> sub_keys[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]:
+        a <span style="color:#f92672">=</span> a <span style="color:#f92672">^</span> k
+    src_bytes<span style="color:#f92672">.</span>append(a)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;明文:&#39;</span>, bytes(src_bytes)<span style="color:#f92672">.</span>decode())
+</code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">文本: hello world
+密钥: password
+密文: b<span style="color:#e6db74">&#39;wzssp?hpms{&#39;</span>
+明文: hello world
+</code></pre></div><p>需要注意的是由于对称式加密的特点，当我们输入的母密钥中存在对称重复的时候情况就会变得糟糕，例如我们输入&quot;abba&quot;作为母密钥，那么算法将完全失效:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">文本: hello world
+密钥: abba
+密文: b<span style="color:#e6db74">&#39;hello world&#39;</span>
+明文: hello world
+</code></pre></div><p>显然我们需要对加密程序进行优化，事实上很早就出现了针对相关问题的解决方案，那就是“费斯妥密码”。</p>
+<p>维基百科: 在密码学中，费斯妥密码（英语：Feistel cipher）是用于构造分组密码的对称结构，以德国出生的物理学家和密码学家霍斯特·费斯妥（Horst Feistel）命名，他在美国IBM工作期间完成了此项开拓性研究。通常也称为费斯妥网络（Feistel network）。大部分分组密码使用该方案，包括数据加密标准（DES）。费斯妥结构的优点在于加密和解密操作非常相似，在某些情况下甚至是相同的，只需要逆转密钥编排。</p>
+<p>想要将对称式加密技术运用于商业活动，还有许多内容需要掌握，如果你足够感兴趣可以自己扩展学习更多的知识，例如: 费斯妥密码、ECB模式、CBC模式、DES标准、AES标准……</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
