@@ -147,29 +147,29 @@
 </code></pre></div><p>使用<code>Build</code>方法，将代码<code>code</code>作为参数进行构建，然后循环调用<code>NextToken</code>方法获得下一个Token，并打印相关信息。需要注意的是应当对Token的类型进行检测判断是否为<code>EOF</code>或<code>ERROR</code>以决定是否终止。</p>
 <p><a href="-"></a></p>
 <h4 id="运行结果如下">运行结果如下</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Test Code:
-声明 变量 <span style="color:#f92672">=</span> PI * <span style="color:#ae81ff">100</span> - fda
-<span style="color:#ae81ff">1024</span> * <span style="color:#ae81ff">4</span> * 3.14 <span style="color:#75715e">###</span> 
-<span style="color:#ae81ff">123</span>
+<pre><code>Test Code:
+声明 变量 = PI * 100 - fda
+1024 * 4 * 3.14 ### 
+123
 --------------------------------
-NAME	<span style="color:#e6db74">&#34;声明&#34;</span>	t3	0	0,0
-NAME	<span style="color:#e6db74">&#34;变量&#34;</span>	t3	7	0,3
-ASSIGN	<span style="color:#e6db74">&#34;=&#34;</span>		t8	14	0,6
-NAME	<span style="color:#e6db74">&#34;PI&#34;</span>	t3	16	0,8
-MUL		<span style="color:#e6db74">&#34;*&#34;</span>		t6	19	0,11
-INT		<span style="color:#e6db74">&#34;100&#34;</span>	t2	21	0,13
-MINUS	<span style="color:#e6db74">&#34;-&#34;</span>		t5	25	0,17
-NAME	<span style="color:#e6db74">&#34;fda&#34;</span>	t3	27	0,19
-NEWLINE	<span style="color:#e6db74">&#34;\n&#34;</span>	t0	30	0,22
-INT		<span style="color:#e6db74">&#34;1024&#34;</span>	t2	31	1,0
-MUL		<span style="color:#e6db74">&#34;*&#34;</span>		t6	36	1,5
-INT		<span style="color:#e6db74">&#34;4&#34;</span>		t2	38	1,7
-MUL		<span style="color:#e6db74">&#34;*&#34;</span>		t6	40	1,9
-FLOAT	<span style="color:#e6db74">&#34;3.14&#34;</span>	t1	42	1,11
-COMMENT	<span style="color:#e6db74">&#34;### &#34;</span>	t9	47	1,16
-NEWLINE	<span style="color:#e6db74">&#34;\n&#34;</span>	t0	51	1,20
-INT		<span style="color:#e6db74">&#34;123&#34;</span>	t2	52	2,0
-</code></pre></div>
+NAME	&quot;声明&quot;	t3	0	0,0
+NAME	&quot;变量&quot;	t3	7	0,3
+ASSIGN	&quot;=&quot;		t8	14	0,6
+NAME	&quot;PI&quot;	t3	16	0,8
+MUL		&quot;*&quot;		t6	19	0,11
+INT		&quot;100&quot;	t2	21	0,13
+MINUS	&quot;-&quot;		t5	25	0,17
+NAME	&quot;fda&quot;	t3	27	0,19
+NEWLINE	&quot;\n&quot;	t0	30	0,22
+INT		&quot;1024&quot;	t2	31	1,0
+MUL		&quot;*&quot;		t6	36	1,5
+INT		&quot;4&quot;		t2	38	1,7
+MUL		&quot;*&quot;		t6	40	1,9
+FLOAT	&quot;3.14&quot;	t1	42	1,11
+COMMENT	&quot;### &quot;	t9	47	1,16
+NEWLINE	&quot;\n&quot;	t0	51	1,20
+INT		&quot;123&quot;	t2	52	2,0
+</code></pre>
   </section>
 </article>
 

@@ -171,17 +171,17 @@ INT    `2`          0, 17
 }
 </code></pre></div><p><a href="-"></a></p>
 <p>在命令行中运行测试</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜ go run lexer.go <span style="color:#e6db74">&#34;数值 = PI + 100&#34;</span>
-INT		^<span style="color:#ae81ff">\d</span>+
-NAME	^<span style="color:#f92672">[</span><span style="color:#ae81ff">\p</span><span style="color:#f92672">{</span>L<span style="color:#f92672">}</span><span style="color:#ae81ff">\d</span>_<span style="color:#f92672">]</span>+
-SYMBOL	^<span style="color:#f92672">[</span><span style="color:#ae81ff">\+</span>-<span style="color:#f92672">=]</span>
+<pre><code>➜ go run lexer.go &quot;数值 = PI + 100&quot;
+INT		^\d+
+NAME	^[\p{L}\d_]+
+SYMBOL	^[\+-=]
 --------------------------------
-NAME	<span style="color:#e6db74">`</span>数值<span style="color:#e6db74">`</span>	0	<span style="color:#ae81ff">0</span>
-SYMBOL	<span style="color:#e6db74">`</span><span style="color:#f92672">=</span><span style="color:#e6db74">`</span>	    0	<span style="color:#ae81ff">3</span>
-NAME	<span style="color:#e6db74">`</span>PI<span style="color:#e6db74">`</span>	0	<span style="color:#ae81ff">5</span>
-SYMBOL	<span style="color:#e6db74">`</span>+<span style="color:#e6db74">`</span>	    0	<span style="color:#ae81ff">8</span>
-INT	    <span style="color:#e6db74">`</span>100<span style="color:#e6db74">`</span>	0	<span style="color:#ae81ff">10</span>
-</code></pre></div><p><a href="-"></a></p>
+NAME	`数值`	0	0
+SYMBOL	`=`	    0	3
+NAME	`PI`	0	5
+SYMBOL	`+`	    0	8
+INT	    `100`	0	10
+</code></pre><p><a href="-"></a></p>
 <h2 id="go语言代码说明">Go语言代码说明</h2>
 <p><a href="-"></a></p>
 <h4 id="引入需要用到的包">引入需要用到的包:</h4>

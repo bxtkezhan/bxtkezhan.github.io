@@ -371,35 +371,35 @@
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="使用一段测试脚本进行测试">使用一段测试脚本进行测试</h4>
 <p>测试内容:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#ae81ff">1</span> + <span style="color:#ae81ff">2</span> <span style="color:#75715e"># plus</span>
-<span style="color:#ae81ff">3</span> - <span style="color:#ae81ff">4</span>
+<pre><code>1 + 2 # plus
+3 - 4
 
-<span style="color:#75715e"># here is a comment</span>
+# here is a comment
 
-<span style="color:#ae81ff">5</span> * <span style="color:#ae81ff">6</span> <span style="color:#75715e"># mul</span>
-<span style="color:#ae81ff">7</span> / <span style="color:#ae81ff">8</span>
+5 * 6 # mul
+7 / 8
 
-<span style="color:#ae81ff">1</span> + <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> - 3<span style="color:#f92672">)</span> * <span style="color:#ae81ff">4</span> / <span style="color:#ae81ff">5</span> <span style="color:#75715e"># composite</span>
-</code></pre></div><p><a href="-"></a></p>
+1 + (2 - 3) * 4 / 5 # composite
+</code></pre><p><a href="-"></a></p>
 <p>运行结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜ go run calc.go
+<pre><code>➜ go run calc.go
 Hello My Calc.
-<span style="color:#ae81ff">1</span> + <span style="color:#ae81ff">2</span> <span style="color:#75715e"># plus</span>
-<span style="color:#ae81ff">3</span> - <span style="color:#ae81ff">4</span>
+1 + 2 # plus
+3 - 4
 
-<span style="color:#75715e"># here is a comment</span>
+# here is a comment
 
-<span style="color:#ae81ff">5</span> * <span style="color:#ae81ff">6</span> <span style="color:#75715e"># mul</span>
-<span style="color:#ae81ff">7</span> / <span style="color:#ae81ff">8</span>
+5 * 6 # mul
+7 / 8
 
-<span style="color:#ae81ff">1</span> + <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> - 3<span style="color:#f92672">)</span> * <span style="color:#ae81ff">4</span> / <span style="color:#ae81ff">5</span> <span style="color:#75715e"># composite</span>
+1 + (2 - 3) * 4 / 5 # composite
 
-out<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 3.000000
-out<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> -1.000000
-out<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 30.000000
-out<span style="color:#f92672">[</span>3<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 0.875000
-out<span style="color:#f92672">[</span>4<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> 0.200000
-</code></pre></div>
+out[0] = 3.000000
+out[1] = -1.000000
+out[2] = 30.000000
+out[3] = 0.875000
+out[4] = 0.200000
+</code></pre>
   </section>
 </article>
 

@@ -68,17 +68,29 @@
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">6</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">7</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
-</code></pre></div><p>整数（如，2、4、20 ）的类型是整型（int），带小数（如，5.0、1.6 ）的类型是浮点型（float）。</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>3
+-1
+30
+0.875
+0.19999999999999996
+</code></pre><p>整数（如，2、4、20 ）的类型是整型（int），带小数（如，5.0、1.6 ）的类型是浮点型（float）。</p>
 <p>除法运算<code>/</code>返回浮点数。用<code>//</code>运算符执行整数除法的结果是整数（忽略小数），计算余数用<code>%</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">3</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>)
-</code></pre></div><p>等号<code>=</code>用于给变量赋值。变量的概念可以参照数学中变量的概念，我们可以用变量来指代某一个值，<code>A = B</code>的意思就是把值/对象赋给A，之后就可以用<code>A</code>指代<code>B</code>:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>3.3333333333333335
+3
+1
+</code></pre><p>等号<code>=</code>用于给变量赋值。变量的概念可以参照数学中变量的概念，我们可以用变量来指代某一个值，<code>A = B</code>的意思就是把值/对象赋给A，之后就可以用<code>A</code>指代<code>B</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">width <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 height <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 area <span style="color:#f92672">=</span> width <span style="color:#f92672">*</span> height
 <span style="color:#66d9ef">print</span>(area)
-</code></pre></div><p>需要注意Python当中变量名字母区分大小写，以下是比较推荐的Python变量命名规范:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>100
+</code></pre><p>需要注意Python当中变量名字母区分大小写，以下是比较推荐的Python变量命名规范:</p>
 <ul>
 <li>变量名以字母或下划线字符开头</li>
 <li>变量名只包含字母数字字符和下划线(A-z、0-9和_)</li>
@@ -87,22 +99,40 @@ area <span style="color:#f92672">=</span> width <span style="color:#f92672">*</s
 <p>除了数字，Python还可以操作字符串。字符串有多种表现形式，用单引号<code>'……'</code>或双引号<code>&quot;……&quot;</code>标注的效果相同:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Hi! kk.&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Hi! jojo.&#34;</span>)
-</code></pre></div><p>使用反斜杠<code>\</code>进行转义可以输出一些特殊字符:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>Hi! kk.
+Hi! jojo.
+</code></pre><p>使用反斜杠<code>\</code>进行转义可以输出一些特殊字符:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">3&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">3&#39;</span>)
-</code></pre></div><p>字符串字面值可以实现跨行连续输入。实现方式是用三引号:<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>或<code>'''...'''</code>，字符串行尾会自动加上回车换行，如果不需要回车换行，在行尾添加<code>\</code>即可。示例如下:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>0	1	2	3
+0
+1
+2
+3
+</code></pre><p>字符串字面值可以实现跨行连续输入。实现方式是用三引号:<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>或<code>'''...'''</code>，字符串行尾会自动加上回车换行，如果不需要回车换行，在行尾添加<code>\</code>即可。示例如下:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">Usage: thingy [OPTIONS]
 </span><span style="color:#e6db74">     -h                        Display this usage message
 </span><span style="color:#e6db74">     -H hostname               Hostname to connect to
 </span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
-</code></pre></div><p>字符串可以用<code>+</code>拼接，也可以用<code>*</code>重复:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>Usage: thingy [OPTIONS]
+     -h                        Display this usage message
+     -H hostname               Hostname to connect to
+</code></pre><p>字符串可以用<code>+</code>拼接，也可以用<code>*</code>重复:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;123&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;456&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;abc&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</code></pre></div><p>我们可以使用<code>len</code>函数计算字符串的长度:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>123456
+abcabcabc
+</code></pre><p>我们可以使用<code>len</code>函数计算字符串的长度:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numbers <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1234567890&#39;</span>
 <span style="color:#66d9ef">print</span>(numbers)
-</code></pre></div><h3 id="类型">类型</h3>
+</code></pre></div><p>运行结果:</p>
+<pre><code>1234567890
+</code></pre><h3 id="类型">类型</h3>
 <p>可以使用<code>type</code>函数输出对象的类型名称:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
 <span style="color:#66d9ef">print</span>(type(a))
@@ -110,7 +140,11 @@ b <span style="color:#f92672">=</span> <span style="color:#ae81ff">123.321</span
 <span style="color:#66d9ef">print</span>(type(b))
 c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123.321&#34;</span>
 <span style="color:#66d9ef">print</span>(type(c))
-</code></pre></div><p>可以使用<code>int</code>、<code>float</code>、<code>str</code>函数进行类型转换:</p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+</code></pre><p>可以使用<code>int</code>、<code>float</code>、<code>str</code>函数进行类型转换:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
 <span style="color:#66d9ef">print</span>(a, type(a))
 b <span style="color:#f92672">=</span> float(a)
@@ -121,7 +155,13 @@ e <span style="color:#f92672">=</span> float(c)
 <span style="color:#66d9ef">print</span>(e, type(e))
 f <span style="color:#f92672">=</span> int(e)
 <span style="color:#66d9ef">print</span>(f, type(f))
-</code></pre></div><p><a href="/post/010-logic-compare/">下篇 初学篇・逻辑运算&amp;比较运算</a></p>
+</code></pre></div><p>运行结果:</p>
+<pre><code>123 &lt;class 'int'&gt;
+123.0 &lt;class 'float'&gt;
+123.0 &lt;class 'str'&gt;
+123.0 &lt;class 'float'&gt;
+123 &lt;class 'int'&gt;
+</code></pre><p><a href="/post/010-logic-compare/">下篇 初学篇・逻辑运算&amp;比较运算</a></p>
 
   </section>
 </article>

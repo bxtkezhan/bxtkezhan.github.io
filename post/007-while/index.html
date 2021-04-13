@@ -146,36 +146,36 @@
 <p><a href="-"></a></p>
 <h4 id="使用一段测试脚本进行测试">使用一段测试脚本进行测试</h4>
 <p>测试内容【斐波那契数列】:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">set n <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
-set a <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-set b <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<pre><code>set n = 15
+set a = 0
+set b = 1
 
-<span style="color:#66d9ef">while</span> n <span style="color:#66d9ef">then</span>
-    set n <span style="color:#f92672">=</span> n - <span style="color:#ae81ff">1</span>
-    set b <span style="color:#f92672">=</span> a + b
-    set a <span style="color:#f92672">=</span> b - a
+while n then
+    set n = n - 1
+    set b = a + b
+    set a = b - a
     echo a
 end
-</code></pre></div><p><a href="-"></a></p>
+</code></pre><p><a href="-"></a></p>
 <p>运行结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜ go calc.go 
+<pre><code>➜ go calc.go 
 
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">13</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">21</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">34</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">55</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">89</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">144</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">233</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">377</span>
-:<span style="color:#f92672">=</span> <span style="color:#ae81ff">610</span>
-</code></pre></div><p><a href="-"></a></p>
+:= 1
+:= 1
+:= 2
+:= 3
+:= 5
+:= 8
+:= 13
+:= 21
+:= 34
+:= 55
+:= 89
+:= 144
+:= 233
+:= 377
+:= 610
+</code></pre><p><a href="-"></a></p>
 <h4 id="代码清单">代码清单</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 

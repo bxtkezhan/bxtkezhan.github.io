@@ -113,10 +113,10 @@ dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;<
         dst <span style="color:#f92672">+=</span> case[j] <span style="color:#75715e"># 将偏移后的字母拼接到dst</span>
 <span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
 </code></pre></div><p>运行效果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">偏移: <span style="color:#ae81ff">3</span>
+<pre><code>偏移: 3
 文本: hello world
 HELLO WORLD -&gt; KHOOR ZRUOG
-</code></pre></div><p>凯撒密码破译难度非常低，一旦被人识破所使用的加密方式为凯撒加密，破解者只需要进行少量的排查就能完成密码破译工作。</p>
+</code></pre><p>凯撒密码破译难度非常低，一旦被人识破所使用的加密方式为凯撒加密，破解者只需要进行少量的排查就能完成密码破译工作。</p>
 <h3 id="古典密码简易替换密码">古典密码・简易替换密码</h3>
 <p>简易替换加密是一种以特定方式改变字母表上字母顺序，并以此顺序书写的加密方式。这样一张改变了字母次序的字母表即为‘替换表’。传统上会先把一个关键词写在字母表最前面，再删去重复字母，这样就能得到一个混合表。</p>
 <p>例如使用混合表系统，关键字为“zebras”:</p>
@@ -145,13 +145,13 @@ dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;<
 <span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
 <span style="color:#66d9ef">print</span>(dst)
 </code></pre></div><p>运行效果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">单词: zebras
+<pre><code>单词: zebras
 明文字母表: ABCDEFGHIJKLMNOPQRSTUVWXYZ
 密文字母表: ZEBRASCDFGHIJKLMNOPQTUVWXY
 文本: flee at once. we are discovered!
 FLEE AT ONCE. WE ARE DISCOVERED! -&gt;
 SIAA ZQ LKBA. VA ZOA RFPBLUAOAR!
-</code></pre></div><p>虽然简易替换密码比凯撒密码复杂度高，然而还是可能被借用词频统计等方法推测出明文内容，随着加密文本量的增加还会使得破译的几率增大。</p>
+</code></pre><p>虽然简易替换密码比凯撒密码复杂度高，然而还是可能被借用词频统计等方法推测出明文内容，随着加密文本量的增加还会使得破译的几率增大。</p>
 <p>除了简易替换密码，还有谐音替换法、多表替换加密、表格式替换加密、机械替换加密、一次性密码本等不同形式的替换式密码，如果大家感兴趣，可以在网上搜集资料扩展更多的知识。</p>
 <p><a href="/post/019-symmetric-key/">下篇 密码篇・对称密钥加密</a></p>
 
