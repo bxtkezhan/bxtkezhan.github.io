@@ -108,7 +108,7 @@ $$</p>
 \text{ &hellip;}
 $$</p>
 <p>有了质因数性质和取模运算，那么接下来我们就可以构建出公钥和私钥:</p>
-<div style="overflow-x:scroll;">
+<p><div style="overflow-x:scroll;">
 
 $$
 \begin{align}
@@ -119,12 +119,12 @@ e \in gcd(e,\Phi(N)) = 1 & \quad 取与\Phi(N)互质且小于\Phi(N)的自然数
 ex + \Phi y = 1 & \quad 由e,\Phi(N)互质可以构建方程并求整数解x,y \tag 5
 \end{align}
 $$
-$$
-(N,e)\ 将被作为公钥；(N,x)\ 则作为私钥使用
-$$
 
 </div>
 
+$$
+(N,e)\ 将被作为公钥；(N,x)\ 则作为私钥使用
+$$</p>
 <p><strong>Note!</strong> 1. 方程式(3)中提到的欧拉函数$\Phi(n)$是指小于或等于$n$的正整数中与$n$互质的数的数目，例如$\Phi(8) = 4$，因为1,3,5,7均和8互质；2. 方程式(5)可以用扩展欧几里得算法进行求解「感兴趣的朋友可以自己搜索了解扩展欧几里得算法的相关知识」。</p>
 <p>有了公钥$(N,e)$以及私钥$(N,x)$后我们就可以对数据进行加密与解密的操作:</p>
 <div style="overflow-x:scroll;">
