@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 11 Apr 2021 14:18:23 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Apr 2021 18:17:37 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・公开密钥加密</title>
+      <link>http://bxtkezhan.xyz/post/021-public-key/</link>
+      <pubDate>Sun, 18 Apr 2021 18:17:37 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/021-public-key/</guid>
+      <description>维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。</description>
+    </item>
     
     <item>
       <title>密码篇・对称密钥加密</title>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。">
+<meta name="keywords" content="python,密码学,公开密钥加密,rsa,费马小定理,黑客,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・公开密钥加密 - bxtkezhan@kk</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css" integrity="sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js" integrity="sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+   renderMathInElement(document.body, {
+     delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+     throwOnError : false
+    });
+  });
+</script>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-18">April 18, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・公开密钥加密</h1>
+  <section class="body" itemprop="articleBody">
+    <p>维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。</p>
+<h3 id="对称加密的密钥发送问题">对称加密的密钥发送问题</h3>
+<p>如果用之前提到的对称加密算法传递数据，因为加密和解密使用的是同一个密钥，所以双方必须先传递这把密钥才能在加密的情况下进行信息交流。但是如果密钥在传递过程中被窃取就会出现泄密。</p>
+<p>为了能够安全传递密钥有人进行了一个设想: 我们可以做出两把密钥，一把用于加密但是不能解密，一把用于解密但是不能用于加密，同时加密用的密钥不能推导出解密用的密钥，那么我们就可以只发送那把加密用的密钥给对方，自己存留解密用的密钥，这样我们就可以确保不会因为分发密钥时密钥被窃取而导致加密信息被泄漏。由于过程中存在可以被公开使用的密钥因此这种加密方式也被称为“公开密钥加密”。其中，公开使用的密钥称为“公钥”；不被公开使用的密钥称为“私钥”。</p>
+<p>在数学上可以表示为: $d(c(x))=x$，让我们使用典型的爱丽丝与鲍伯假设来解释：</p>
+<ol>
+<li>爱丽丝与鲍伯事先互不认识，也没有可靠安全的沟通渠道，但爱丽丝现在却要透过不安全的互联网向鲍伯发送信息</li>
+<li>爱丽丝撰写好原文，原文在未加密的状态下称之为明文$x$</li>
+<li>鲍伯使用“密码学安全伪随机数生成器”产生一对密钥，其中一个作为公钥为$c$，另一个作为私钥 $d$</li>
+<li>鲍伯可以用任何方法发送公钥$c$给爱丽丝，即使伊夫在中间窃听到$c$也没问题</li>
+<li>爱丽丝用公钥$c$把明文$x$进行加密，得到密文$c(x)$</li>
+<li>爱丽丝可以用任何方法传输密文$c(x)$给鲍伯，即使伊夫在中间窃听到密文$c(x)$也没问题</li>
+<li>鲍伯收到密文，用私钥$d$对密文进行解密$d(c(x))$得到爱丽丝撰写的明文$x$</li>
+<li>由于伊夫没有得到鲍伯的私钥$d$，所以无法得知明文$x$</li>
+<li>如果爱丽丝丢失了她自己撰写的原文$x$，在没有得到鲍伯的私钥$d$的情况下，她的处境将等同伊夫，即无法透过鲍伯的公钥$c$和密文$c(x)$重新得到原文$x$</li>
+</ol>
+<h3 id="rsa算法">RSA算法</h3>
+<p>RSA算法就是公开密钥加密设想的一种实现方法，RAS算法通过巧妙的利用质因数拆解难题构造出公钥和私钥来实现公开密钥加密。</p>
+<p>给定两个非常大质数$p,q$，我们可以很容易得到他们乘积$m = p \times q$，然而我们如果只知道$m$由两个质数相乘得到我们却很难得出$A、B$的确切值:</p>
+<p>$$
+简单: p,q \rightarrow m = p \times q \\ 困难: p,q \leftarrow m = p \times q
+$$</p>
+<p>有了质因数的这个性质后我们还需要通过一个运算方法将其应用到实际操作中，“取模”就是一个不错的选项，即给定两个整数$a,n$可以相除得到余数$b$，数学上可以表示为:</p>
+<p>$$
+a \equiv b \ (mod \ n)
+$$</p>
+<p>在取模操作中有一个比较有趣的现象，我们若知道$a,n$就可以准确推出$b$，然而若只知道$b,n$却无法准确推出$a$。</p>
+<p>$$
+6 \equiv 1 (mod \ 7)
+\text{ ; }
+15 \equiv 1 (mod \ 7)
+\text{ ; }
+22 \equiv 1 (mod \ 7)
+\text{ &hellip;&hellip;}
+$$</p>
+<p>有了质因数性质和取模运算，那么接下来我们就可以构建出公钥和私钥:</p>
+<p>$$
+\begin{align}
+p,q &amp; \quad 随机生成两个不相等的大质数p,q \\ N = p \times q &amp; \quad 计算p,q的乘积N \\ \Phi(N) = (p - 1)(q - 1) &amp; \quad 计算欧拉函数\Phi(N) \\ e \in gcd(e,\Phi(N)) = 1 &amp; \quad 取与\Phi(N)互质且小于\Phi(N)的自然数e \\ ex + \Phi y = 1 &amp; \quad 由e,\Phi(N)互质可以构建方程并求解x,y \\ \end{align}
+$$</p>
+<p>$$
+(N,e)\ 将被作为公钥；(N,x)\ 则作为私钥使用
+$$</p>
+<p><strong>Note!</strong> 1. 方程式(3)中提到的欧拉函数$\Phi(n)$是指小于或等于$n$的正整数中与$n$互质的数的数目，例如$\Phi(8) = 4$，因为1,3,5,7均和8互质；2. 方程式(5)可以用扩展欧几里得算法进行求解「感兴趣的朋友可以自己搜索了解扩展欧几里得算法的相关知识」。</p>
+<p>有了公钥$(N,e)$以及私钥$(N,x)$后我们就可以对数据进行加密与解密的操作:</p>
+<p>$$
+\begin{align}
+A &amp; \quad 将数字A作为需要加密的明文 \\ A^e \equiv R (mod \ N) &amp; \quad 计算A的e次方并除N得到余数R，R\ 即位密文 \\ R^x \equiv A (mod \ N) &amp; \quad 计算R的x次方并除N得到余数A，A\ 即为明文 \\ \end{align}
+$$</p>
+<p><strong>Note!</strong> 关于运算式(7)、(8)为什么可以互相逆转可以使用费马小定理进行证明，感兴趣的朋友也可以搜索相关资料进行扩展学习。</p>
+<p>下面我们用一组比较简单的数据来验证一下上述方法:</p>
+<ol>
+<li>取质数$p = 5, q = 11$，求得$N = p \times q = 55$；</li>
+<li>计算欧拉函数$\Phi(N) = (p - 1)(q - 1) = 40$；</li>
+<li>取$e = 17$，满足$e \in gcd(e,\Phi(N)) = 1$；</li>
+<li>当$x = 33,y = -14$时方程$ex + \Phi y = 1$成立；</li>
+<li>$(55,17)$作为公钥；$(55,33)$作为私钥；</li>
+<li>有数字14作为明文$A$，「注意确保$A$小于$N$」；</li>
+<li>加密明文$A=14$得到密文$97^{17} \equiv 9 (mod \ 55) \Rightarrow R = 9$；</li>
+<li>解密密文$R=9$得到明文$9^{33} \equiv 14 (mod \ 55) \Rightarrow A = 14$；</li>
+</ol>
+<p>使用Python代码进行测试:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p, q <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">11</span>
+N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
+Phi <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+e <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span>
+x, y <span style="color:#f92672">=</span> <span style="color:#ae81ff">33</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">14</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;ex + Phi(N)y =&#39;</span>, e <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> Phi <span style="color:#f92672">*</span> y)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;公钥:&#39;</span>, (N, e), <span style="color:#e6db74">&#39;私钥:&#39;</span>, (N, x))
+A <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;明文: &#39;</span>)<span style="color:#f92672">.</span>strip())
+R <span style="color:#f92672">=</span> A<span style="color:#f92672">**</span>e <span style="color:#f92672">%</span> N
+_A <span style="color:#f92672">=</span> R<span style="color:#f92672">**</span>x <span style="color:#f92672">%</span> N
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;加密&amp;解密: {} -&gt; {} -&gt; {}&#39;</span><span style="color:#f92672">.</span>format(A, R, _A))
+</code></pre></div><p>运行效果:</p>
+<pre><code>ex + Phi(N)y = 1
+公钥: (55, 17) 私钥: (55, 33)
+明文: 14
+加密&amp;解密: 14 -&gt; 9 -&gt; 14
+</code></pre><p>实际上公钥加密算法的类型也有很多种，而RSA只是利用质因数分解特性的一种方法，除此之外还有Rabin等利用质因数分解特性的公钥加密算法；另外还有根据离散对数问题设计的公钥加密算法，例如: 椭圆曲线加密算法、ElGamal加密算法……</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

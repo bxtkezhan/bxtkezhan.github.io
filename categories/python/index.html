@@ -11,6 +11,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
 <title>Python - bxtkezhan@kk</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css" integrity="sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js" integrity="sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+   renderMathInElement(document.body, {
+     delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+     throwOnError : false
+    });
+  });
+</script>
 <script src="/js/player.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
@@ -40,6 +51,20 @@
 
 <main role="main" class="article-list">
   <h1 class="list-title">Python</h1>
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/021-public-key/">密码篇・公开密钥加密</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-18">April 18, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。 
+  </section>
+</article>
+
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/019-symmetric-key/">密码篇・对称密钥加密</a></h2>
@@ -121,20 +146,6 @@
   </div>
   <section class="summary">
     函数是指可重复使用的程序片段。被用来为某个代码块赋予名字，通过这一特殊的名字可以在程序的任何地方来运行代码块，并可重复任何次数。这就是所谓的调用函数。我们已经使用过了许多内置的函数，例如: <code>print</code>、<code>len</code>和<code>range</code>。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/012-loop/">初学篇・循环控制语句</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    在Python中可以通过<code>while</code>与<code>for</code>两种循环语句来处理循环问题。 
   </section>
 </article>
 
