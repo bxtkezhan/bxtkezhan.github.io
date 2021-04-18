@@ -118,7 +118,7 @@ $$</p>
 <p>有了公钥$(N,e)$以及私钥$(N,x)$后我们就可以对数据进行加密与解密的操作:</p>
 <p>$$
 \begin{align}
-A &amp; \quad 将数字A作为需要加密的明文 \\ A^e \equiv R (mod \ N) &amp; \quad 计算A的e次方并除N得到余数R，R\ 即位密文 \\ R^x \equiv A (mod \ N) &amp; \quad 计算R的x次方并除N得到余数A，A\ 即为明文 \\ \end{align}
+A &amp; \quad 将数字A作为需要加密的明文 \\ A^e \equiv R (mod \ N) &amp; \quad 计算A的e次方并除N得到余数R，R\ 即为密文 \\ R^x \equiv A (mod \ N) &amp; \quad 计算R的x次方并除N得到余数A，A\ 即为明文 \\ \end{align}
 $$</p>
 <p><strong>Note!</strong> 关于运算式(7)、(8)为什么可以互相逆转可以使用费马小定理进行证明，感兴趣的朋友也可以搜索相关资料进行扩展学习。</p>
 <p>下面我们用一组比较简单的数据来验证一下上述方法:</p>
