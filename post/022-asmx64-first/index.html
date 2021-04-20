@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="汇编语言是一系列用于电脑、处理器、控制器，或其他可以编程器件的低级语言的统称。通常不同的设备会对应不同的汇编语言。下面着重介绍Linux下的64位汇编语言 **NASM x86-64**，我这边主要使用Ubuntu系统进行作业，原则上其他版本的64位Linux也同样可以进行相应的操作，只不过某些命令会有所不同，需要大家注意。">
+<meta name="keywords" content="汇编,编译,连接,编程,asm,nasm,linux">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>汇编语言「Linux/x86-64」・第一步 - bxtkezhan@kk</title>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>
+  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
+</script>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-20">April 20, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/%E7%BC%96%E8%AF%91">编译</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">汇编语言「Linux/x86-64」・第一步</h1>
+  <section class="body" itemprop="articleBody">
+    <p>汇编语言是一系列用于电脑、处理器、控制器，或其他可以编程器件的低级语言的统称。通常不同的设备会对应不同的汇编语言。下面着重介绍Linux下的64位汇编语言 <strong>NASM x86-64</strong>，我这边主要使用Ubuntu系统进行作业，原则上其他版本的64位Linux也同样可以进行相应的操作，只不过某些命令会有所不同，需要大家注意。</p>
+<h3 id="安装nasm">安装NASM</h3>
+<p>我们可以使用APT工具直接在联网的情况下安装NASM:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt install nasm
+</code></pre></div><p>安装完毕后，可以查看一下它的版本号:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -v
+<span style="color:#75715e"># NASM version 2.14.02</span>
+</code></pre></div><h3 id="linux下64位汇编的hello-world">Linux下64位汇编的“Hello World”</h3>
+<p>我们在文本编辑器中写入如下代码并进行保存「建议扩展名为.asm」:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> _start
+
+<span style="color:#66d9ef">section</span> .text
+
+_start:
+    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rdi, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rsi, message
+    <span style="color:#a6e22e">mov</span> rdx, <span style="color:#ae81ff">13</span>
+    <span style="color:#a6e22e">syscall</span>
+    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">60</span>
+    <span style="color:#a6e22e">xor</span> rdi, rdi
+    <span style="color:#a6e22e">syscall</span>
+
+<span style="color:#66d9ef">section</span> .data
+
+message:
+    <span style="color:#66d9ef">db</span> <span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">10</span>
+</code></pre></div><p>运行编译和链接命令生成可执行的二进制文件然后运行:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -f elf64 hello.asm <span style="color:#f92672">&amp;&amp;</span> ld hello.o
+./a.out
+</code></pre></div><p>输出结果:</p>
+<pre><code>Hello, World
+</code></pre><p>成功编译并能输出正确的结果就说明Linux下64位NASM开发环境已经准备完毕，下一节将解析一下这段代码的含意，欢迎关注。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

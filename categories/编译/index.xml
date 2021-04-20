@@ -6,10 +6,19 @@
     <description>Recent content in 编译 on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 31 Mar 2021 14:17:49 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Apr 2021 00:26:43 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>汇编语言「Linux/x86-64」・第一步</title>
+      <link>http://bxtkezhan.xyz/post/022-asmx64-first/</link>
+      <pubDate>Tue, 20 Apr 2021 00:26:43 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/022-asmx64-first/</guid>
+      <description>汇编语言是一系列用于电脑、处理器、控制器，或其他可以编程器件的低级语言的统称。通常不同的设备会对应不同的汇编语言。下面着重介绍Linux下的64位汇编语言 &lt;strong&gt;NASM x86-64&lt;/strong&gt;，我这边主要使用Ubuntu系统进行作业，原则上其他版本的64位Linux也同样可以进行相应的操作，只不过某些命令会有所不同，需要大家注意。</description>
+    </item>
     
     <item>
       <title>支持While语句</title>
