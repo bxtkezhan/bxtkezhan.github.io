@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。">
+<meta name="keywords" content="python,密码学,密码字典,ZIP压缩,密码破译,黑客,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・密码猜解 - bxtkezhan@kk</title>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>
+  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
+</script>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・密码猜解</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/024-cryptography-application/">上篇 密码篇・实际应用</a></p>
+<p>几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。</p>
+<h3 id="zip压缩文件读写">ZIP压缩文件读写</h3>
+<p>ZIP压缩包是被广泛使用的具备加密功能的文件类型，我们可以从爆破ZIP压缩文件入手学习如何使用Python进行“字典爆破”，不过在这之前我们得掌握ZIP压缩文件的读写操作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> zipfile
+
+<span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(<span style="color:#e6db74">&#39;myzipfile.zip&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> zf:
+    zf<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;message.txt&#39;</span>)
+</code></pre></div><p>引入<code>zipfile</code>模块，将当前目录下的<code>message.txt</code>文件写入到 <code>myzipfile.zip</code>压缩包中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> zipfile
+
+<span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(<span style="color:#e6db74">&#39;myzipfile.zip&#39;</span>) <span style="color:#66d9ef">as</span> zf:
+    <span style="color:#66d9ef">print</span>(zf<span style="color:#f92672">.</span>read(<span style="color:#e6db74">&#39;message.txt&#39;</span>)<span style="color:#f92672">.</span>decode())
+</code></pre></div><p>从<code>myzipfile.zip</code>压缩包中读入<code>message.txt</code>文件并打印输出。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> zipfile
+
+<span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(<span style="color:#e6db74">&#39;myzipfile.zip&#39;</span>) <span style="color:#66d9ef">as</span> zf:
+    zf<span style="color:#f92672">.</span>extractall()
+</code></pre></div><p>解压<code>myzipfile.zip</code>中所有的文件。</p>
+<h3 id="遍历字典猜解密码">遍历字典猜解密码</h3>
+<p>首先我们准备一份密码字典:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">jojo
+kk
+python
+password
+admin
+somebody
+gogogo
+bxtkezhan
+</code></pre></div><p>然后我们随便选择其中一个密码用来制作加密的ZIP压缩包，我这边使用<code>admin</code>，然后运行如下Python代码进行密码猜解:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> zipfile
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;password.dict&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    passwords <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+
+<span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(<span style="color:#e6db74">&#39;myzipfile.zip&#39;</span>) <span style="color:#66d9ef">as</span> zf:
+    <span style="color:#66d9ef">for</span> password <span style="color:#f92672">in</span> passwords:
+        <span style="color:#66d9ef">try</span>:
+            zf<span style="color:#f92672">.</span>extractall(pwd<span style="color:#f92672">=</span>password<span style="color:#f92672">.</span>encode())
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">RuntimeError</span>:
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;password is&#39;</span>, password)
+        <span style="color:#66d9ef">break</span>
+</code></pre></div><p>运行结果:</p>
+<pre><code>password is admin
+</code></pre><p>使用<code>zf.extractall</code>方法逐一测试密码字典<code>password.dict</code>中的密码，如果当前密码测试失败就进入下一轮，如果成功则打印密码并结束循环。</p>
+<p><strong>Note!</strong> <code>zf.extractall</code>方法可以通过参数<code>pwd</code>指定密码；如果密码错误则会抛出<code>RuntimeError</code>错误，可以使用<code>try except</code>语句接收。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

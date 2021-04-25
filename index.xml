@@ -6,10 +6,19 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 25 Apr 2021 17:20:41 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 25 Apr 2021 22:00:57 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・密码猜解</title>
+      <link>http://bxtkezhan.xyz/post/025-zip-decrypt/</link>
+      <pubDate>Sun, 25 Apr 2021 22:00:57 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/025-zip-decrypt/</guid>
+      <description>几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。</description>
+    </item>
     
     <item>
       <title>密码篇・实际应用</title>
