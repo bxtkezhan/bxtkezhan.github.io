@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="之前我们学习了一些密码学的基本概念和原理，接下来我们研究一下密码学技术在实际应用中需要关注的一些问题。">
+<meta name="keywords" content="python,密码学,身份验证,数字签名,公钥加密,黑客,入门">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・实际应用 - bxtkezhan@kk</title>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>
+  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
+</script>
+<script src="/js/player.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・实际应用</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/021-public-key/">上篇 密码篇・公开密钥加密</a></p>
+<p>之前我们学习了一些密码学的基本概念和原理，接下来我们研究一下密码学技术在实际应用中需要关注的一些问题。</p>
+<h3 id="加密效率问题">加密效率问题</h3>
+<p>虽然公钥加密能够确保密钥的安全，然而由于公钥加密运算量庞大，如果需要传递的数据比较多，那么一直使用公钥加密的方式就会使得通讯效率低下。</p>
+<p>对于这种情况我们可以结合公钥加密与对称加密进行数据的加密传递，我们可以使用公钥加密去安全地传递用于对称加密的密钥，然后再持续使用对称加密进行快速的加密通讯:</p>
+<ol>
+<li>使用公钥加密方法加密对称加密的密钥并传递给对方；</li>
+<li>在之后的通讯中使用对称加密进行加密；</li>
+</ol>
+<h3 id="身份验证问题">身份验证问题</h3>
+<p>在使用公钥加密的时候我们会广播自己生成的公钥，并要求对方使用公钥进行加密。这意味着别人也可以通过我们的公钥来加密数据并传递给我们，对我们进行身份欺骗攻击。</p>
+<p>对于这种情况我们可以将公钥加密的方式反过来运用进行数字签名:</p>
+<ol>
+<li>爱丽丝如果要将一串数据发送给鲍伯，首先可以对这串数据使用Hash算法生成一段摘要，然后使用自己的私钥加密这段摘要，最后将数据和加密后的摘要一同使用鲍伯的公钥进行加密并发送给鲍伯；</li>
+<li>鲍伯在收到数据后先使用自己的私钥进行解密得到数据和该数据的加密摘要，然后使用爱丽丝的公钥对加密的摘要进行解密得到摘要A，同时对数据进行Hash得到摘要B，如果摘要A与摘要B相同则说明该数据来自爱丽丝；</li>
+<li>由于伊夫没有爱丽丝的私钥，所以如果伊夫也对数据进行Hash并使用不属于爱丽丝的私钥进行加密就会导致鲍伯最终得到的A、B两个摘要不相同，因此无法冒充爱丽丝与鲍伯进行通讯；</li>
+</ol>
+<p>维基百科: 散列函数（英语：Hash function）又称散列算法、哈希函数，是一种从任何一种数据中创建小的数字“指纹”的方法。散列函数把消息或数据压缩成摘要，使得数据量变小，将数据的格式固定下来。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
