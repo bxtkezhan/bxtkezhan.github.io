@@ -11,11 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
 <title>密码篇・密码猜解 - bxtkezhan@kk</title>
-<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script>
-  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
-</script>
-<script src="/js/player.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,6 +18,11 @@
   gtag('js', new Date());
   gtag('config', 'G-7VMHQ286BK');
 </script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
 </head>
 <body>
 
@@ -110,6 +110,7 @@ bxtkezhan
 <pre><code>password is admin
 </code></pre><p>使用<code>zf.extractall</code>方法逐一测试密码字典<code>password.dict</code>中的密码，如果当前密码测试失败就进入下一轮，如果成功则打印密码并结束循环。</p>
 <p><strong>Note!</strong> <code>zf.extractall</code>方法可以通过参数<code>pwd</code>指定密码；如果密码错误则会抛出<code>RuntimeError</code>错误，可以使用<code>try except</code>语句接收。</p>
+<p><a href="/post/027-zip-decrypt-parallel/">下篇 密码篇・并行密码猜解</a></p>
 
   </section>
 </article>

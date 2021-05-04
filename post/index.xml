@@ -6,10 +6,28 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 25 Apr 2021 22:00:57 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 May 2021 15:46:01 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・并行密码猜解</title>
+      <link>http://bxtkezhan.xyz/post/027-zip-decrypt-parallel/</link>
+      <pubDate>Sun, 02 May 2021 15:46:01 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/027-zip-decrypt-parallel/</guid>
+      <description>在上一节的内容中我们实现了简单的ZIP压缩包密码猜解程序。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。</description>
+    </item>
+    
+    <item>
+      <title>汇编语言「Linux/x86-64」・代码解析</title>
+      <link>http://bxtkezhan.xyz/post/026-asmx64-explanation/</link>
+      <pubDate>Sat, 01 May 2021 19:38:19 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/026-asmx64-explanation/</guid>
+      <description>上一节中我们编译运行了一段NASM汇编代码，接下来我们将针对上一节的代码进行解析，了解一些具体的汇编知识。</description>
+    </item>
     
     <item>
       <title>密码篇・密码猜解</title>

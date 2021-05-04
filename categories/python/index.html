@@ -11,11 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
 <title>Python - bxtkezhan@kk</title>
-<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script>
-  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
-</script>
-<script src="/js/player.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,6 +18,11 @@
   gtag('js', new Date());
   gtag('config', 'G-7VMHQ286BK');
 </script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
 </head>
 <body>
 
@@ -44,6 +44,20 @@
 
 <main role="main" class="article-list">
   <h1 class="list-title">Python</h1>
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/027-zip-decrypt-parallel/">密码篇・并行密码猜解</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-02">May 02, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    在上一节的内容中我们实现了简单的ZIP压缩包密码猜解程序。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。 
+  </section>
+</article>
+
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/025-zip-decrypt/">密码篇・密码猜解</a></h2>
@@ -125,20 +139,6 @@
   </div>
   <section class="summary">
     Python作为一门流行的脚本语言很早就被Mac OS、主流Linux发行版所预装，一般来说只需要确保自己系统的Python版本不要太旧「建议高于3.5」，如果是Windows用户可以去往Python的官方网站 <a href="https://www.python.org">www.python.org</a> 进行下载安装。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/015-digit-game/">初学篇・猜字游戏「阶段练习」</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-06">April 06, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    猜字游戏涉及的Python基础知识比较丰富且十分容易实现，可以作为《黑客之路・Python篇・初学者篇》的阶段性练习“项目”。 
   </section>
 </article>
 

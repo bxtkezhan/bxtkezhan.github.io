@@ -11,11 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
 <title>编译 - bxtkezhan@kk</title>
-<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script>
-  MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};
-</script>
-<script src="/js/player.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,6 +18,11 @@
   gtag('js', new Date());
   gtag('config', 'G-7VMHQ286BK');
 </script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
 </head>
 <body>
 
@@ -44,6 +44,20 @@
 
 <main role="main" class="article-list">
   <h1 class="list-title">编译</h1>
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/002-bklexer/">使用BKLexer进行词法分析</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-03-13">March 13, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    前几天我已经封装好了词法分析器并命名<code>BKLexer</code>，当前<code>BKLexer</code>分别支持Go/C++/Python。 
+  </section>
+</article>
+
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/001-lexer/">词法分析器</a></h2>

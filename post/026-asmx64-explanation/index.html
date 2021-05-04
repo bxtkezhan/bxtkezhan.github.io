@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="上一节中我们编译运行了一段NASM汇编代码，接下来我们将针对上一节的代码进行解析，了解一些具体的汇编知识。">
+<meta name="keywords" content="汇编,编译,连接,编程,asm,nasm,linux">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>汇编语言「Linux/x86-64」・代码解析 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-01">May 01, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/%E7%BC%96%E8%AF%91">编译</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">汇编语言「Linux/x86-64」・代码解析</h1>
+  <section class="body" itemprop="articleBody">
+    <p>上一节中我们编译运行了一段NASM汇编代码，接下来我们将针对上一节的代码进行解析，了解一些具体的汇编知识。</p>
+<h3 id="程序结构">程序结构</h3>
+<p>我们先将上一节中的代码通过调整变成如下形式:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">			<span style="color:#66d9ef">global</span>		_start
+
+			<span style="color:#66d9ef">section</span>		.text
+_start:		<span style="color:#a6e22e">mov</span>			rax, <span style="color:#ae81ff">1</span>
+			<span style="color:#a6e22e">mov</span>			rdi, <span style="color:#ae81ff">1</span>
+			<span style="color:#a6e22e">mov</span>			rsi, message
+			<span style="color:#a6e22e">mov</span>			rdx, <span style="color:#ae81ff">13</span>
+			<span style="color:#a6e22e">syscall</span>
+			<span style="color:#a6e22e">mov</span>			rax, <span style="color:#ae81ff">60</span>
+			<span style="color:#a6e22e">xor</span>			rdi, rdi
+			<span style="color:#a6e22e">syscall</span>
+
+			<span style="color:#66d9ef">section</span>		.data
+message:	<span style="color:#66d9ef">db</span>			<span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">10</span>
+</code></pre></div><p>然后再整理成表格形式:</p>
+<table>
+<thead>
+<tr>
+<th align="right">编号</th>
+<th align="right">区块说明</th>
+<th align="right">标签</th>
+<th align="right">指令</th>
+<th align="right">操作数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td align="right">指令</td>
+<td align="right"></td>
+<td align="right">global</td>
+<td align="right">_start</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td align="right">代码段开始</td>
+<td align="right"></td>
+<td align="right">section</td>
+<td align="right">.text</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td align="right"></td>
+<td align="right">_start:</td>
+<td align="right">mov</td>
+<td align="right">rax, 1</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">mov</td>
+<td align="right">rdi, 1</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">mov</td>
+<td align="right">rsi, message</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">mov</td>
+<td align="right">rdx, 13</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">syscall</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">mov</td>
+<td align="right">rax, 60</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">xor</td>
+<td align="right">rdi, rdi</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">syscall</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td align="right">数据段开始</td>
+<td align="right"></td>
+<td align="right">section</td>
+<td align="right">.data</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td align="right"></td>
+<td align="right">message:</td>
+<td align="right">db</td>
+<td align="right">&ldquo;Hello, World&rdquo;, 10</td>
+</tr>
+</tbody>
+</table>
+<p>主程序中要设置<code>_start</code>标签并使用<code>global</code>将其暴露给汇编器；程序由指令和段组成，常见的段有代码段<code>.text</code>、数据段<code>.data</code>；指令语句主要由指令或指令+操作数组成，例如:<code>mov rax, 1</code>。</p>
+<h3 id="操作指令">操作指令</h3>
+<p>NASM的操作指令非常多，但是我们并不需要全部掌握，以下列举最常见的指令:</p>
+<ul>
+<li><code>mov x, y</code> 将y的值给到x；</li>
+<li><code>and x, y</code> 将x、y进行与运算，把结果给到x；</li>
+<li><code>or x, y</code> 将x、y进行或运算，把结果给到x；</li>
+<li><code>xor x, y</code> 将x、y进行亦或运算，把结果给到x；</li>
+<li><code>add x, y</code> 将y的累加到x；</li>
+<li><code>sub x, y</code> 从x中减去y；</li>
+<li><code>inc x</code> 让x自增1；</li>
+<li><code>dec x</code> 让x自减1；</li>
+</ul>
+<h3 id="寄存器">寄存器</h3>
+<p>未完待续……</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
