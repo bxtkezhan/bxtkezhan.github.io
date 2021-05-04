@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="在上一节的内容中我们实现了简单的ZIP压缩包密码猜解程序。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。">
+<meta name="description" content="在上一节中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。">
 <meta name="keywords" content="python,密码学,密码字典,ZIP压缩,密码破译,并行,并发">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
@@ -64,7 +64,7 @@
   <section class="body" itemprop="articleBody">
     <p><a href="/post/tutorial_001/">返回教程主页</a></p>
 <p><a href="/post/025-zip-decrypt/">上篇 密码篇・密码猜解</a></p>
-<p>在上一节的中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。</p>
+<p>在上一节中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。</p>
 <p><a href="#%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%95">代码清单</a>在末尾，我们先看一下运行效果，然后对程序的各部分进行介绍:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 zip_decrypt_parallel.py password.dict myzipfile.zip <span style="color:#ae81ff">4</span>
 password is admin
