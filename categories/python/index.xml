@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 02 May 2021 15:46:01 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 May 2021 11:24:03 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>密码篇・PyCryptodome示例「扩展」</title>
+      <link>http://bxtkezhan.xyz/post/028-pycryptodome/</link>
+      <pubDate>Thu, 06 May 2021 11:24:03 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/028-pycryptodome/</guid>
+      <description>PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。</description>
+    </item>
     
     <item>
       <title>密码篇・并行密码猜解</title>

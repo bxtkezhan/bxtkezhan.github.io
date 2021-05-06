@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。">
+<meta name="keywords" content="python,密码学,PyCryptodome,AES,RSA,对称加密,公钥加密">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>密码篇・PyCryptodome示例「扩展」 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-06">May 06, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">密码篇・PyCryptodome示例「扩展」</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/027-zip-decrypt-parallel/">上篇 密码篇・并行密码猜解</a></p>
+<p>PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。</p>
+<h3 id="安装pycryptodome">安装PyCryptodome</h3>
+<p>可以使用如下命令进行在线安装:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pycryptodome
+</code></pre></div><p>运行如下命令查看版本号:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 -c <span style="color:#e6db74">&#34;import Crypto;print(Crypto.__version__)&#34;</span>
+<span style="color:#75715e"># 3.10.1</span>
+</code></pre></div><h3 id="对称加密aes标准">对称加密「AES标准」</h3>
+<p>我们可以使用PyCryptodome实现AES标准的对称加密与解密:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> AES
+<span style="color:#f92672">from</span> Crypto.Random <span style="color:#f92672">import</span> get_random_bytes
+
+text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;你好吗？&#39;</span>
+
+<span style="color:#75715e"># 加密</span>
+key <span style="color:#f92672">=</span> get_random_bytes(<span style="color:#ae81ff">16</span>)
+cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_EAX)
+ciphertext <span style="color:#f92672">=</span> cipher<span style="color:#f92672">.</span>encrypt(text<span style="color:#f92672">.</span>encode())
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;encrypted.bin&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(cipher<span style="color:#f92672">.</span>nonce)
+    f<span style="color:#f92672">.</span>write(ciphertext)
+
+<span style="color:#75715e"># 解密</span>
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;encrypted.bin&#39;</span>, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    nonce <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read(<span style="color:#ae81ff">16</span>)
+    ciphertext <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_EAX, nonce)
+text <span style="color:#f92672">=</span> cipher<span style="color:#f92672">.</span>decrypt(ciphertext)<span style="color:#f92672">.</span>decode()
+<span style="color:#66d9ef">print</span>(text)
+</code></pre></div><p>在加密时，先用<code>get_random_bytes</code>函数生成16个字节「128位」的随机密钥；然后实例化EAX模式的AES加密模型<code>AES.new</code>并对文本进行加密<code>cipher.encrypt</code>；在加密完成后将模型<code>cipher</code>的随机数与密文一并保存或传送；</p>
+<p>在解密时，先读取随机参数<code>nonce</code>与密文<code>ciphertext</code>；然后实例化EAX模式的AES加密模型<code>AES.new</code>并对文本进行解密<code>cipher.decrypt</code>，在解密后的明文通过<code>decode</code>就能转换成可读的文本形式。</p>
+<h3 id="公钥加密的密钥生成rsa算法">公钥加密的密钥生成「RSA算法」</h3>
+<p>使用PyCryptodome的公钥加密模块可以快速实现私钥与公钥的生成:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.PublicKey <span style="color:#f92672">import</span> RSA
+
+key <span style="color:#f92672">=</span> RSA<span style="color:#f92672">.</span>generate(<span style="color:#ae81ff">2048</span>)
+private_key <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>export_key()
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;private.pem&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(private_key)
+
+public_key <span style="color:#f92672">=</span> key<span style="color:#f92672">.</span>publickey()<span style="color:#f92672">.</span>export_key()
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;receiver.pem&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(public_key)
+</code></pre></div><p>使用<code>RSA.generate</code>方法生成RSA密钥；运行<code>key.export_key</code>方法导出私钥；运行<code>key.publickey().export_key</code>方法导出公钥。</p>
+<h3 id="公钥加密的加密与解密rsa算法">公钥加密的加密与解密「RSA算法」</h3>
+<p>使用公钥加密方法传送用于对称加密的密钥:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.PublicKey <span style="color:#f92672">import</span> RSA
+<span style="color:#f92672">from</span> Crypto.Random <span style="color:#f92672">import</span> get_random_bytes
+<span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> PKCS1_OAEP
+
+session_key <span style="color:#f92672">=</span> get_random_bytes(<span style="color:#ae81ff">16</span>)
+<span style="color:#66d9ef">print</span>(session_key)
+
+<span style="color:#75715e"># 公钥加密</span>
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;receiver.pem&#39;</span>, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    recipient_key <span style="color:#f92672">=</span> RSA<span style="color:#f92672">.</span>import_key(f<span style="color:#f92672">.</span>read())
+cipher_rsa <span style="color:#f92672">=</span> PKCS1_OAEP<span style="color:#f92672">.</span>new(recipient_key)
+enc_session_key <span style="color:#f92672">=</span> cipher_rsa<span style="color:#f92672">.</span>encrypt(session_key)
+
+<span style="color:#75715e"># 私钥解密</span>
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;private.pem&#39;</span>, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    private_key <span style="color:#f92672">=</span> RSA<span style="color:#f92672">.</span>import_key(f<span style="color:#f92672">.</span>read())
+cipher_rsa <span style="color:#f92672">=</span> PKCS1_OAEP<span style="color:#f92672">.</span>new(private_key)
+dec_session_key <span style="color:#f92672">=</span> cipher_rsa<span style="color:#f92672">.</span>decrypt(enc_session_key)
+
+<span style="color:#66d9ef">print</span>(dec_session_key)
+</code></pre></div><p>在加密时，使用公钥<code>recipient_key</code>作为参数创建RSA算法模型<code>cipher_rsa</code>；并使用<code>cipher_rsa.encrypt</code>方法进行加密；</p>
+<p>在解密时，使用私钥<code>private_key</code>作为参数创建RSA算法模型<code>cipher_rsa</code>；并使用<code>cipher_rsa.decrypt</code>方法进行解密。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
