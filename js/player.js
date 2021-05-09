@@ -25,7 +25,7 @@ function innerCFW(callback) {
 
 function setPlayer(isInnerCFW) {
     document.querySelectorAll('.player').forEach(function(frame) {
-        var videos = frame.getAttribute('data').split('-');
+        var videos = frame.getAttribute('data').split(',');
         if (!isInnerCFW) {
             frame.setAttribute('src', '//www.youtube.com/embed/' + videos[0]);
         } else {

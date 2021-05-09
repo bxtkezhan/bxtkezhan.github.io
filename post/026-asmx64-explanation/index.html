@@ -80,103 +80,7 @@ _start:		<span style="color:#a6e22e">mov</span>			rax, <span style="color:#ae81f
 			<span style="color:#66d9ef">section</span>		.data
 message:	<span style="color:#66d9ef">db</span>			<span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">10</span>
 </code></pre></div><p>然后再整理成表格形式:</p>
-<table>
-<thead>
-<tr>
-<th align="left">编号</th>
-<th align="left">区块说明</th>
-<th align="left">标签</th>
-<th align="left">指令</th>
-<th align="left">操作数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">1</td>
-<td align="left">指令</td>
-<td align="left"></td>
-<td align="left">global</td>
-<td align="left">_start</td>
-</tr>
-<tr>
-<td align="left">2</td>
-<td align="left">代码段开始</td>
-<td align="left"></td>
-<td align="left">section</td>
-<td align="left">.text</td>
-</tr>
-<tr>
-<td align="left">3</td>
-<td align="left"></td>
-<td align="left">_start:</td>
-<td align="left">mov</td>
-<td align="left">rax, 1</td>
-</tr>
-<tr>
-<td align="left">4</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">mov</td>
-<td align="left">rdi, 1</td>
-</tr>
-<tr>
-<td align="left">5</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">mov</td>
-<td align="left">rsi, message</td>
-</tr>
-<tr>
-<td align="left">6</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">mov</td>
-<td align="left">rdx, 13</td>
-</tr>
-<tr>
-<td align="left">7</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">syscall</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">8</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">mov</td>
-<td align="left">rax, 60</td>
-</tr>
-<tr>
-<td align="left">9</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">xor</td>
-<td align="left">rdi, rdi</td>
-</tr>
-<tr>
-<td align="left">10</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">syscall</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">11</td>
-<td align="left">数据段开始</td>
-<td align="left"></td>
-<td align="left">section</td>
-<td align="left">.data</td>
-</tr>
-<tr>
-<td align="left">12</td>
-<td align="left"></td>
-<td align="left">message:</td>
-<td align="left">db</td>
-<td align="left">&ldquo;Hello, World&rdquo;, 10</td>
-</tr>
-</tbody>
-</table>
+<p><img src="/img/nasm_struct.png" alt="fda"></p>
 <p>主程序中要设置<code>_start</code>标签并使用<code>global</code>将其暴露给汇编器；程序由指令和段组成，常见的段有代码段<code>.text</code>、数据段<code>.data</code>；指令语句主要由指令或指令+操作数组成，例如:<code>mov rax, 1</code>。</p>
 <h3 id="操作指令">操作指令</h3>
 <p>NASM的操作指令非常多，但是我们并不需要全部掌握，以下列举最常见的指令:</p>
@@ -185,7 +89,7 @@ message:	<span style="color:#66d9ef">db</span>			<span style="color:#e6db74">&#3
 <li><code>and x, y</code> 将x、y进行与运算，把结果给到x；</li>
 <li><code>or x, y</code> 将x、y进行或运算，把结果给到x；</li>
 <li><code>xor x, y</code> 将x、y进行亦或运算，把结果给到x；</li>
-<li><code>add x, y</code> 将y的累加到x；</li>
+<li><code>add x, y</code> 将y累加到x；</li>
 <li><code>sub x, y</code> 从x中减去y；</li>
 <li><code>inc x</code> 让x自增1；</li>
 <li><code>dec x</code> 让x自减1；</li>
