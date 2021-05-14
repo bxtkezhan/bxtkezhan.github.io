@@ -6,10 +6,28 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 06 May 2021 11:24:03 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 May 2021 16:28:43 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>网络篇・HTTP协议</title>
+      <link>http://bxtkezhan.xyz/post/030-http/</link>
+      <pubDate>Tue, 11 May 2021 16:28:43 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/030-http/</guid>
+      <description>HTTP是一种能够获取如HTML这样的网络资源的protocol(通讯协议)。它是在Web上进行数据交换的基础，是一种client-server协议，也就是说，请求通常是由像浏览器这样的接受方发起的。一个完整的Web文档通常是由不同的子文档拼接而成的，像是文本、布局描述、图片、视频、脚本等等。</description>
+    </item>
+    
+    <item>
+      <title>网络篇・操作环境准备</title>
+      <link>http://bxtkezhan.xyz/post/029-net-dev/</link>
+      <pubDate>Tue, 11 May 2021 16:28:28 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/029-net-dev/</guid>
+      <description>本章会使用Python进行一些网络相关的操作。除了需要安装Python外，我们还需要使用Chrome「可以用Chromium替代」或Firefox浏览器进行辅助。</description>
+    </item>
     
     <item>
       <title>密码篇・PyCryptodome示例「扩展」</title>

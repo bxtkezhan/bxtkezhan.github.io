@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="HTTP是一种能够获取如HTML这样的网络资源的protocol(通讯协议)。它是在Web上进行数据交换的基础，是一种client-server协议，也就是说，请求通常是由像浏览器这样的接受方发起的。一个完整的Web文档通常是由不同的子文档拼接而成的，像是文本、布局描述、图片、视频、脚本等等。">
+<meta name="keywords" content="python,http,http协议,urlopen,get,post,headers">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>网络篇・HTTP协议 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-11">May 11, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">网络篇・HTTP协议</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/029-net-dev/">上篇 网络篇・操作环境准备</a></p>
+<p>HTTP是一种能够获取如HTML这样的网络资源的protocol(通讯协议)。它是在Web上进行数据交换的基础，是一种client-server协议，也就是说，请求通常是由像浏览器这样的接受方发起的。一个完整的Web文档通常是由不同的子文档拼接而成的，像是文本、布局描述、图片、视频、脚本等等。</p>
+<p><img src="https://mdn.mozillademos.org/files/13677/Fetching_a_page.png" alt=""></p>
+<p>客户端和服务端通过交换各自的消息（与数据流正好相反）进行交互。由像浏览器这样的客户端发出的消息叫做requests，被服务端响应的消息叫做responses。</p>
+<p><img src="https://mdn.mozillademos.org/files/13673/HTTP%20&amp;%20layers.png" alt=""></p>
+<h3 id="作为客户端与http服务交互">作为客户端与HTTP服务交互</h3>
+<p>对于简单的操作，通常可以使用<code>urllib.request</code>模块。例如发送一个简单的HTTP/HTTPS请求，获取远程服务上的一张图像:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://www.python.org/static/img/python-logo.png&#39;</span>
+
+resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(url)
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;python-logo.png&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+	f<span style="color:#f92672">.</span>write(resp<span style="color:#f92672">.</span>read())
+</code></pre></div><p>以下是下载的图像:</p>
+<p><img src="https://www.python.org/static/img/python-logo.png" alt=""></p>
+<h3 id="使用get方法传递参数">使用GET方法传递参数</h3>
+<p>如果需要在GET方法中传递参数可以这样:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+
+<span style="color:#75715e"># 设置基础URL</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/get&#39;</span>
+
+<span style="color:#75715e"># 使用字典结构存储请求参数</span>
+parms <span style="color:#f92672">=</span> {
+   <span style="color:#e6db74">&#39;name1&#39;</span> : <span style="color:#e6db74">&#39;value1&#39;</span>,
+   <span style="color:#e6db74">&#39;name2&#39;</span> : <span style="color:#e6db74">&#39;value2&#39;</span>
+}
+
+<span style="color:#75715e"># 对请求进行编码</span>
+querystring <span style="color:#f92672">=</span> parse<span style="color:#f92672">.</span>urlencode(parms)
+
+<span style="color:#75715e"># 构造GET请求</span>
+resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(url<span style="color:#f92672">+</span><span style="color:#e6db74">&#39;?&#39;</span> <span style="color:#f92672">+</span> querystring)
+data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
+<span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>运行结果:</p>
+<pre><code>{
+  &quot;args&quot;: {
+    &quot;name1&quot;: &quot;value1&quot;, 
+    &quot;name2&quot;: &quot;value2&quot;
+  }, 
+  &quot;url&quot;: &quot;http://httpbin.org/get?name1=value1&amp;name2=value2&quot;,
+  &quot;headers&quot;: {
+    &quot;Accept-Encoding&quot;: &quot;identity&quot;, 
+    &quot;Host&quot;: &quot;httpbin.org&quot;, 
+  ... 省略 ...
+</code></pre><h3 id="使用post方法传递参数">使用POST方法传递参数</h3>
+<p>如果需要使用POST方法在请求主体中发送查询参数，可以将参数编码后作为可选参数提供给<code>urlopen</code>函数:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/post&#39;</span>
+
+parms <span style="color:#f92672">=</span> {
+   <span style="color:#e6db74">&#39;name1&#39;</span> : <span style="color:#e6db74">&#39;value1&#39;</span>,
+   <span style="color:#e6db74">&#39;name2&#39;</span> : <span style="color:#e6db74">&#39;value2&#39;</span>
+}
+
+querystring <span style="color:#f92672">=</span> parse<span style="color:#f92672">.</span>urlencode(parms)
+
+<span style="color:#75715e"># 设置POST参数，构造POST请求</span>
+resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(url, querystring<span style="color:#f92672">.</span>encode())
+data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
+<span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>运行结果:</p>
+<pre><code>{
+  &quot;args&quot;: {}, 
+  &quot;data&quot;: &quot;&quot;, 
+  &quot;files&quot;: {}, 
+  &quot;form&quot;: {
+    &quot;name1&quot;: &quot;value1&quot;, 
+    &quot;name2&quot;: &quot;value2&quot;
+  }, 
+  &quot;headers&quot;: {
+    &quot;Accept-Encoding&quot;: &quot;identity&quot;, 
+    &quot;Content-Length&quot;: &quot;25&quot;, 
+    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;, 
+    &quot;Host&quot;: &quot;httpbin.org&quot;, 
+  ... 省略 ...
+</code></pre><h3 id="自定义http请求headers">自定义HTTP请求Headers</h3>
+<p>如果需要在发出的请求中提供一些自定义的HTTP头，例如修改<code>user-agent</code>字段,可以创建一个包含字段值的字典，并创建一个Request实例然后将其传给<code>urlopen</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/post&#39;</span>
+
+parms <span style="color:#f92672">=</span> {
+   <span style="color:#e6db74">&#39;name1&#39;</span> : <span style="color:#e6db74">&#39;value1&#39;</span>,
+   <span style="color:#e6db74">&#39;name2&#39;</span> : <span style="color:#e6db74">&#39;value2&#39;</span>
+}
+
+querystring <span style="color:#f92672">=</span> parse<span style="color:#f92672">.</span>urlencode(parms)
+
+<span style="color:#75715e"># 添加额外的Headers信息</span>
+headers <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;User-agent&#39;</span> : <span style="color:#e6db74">&#39;none/ofyourbusiness&#39;</span>,
+    <span style="color:#e6db74">&#39;Spam&#39;</span> : <span style="color:#e6db74">&#39;Eggs&#39;</span>
+}
+
+req <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>Request(url, querystring<span style="color:#f92672">.</span>encode(), headers<span style="color:#f92672">=</span>headers)
+resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(req)
+data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
+<span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>运行结果:</p>
+<pre><code>{
+  &quot;args&quot;: {}, 
+  &quot;data&quot;: &quot;&quot;, 
+  &quot;files&quot;: {}, 
+  &quot;form&quot;: {
+    &quot;name1&quot;: &quot;value1&quot;, 
+    &quot;name2&quot;: &quot;value2&quot;
+  }, 
+  &quot;headers&quot;: {
+    &quot;Accept-Encoding&quot;: &quot;identity&quot;, 
+    &quot;Content-Length&quot;: &quot;25&quot;, 
+    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;, 
+    &quot;Host&quot;: &quot;httpbin.org&quot;, 
+    &quot;Spam&quot;: &quot;Eggs&quot;, 
+    &quot;User-Agent&quot;: &quot;none/ofyourbusiness&quot;, 
+  ... 省略 ...
+</code></pre>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
