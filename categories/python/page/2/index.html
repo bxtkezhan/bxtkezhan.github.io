@@ -46,6 +46,76 @@
   <h1 class="list-title">Python</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/028-pycryptodome/">密码篇・PyCryptodome示例「扩展」</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-06">May 06, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/027-zip-decrypt-parallel/">密码篇・并行密码猜解</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-02">May 02, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    在上一节中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/025-zip-decrypt/">密码篇・密码猜解</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/024-cryptography-application/">密码篇・实际应用</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    之前我们学习了一些密码学的基本概念和原理，接下来我们研究一下密码学技术在实际应用中需要关注的一些问题。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/021-public-key/">密码篇・公开密钥加密</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-18">April 18, 2021</time></span>
+
+  </div>
+  <section class="summary">
+    维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。 
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/019-symmetric-key/">密码篇・对称密钥加密</a></h2>
   <div class="meta">
 
@@ -73,76 +143,6 @@
 </article>
 
   
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/016-python-install/">密码篇・操作环境准备</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-08">April 08, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    Python作为一门流行的脚本语言很早就被Mac OS、主流Linux发行版所预装，一般来说只需要确保自己系统的Python版本不要太旧「建议高于3.5」，如果是Windows用户可以去往Python的官方网站 <a href="https://www.python.org">www.python.org</a> 进行下载安装。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/015-digit-game/">初学篇・猜字游戏「阶段练习」</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-06">April 06, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    猜字游戏涉及的Python基础知识比较丰富且十分容易实现，可以作为《黑客之路・Python篇・初学者篇》的阶段性练习“项目”。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/014-object-struct/">初学篇・面向对象&amp;数据结构</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    在Python当中，我们常常使用到的基本数据类型有整型<code>int</code>、浮点型<code>float</code>、字符串类型<code>str</code>……，以及结构类型列表<code>list</code>、元组<code>tuple</code>，事实上我们也可以自己来定义类型，这将涉及到Python的面向对象编程。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/013-function/">初学篇・函数的定义与调用</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    函数是指可重复使用的程序片段。被用来为某个代码块赋予名字，通过这一特殊的名字可以在程序的任何地方来运行代码块，并可重复任何次数。这就是所谓的调用函数。我们已经使用过了许多内置的函数，例如: <code>print</code>、<code>len</code>和<code>range</code>。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/012-loop/">初学篇・循环控制语句</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-04">April 04, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    在Python中可以通过<code>while</code>与<code>for</code>两种循环语句来处理循环问题。 
-  </section>
-</article>
-
-  
 </main>
 
   <nav class="paginator">
@@ -150,7 +150,7 @@
     <a class="nav-left" href="/categories/python/">&lt; Prev</a>
     
 
-    <span>2 / 3</span>
+    <span>2 / 4</span>
 
     
     <a class="nav-right" href="/categories/python/page/3/">Next &gt;</a>

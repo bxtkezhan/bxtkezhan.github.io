@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。">
+<meta name="keywords" content="python,port,scanner,端口扫描,port,scanner,网络安全,测试">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>网络篇・端口扫描 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">网络篇・端口扫描</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/033-udp/">上篇 网络篇・UDP通信</a></p>
+<p>维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。</p>
+<h3 id="tcp连接测试">TCP连接测试</h3>
+<p>在实现TCP通讯的时候，我们知道可以在客户端socket中输入主机名和端口号码来连接服务器。同样的，我们也可以使用这种方法来尝试连接一定范围的服务器端口:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
+
+ports <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10000</span>)
+<span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
+    s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
+    s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((<span style="color:#e6db74">&#39;localhost&#39;</span>, port)):
+        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;Opened Port: {port}&#39;</span>)
+</code></pre></div><p>我们扫描10到10000「不包含10000」的端口，使用<code>s.connect_ex</code>进行连接，如果连接成功则返回0。通过<code>if not</code>进行判别并输出主机<code>localhost</code>开放的端口，其中主机名称<code>localhost</code>可以替换成其他主机的名称或者IP地址。</p>
+<p><a href="/post/035-port-scan-concurrent/">下篇 网络篇・并发端口扫描</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

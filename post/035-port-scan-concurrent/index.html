@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。">
+<meta name="keywords" content="python,scanner,端口扫描,并发,多线程,网络安全,测试">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>网络篇・并发端口扫描 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">网络篇・并发端口扫描</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/034-port-scan/">上篇 网络篇・端口扫描</a></p>
+<p>上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。</p>
+<h3 id="批量扫描">批量扫描</h3>
+<p>虽然端口扫描属于IO密集型操作，但是由于我们的测试目标是本机，所以有必要对线程切换导致的效率损失问题进行处理。在这里我们使用批量分配任务到每一个线程的方法来进行处理。</p>
+<p>我们首先定义一个批量处理函数:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
+<span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Thread
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">batch_test</span>(host:str, ports:range):
+    <span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
+        s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
+        s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((host, port)):
+            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;Opened Port: {port}&#39;</span>)
+</code></pre></div><h3 id="分批并发配">分批并发配</h3>
+<p>将任务进行等分「近似」并分发给每一个线程:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_ports</span>(host:str, ports:range, thread_num:int):
+    count <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop <span style="color:#f92672">-</span> ports<span style="color:#f92672">.</span>start
+    batchsize <span style="color:#f92672">=</span> count <span style="color:#f92672">//</span> thread_num
+    works <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> thread_id <span style="color:#f92672">in</span> range(thread_num):
+        start <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>start <span style="color:#f92672">+</span> thread_id <span style="color:#f92672">*</span> batchsize
+        stop <span style="color:#f92672">=</span> start <span style="color:#f92672">+</span> batchsize
+        <span style="color:#66d9ef">if</span> thread_id <span style="color:#f92672">==</span> thread_num <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+            stop <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop
+        t <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>batch_test, args<span style="color:#f92672">=</span>(host, range(start, stop)))
+        t<span style="color:#f92672">.</span>start()
+        works<span style="color:#f92672">.</span>append(t)
+    <span style="color:#66d9ef">for</span> work <span style="color:#f92672">in</span> works:
+        work<span style="color:#f92672">.</span>join()
+</code></pre></div><h3 id="程序入口">程序入口</h3>
+<p>根据用户输入设置函数参数并运行程序:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    <span style="color:#f92672">import</span> sys
+
+    host       <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+    start      <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>])
+    stop       <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">3</span>])
+    thread_num <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">4</span>])
+    test_ports(host, range(start, stop), thread_num)
+</code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

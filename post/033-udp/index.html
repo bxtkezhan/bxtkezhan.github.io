@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="之前我们尝试了TCP服务器与客户端的通讯，现在我们要实现一个服务器，通过UDP协议与客户端程序通讯。">
+<meta name="keywords" content="python,udp,socket,server,client,address,port">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>网络篇・UDP通信 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">网络篇・UDP通信</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/032-tcp/">上篇 网络篇・TCP通信</a></p>
+<p>之前我们尝试了TCP服务器与客户端的通讯，现在我们要实现一个服务器，通过UDP协议与客户端程序通讯。</p>
+<h3 id="socketserver">socketserver</h3>
+<p>和TCP服务器的实现一样，我们使用Python的<code>socketserver</code>库就可以快速实现一个简单的报时务器:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socketserver <span style="color:#f92672">import</span> BaseRequestHandler, UDPServer
+<span style="color:#f92672">import</span> time
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TimeHandler</span>(BaseRequestHandler):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">handle</span>(self):
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Got connection from&#39;</span>, self<span style="color:#f92672">.</span>client_address)
+        msg, sock <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>request
+        resp <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>ctime()
+        sock<span style="color:#f92672">.</span>sendto(resp<span style="color:#f92672">.</span>encode(), self<span style="color:#f92672">.</span>client_address)
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    serv <span style="color:#f92672">=</span> UDPServer((<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#ae81ff">8000</span>), TimeHandler)
+    serv<span style="color:#f92672">.</span>serve_forever()
+</code></pre></div><p>这里我们使用成功<code>self.request</code>获取的套接字<code>sock</code>发送时间刀指定客户端<code>self.client_address</code>。</p>
+<p>下面我们通过UDP连接的方式去获取服务器报时:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_DGRAM
+<span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_DGRAM)
+<span style="color:#f92672">&gt;&gt;&gt;</span> s<span style="color:#f92672">.</span>sendto(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>, (<span style="color:#e6db74">&#39;localhost&#39;</span>, <span style="color:#ae81ff">8000</span>))
+<span style="color:#ae81ff">0</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> s<span style="color:#f92672">.</span>recvfrom(<span style="color:#ae81ff">8192</span>)
+(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;Sun May 23 21:17:54 2021&#39;</span>, (<span style="color:#e6db74">&#39;127.0.0.1&#39;</span>, <span style="color:#ae81ff">8000</span>))
+<span style="color:#f92672">&gt;&gt;&gt;</span>
+</code></pre></div><h3 id="threadingudpserver">ThreadingUDPServer</h3>
+<p><code>UDPServer</code>可以快速实现一个简单的服务器，但默认情况下只会得到一个单线程的服务器，不能同时连接多个客户端。使用<code>ThreadingUDPServer</code>则可以快速实现多线程的服务器:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socketserver <span style="color:#f92672">import</span> ThreadingUDPServer
+
+   <span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    serv <span style="color:#f92672">=</span> ThreadingUDPServer((<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#ae81ff">8000</span>), TimeHandler)
+    serv<span style="color:#f92672">.</span>serve_forever()
+</code></pre></div><p><a href="/post/034-port-scan/">下篇 网络篇・端口扫描</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

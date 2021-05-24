@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="我们学习了如何使用Python访问网络上的HTTP资源，下面我们将使用一个叫[煎蛋](https://jandan.net/)的网站来入手学习Web爬虫技术。">
+<meta name="keywords" content="python,爬虫,http,urlopen,get,post,headers">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>网络篇・Web爬虫 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">网络篇・Web爬虫</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/030-http/">上篇 网络篇・HTTP协议</a></p>
+<p>我们学习了如何使用Python访问网络上的HTTP资源，下面我们将使用一个叫<a href="https://jandan.net/">煎蛋</a>的网站来入手学习Web爬虫技术。</p>
+<h3 id="目标介绍">目标介绍</h3>
+<p>我们需要使用Python获取煎蛋网中的<a href="https://jandan.net/zoo">宠物图像资源</a>，实现批量下载宠物图像的功能。</p>
+<div class="mermaid">
+
+graph TB
+	Site[煎蛋网 jandan.net/zoo] -- HTTP请求 --> Page[网页 HTML]
+	Page -- 字符串查找 --> Images[图像连接 URL]
+	Images -- HTTP请求 --> Storage[本地图像 JPG/PNG/...]
+
+</div>
+
+<h3 id="网页元素查找">网页元素查找</h3>
+<p>我们可以使用浏览器自带的Web开发辅助工具来辅助爬虫项目的开发:</p>
+<ol>
+<li>在网页 <a href="https://jandan.net/zoo">https://jandan.net/zoo</a> 页面右键点击元素审查「或者输入快捷键<code>Ctr+Shift+I</code>」开启辅助工具；</li>
+<li>点击挑选页面元素的工具「或者输入快捷键<code>Ctr+Shift+C</code>」；</li>
+<li>尝试点击页面中的图像然后观察元素面板的变化，就可以找到对应的图像资源；</li>
+</ol>
+<p><img src="/img/chrome_web_dev.png" alt=""></p>
+<p>经过反复的测试，我们得知大概有两种形式「如果考虑gif格式可能会更复杂」的目标图像:</p>
+<ul>
+<li>原图图像链接的格式 //wx4.sinaimg.cn/large/xxx.xxx</li>
+<li>展示图像链接的格式 //wx4.sinaimg.cn/mw600/xxx.xxx</li>
+</ul>
+<h3 id="获取网页页面">获取网页页面</h3>
+<p>使用<code>urllib</code>访问该网站时注意要自定义<code>headers</code>中的<code>User-Agent</code>项:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib.request <span style="color:#f92672">import</span> Request, urlopen
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://jandan.net/zoo&#39;</span>
+
+headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;User-Agent&#39;</span>: <span style="color:#e6db74">&#39;Chrome hkw 031 web&#39;</span>}
+
+request <span style="color:#f92672">=</span> Request(url, headers<span style="color:#f92672">=</span>headers)
+html <span style="color:#f92672">=</span> urlopen(request)<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
+</code></pre></div><h3 id="搜索原图链接">搜索原图链接</h3>
+<p>使用正则表达式匹配查询原图链接:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+
+pattern <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;//wx4.sinaimg.cn/large/[^&#34;]+&#39;</span>)
+links <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(pattern, html)
+</code></pre></div><h3 id="批量下载图像">批量下载图像</h3>
+<p>遍历<code>links</code>并构建<code>Request</code>对象请求图像资源:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i, link <span style="color:#f92672">in</span> enumerate(links):
+    request <span style="color:#f92672">=</span> Request(f<span style="color:#e6db74">&#39;https:{link}&#39;</span>, headers<span style="color:#f92672">=</span>headers)
+    ext <span style="color:#f92672">=</span> link<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;.&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    data <span style="color:#f92672">=</span> urlopen(request)<span style="color:#f92672">.</span>read()
+    <span style="color:#66d9ef">with</span> open(f<span style="color:#e6db74">&#39;{i}.{ext}&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>write(data)
+    <span style="color:#66d9ef">print</span>(i, link)
+</code></pre></div><p><a href="/post/032-tcp/">下篇 网络篇・TCP通信</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

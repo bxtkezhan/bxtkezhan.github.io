@@ -6,10 +6,55 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 11 May 2021 16:28:43 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 22 May 2021 23:12:41 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>网络篇・并发端口扫描</title>
+      <link>http://bxtkezhan.xyz/post/035-port-scan-concurrent/</link>
+      <pubDate>Sat, 22 May 2021 23:12:41 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/035-port-scan-concurrent/</guid>
+      <description>上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。</description>
+    </item>
+    
+    <item>
+      <title>网络篇・端口扫描</title>
+      <link>http://bxtkezhan.xyz/post/034-port-scan/</link>
+      <pubDate>Sat, 22 May 2021 23:12:01 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/034-port-scan/</guid>
+      <description>维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。</description>
+    </item>
+    
+    <item>
+      <title>网络篇・UDP通信</title>
+      <link>http://bxtkezhan.xyz/post/033-udp/</link>
+      <pubDate>Sat, 22 May 2021 23:11:33 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/033-udp/</guid>
+      <description>之前我们尝试了TCP服务器与客户端的通讯，现在我们要实现一个服务器，通过UDP协议与客户端程序通讯。</description>
+    </item>
+    
+    <item>
+      <title>网络篇・TCP通信</title>
+      <link>http://bxtkezhan.xyz/post/032-tcp/</link>
+      <pubDate>Sat, 22 May 2021 23:10:36 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/032-tcp/</guid>
+      <description>现在我们要实现一个服务器，通过TCP协议与客户端程序通讯。</description>
+    </item>
+    
+    <item>
+      <title>网络篇・Web爬虫</title>
+      <link>http://bxtkezhan.xyz/post/031-web-crawler/</link>
+      <pubDate>Sat, 22 May 2021 23:10:22 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/031-web-crawler/</guid>
+      <description>我们学习了如何使用Python访问网络上的HTTP资源，下面我们将使用一个叫&lt;a href=&#34;https://jandan.net/&#34;&gt;煎蛋&lt;/a&gt;的网站来入手学习Web爬虫技术。</description>
+    </item>
     
     <item>
       <title>网络篇・HTTP协议</title>
