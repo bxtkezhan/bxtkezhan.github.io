@@ -6,10 +6,73 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 22 May 2021 23:12:41 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Jun 2021 20:17:49 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>隐写术・将游戏存入图像</title>
+      <link>http://bxtkezhan.xyz/post/042-image-game-steganography/</link>
+      <pubDate>Sat, 12 Jun 2021 20:17:49 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/042-image-game-steganography/</guid>
+      <description>我们已经可以将文本资料通过编码成qrcode然后隐藏到载体图像。事实上Python代码也是文本资料，因此我们实际上也可以将Python代码作为文本资料隐藏到载体图像。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・图文隐写术</title>
+      <link>http://bxtkezhan.xyz/post/041-image-text-steganography/</link>
+      <pubDate>Sat, 12 Jun 2021 20:17:29 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/041-image-text-steganography/</guid>
+      <description>把图像隐写术与二维码技术结合就能实现将文本内容转换成二维码，然后隐藏到载体图像的图文隐写术。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・QRCode</title>
+      <link>http://bxtkezhan.xyz/post/040-qrcode/</link>
+      <pubDate>Sat, 12 Jun 2021 20:17:04 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/040-qrcode/</guid>
+      <description>上一节我们完成了将二值化图像存储在载体图像中的操作，为了方便存储更加丰富的讯息我们可以将二维码图像作为二值化的内容图像。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・图像隐写术</title>
+      <link>http://bxtkezhan.xyz/post/039-image-steganography/</link>
+      <pubDate>Sat, 12 Jun 2021 20:16:41 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/039-image-steganography/</guid>
+      <description>在了解了一些基本的图像处理操作后，我们开始着手实现图像隐写术。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・图像处理</title>
+      <link>http://bxtkezhan.xyz/post/038-image/</link>
+      <pubDate>Sat, 12 Jun 2021 20:15:42 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/038-image/</guid>
+      <description>将机要讯息藏匿于没有关联的图像资料是隐写术的常见操作，为了学习这种方法，我们有必要先了解一些基本的图像处理操作。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・文件隐写术</title>
+      <link>http://bxtkezhan.xyz/post/037-steganography-file/</link>
+      <pubDate>Sun, 06 Jun 2021 19:08:55 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/037-steganography-file/</guid>
+      <description>维基百科: 隐写术是一门关于信息隐藏的技巧与科学，所谓信息隐藏指的是不让除预期的接收者之外的任何人知晓信息的传递事件或者信息的内容。隐写术的英文叫做Steganography，来源于特里特米乌斯的一本讲述密码学与隐写术的著作Steganographia，该书书名源于希腊语，意为「隐秘书写」。</description>
+    </item>
+    
+    <item>
+      <title>隐写术・操作环境准备</title>
+      <link>http://bxtkezhan.xyz/post/036-steganography-dev/</link>
+      <pubDate>Sun, 06 Jun 2021 19:08:42 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/036-steganography-dev/</guid>
+      <description>本章会使用Python进行一些图像处理操作。除了需要Python3.6+外，我们还需要安装一些扩展库。</description>
+    </item>
     
     <item>
       <title>网络篇・并发端口扫描</title>

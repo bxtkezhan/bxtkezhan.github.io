@@ -69,99 +69,99 @@
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/028-pycryptodome/">密码篇・PyCryptodome示例「扩展」</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/035-port-scan-concurrent/">网络篇・并发端口扫描</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-05-06">May 06, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
 
   </div>
   <section class="summary">
-    PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。 
+    上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/027-zip-decrypt-parallel/">密码篇・并行密码猜解</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/034-port-scan/">网络篇・端口扫描</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-05-02">May 02, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
 
   </div>
   <section class="summary">
-    在上一节中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。 
+    维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/026-asmx64-explanation/">汇编语言「Linux/x86-64」・代码解析</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/033-udp/">网络篇・UDP通信</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-05-01">May 01, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
 
   </div>
   <section class="summary">
-    上一节中我们编译运行了一段NASM汇编代码，接下来我们将针对上一节的代码进行解析，了解一些具体的汇编知识。 
+    之前我们尝试了TCP服务器与客户端的通讯，现在我们要实现一个服务器，通过UDP协议与客户端程序通讯。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/025-zip-decrypt/">密码篇・密码猜解</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/032-tcp/">网络篇・TCP通信</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
 
   </div>
   <section class="summary">
-    几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。 
+    现在我们要实现一个服务器，通过TCP协议与客户端程序通讯。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/024-cryptography-application/">密码篇・实际应用</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/031-web-crawler/">网络篇・Web爬虫</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-22">May 22, 2021</time></span>
 
   </div>
   <section class="summary">
-    之前我们学习了一些密码学的基本概念和原理，接下来我们研究一下密码学技术在实际应用中需要关注的一些问题。 
+    我们学习了如何使用Python访问网络上的HTTP资源，下面我们将使用一个叫<a href="https://jandan.net/">煎蛋</a>的网站来入手学习Web爬虫技术。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/023-proverbs/">懒惰人哪，你要睡到几时呢？</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/030-http/">网络篇・HTTP协议</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-24">April 24, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-11">May 11, 2021</time></span>
 
   </div>
   <section class="summary">
-    箴言 6 9 懒惰人哪，你要睡到几时呢？你何时睡醒呢？10 再睡片时，打盹片时，抱着手躺卧片时，11 你的贫穷就必如强盗速来，你的缺乏仿佛拿兵器的人来到。 
+    HTTP是一种能够获取如HTML这样的网络资源的protocol(通讯协议)。它是在Web上进行数据交换的基础，是一种client-server协议，也就是说，请求通常是由像浏览器这样的接受方发起的。一个完整的Web文档通常是由不同的子文档拼接而成的，像是文本、布局描述、图片、视频、脚本等等。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/022-asmx64-first/">汇编语言「Linux/x86-64」・第一步</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/029-net-dev/">网络篇・操作环境准备</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-20">April 20, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-11">May 11, 2021</time></span>
 
   </div>
   <section class="summary">
-    汇编语言是一系列用于电脑、处理器、控制器，或其他可以编程器件的低级语言的统称。通常不同的设备会对应不同的汇编语言。下面着重介绍Linux下的64位汇编语言 <strong>NASM x86-64</strong>，我这边主要使用Ubuntu系统进行作业，原则上其他版本的64位Linux也同样可以进行相应的操作，只不过某些命令会有所不同，需要大家注意。 
+    本章会使用Python进行一些网络相关的操作。除了需要安装Python外，我们还需要使用Chrome「可以用Chromium替代」或Firefox浏览器进行辅助。 
   </section>
 </article>
 
@@ -174,7 +174,7 @@
     <a class="nav-left" href="/">&lt; Prev</a>
     
 
-    <span>2 / 6</span>
+    <span>2 / 7</span>
 
     
     <a class="nav-right" href="/page/3/">Next &gt;</a>
@@ -191,7 +191,7 @@
     
     <h2 class="category">
       <a href="http://bxtkezhan.xyz/categories/python">Python</a>
-      <small>(24)</small>
+      <small>(31)</small>
     </h2>
     
     <h2 class="category">

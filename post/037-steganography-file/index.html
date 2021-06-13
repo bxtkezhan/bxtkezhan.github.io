@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="维基百科: 隐写术是一门关于信息隐藏的技巧与科学，所谓信息隐藏指的是不让除预期的接收者之外的任何人知晓信息的传递事件或者信息的内容。隐写术的英文叫做Steganography，来源于特里特米乌斯的一本讲述密码学与隐写术的著作Steganographia，该书书名源于希腊语，意为「隐秘书写」。">
+<meta name="keywords" content="python,隐写术,steganography,file,append,write,open">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>隐写术・文件隐写术 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-06-06">June 06, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">隐写术・文件隐写术</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/036-steganography-dev/">上篇 隐写术・操作环境准备</a></p>
+<p>维基百科: 隐写术是一门关于信息隐藏的技巧与科学，所谓信息隐藏指的是不让除预期的接收者之外的任何人知晓信息的传递事件或者信息的内容。隐写术的英文叫做Steganography，来源于特里特米乌斯的一本讲述密码学与隐写术的著作Steganographia，该书书名源于希腊语，意为「隐秘书写」。</p>
+<h3 id="简易的文件隐写">简易的文件隐写</h3>
+<p>我们可以使用Python的文件读写功能去实现最简单的文件隐写操作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">concat</span>(file1, file2, output):
+    <span style="color:#66d9ef">with</span> open(output, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> of:
+        <span style="color:#66d9ef">with</span> open(file1, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> rf:
+            of<span style="color:#f92672">.</span>write(rf<span style="color:#f92672">.</span>read())
+        <span style="color:#66d9ef">with</span> open(file2, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> rf:
+            of<span style="color:#f92672">.</span>write(rf<span style="color:#f92672">.</span>read())
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    <span style="color:#f92672">import</span> sys
+
+    file1  <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+    file2  <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>]
+    output <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">3</span>]
+    concat(file1, file2, output)
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{file1} + {file2} -&gt; {output}&#39;</span>)
+</code></pre></div><p>可以将上述代码保存到本地，这里假设保存为文件<code>concat.py</code>。</p>
+<p>下面我们准备一张图片<code>run.jpg</code>和一个文本文件<code>text.txt</code>来进行实验:</p>
+<p><img src="/img/file_concat_lab_prepare.png" alt=""></p>
+<p>为了把<code>text.txt</code>隐藏到<code>run.jpg</code>中，我们需要对<code>text.txt</code>进行打包，这里使用ZIP工具进行压缩打包得到<code>text.zip</code>:</p>
+<p><img src="/img/file_concat_lab_prepare2.png" alt=""></p>
+<p>然后我们在命令行中运行如下代码实现隐写操作:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 concat.py run.jpg text.zip out.jpg
+</code></pre></div><p><img src="/img/file_concat_lab_prepare3.png" alt=""></p>
+<p>如图，我们得到了一个名为<code>out.jpg</code>的图像文件，我们可以正常打开它；但是如果我们将其扩展名修改为<code>.zip</code>时会发现我们可以将其作为压缩包打开:</p>
+<p><img src="/img/file_concat_lab_prepare4.png" alt=""></p>
+<p><a href="/post/038-image/">下篇 隐写术・图像处理</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

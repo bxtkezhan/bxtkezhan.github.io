@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="上一节我们完成了将二值化图像存储在载体图像中的操作，为了方便存储更加丰富的讯息我们可以将二维码图像作为二值化的内容图像。">
+<meta name="keywords" content="python,隐写术,steganography,qrcode,image,pillow,numpy">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>隐写术・QRCode - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-06-12">June 12, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">隐写术・QRCode</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/039-image-steganography/">上篇 隐写术・图像隐写术</a></p>
+<p>上一节我们完成了将二值化图像存储在载体图像中的操作，为了方便存储更加丰富的讯息我们可以将二维码图像作为二值化的内容图像。</p>
+<h3 id="二维码的生成">二维码的生成</h3>
+<p>使用Python的第三方二维码生成库qrcode就可以非常方便快速的生成二维码:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> qrcode
+
+data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Hello, QRCode&#39;</span>
+img <span style="color:#f92672">=</span> qrcode<span style="color:#f92672">.</span>make(data)
+img<span style="color:#f92672">.</span>show()
+</code></pre></div><p>通过<code>qrcode.make</code>方法可以将指定的文本内容编码成一张二维码图像，而返回的值是Pillow中的Image对象，可以很方便的使用Pillow提供的方法去编辑它。</p>
+<h3 id="二维码的识别">二维码的识别</h3>
+<p>Python当中存在一些第三方的二维码识别工具但是对Windows平台支持不好，如果你和我一样是Linux/Ubuntu用户「可以是别的Linux」，或者你使用Mac OS，那么可以尝试一款叫做pyzbar的二维码识别库。</p>
+<p>使用如下命令安装pyzbar:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pyzbar
+</code></pre></div><p>可以使用pyzbar提供的decode方法对一张二维码「<code>Pillow.Image</code>对象」进行解码:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">from</span> pyzbar.pyzbar <span style="color:#f92672">import</span> decode
+
+img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;我的二维码.png&#39;</span>)
+<span style="color:#66d9ef">print</span>(decode(img<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>)))
+</code></pre></div><p>在使用<code>pyzbar.decode</code>方法解码前最好对输入的Pillow图像进行转换得到灰度图像<code>img.convert('L')</code>。</p>
+<p><a href="/post/041-image-text-steganography/">下篇 隐写术・图文隐写术</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

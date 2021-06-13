@@ -69,99 +69,99 @@
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/021-public-key/">密码篇・公开密钥加密</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/028-pycryptodome/">密码篇・PyCryptodome示例「扩展」</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-18">April 18, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-06">May 06, 2021</time></span>
 
   </div>
   <section class="summary">
-    维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。 
+    PyCryptodome是一个低级密码学原语的独立Python包，它支持Python2.6、Python2.7以及Python3.4或更新的版本，另外还包括PyPy。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/020-proverbs/">保守公义的心，行走正直的路</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/027-zip-decrypt-parallel/">密码篇・并行密码猜解</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-17">April 17, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-02">May 02, 2021</time></span>
 
   </div>
   <section class="summary">
-    箴言 11 1 诡诈的天平为耶和华所憎恶，公平的法码为他所喜悦。 2 骄傲来，羞耻也来，谦逊人却有智慧。 
+    在上一节中我们实现了简单的ZIP压缩包密码猜解。为了充分利用计算机的性能我们可以同时使用多个CPU核心参与破译，这一节中我们将实现多核心版本或者称为并行版本的密码猜解程序。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/019-symmetric-key/">密码篇・对称密钥加密</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/026-asmx64-explanation/">汇编语言「Linux/x86-64」・代码解析</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-11">April 11, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-05-01">May 01, 2021</time></span>
 
   </div>
   <section class="summary">
-    对称密钥算法（英语：Symmetric-key algorithm）又称为对称加密、私钥加密、共享密钥加密，是密码学中的一类加密算法。这类算法在加密和解密时使用相同的密钥，或是使用两个可以简单地相互推算的密钥。 
+    上一节中我们编译运行了一段NASM汇编代码，接下来我们将针对上一节的代码进行解析，了解一些具体的汇编知识。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/018-cryptography-info/">密码篇・密码学简介</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/025-zip-decrypt/">密码篇・密码猜解</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-10">April 10, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
 
   </div>
   <section class="summary">
-    密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。 
+    几乎所有成熟的商用密码都能经受严格的密码破解分析，一般来说想要对一个加密的数据进行破译最简单的方法就是直接猜测密钥，如果条件允许甚至可以进行大量尝试。为了提高破译效率可以先准备好大量的可能性较高的密钥，然后依次遍历猜测密钥，这种做法有个名词叫“字典爆破”。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/017-proverbs/">你的泉源岂可涨溢在外？</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/024-cryptography-application/">密码篇・实际应用</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-09">April 09, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-25">April 25, 2021</time></span>
 
   </div>
   <section class="summary">
-    箴言 5 15 你要喝自己池中的水，饮自己井里的活水。 16 你的泉源岂可涨溢在外？你的河水岂可流在街上？ 17 唯独归你一人，不可与外人同用。 
+    之前我们学习了一些密码学的基本概念和原理，接下来我们研究一下密码学技术在实际应用中需要关注的一些问题。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/books_002/">推荐几本C/C&#43;&#43;书籍【免费下载】</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/023-proverbs/">懒惰人哪，你要睡到几时呢？</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-09">April 09, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-24">April 24, 2021</time></span>
 
   </div>
   <section class="summary">
-    根据之前的投票结果，C/C++也是票数非常多的选项，那么这里也推荐几本C/C++书籍。 
+    箴言 6 9 懒惰人哪，你要睡到几时呢？你何时睡醒呢？10 再睡片时，打盹片时，抱着手躺卧片时，11 你的贫穷就必如强盗速来，你的缺乏仿佛拿兵器的人来到。 
   </section>
 </article>
 
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/016-python-install/">密码篇・操作环境准备</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/022-asmx64-first/">汇编语言「Linux/x86-64」・第一步</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-08">April 08, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-04-20">April 20, 2021</time></span>
 
   </div>
   <section class="summary">
-    Python作为一门流行的脚本语言很早就被Mac OS、主流Linux发行版所预装，一般来说只需要确保自己系统的Python版本不要太旧「建议高于3.5」，如果是Windows用户可以去往Python的官方网站 <a href="https://www.python.org">www.python.org</a> 进行下载安装。 
+    汇编语言是一系列用于电脑、处理器、控制器，或其他可以编程器件的低级语言的统称。通常不同的设备会对应不同的汇编语言。下面着重介绍Linux下的64位汇编语言 <strong>NASM x86-64</strong>，我这边主要使用Ubuntu系统进行作业，原则上其他版本的64位Linux也同样可以进行相应的操作，只不过某些命令会有所不同，需要大家注意。 
   </section>
 </article>
 
@@ -174,7 +174,7 @@
     <a class="nav-left" href="/page/2/">&lt; Prev</a>
     
 
-    <span>3 / 6</span>
+    <span>3 / 7</span>
 
     
     <a class="nav-right" href="/page/4/">Next &gt;</a>
@@ -191,7 +191,7 @@
     
     <h2 class="category">
       <a href="http://bxtkezhan.xyz/categories/python">Python</a>
-      <small>(24)</small>
+      <small>(31)</small>
     </h2>
     
     <h2 class="category">

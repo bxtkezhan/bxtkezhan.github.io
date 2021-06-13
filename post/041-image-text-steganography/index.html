@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="把图像隐写术与二维码技术结合就能实现将文本内容转换成二维码，然后隐藏到载体图像的图文隐写术。">
+<meta name="keywords" content="python,隐写术,steganography,qrcode,image,pillow,numpy">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>隐写术・图文隐写术 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-06-12">June 12, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">隐写术・图文隐写术</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/040-qrcode/">上篇 隐写术・QRCode</a></p>
+<p>把图像隐写术与二维码技术结合就能实现将文本内容转换成二维码，然后隐藏到载体图像的图文隐写术。</p>
+<h3 id="载入图像并生成二维码">载入图像并生成二维码</h3>
+<p>首先，我们需要加载载体图像，并根据指定的文本内容生成二维码:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_qrcode</span>(text:str, side:int):
+    image <span style="color:#f92672">=</span> qrcode<span style="color:#f92672">.</span>make(text)
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>resize((side, side))
+    <span style="color:#66d9ef">return</span> image
+
+bg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;container.jpg&#39;</span>)
+fg <span style="color:#f92672">=</span> gen_qrcode(<span style="color:#e6db74">&#39;Hello Python!&#39;</span>, min(bg<span style="color:#f92672">.</span>size))
+</code></pre></div><p>为了确保我们的二维码可以完整的存入载体图像，我们需要缩放二维码使之边长不超过载体图像的最小边城。</p>
+<h3 id="将二维码存入载体图像">将二维码存入载体图像</h3>
+<p>将二维码存入载体图像的操作和之前的<a href="/post/039-image-steganography/">「隐写术・图像隐写术」</a>操作一致。</p>
+<h3 id="解析二维码">解析二维码</h3>
+<p>我们仍旧可以使用之前的<a href="/post/039-image-steganography/">「隐写术・图像隐写术」</a>说道操作将二维码取出。在解析二维码时，我们可以使用pyzbar「中文编码可能会有问题」也可以直接用手机扫描。</p>
+<h3 id="代码清单">代码清单</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> qrcode
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_qrcode</span>(text:str, side:int):
+    image <span style="color:#f92672">=</span> qrcode<span style="color:#f92672">.</span>make(text)
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>resize((side, side))
+    <span style="color:#66d9ef">return</span> image
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">preprocess</span>(frame:Image<span style="color:#f92672">.</span>Image):
+    image <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>)
+    array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(image)
+    array <span style="color:#f92672">-=</span> array <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
+    <span style="color:#66d9ef">return</span> array
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_binary</span>(frame:Image<span style="color:#f92672">.</span>Image, threshold:int<span style="color:#f92672">=</span><span style="color:#ae81ff">127</span>):
+    gray   <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>)
+    array  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(gray)
+    binary <span style="color:#f92672">=</span> (array <span style="color:#f92672">&gt;</span> threshold)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    <span style="color:#66d9ef">return</span> binary
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">merge_image</span>(container:np<span style="color:#f92672">.</span>ndarray, binary:np<span style="color:#f92672">.</span>ndarray):
+    r1, c1 <span style="color:#f92672">=</span> container<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], container<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+    r2, c2 <span style="color:#f92672">=</span> binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+    r, c <span style="color:#f92672">=</span> min(r1, r2), min(c1, c2)
+    final <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(container)
+    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, None]
+    <span style="color:#66d9ef">return</span> final
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_binary</span>(frame:Image<span style="color:#f92672">.</span>Image):
+    array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(frame)
+    array <span style="color:#f92672">%=</span> <span style="color:#ae81ff">2</span>
+    array <span style="color:#f92672">*=</span> <span style="color:#ae81ff">255</span>
+    image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(array)
+    <span style="color:#66d9ef">return</span> image
+
+bg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;container.jpg&#39;</span>)
+fg <span style="color:#f92672">=</span> gen_qrcode(<span style="color:#e6db74">&#39;Hello Python!&#39;</span>, min(bg<span style="color:#f92672">.</span>size))
+
+container <span style="color:#f92672">=</span> preprocess(bg)
+binary <span style="color:#f92672">=</span> to_binary(fg)
+
+final <span style="color:#f92672">=</span> merge_image(container, binary)
+final_img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(final)
+final_img<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;merged.png&#39;</span>)
+
+merged <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;merged.png&#39;</span>)
+_binary <span style="color:#f92672">=</span> get_binary(merged)
+_binary<span style="color:#f92672">.</span>show()
+
+<span style="color:#f92672">from</span> pyzbar.pyzbar <span style="color:#f92672">import</span> decode
+
+<span style="color:#66d9ef">for</span> code <span style="color:#f92672">in</span> decode(_binary):
+    <span style="color:#66d9ef">print</span>(code<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>decode())
+</code></pre></div><p><a href="/post/042-image-game-steganography/">下篇 隐写术・将游戏存入图像</a></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
