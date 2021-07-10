@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>黑客之路・编译原理</title>
+      <link>http://bxtkezhan.xyz/post/tutorial_003/</link>
+      <pubDate>Wed, 31 Mar 2021 23:21:44 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/tutorial_003/</guid>
+      <description>和编程相关的一些计算机技术，包括编译原理，汇编语言，llvm，gcc。</description>
+    </item>
+    
+    <item>
       <title>支持While语句</title>
       <link>http://bxtkezhan.xyz/post/007-while/</link>
       <pubDate>Wed, 31 Mar 2021 14:17:49 +0800</pubDate>

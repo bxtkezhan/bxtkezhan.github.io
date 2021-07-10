@@ -62,7 +62,9 @@
   </div>
   <h1 class="headline" itemprop="headline">递归向下算法实现Calc</h1>
   <section class="body" itemprop="articleBody">
-    <p>利用递归向下算法结合我们的<code>BKLexer</code>实现支持四则运算与括号优先级的计算器程序。</p>
+    <p><a href="/post/tutorial_003/">返回教程主页</a></p>
+<p><a href="/post/002-bklexer/">上篇 使用BKLexer进行词法分析</a></p>
+<p>利用递归向下算法结合我们的<code>BKLexer</code>实现支持四则运算与括号优先级的计算器程序。</p>
 <p><a href="-"></a></p>
 <p>代码清单【Golang】</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
@@ -398,6 +400,7 @@ bye!
 }
 <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;bye!&#34;</span>)
 </code></pre></div><p>当解析函数<code>parse</code>返回的内容不是<code>nil</code>时可以使用<code>GetValue</code>函数计算表达式并得到结果。</p>
+<p><a href="/post/004-block/">下篇 使计算器支持语句块</a></p>
 
   </section>
 </article>
