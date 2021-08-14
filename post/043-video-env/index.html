@@ -2,15 +2,15 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="我们已经可以将文本资料通过编码成qrcode然后隐藏到载体图像。事实上Python代码也是文本资料，因此我们实际上也可以将Python代码作为文本资料隐藏到载体图像。">
-<meta name="keywords" content="python,隐写术,steganography,qrcode,image,pillow,numpy">
+<meta name="description" content="本章会使用Python进行一些影像处理操作。除了需要Python3.6&#43;外，我们还需要安装一些扩展库。">
+<meta name="keywords" content="python,opencv,cv,目标检测,人脸识别,video,camera">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
-<title>隐写术・将游戏存入图像 - bxtkezhan@kk</title>
+<title>影像处理・操作环境准备 - bxtkezhan@kk</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -48,7 +48,7 @@
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-06-12">June 12, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-08-14">August 14, 2021</time></span>
 
 
     <span class="key">in</span>
@@ -60,14 +60,24 @@
 
 
   </div>
-  <h1 class="headline" itemprop="headline">隐写术・将游戏存入图像</h1>
+  <h1 class="headline" itemprop="headline">影像处理・操作环境准备</h1>
   <section class="body" itemprop="articleBody">
     <p><a href="/post/tutorial_001/">返回教程主页</a></p>
-<p><a href="/post/041-image-text-steganography/">上篇 隐写术・图文隐写术</a></p>
-<p>我们已经可以将文本资料通过编码成qrcode然后隐藏到载体图像。事实上Python代码也是文本资料，因此我们实际上也可以将Python代码作为文本资料隐藏到载体图像。</p>
-<p>考虑到具体的Python图形化界面游戏开发我们这里还没有讲到，而且较长的代码存储需要的空间也比较大可能会导致二维码识别效果降低，所以目前建议大家先尝试将简单的猜字游戏「或者类似的程序」隐写到图像中。</p>
-<p>由于需要的技术知识并没有增加，所以这节的操作主要交给大家自行实践。</p>
-<p><a href="/post/043-video-env/">下篇 影像處理・操作環境準備</a></p>
+<p><a href="/post/042-image-game-steganography/">上篇 隐写术・将游戏存入图像</a></p>
+<p>本章会使用Python进行一些影像处理操作。除了需要Python3.6+外，我们还需要安装一些扩展库。</p>
+<h3 id="opencv">OpenCV</h3>
+<p>OpenCV是非常受欢迎的计算机视觉处理库，对Python有较好的支持，我们可以在命令行运行如下代码安装它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install opencv-python
+</code></pre></div><h3 id="numpy">numpy</h3>
+<p>numpy是个高效率的数组计算工具，我们需要利用它，在命令行运行如下代码可以安装:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install numpy
+</code></pre></div><h3 id="websockets">websockets</h3>
+<p>如果要将视频数据通过网络进行传输，并支持浏览器打开，那么websockets是个不错的选择，我们可以使用与之同名的库来实现:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install websockets
+</code></pre></div><h3 id="flask">Flask</h3>
+<p>为了能够使用浏览器操作websockets，我们需要构建一个简单的Web App，使用Flask可以快速完成它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install Flask
+</code></pre></div><p><a href="/post/037-steganography-file/">下篇 隐写术・文件隐写术</a></p>
 
   </section>
 </article>
