@@ -52,7 +52,7 @@ async function editor() {
 }
 
 var app = document.querySelector("#app").innerText;
-var wembed = new WembedOffice(app);
+var wembed = new WembedOffice(app, "http://localhost:8077");
 
 window.onload = async function(e) {
     const data = await wembed.get_token();
