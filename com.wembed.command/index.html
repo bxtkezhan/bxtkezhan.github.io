@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Hello World</title>
+    </head>
+    <body>
+        <h1>command|WembedOffice</h1>
+        <div style="padding: 0.2rem">
+            APP URL: <span id="app">http://wembedapp:8888</span>
+        </div>
+        <div style="padding: 0.2rem">
+            TokenID: <span id="tokenid"></span>
+        </div>
+        <div style="padding: 0.2rem">
+            <input type="text" id="filename" value="">
+            <button onclick="close_();">Close</button>
+        </div>
+        <div style="padding: 0.2rem">
+            <button onclick="sys_open();">Open[System]</button>
+            <button onclick="office();">Open[LibreOffice]</button>
+            <button onclick="editor();">Open[Notepad]</button>
+        </div>
+        <iframe id="storage" src="/storage" frameborder="1"></iframe>
+        <div id="container" style="float: left;width: 600px;height: 400px;background-color: #F00"></div>
+    </body>
+</html>
+<script src="http://localhost:8077/app/api/core.js" charset="utf-8"></script>
+<script charset="utf-8">
+function close_() {
+    var handle = document.querySelector('#container').getAttribute("handle");
+    wembed.close_window(handle);
+}
+
+function sys_open() {
+    var filename = document.querySelector('#filename').value;
+    wembed.command("#container", "start", filename);
+}
+
+function office() {
+    var filename = document.querySelector('#filename').value;
+    wembed.command("#container", "soffice.bin", filename);
+}
+
+async function editor() {
+    var filename = document.querySelector('#filename').value;
+    const data = await wembed.command("#container", "notepad.exe", filename);
+    if (data.resp.status == 200) {
+        console.log(data.handle, data.pid);
+    }
+}
+
+var app = document.querySelector("#app").innerText;
+var wembed = new WembedOffice(app);
+
+window.onload = async function(e) {
+    const data = await wembed.get_token();
+    if (data.resp.status == 200) {
+        document.querySelector('#tokenid').innerText = data.tokenid;
+        wembed.connect(function(message) {
+            console.log(message);
+        });
+        wembed.set_windows();
+    }
+}
+</script>
