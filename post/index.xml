@@ -6,10 +6,19 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 14 Aug 2021 23:04:26 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Aug 2021 11:42:19 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>影像处理・OpenCV简介</title>
+      <link>http://bxtkezhan.xyz/post/044-opencv-intro/</link>
+      <pubDate>Tue, 31 Aug 2021 11:42:19 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/044-opencv-intro/</guid>
+      <description>下面，我们初步认识一下OpenCV这款计算机视觉处理程序开发库。</description>
+    </item>
     
     <item>
       <title>影像处理・操作环境准备</title>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="下面，我们初步认识一下OpenCV这款计算机视觉处理程序开发库。">
+<meta name="keywords" content="python,opencv,cv,目标检测,人脸识别,video,camera">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>影像处理・OpenCV简介 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-08-31">August 31, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">影像处理・OpenCV简介</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/043-video-env/">上篇 影像处理・操作环境准备</a></p>
+<p>下面，我们初步认识一下OpenCV这款计算机视觉处理程序开发库。在这之前需要确保成功安装它的Python版本，可以用上篇提到的<code>pip install opencv-python</code>命令进行安装，考虑到部分用户的网络问题，可以使用<code>pip install opencv-python -i https://pypi.douban.com/simple</code>切换成豆瓣源进行加速。</p>
+<h3 id="图像的载入显示以及写入">图像的载入，显示以及写入</h3>
+<p>最首先的自然是图像的载入，我们引入OpenCV<code>import cv2 as cv</code>，然后使用<code>imread</code>载入图像:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#f92672">as</span> cv
+
+img <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./python.jpg&#39;</span>)
+<span style="color:#66d9ef">print</span>(type(img))
+</code></pre></div><p>给<code>cv.imread</code>函数传入一个图像文件路径的字符串作为参数，如果成功<code>cv.imread</code>将返回返回图片像素信息的numpy数组，如果失败则返回<code>None</code>。</p>
+<p>成功载入图像后我们可以使用<code>imshow</code>去显示它:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> img <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> None:
+    cv<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;hello opencv&#39;</span>, img)
+    cv<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">0</span>) <span style="color:#75715e"># 按键盘任意键退出</span>
+</code></pre></div><p><code>cv.imshow</code>会打开一个窗口用于显示图像，该函数的第一个参数是窗口标题的字符串；第二个是图像的numpy数组。此外，我们还需要调用<code>cv.waitKey(0)</code>去阻塞程序，该函数会阻塞程序直到接收到一个键盘输入。</p>
+<p>使用<code>imwrite</code>可以将图像的numpy数组写入到图像文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cv<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#39;./python2.jpg&#39;</span>, <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> img)
+</code></pre></div><p><code>cv.imwrite</code>一般接收两个参数，第一个为保存的文件路径；第二个是图像的numpy数组，我们用255减去原来的图像数组得到一个新的图像数组并保存「利于区分」。</p>
+<h3 id="图像缩放">图像缩放</h3>
+<p>对图像进行缩放可以使用<code>cv.resize</code>函数:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">img <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>resize(img, (<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>))
+</code></pre></div><p>这里我们为<code>cv.resize</code>传入了两个参数，第一个是原始图像的numpy数组；第二个是缩放后的宽与高，是个元祖。该函数将返回缩放后的图像数组。</p>
+<h3 id="其它操作">其它操作</h3>
+<p>除此之外，OpenCV还有许多功能，例如：图像裁剪，几何变换，颜色空间，阈值处理，形态学操作，角点检测，轮廓检测，目标检测…… 感兴趣的朋友可以自己上网搜索相关专题。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
