@@ -66,7 +66,7 @@
 <p><a href="/post/044-opencv-intro/">上篇 影像处理・OpenCV简介</a></p>
 <p>影像处理免不了读取视频和调用摄像头，在OpenCV中可以使用<code>VideoCapture</code>工具快速完成视频读取以及摄像头调用。</p>
 <h3 id="读取并播放视频">读取并播放视频</h3>
-<p>调用<code>VideoCapture</code>的时候如果传入一个视频文件的路径作为变量则可以读取该视频文件:</p>
+<p>调用<code>VideoCapture</code>的时候如果传入一个视频文件的路径作为参数则可以读取该视频文件:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#f92672">as</span> cv
 
 video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#e6db74">&#39;/home/kk/影片/mytest.mp4&#39;</span>)
