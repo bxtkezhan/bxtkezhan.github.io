@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="在成功调用摄像头并获取视频内容后，我们可以对视频内容进行目标检测，为了方便上手，这里采用OpenCV人脸检测作为作为实例学习。">
+<meta name="keywords" content="python,opencv,cv,目标检测,人脸识别,video,camera">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>影像处理・目标检测 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-10-03">October 03, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">影像处理・目标检测</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/046-opencv-websocket/">上篇 影像处理・网络摄像头</a></p>
+<p>在成功调用摄像头并获取视频内容后，我们可以对视频内容进行目标检测，为了方便上手，这里采用OpenCV人脸检测作为作为实例学习。</p>
+<p>我们需要下载OpenCV官方已经训练好的人脸检测器数据文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_alt.xml
+</code></pre></div><h3 id="创建检测器">创建检测器</h3>
+<p>创建一个检测器并载入下载的检测器数据:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">face_cascade_data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;haarcascade_frontalface_alt.xml&#39;</span>
+face_cascade <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>CascadeClassifier()
+face_cascade<span style="color:#f92672">.</span>load(cv<span style="color:#f92672">.</span>samples<span style="color:#f92672">.</span>findFile(face_cascade_data))
+</code></pre></div><p>传入函数<code>cv.samples.findFile</code>的参数是我们下载好的检测器数据文件的路径。</p>
+<h3 id="检测与标记">检测与标记</h3>
+<p>我们创建一个函数用于处理目标检测，并将检测结果标记描绘到图像上:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">face_detect</span>(frame):
+    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_BGR2GRAY)
+    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>equalizeHist(gray)
+    faces <span style="color:#f92672">=</span> face_cascade<span style="color:#f92672">.</span>detectMultiScale(gray)
+    <span style="color:#66d9ef">for</span> x, y, w, h <span style="color:#f92672">in</span> faces:
+        cv<span style="color:#f92672">.</span>rectangle(frame, (x, y), (x <span style="color:#f92672">+</span> w, y <span style="color:#f92672">+</span> h), (<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">3</span>)
+</code></pre></div><p>在将图像放入检测器前，我们可以将图像转换成灰度图<code>cv.cvtColor(frame, cv.COLOR_BGR2GRAY)</code>；有时为了提升效果可以对图像进行色彩均衡化操作<code>cv.equalizeHist(gray)</code>；使用<code>face_cascade.detectMultiScale</code>方法进行检测，可以使用for in循环遍历取出每一个检测到的人脸位置信息。</p>
+<h3 id="结合摄像头调用">结合摄像头调用</h3>
+<p>我们可以在之前的摄像头调用实例代码中应用人脸检测:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#f92672">as</span> cv
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">face_detect</span>(frame):
+    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_BGR2GRAY)
+    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>equalizeHist(gray)
+    faces <span style="color:#f92672">=</span> face_cascade<span style="color:#f92672">.</span>detectMultiScale(gray)
+    <span style="color:#66d9ef">for</span> x, y, w, h <span style="color:#f92672">in</span> faces:
+        cv<span style="color:#f92672">.</span>rectangle(frame, (x, y), (x <span style="color:#f92672">+</span> w, y <span style="color:#f92672">+</span> h), (<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">3</span>)
+
+face_cascade_data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;haarcascade_frontalface_alt.xml&#39;</span>
+face_cascade <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>CascadeClassifier()
+face_cascade<span style="color:#f92672">.</span>load(cv<span style="color:#f92672">.</span>samples<span style="color:#f92672">.</span>findFile(face_cascade_data))
+
+video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">while</span> video<span style="color:#f92672">.</span>isOpened():
+    ret, frame <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>read()
+    <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">==</span> True:
+        face_detect(frame)
+        cv<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;My Video&#39;</span>, frame[:, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+        <span style="color:#66d9ef">if</span> cv<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">20</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span> <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;q&#39;</span>):
+            <span style="color:#66d9ef">break</span>
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">break</span>
+video<span style="color:#f92672">.</span>release()
+cv<span style="color:#f92672">.</span>destroyAllWindows()
+</code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
