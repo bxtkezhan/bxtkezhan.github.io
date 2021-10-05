@@ -17,7 +17,7 @@
       <pubDate>Mon, 04 Oct 2021 21:37:28 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/048-face-recognition/</guid>
-      <description>在成功调用摄像头并获取视频内容后，我们可以对视频内容进行目标检测，为了方便上手，这里采用OpenCV人脸检测作为作为实例学习。</description>
+      <description>想要使用Python实现人脸识别也不是一件难事，使用&lt;code&gt;face_recognition&lt;/code&gt;人脸识别开发库可以快速上手。</description>
     </item>
     
     <item>
