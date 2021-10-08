@@ -81,7 +81,8 @@ _start:		<span style="color:#a6e22e">mov</span>			rax, <span style="color:#ae81f
 message:	<span style="color:#66d9ef">db</span>			<span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">10</span>
 </code></pre></div><p>然后再整理成表格形式:</p>
 <p><img src="/img/nasm_struct.png" alt="fda"></p>
-<p>主程序中要设置<code>_start</code>标签并使用<code>global</code>将其暴露给汇编器；程序由指令和段组成，常见的段有代码段<code>.text</code>、数据段<code>.data</code>；指令语句主要由指令或指令+操作数组成，例如:<code>mov rax, 1</code>。</p>
+<p>主程序中需要指定代码从哪里开始运行，做法是设置<code>_start</code>标签并使用<code>global</code>将其暴露给汇编器；程序由指令和段组成，常见的段有代码段<code>.text</code>、数据段<code>.data</code>；指令语句主要由指令或指令+操作数组成，例如:<code>mov rax, 1</code>。</p>
+<p>通常我们会在代码段声明语句<code>section .text</code>后接上入口标签<code>_start:</code>并开始编写一系列的指令操作；对于数据段声明语句<code>section .data</code>，我们会在其后接上声明的数据以及对应的标签。</p>
 <h3 id="操作指令">操作指令</h3>
 <p>NASM的操作指令非常多，但是我们并不需要全部掌握，以下列举最常见的指令:</p>
 <ul>
@@ -95,8 +96,144 @@ message:	<span style="color:#66d9ef">db</span>			<span style="color:#e6db74">&#3
 <li><code>dec x</code> 让x自减1；</li>
 </ul>
 <h3 id="寄存器">寄存器</h3>
-<p>未完待续……</p>
+<p>寄存器主要用于存取数值，可以被当作高级程序语言中的数值变量来使用。</p>
+<p>当我们想进行64位数值操作的时候，我们常会使用英文字母r开头的寄存器，可以初步理解为64位的整型变量:</p>
+<ul>
+<li>RAX</li>
+<li>RCX</li>
+<li>RDX</li>
+<li>RBX</li>
+<li>RSP</li>
+<li>RBP</li>
+<li>RSI</li>
+<li>RDI</li>
+</ul>
+<p>当我们想进行32位数值操作的时候，我们常使用英文字母e开头的寄存器，可以初步理解为32位的整型变量:</p>
+<ul>
+<li>EAX</li>
+<li>ECX</li>
+<li>EDX</li>
+<li>EBX</li>
+<li>ESP</li>
+<li>EBP</li>
+<li>ESI</li>
+<li>EDI</li>
+</ul>
+<p>把64位寄存器的首字母r去掉，或者把32位寄存器的首字母e去掉则变为16位的寄存器，可以理解为16位的整型变量:</p>
+<ul>
+<li>AX</li>
+<li>CX</li>
+<li>DX</li>
+<li>BX</li>
+<li>SP</li>
+<li>BP</li>
+<li>SI</li>
+<li>DI</li>
+</ul>
+<p>可以将16位的寄存器拆分为两个8位的寄存器，高位的部分称作高8位寄存器，低位的部分称作低8位寄存器。</p>
+<p>常见低8位寄存器:</p>
+<ul>
+<li>AL</li>
+<li>CL</li>
+<li>DL</li>
+<li>BL</li>
+<li>SPL</li>
+<li>BPL</li>
+<li>SIL</li>
+<li>DIL</li>
+</ul>
+<p>常见高8位寄存器:</p>
+<ul>
+<li>AH</li>
+<li>CH</li>
+<li>DH</li>
+<li>BH</li>
+</ul>
+<p>下面，我们类比C语言，使用NASM代码来实现对应的操作。</p>
+<p>有C语言如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> c;
+c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span>;
+</code></pre></div><p>变换成NASM:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#a6e22e">mov</span> al, <span style="color:#e6db74">&#39;a&#39;</span>
+</code></pre></div><p>有C语言如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">c <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+</code></pre></div><p>变换成NASM:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#a6e22e">add</span> al, <span style="color:#ae81ff">1</span>
+</code></pre></div><h3 id="内存寻址">内存寻址</h3>
+<p>由于寄存器数量有限，在处理较为复杂的数据结构时，我们需要利用内存来完成数据存取。</p>
+<p>在汇编中，我们可以指定一段内存地址，然后写入或者读取一段数据。通过汇编语言的寻址操作，我们可以得到目标地址:</p>
+<ul>
+<li><code>[数字]</code></li>
+<li><code>[寄存器]</code></li>
+<li><code>[寄存器 + 数字]</code></li>
+<li><code>[寄存器 + 寄存器*scale]</code> scale 可以是 1, 2, 4, 8</li>
+<li><code>[寄存器 + 寄存器*scale + 数字]</code></li>
+</ul>
+<p>数字指的是偏移量，普通的寄存器被称作基址寄存器，寄存器*scale被称作索引。</p>
+<p>示例:</p>
+<ul>
+<li><code>[123]</code> 偏移</li>
+<li><code>[rbp]</code> 基址</li>
+<li><code>[rbx - 8]</code> 基址 + 偏移量 -8「反向偏移8个单位」</li>
+<li><code>[rcx + rsi*4]</code> 基址 + 索引*scale</li>
+<li><code>[rbp + rdx]</code> scale为1可以省略</li>
+<li><code>[rax + rdi*8 + 500]</code> 完整的写法</li>
+<li><code>[rbx + message]</code> 可以使用标签作为偏移量，这使得标签具备变量名的作用</li>
+</ul>
+<h3 id="立即数操作">立即数操作</h3>
+<p>在代码中我们可以直接使用数值，例如: 10进位的100；16进位的0xff；2进位的0b11……，有个好消息是我们仍旧可以使用字符「编译器会转换为ascii对应的数字，本质上也是数字的一种写法」。</p>
+<p>下面我们修改之前的代码，使用寻址操作将输出字符串<code>Hello, World</code>变为小写的<code>hello, world</code>，我们仅需要通过寻址修改两个字符:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> _start
 
+<span style="color:#66d9ef">section</span> .text
+
+_start:
+    <span style="color:#75715e">; 将偏移量交给rax</span>
+    <span style="color:#a6e22e">mov</span> rax, message
+    <span style="color:#75715e">; 给rax所在的地址赋值&#39;h&#39;，需要声明是在字节范围进行的操作</span>
+    <span style="color:#a6e22e">mov</span> <span style="color:#66d9ef">byte</span> [rax], <span style="color:#e6db74">&#39;h&#39;</span>
+    <span style="color:#75715e">; 给rax+7所在的地址赋值&#39;w&#39;，需要声明是在字节范围进行的操作</span>
+    <span style="color:#a6e22e">mov</span> <span style="color:#66d9ef">byte</span> [rax <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>], <span style="color:#e6db74">&#39;w&#39;</span>
+    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rdi, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rsi, message
+    <span style="color:#a6e22e">mov</span> rdx, <span style="color:#ae81ff">13</span>
+    <span style="color:#a6e22e">syscall</span>
+    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">60</span>
+    <span style="color:#a6e22e">xor</span> rdi, rdi
+    <span style="color:#a6e22e">syscall</span>
+
+<span style="color:#66d9ef">section</span> .data
+
+message:
+    <span style="color:#66d9ef">db</span> <span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">10</span>
+</code></pre></div><h3 id="系统调用">系统调用</h3>
+<p>在C语言中我们常使用<code>printf</code>函数打印字符串，然而这个函数并不是由我们自己完成，一般来说系统库会为我们提供他。在汇编当中我们也可以使用类似的由系统提供的工具，在64位的NASM中称其为系统调用<code>syscall</code>。</p>
+<p>在我们的示例代码中有两次使用了系统调用。</p>
+<p>第一次是打印输出字符串:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rdi, <span style="color:#ae81ff">1</span>
+    <span style="color:#a6e22e">mov</span> rsi, message
+    <span style="color:#a6e22e">mov</span> rdx, <span style="color:#ae81ff">13</span>
+    <span style="color:#a6e22e">syscall</span>
+</code></pre></div><p><code>syscall</code>前的寄存器操作是在设定我们以何种方式进行系统调用。rax的值决定使用哪一个系统调用，1对应的就是写入操作；此时rdi设置为1表示标准输出；rsi则存放字符串地址；rdx记录字符串长度。</p>
+<p>第二次是结束程序，相当于<code>exit(0)</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">    <span style="color:#a6e22e">mov</span> rax, <span style="color:#ae81ff">60</span>
+    <span style="color:#a6e22e">xor</span> rdi, rdi
+    <span style="color:#a6e22e">syscall</span>
+</code></pre></div><p>当rax的值为60时表示调用退出操作；此时rdi为0表示以0号状态进行退出，就像C语言中<code>exit(0);</code>。</p>
+<h3 id="定义或声明数据">定义或声明数据</h3>
+<p>我们将数据的定义或声明放在数据段中，它的形式是这样: <code>标签: 类型 值</code>。</p>
+<p><code>db</code>用于定义字节byte，例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">message:
+    <span style="color:#66d9ef">db</span> <span style="color:#e6db74">&#39;H&#39;</span>, <span style="color:#e6db74">&#39;e&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#34;World&#34;</span>, <span style="color:#ae81ff">10</span> <span style="color:#75715e">;</span>
+</code></pre></div><p><code>dw</code>用于定义字word，例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">number_dw:
+    <span style="color:#66d9ef">dw</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>
+</code></pre></div><p><code>dd</code>用于定义双字double word，例如:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm">number_dd:
+    <span style="color:#66d9ef">dd</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>
+</code></pre></div>
   </section>
 </article>
 
