@@ -6,10 +6,19 @@
     <description>Recent content in Categories on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 04 Oct 2021 21:37:28 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 Oct 2021 15:35:44 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>编译</title>
+      <link>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sun, 17 Oct 2021 15:35:44 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Python</title>
@@ -17,15 +26,6 @@
       <pubDate>Mon, 04 Oct 2021 21:37:28 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/categories/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>编译</title>
-      <link>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</link>
-      <pubDate>Sat, 01 May 2021 19:38:19 +0800</pubDate>
-      
-      <guid>http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/</guid>
       <description></description>
     </item>
     

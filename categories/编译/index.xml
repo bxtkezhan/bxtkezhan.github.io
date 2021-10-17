@@ -6,10 +6,19 @@
     <description>Recent content in 编译 on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 01 May 2021 19:38:19 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 Oct 2021 15:35:44 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>汇编语言「Linux/x86-64」・調用C程序</title>
+      <link>http://bxtkezhan.xyz/post/049-asmx64-c/</link>
+      <pubDate>Sun, 17 Oct 2021 15:35:44 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/049-asmx64-c/</guid>
+      <description>在有操作系統的情況下使用純彙編開發程序的情況非常少，即便是不得不用彙編的場景也常常是使用彙編結合高級編程語言的方式進行開發。下面我們來了解一下如何在彙編之中調用C程序以及在C程序中調用彙編。</description>
+    </item>
     
     <item>
       <title>汇编语言「Linux/x86-64」・代码解析</title>
