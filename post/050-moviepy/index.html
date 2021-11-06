@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="关于影像处理除了进行类似计算机视觉与数字图像处理的操作，我们还可以像一些非线性编辑软件一样对视频材料进行剪辑处理，以及添加专场、字幕等操作。通常此类操作都会使用到ffmpeg这款开源的数字媒体处理工具，而它有一个叫做moviepy的接口，可以让我们轻松上手。">
+<meta name="keywords" content="python,moviepy,ffmpeg,视频编辑,非线性编辑,影音处理,video">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>影像处理・视频编辑 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2021-11-05">November 05, 2021</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">影像处理・视频编辑</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/048-face-recognition/">上篇 影像处理・人脸识别</a></p>
+<p>关于影像处理除了进行类似计算机视觉与数字图像处理的操作，我们还可以像一些非线性编辑软件一样对视频材料进行剪辑处理，以及添加专场、字幕等操作。通常此类操作都会使用到ffmpeg这款开源的数字媒体处理工具，而它有一个叫做moviepy的接口，可以让我们轻松上手。</p>
+<h3 id="安装moviepy">安装moviepy</h3>
+<p>使用pip就能完成下载安装，命令如下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install moviepy
+</code></pre></div><p>如果安装过程出现问题可以去到项目网页(<a href="https://github.com/Zulko/moviepy">https://github.com/Zulko/moviepy</a>)查看原因，或者搜索相关信息。</p>
+<h3 id="载入视频">载入视频</h3>
+<p>首先我们可以载入一段视频，然后获取相关信息，如：帧率、时长、分辨率……:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> moviepy.editor <span style="color:#f92672">as</span> mpy
+
+video <span style="color:#f92672">=</span> mpy<span style="color:#f92672">.</span>VideoFileClip(<span style="color:#e6db74">&#39;我的视频.mp4&#39;</span>)
+<span style="color:#66d9ef">print</span>(video<span style="color:#f92672">.</span>fps, video<span style="color:#f92672">.</span>duration, video<span style="color:#f92672">.</span>size)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">15.0 39.93 <span style="color:#f92672">[</span>1368, 768<span style="color:#f92672">]</span>
+</code></pre></div><p><code>mpy.VideoFileClip</code>接收一个字符串类型的视频地址用于载入该视频并实例化一个VideoClip对象。<code>.fps</code>为帧率；<code>.duration</code>为时长；<code>.size</code>为分辨率大小。</p>
+<h3 id="截取视频">截取视频</h3>
+<p>使用<code>.subclip</code>方法可以截取视频:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sub1 <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>subclip(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>)
+<span style="color:#66d9ef">print</span>(sub1<span style="color:#f92672">.</span>duration)
+sub2 <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>subclip(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>)
+<span style="color:#66d9ef">print</span>(sub2<span style="color:#f92672">.</span>duration)
+</code></pre></div><p><code>.subclip</code>用于截取视频并返回对应的VideoClip对象，通过<code>.subclip</code>的参数可以决定我们截取视频的位置。第一个参数表示开始时间；第二个参数表示终止时间，默认为原视频的终止时间。</p>
+<h3 id="导出视频">导出视频</h3>
+<p>使用<code>.write_videofile</code>方法可以将视频对象导出成视频文件:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sub1<span style="color:#f92672">.</span>write_videofile(<span style="color:#e6db74">&#39;sub1.mp4&#39;</span>)
+</code></pre></div><p><code>.write_videofile</code>就收一个字符串类型的参数用于指定视频保存的文件名。</p>
+<h3 id="添加淡入淡出">添加淡入淡出</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sub1_faded <span style="color:#f92672">=</span> sub1<span style="color:#f92672">.</span>fadein(<span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">.</span>fadeout(<span style="color:#ae81ff">0.5</span>)
+sub1_faded<span style="color:#f92672">.</span>write_videofile(<span style="color:#e6db74">&#39;sub1_faded.mp4&#39;</span>)
+</code></pre></div><p>淡入为<code>.fadein</code>，会返回对应的VideoClip对象，可以传入一个浮点型参数用于设定时长；淡出为<code>.fadeout</code>，同样会返回对应的VideoClip对象，也可以传入浮点型参数设定时长。</p>
+<h3 id="拼接视频">拼接视频</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">final <span style="color:#f92672">=</span> mpy<span style="color:#f92672">.</span>concatenate([
+    sub1<span style="color:#f92672">.</span>fadein(<span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">.</span>fadeout(<span style="color:#ae81ff">0.5</span>),
+    sub2<span style="color:#f92672">.</span>fadein(<span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">.</span>fadeout(<span style="color:#ae81ff">0.5</span>),
+])
+final<span style="color:#f92672">.</span>write_videofile(<span style="color:#e6db74">&#39;final.mp4&#39;</span>)
+</code></pre></div><p>使用<code>mpy.concatenate</code>函数可以拼接视频并返回对应的VideoClip对象。它就收一个列表作为输入参数，该列表的每一项都是VideoClip对象。</p>
+<h3 id="继续学习">继续学习</h3>
+<p>更多操作可以去到官方文档(<a href="https://zulko.github.io/moviepy/">https://zulko.github.io/moviepy/</a>)学习。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2021 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 04 Oct 2021 21:37:28 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Nov 2021 13:47:38 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>影像处理・视频编辑</title>
+      <link>http://bxtkezhan.xyz/post/050-moviepy/</link>
+      <pubDate>Fri, 05 Nov 2021 13:47:38 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/050-moviepy/</guid>
+      <description>关于影像处理除了进行类似计算机视觉与数字图像处理的操作，我们还可以像一些非线性编辑软件一样对视频材料进行剪辑处理，以及添加专场、字幕等操作。通常此类操作都会使用到ffmpeg这款开源的数字媒体处理工具，而它有一个叫做moviepy的接口，可以让我们轻松上手。</description>
+    </item>
     
     <item>
       <title>影像处理・人脸识别</title>
