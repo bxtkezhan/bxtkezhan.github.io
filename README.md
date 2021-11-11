@@ -1,2 +1,2 @@
 # bxtkezhan.github.io
-bxtkezhan docs
+bxtkezhan wiki
