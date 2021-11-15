@@ -6,10 +6,26 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 05 Nov 2021 13:47:38 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Nov 2021 17:05:11 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据分析・操作环境准备</title>
+      <link>http://bxtkezhan.xyz/post/051-data-analysis-env/</link>
+      <pubDate>Mon, 15 Nov 2021 17:05:11 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/051-data-analysis-env/</guid>
+      <description>返回教程主页
+上篇 影像处理・视频编辑
+本章介绍一些Python数据分析的入门知识，下面列出本章节会使用的一些依赖库。
+numpy numpy是著名的Python数值计算库，许多的数据计算操作都依赖它实现。使用pip就能完成下载安装，命令如下:
+pip install numpy matplotlib 常用的Python绘图工具，方便进行数据可视化工作。pip的安装指令如下:
+pip install matplotlib SciPy SciPy是一个开源的Python算法库和数学工具包。SciPy包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。
+SciPy的pip安装指令如下:
+pip install scipy </description>
+    </item>
     
     <item>
       <title>影像处理・视频编辑</title>
