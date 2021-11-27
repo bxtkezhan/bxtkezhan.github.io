@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 15 Nov 2021 17:05:11 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 17 Nov 2021 00:25:21 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据分析・多维数组的数值操作</title>
+      <link>http://bxtkezhan.xyz/post/052-data-analysis-array/</link>
+      <pubDate>Wed, 17 Nov 2021 00:25:21 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/052-data-analysis-array/</guid>
+      <description>数组结构可以快速有序的处理一系列的数据。因此，在处理数据的时候常常要用到数组或多维数组，一个常用的例子就是在处理Excel表格数据的时候将其表示为二维数组。</description>
+    </item>
     
     <item>
       <title>数据分析・操作环境准备</title>
