@@ -2,15 +2,15 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="我们可以使用Python来进行一系列的计算器操作，如果足够熟悉Python，那么它将胜过许多高级计算器，甚至某些高级计算器就内置了Python，例如: Casio 卡西欧 FX-9860 GIII 图形计算器。">
-<meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
+<meta name="description" content="We can use python to do some calc operations like a calculator. It will be power than many calculators if you know enough python. And some calculators have embedded python. Casio FX 9860 GIII is an example.">
+<meta name="keywords" content="python,idle,hacker,program,free,easy,start">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
-<title>初学篇・Python计算器 - bxtkezhan@kk</title>
+<title>The Beginning・Python Calculator - bxtkezhan@kk</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -48,7 +48,7 @@
   <div class="meta">
 
     <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-04-03">April 03, 2021</time></span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-01-15">January 15, 2022</time></span>
 
 
     <span class="key">in</span>
@@ -60,97 +60,93 @@
 
 
   </div>
-  <h1 class="headline" itemprop="headline">初学篇・Python计算器</h1>
+  <h1 class="headline" itemprop="headline">The Beginning・Python Calculator</h1>
   <section class="body" itemprop="articleBody">
-    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
-<p><a href="/post/008-first/">上篇 初学篇・第一步“你好，世界”</a></p>
-<iframe class="player" data="L6G25V9tVY0,BV1Zo4y127nj" allowfullscreen></iframe>
-
-<p>我们可以使用Python来进行一系列的计算器操作，如果足够熟悉Python，那么它将胜过许多高级计算器，甚至某些高级计算器就内置了Python，例如: Casio 卡西欧 FX-9860 GIII 图形计算器。</p>
-<h3 id="数字">数字</h3>
-<p>在<a href="https://www.bxtkezhan.xyz/widle/">WIDLE</a>中，输入表达式，点击<code>run</code>按钮运行就会得到答案，使用<code>print</code>函数可以使答案显示出来。表达式的语法很直接: 运算符<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>的用法和普通计算器一样，括号<code>()</code>用来处理优先级。例如:</p>
+    <p>We can use python to do some calc operations like a calculator. It will be power than many calculators if you know enough python. And some calculators have embedded python. Casio FX 9860 GIII is an example.</p>
+<h3 id="the-number">The Number</h3>
+<p>In <a href="https://www.bxtkezhan.xyz/widle/">WIDLE</a>(WIDLE is a python ide run in a web browser), you can input expressions and click the <code>run</code> button to get answers. Use the <code>print</code> function to show the answers. The grammar of these expressions is so direct. Some symbols like <code>+, -, *, /</code> just like in calculator. And by the brackets like <code>()</code> can deal with the priority. An example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">6</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">7</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>3
 -1
 30
 0.875
 0.19999999999999996
-</code></pre><p>整数（如，2、4、20 ）的类型是整型（int），带小数（如，5.0、1.6 ）的类型是浮点型（float）。</p>
-<p>除法运算<code>/</code>返回浮点数。用<code>//</code>运算符执行整数除法的结果是整数（忽略小数），计算余数用<code>%</code>:</p>
+</code></pre><p>Integer like these 2, 4, 20 is <code>int</code> type, float like these 5.0, 1.6 is <code>float</code> type.</p>
+<p>Do divide using the symbol <code>/</code> will return a float value, but <code>//</code> will return an integer value. Use <code>%</code> to do modulo operation.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">3</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>3.3333333333333335
 3
 1
-</code></pre><p>等号<code>=</code>用于给变量赋值。变量的概念可以参照数学中变量的概念，我们可以用变量来指代某一个值，<code>A = B</code>的意思就是把值/对象赋给A，之后就可以用<code>A</code>指代<code>B</code>:</p>
+</code></pre><p>The equal symbol <code>=</code> is used to assign the variable. The python variable is like the variable in math, and we can use a python variable to refer to a value. <code>A = B</code> is assigned a value <code>B</code> to a variable <code>A</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">width <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 height <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 area <span style="color:#f92672">=</span> width <span style="color:#f92672">*</span> height
 <span style="color:#66d9ef">print</span>(area)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>100
-</code></pre><p>需要注意Python当中变量名字母区分大小写，以下是比较推荐的Python变量命名规范:</p>
-<ul>
-<li>变量名以字母或下划线字符开头</li>
-<li>变量名只包含字母数字字符和下划线(A-z、0-9和_)</li>
-</ul>
-<h3 id="字符串">字符串</h3>
-<p>除了数字，Python还可以操作字符串。字符串有多种表现形式，用单引号<code>'……'</code>或双引号<code>&quot;……&quot;</code>标注的效果相同:</p>
+</code></pre><p>The variable in the python program is case-sensitive. Some recommend formats of the variable are below.</p>
+<ol>
+<li>Put letters or underscore to first;</li>
+<li>Characters of the variable only letters, underline, and numbers(A-z, 0-9, and _);</li>
+</ol>
+<h3 id="the-string">The String</h3>
+<p>In addition to the number, there is the string in python. The string format of python is multiple, for example, single quotation marks <code>'...'</code> and double quotation marks <code>&quot;...&quot;</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Hi! kk.&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Hi! jojo.&#34;</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>Hi! kk.
 Hi! jojo.
-</code></pre><p>使用反斜杠<code>\</code>进行转义可以输出一些特殊字符:</p>
+</code></pre><p>Convert some characters to special characters by a backslash symbol <code>\</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">3&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">3&#39;</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>0	1	2	3
 0
 1
 2
 3
-</code></pre><p>字符串字面值可以实现跨行连续输入。实现方式是用三引号:<code>&quot;&quot;&quot;...&quot;&quot;&quot;</code>或<code>'''...'''</code>，字符串行尾会自动加上回车换行，如果不需要回车换行，在行尾添加<code>\</code>即可。示例如下:</p>
+</code></pre><p>We can new lines in a string when using triple quotation marks. If you want it not to be a new line, add a backslash symbol <code>\</code> at the end of the previous line. Below is an example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">Usage: thingy [OPTIONS]
 </span><span style="color:#e6db74">     -h                        Display this usage message
 </span><span style="color:#e6db74">     -H hostname               Hostname to connect to
 </span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>Usage: thingy [OPTIONS]
      -h                        Display this usage message
      -H hostname               Hostname to connect to
-</code></pre><p>字符串可以用<code>+</code>拼接，也可以用<code>*</code>重复:</p>
+</code></pre><p>Concatenation strings using <code>+</code>, using <code>*</code> to repeat it:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;123&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;456&#39;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;abc&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>123456
 abcabcabc
-</code></pre><p>我们可以使用<code>len</code>函数计算字符串的长度:</p>
+</code></pre><p>We can use the <code>len</code> function to calculate string length</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numbers <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1234567890&#39;</span>
 <span style="color:#66d9ef">print</span>(len(numbers))
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>10
-</code></pre><h3 id="类型">类型</h3>
-<p>可以使用<code>type</code>函数输出对象的类型名称:</p>
+</code></pre><h3 id="the-types">The Types</h3>
+<p>Use <code>type</code> function to print type name of objects:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
 <span style="color:#66d9ef">print</span>(type(a))
 b <span style="color:#f92672">=</span> <span style="color:#ae81ff">123.321</span>
 <span style="color:#66d9ef">print</span>(type(b))
 c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123.321&#34;</span>
 <span style="color:#66d9ef">print</span>(type(c))
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>&lt;class 'int'&gt;
 &lt;class 'float'&gt;
 &lt;class 'str'&gt;
-</code></pre><p>可以使用<code>int</code>、<code>float</code>、<code>str</code>函数进行类型转换:</p>
+</code></pre><p>We can use <code>int</code>, <code>float</code>, <code>str</code> functions to do type converting:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
 <span style="color:#66d9ef">print</span>(a, type(a))
 b <span style="color:#f92672">=</span> float(a)
@@ -161,14 +157,13 @@ e <span style="color:#f92672">=</span> float(c)
 <span style="color:#66d9ef">print</span>(e, type(e))
 f <span style="color:#f92672">=</span> int(e)
 <span style="color:#66d9ef">print</span>(f, type(f))
-</code></pre></div><p>运行结果:</p>
+</code></pre></div><p>The operation result:</p>
 <pre><code>123 &lt;class 'int'&gt;
 123.0 &lt;class 'float'&gt;
 123.0 &lt;class 'str'&gt;
 123.0 &lt;class 'float'&gt;
 123 &lt;class 'int'&gt;
-</code></pre><p><a href="/post/010-logic-compare/">下篇 初学篇・逻辑运算&amp;比较运算</a></p>
-
+</code></pre>
   </section>
 </article>
 
