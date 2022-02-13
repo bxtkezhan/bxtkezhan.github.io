@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>项目 on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.xyz/categories/%E9%A1%B9%E7%9B%AE/</link>
+    <description>Recent content in 项目 on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 13 Feb 2022 16:04:08 +0800</lastBuildDate>
+    
+	<atom:link href="http://bxtkezhan.xyz/categories/%E9%A1%B9%E7%9B%AE/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>项目・Smartfile</title>
+      <link>http://bxtkezhan.xyz/post/project-smartfile/</link>
+      <pubDate>Sun, 13 Feb 2022 16:04:08 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/project-smartfile/</guid>
+      <description>smartfile文件可以帮助我们将网络上的资源转换成桌面快捷方式，类似于创建了网络版本的应用程序；还能将一些日常操作整理成快捷方式，提升用户使用电脑的效率。</description>
+    </item>
+    
+  </channel>
+</rss>
