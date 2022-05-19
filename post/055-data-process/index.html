@@ -68,7 +68,125 @@
 <p><a href="/post/053-matplotlib/">上篇 数据分析・数据可视化</a></p>
 <p>现在我们来了解如何在Python中进行数据的载入和导出操作，我们以Json和CSV这两个常见的文本数据类型进行讲解。</p>
 <h3 id="json数据的载入与导出">JSON数据的载入与导出</h3>
-<p>首先，我们来</p>
+<p>python的json模块提供了一种很简单的方式来编码和解码JSON数据。 其中两个主要的函数是<code>json.dumps()</code>和<code>json.loads()</code>，下面演示如何将一个Python数据结构转换为JSON：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+
+data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;author&#39;</span>: <span style="color:#e6db74">&#39;kk&#39;</span>, <span style="color:#e6db74">&#39;level&#39;</span>: <span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;is old man&#39;</span>: True}
+jsonStr <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(data)
+<span style="color:#66d9ef">print</span>(type(jsonStr), jsonStr)
+
+data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(jsonStr)
+<span style="color:#66d9ef">print</span>(type(data), data)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&lt;class <span style="color:#e6db74">&#39;str&#39;</span>&gt; <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;kk&#34;</span>, <span style="color:#e6db74">&#34;level&#34;</span>: 10, <span style="color:#e6db74">&#34;is old man&#34;</span>: true<span style="color:#f92672">}</span>
+&lt;class <span style="color:#e6db74">&#39;dict&#39;</span>&gt; <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;author&#39;</span>: <span style="color:#e6db74">&#39;kk&#39;</span>, <span style="color:#e6db74">&#39;level&#39;</span>: 10, <span style="color:#e6db74">&#39;is old man&#39;</span>: True<span style="color:#f92672">}</span>
+</code></pre></div><p><code>json.dumps</code>用于将python对象「通常为字典，列表」转换为json格式的字符串；<code>json.loads</code>将json格式的字符串解析成python对象。</p>
+<p>几个常见的python类型与json类型的互换对照:</p>
+<table>
+<thead>
+<tr>
+<th align="left">python</th>
+<th align="left">json</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">None</td>
+<td align="left">null</td>
+</tr>
+<tr>
+<td align="left">True</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left">false</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left">int</td>
+<td align="left">numbers</td>
+</tr>
+<tr>
+<td align="left">float</td>
+<td align="left">numbers</td>
+</tr>
+<tr>
+<td align="left">str</td>
+<td align="left">string</td>
+</tr>
+<tr>
+<td align="left">list</td>
+<td align="left">array</td>
+</tr>
+<tr>
+<td align="left">dict</td>
+<td align="left">object</td>
+</tr>
+</tbody>
+</table>
+<p>如果想要从磁盘文件载入json数据，或者将数据导出为json格式的磁盘文件可以使用<code>json.dump()</code>与<code>json.load()</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+
+
+data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;author&#39;</span>: <span style="color:#e6db74">&#39;kk&#39;</span>, <span style="color:#e6db74">&#39;level&#39;</span>: <span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;is old man&#39;</span>: True}
+<span style="color:#66d9ef">print</span>(data)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;myjson.json&#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    json<span style="color:#f92672">.</span>dump(data, f)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;myjson.json&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
+    <span style="color:#66d9ef">print</span>(data)
+</code></pre></div><h3 id="csv数据的读取">CSV数据的读取</h3>
+<p>对于大多数的CSV格式的数据读写问题，都可以使用python的csv库。例如：假设你在一个名叫stocks.csv文件中有一些股票市场数据，就像这样：</p>
+<pre><code class="language-csv" data-lang="csv">Symbol,Price,Date,Time,Change,Volume
+&quot;AA&quot;,39.48,&quot;6/11/2007&quot;,&quot;9:36am&quot;,-0.18,181800
+&quot;AIG&quot;,71.38,&quot;6/11/2007&quot;,&quot;9:36am&quot;,-0.15,195500
+&quot;AXP&quot;,62.58,&quot;6/11/2007&quot;,&quot;9:36am&quot;,-0.46,935000
+&quot;BA&quot;,98.31,&quot;6/11/2007&quot;,&quot;9:36am&quot;,+0.12,104800
+&quot;C&quot;,53.08,&quot;6/11/2007&quot;,&quot;9:36am&quot;,-0.25,360900
+&quot;CAT&quot;,78.29,&quot;6/11/2007&quot;,&quot;9:36am&quot;,-0.23,225400
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> csv
+
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;./stocks.csv&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    c <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>reader(f, delimiter<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;,&#39;</span>)
+    header <span style="color:#f92672">=</span> next(c)
+    <span style="color:#66d9ef">print</span>(header)
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> c:
+        <span style="color:#66d9ef">print</span>(row)
+</code></pre></div><p>函数<code>csv.reader</code>需要可以接收文件句柄并进行读取，通过<code>delimiter</code>参数设定分隔符，该函数返回一个可迭代的对象，一般先使用<code>next</code>函数抽取表头信息，然后在一个for语句中遍历每一行数据，每一行的数据将以列表的消失展现，就像下面这样:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Symbol&#39;</span>, <span style="color:#e6db74">&#39;Price&#39;</span>, <span style="color:#e6db74">&#39;Date&#39;</span>, <span style="color:#e6db74">&#39;Time&#39;</span>, <span style="color:#e6db74">&#39;Change&#39;</span>, <span style="color:#e6db74">&#39;Volume&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AA&#39;</span>, <span style="color:#e6db74">&#39;39.48&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.18&#39;</span>, <span style="color:#e6db74">&#39;181800&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AIG&#39;</span>, <span style="color:#e6db74">&#39;71.38&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.15&#39;</span>, <span style="color:#e6db74">&#39;195500&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AXP&#39;</span>, <span style="color:#e6db74">&#39;62.58&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.46&#39;</span>, <span style="color:#e6db74">&#39;935000&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;BA&#39;</span>, <span style="color:#e6db74">&#39;98.31&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;+0.12&#39;</span>, <span style="color:#e6db74">&#39;104800&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;53.08&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.25&#39;</span>, <span style="color:#e6db74">&#39;360900&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;CAT&#39;</span>, <span style="color:#e6db74">&#39;78.29&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.23&#39;</span>, <span style="color:#e6db74">&#39;225400&#39;</span><span style="color:#f92672">]</span>
+</code></pre></div><p>通过观察可以发现解析后的数据统一为字符串类型，这并不符合原本数据中的描述，可以额外再做数据转换处理:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> csv
+
+
+types <span style="color:#f92672">=</span> (str, float, str, str, float, int)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;./stocks.csv&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    c <span style="color:#f92672">=</span> csv<span style="color:#f92672">.</span>reader(f, delimiter<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;,&#39;</span>)
+    header <span style="color:#f92672">=</span> next(c)
+    <span style="color:#66d9ef">print</span>(header)
+    <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> c:
+        row <span style="color:#f92672">=</span> [types[i](v) <span style="color:#66d9ef">for</span> i, v <span style="color:#f92672">in</span> enumerate(row)]
+        <span style="color:#66d9ef">print</span>(row)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Symbol&#39;</span>, <span style="color:#e6db74">&#39;Price&#39;</span>, <span style="color:#e6db74">&#39;Date&#39;</span>, <span style="color:#e6db74">&#39;Time&#39;</span>, <span style="color:#e6db74">&#39;Change&#39;</span>, <span style="color:#e6db74">&#39;Volume&#39;</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AA&#39;</span>, 39.48, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, -0.18, 181800<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AIG&#39;</span>, 71.38, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, -0.15, 195500<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AXP&#39;</span>, 62.58, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, -0.46, 935000<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;BA&#39;</span>, 98.31, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, 0.12, 104800<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;C&#39;</span>, 53.08, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, -0.25, 360900<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;CAT&#39;</span>, 78.29, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, -0.23, 225400<span style="color:#f92672">]</span>
+</code></pre></div><h3 id="继续学习">继续学习</h3>
+<p>实际上python内置的json与csv模块还有很多细节操作值得去学习，感兴趣的朋友可以去到python官方文档页面进行详细的了解。</p>
+<p><a href="/post/056-matrix-operate/">下篇 数据分析・矩阵计算</a></p>
 
   </section>
 </article>

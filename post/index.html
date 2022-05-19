@@ -48,6 +48,20 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/056-matrix-operate/">056 Matrix Operate (Draft)</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-05-19">May 19, 2022</time></span>
+
+  </div>
+  <section class="summary">
+     
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/project-smartfile/">项目・Smartfile</a></h2>
   <div class="meta">
 
@@ -73,7 +87,11 @@
     返回教程主页
 上篇 数据分析・数据可视化
 现在我们来了解如何在Python中进行数据的载入和导出操作，我们以Json和CSV这两个常见的文本数据类型进行讲解。
-JSON数据的载入与导出 首先，我们来 
+JSON数据的载入与导出 python的json模块提供了一种很简单的方式来编码和解码JSON数据。 其中两个主要的函数是json.dumps()和json.loads()，下面演示如何将一个Python数据结构转换为JSON：
+import json data = {&#39;author&#39;: &#39;kk&#39;, &#39;level&#39;: 10, &#39;is old man&#39;: True} jsonStr = json.dumps(data) print(type(jsonStr), jsonStr) data = json.loads(jsonStr) print(type(data), data) 运行后输出:
+&lt;class &#39;str&#39;&gt; {&#34;author&#34;: &#34;kk&#34;, &#34;level&#34;: 10, &#34;is old man&#34;: true} &lt;class &#39;dict&#39;&gt; {&#39;author&#39;: &#39;kk&#39;, &#39;level&#39;: 10, &#39;is old man&#39;: True} json.dumps用于将python对象「通常为字典，列表」转换为json格式的字符串；json.loads将json格式的字符串解析成python对象。
+几个常见的python类型与json类型的互换对照:
+   python json     None null   True true   false false   int numbers   float numbers   str string   list array   dict object    如果想要从磁盘文件载入json数据，或者将数据导出为json格式的磁盘文件可以使用json.  <a href="/post/055-data-process/">Read More...</a>
   </section>
 </article>
 
@@ -130,20 +148,6 @@ JSON数据的载入与导出 首先，我们来
   </div>
   <section class="summary">
     本章介绍一些Python数据分析的入门知识，下面列出本章节会使用的一些依赖库。 
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/050-moviepy/">影像处理・视频编辑</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2021-11-05">November 05, 2021</time></span>
-
-  </div>
-  <section class="summary">
-    关于影像处理除了进行类似计算机视觉与数字图像处理的操作，我们还可以像一些非线性编辑软件一样对视频材料进行剪辑处理，以及添加专场、字幕等操作。通常此类操作都会使用到ffmpeg这款开源的数字媒体处理工具，而它有一个叫做moviepy的接口，可以让我们轻松上手。 
   </section>
 </article>
 
