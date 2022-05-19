@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="欢迎来到 `bxtkezhan`, 一个独立、开放的知识分享小站。">
+<meta name="description" content="现在我们来了解如何在Python中进行数据的载入和导出操作，我们以Json和CSV这两个常见的文本数据类型进行讲解。">
 <meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
@@ -155,7 +155,7 @@ data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;auth
     <span style="color:#66d9ef">print</span>(header)
     <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> c:
         <span style="color:#66d9ef">print</span>(row)
-</code></pre></div><p>函数<code>csv.reader</code>需要可以接收文件句柄并进行读取，通过<code>delimiter</code>参数设定分隔符，该函数返回一个可迭代的对象，一般先使用<code>next</code>函数抽取表头信息，然后在一个for语句中遍历每一行数据，每一行的数据将以列表的消失展现，就像下面这样:</p>
+</code></pre></div><p>函数<code>csv.reader</code>可以接收文件句柄并进行读取，通过<code>delimiter</code>参数设定分隔符，该函数返回一个可迭代的对象，一般先使用<code>next</code>函数抽取表头信息，然后在一个for语句中遍历每一行数据，每一行的数据将以列表的进行展现，就像下面这样:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;Symbol&#39;</span>, <span style="color:#e6db74">&#39;Price&#39;</span>, <span style="color:#e6db74">&#39;Date&#39;</span>, <span style="color:#e6db74">&#39;Time&#39;</span>, <span style="color:#e6db74">&#39;Change&#39;</span>, <span style="color:#e6db74">&#39;Volume&#39;</span><span style="color:#f92672">]</span>
 <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AA&#39;</span>, <span style="color:#e6db74">&#39;39.48&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.18&#39;</span>, <span style="color:#e6db74">&#39;181800&#39;</span><span style="color:#f92672">]</span>
 <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;AIG&#39;</span>, <span style="color:#e6db74">&#39;71.38&#39;</span>, <span style="color:#e6db74">&#39;6/11/2007&#39;</span>, <span style="color:#e6db74">&#39;9:36am&#39;</span>, <span style="color:#e6db74">&#39;-0.15&#39;</span>, <span style="color:#e6db74">&#39;195500&#39;</span><span style="color:#f92672">]</span>

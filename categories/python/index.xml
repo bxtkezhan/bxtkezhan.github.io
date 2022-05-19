@@ -17,14 +17,7 @@
       <pubDate>Tue, 18 Jan 2022 00:29:47 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/055-data-process/</guid>
-      <description>返回教程主页
-上篇 数据分析・数据可视化
-现在我们来了解如何在Python中进行数据的载入和导出操作，我们以Json和CSV这两个常见的文本数据类型进行讲解。
-JSON数据的载入与导出 python的json模块提供了一种很简单的方式来编码和解码JSON数据。 其中两个主要的函数是json.dumps()和json.loads()，下面演示如何将一个Python数据结构转换为JSON：
-import json data = {&amp;#39;author&amp;#39;: &amp;#39;kk&amp;#39;, &amp;#39;level&amp;#39;: 10, &amp;#39;is old man&amp;#39;: True} jsonStr = json.dumps(data) print(type(jsonStr), jsonStr) data = json.loads(jsonStr) print(type(data), data) 运行后输出:
-&amp;lt;class &amp;#39;str&amp;#39;&amp;gt; {&amp;#34;author&amp;#34;: &amp;#34;kk&amp;#34;, &amp;#34;level&amp;#34;: 10, &amp;#34;is old man&amp;#34;: true} &amp;lt;class &amp;#39;dict&amp;#39;&amp;gt; {&amp;#39;author&amp;#39;: &amp;#39;kk&amp;#39;, &amp;#39;level&amp;#39;: 10, &amp;#39;is old man&amp;#39;: True} json.dumps用于将python对象「通常为字典，列表」转换为json格式的字符串；json.loads将json格式的字符串解析成python对象。
-几个常见的python类型与json类型的互换对照:
-   python json     None null   True true   false false   int numbers   float numbers   str string   list array   dict object    如果想要从磁盘文件载入json数据，或者将数据导出为json格式的磁盘文件可以使用json.</description>
+      <description>现在我们来了解如何在Python中进行数据的载入和导出操作，我们以Json和CSV这两个常见的文本数据类型进行讲解。</description>
     </item>
     
     <item>
