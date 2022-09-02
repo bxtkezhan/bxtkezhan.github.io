@@ -17,7 +17,7 @@
       <pubDate>Thu, 01 Sep 2022 15:35:50 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/057-gnu-lightning/</guid>
-      <description>在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用机巧，现在我们进一步来学习使用及时编译机巧「JIT」。</description>
+      <description>在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用技巧，现在我们进一步来学习使用及时编译技巧「JIT」。</description>
     </item>
     
     <item>

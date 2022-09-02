@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用机巧，现在我们进一步来学习使用及时编译机巧「JIT」。">
+<meta name="description" content="在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用技巧，现在我们进一步来学习使用及时编译技巧「JIT」。">
 <meta name="keywords" content="汇编,编译,连接,编程,asm,JIT,linux">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.68.3" />
@@ -64,7 +64,7 @@
   </div>
   <h1 class="headline" itemprop="headline">JIT・GNU/Lightning</h1>
   <section class="body" itemprop="articleBody">
-    <p>在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用机巧，现在我们进一步来学习使用及时编译机巧「JIT」。</p>
+    <p>在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用技巧，现在我们进一步来学习使用及时编译技巧「JIT」。</p>
 <h3 id="关于jit的简介来自-wiki">关于JIT的简介「来自 wiki」</h3>
 <blockquote>
 <p>在计算机技术中，即时编译（英语：just-in-time compilation，缩写为JIT；又译及时编译、实时编译），也称为动态翻译或运行时编译，是一种执行计算机代码的方法，这种方法涉及在程序执行过程中（在执行期）而不是在执行之前进行编译。通常，这包括源代码或更常见的字节码到机器码的转换，然后直接执行。实现JIT编译器的系统通常会不断地分析正在执行的代码，并确定代码的某些部分，在这些部分中，编译或重新编译所获得的加速将超过编译该代码的开销。</p>
