@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 19 May 2022 19:26:33 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Sep 2022 18:59:05 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据分析・最小二乘拟合</title>
+      <link>http://bxtkezhan.xyz/post/060-least-squares/</link>
+      <pubDate>Tue, 20 Sep 2022 18:59:05 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/060-least-squares/</guid>
+      <description>下面我们使用最小二乘拟合的方法去拟合一系列的数据点，该操作常用于在一组数据点中窥见变化趋势。</description>
+    </item>
     
     <item>
       <title>数据分析・矩阵操作</title>

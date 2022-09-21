@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="下面我们使用最小二乘拟合的方法去拟合一系列的数据点，该操作常用于在一组数据点中窥见变化趋势。">
+<meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.68.3" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>数据分析・最小二乘拟合 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-09-20">September 20, 2022</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">数据分析・最小二乘拟合</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/056-matrix-operate/">上篇 数据分析・矩阵操作</a></p>
+<p>下面我们使用最小二乘拟合的方法去拟合一系列的数据点，该操作常用于在一组数据点中窥见变化趋势。</p>
+<h3 id="构造数据集">构造数据集</h3>
+<p>我们先在 $[-5, 5]$ 范围内容对函数 $y = x^2 + 2x$ 进行均匀随机采样，获得100个数据点:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random((<span style="color:#ae81ff">100</span>,)) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(x<span style="color:#f92672">.</span>max(), x<span style="color:#f92672">.</span>min())
+
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sort(x)
+y <span style="color:#f92672">=</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> x
+</code></pre></div><p><code>x</code>为该组数据点的横座标值，<code>y</code>为对应的纵座标值。</p>
+<p>我们给该组数据添加一点随机扰动，让它至少不完全落在函数 $y = x^2 + 2x$ 上:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y <span style="color:#f92672">+=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random(y<span style="color:#f92672">.</span>shape) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</code></pre></div><p>可以使用matplotlib可视化一下:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(x, y)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>至此，我们得到了一系列数据点。当然，如果手头正好有适合的数据也可以考虑用它来替代刚刚生成的数据点。</p>
+<h3 id="拟合多项式">拟合多项式</h3>
+<p>现在我们构造数据集，然后用将这些点拟合成一个二次多项式: $y = ax^2 + bx$，我们需要求解系数a与b的值。</p>
+<p>$$
+\begin{align}
+y = ax^2 + bx \tag 1 \\<br>
+式(1)的矩阵形式 \Rightarrow y = \begin{bmatrix} x&amp;x^2 \end{bmatrix} \begin{bmatrix} b \\ a \end{bmatrix} \tag 2 \\<br>
+令A = \begin{bmatrix} x&amp;x^2 \end{bmatrix} , \hat{c} = \begin{bmatrix} b \\ a \end{bmatrix} \Rightarrow y = A\hat{c} \tag 3
+\end{align}
+$$</p>
+<p>首先我们构造由$x^2$与$x$组成的矩阵$A$:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate([x, x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>])<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</code></pre></div><p>矩阵$A$的第0列为$x$，第1列为$x^2$。</p>
+<p>我们使用公式 $(A^TA)^{-1}A^Ty = \hat{c}$ 求解系数 $\hat{c} = \begin{vmatrix} b \\ a \end{vmatrix}$:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">b, a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>inv(A<span style="color:#f92672">.</span>T <span style="color:#960050;background-color:#1e0010">@</span> A) <span style="color:#960050;background-color:#1e0010">@</span> A<span style="color:#f92672">.</span>T <span style="color:#960050;background-color:#1e0010">@</span> y
+<span style="color:#66d9ef">print</span>(a, b)
+</code></pre></div><p><strong>Note:</strong> 此处的$(A^TA)^{-1}$指的是求$A^TA$的逆矩阵，可用numpy的<code>linalg.inv</code>函数计算；另外由于使用的是numpy数组对象所以需要使用运算符<code>@</code>执行矩阵乘法。</p>
+<p>现在我们可以使用系数<code>a</code>与<code>b</code>重新生成对应的纵座标<code>_y</code>，并进行可视化:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_y <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> b <span style="color:#f92672">*</span> x
+plt<span style="color:#f92672">.</span>plot(x, y, <span style="color:#e6db74">&#39;o&#39;</span>, x, _y, <span style="color:#e6db74">&#39;-&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/least_squares.png" alt="least\_squares.png"></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2022 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
