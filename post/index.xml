@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>061 Cluster Analysis</title>
+      <title>数据分析・聚类分析</title>
       <link>http://bxtkezhan.xyz/post/061-cluster-analysis/</link>
       <pubDate>Tue, 20 Sep 2022 18:59:48 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/061-cluster-analysis/</guid>
-      <description></description>
+      <description>上一节中介绍了最小二乘法，本节将介绍另一个数据分析方法——聚类分析。该方法常用于处理具备几何特征关系的数据点，我们以最基础的k均值聚类为例进行说明。</description>
     </item>
     
     <item>
