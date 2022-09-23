@@ -6,10 +6,19 @@
     <description>Recent content in Python on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Sep 2022 18:59:48 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 23 Sep 2022 23:05:46 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>人工神经网络・操作环境准备</title>
+      <link>http://bxtkezhan.xyz/post/062-artificial-neural-network-env/</link>
+      <pubDate>Fri, 23 Sep 2022 23:05:46 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/062-artificial-neural-network-env/</guid>
+      <description>本章介绍一些人工神经网络开发的技术，下面列出本章节会使用的一些依赖库。</description>
+    </item>
     
     <item>
       <title>数据分析・聚类分析</title>
