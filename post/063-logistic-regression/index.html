@@ -117,7 +117,7 @@ X = \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; 0 \\ 1 &amp; 1 \end{bmatri
 $$</p>
 <p>在计算完损失函数值后，我们就对损失函数求参数$\{W,b\}$的梯度$\{\Delta W,\Delta b\}$，然后用当前的参数分别减去各自的梯度用以得到更新后的参数:</p>
 <p>$$
-W_t = W_{t-4} - \lambda \Delta W \ ; \
+W_t = W_{t-1} - \lambda \Delta W \ ; \
 b_t = b_{t-1} - \lambda \Delta b
 $$</p>
 <p>通常在使用梯度进行参数更新的时候我们不希望使用全部的梯度，这样会使得数值跨度太大，因此我们通常会将梯度乘上一个小于1的正数$\lambda$，很多地方称$\lambda$为学习率「learning rate」。</p>
