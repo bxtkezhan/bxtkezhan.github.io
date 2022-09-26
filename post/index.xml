@@ -6,10 +6,19 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Sep 2022 23:05:46 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Sep 2022 15:02:00 +0800</lastBuildDate>
     
 	<atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>人工神经网络・逻辑回归</title>
+      <link>http://bxtkezhan.xyz/post/063-logistic-regression/</link>
+      <pubDate>Mon, 26 Sep 2022 15:02:00 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/063-logistic-regression/</guid>
+      <description>先前我们在最小二乘拟合那一节中了解到如何使用最小二乘的方法拟合多项式方程，那么今天我们再来学习一种「拟合」方程的方法——逻辑回归。</description>
+    </item>
     
     <item>
       <title>人工神经网络・操作环境准备</title>
