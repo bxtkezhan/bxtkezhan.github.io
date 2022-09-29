@@ -5,7 +5,7 @@
 <meta name="description" content="把图像隐写术与二维码技术结合就能实现将文本内容转换成二维码，然后隐藏到载体图像的图文隐写术。">
 <meta name="keywords" content="python,隐写术,steganography,qrcode,image,pillow,numpy">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,7 +69,7 @@
 <p>把图像隐写术与二维码技术结合就能实现将文本内容转换成二维码，然后隐藏到载体图像的图文隐写术。</p>
 <h3 id="载入图像并生成二维码">载入图像并生成二维码</h3>
 <p>首先，我们需要加载载体图像，并根据指定的文本内容生成二维码:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_qrcode</span>(text:str, side:int):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_qrcode</span>(text:str, side:int):
     image <span style="color:#f92672">=</span> qrcode<span style="color:#f92672">.</span>make(text)
     image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>resize((side, side))
     <span style="color:#66d9ef">return</span> image
@@ -82,8 +82,8 @@ fg <span style="color:#f92672">=</span> gen_qrcode(<span style="color:#e6db74">&
 <h3 id="解析二维码">解析二维码</h3>
 <p>我们仍旧可以使用之前的<a href="/post/039-image-steganography/">「隐写术・图像隐写术」</a>说道操作将二维码取出。在解析二维码时，我们可以使用pyzbar「中文编码可能会有问题」也可以直接用手机扫描。</p>
 <h3 id="代码清单">代码清单</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
 <span style="color:#f92672">import</span> qrcode
 
 
@@ -109,7 +109,7 @@ fg <span style="color:#f92672">=</span> gen_qrcode(<span style="color:#e6db74">&
     r2, c2 <span style="color:#f92672">=</span> binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
     r, c <span style="color:#f92672">=</span> min(r1, r2), min(c1, c2)
     final <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(container)
-    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, None]
+    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, <span style="color:#66d9ef">None</span>]
     <span style="color:#66d9ef">return</span> final
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_binary</span>(frame:Image<span style="color:#f92672">.</span>Image):
@@ -136,7 +136,7 @@ _binary<span style="color:#f92672">.</span>show()
 <span style="color:#f92672">from</span> pyzbar.pyzbar <span style="color:#f92672">import</span> decode
 
 <span style="color:#66d9ef">for</span> code <span style="color:#f92672">in</span> decode(_binary):
-    <span style="color:#66d9ef">print</span>(code<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>decode())
+    print(code<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>decode())
 </code></pre></div><p><a href="/post/042-image-game-steganography/">下篇 隐写术・将游戏存入图像</a></p>
 
   </section>

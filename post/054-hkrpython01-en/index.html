@@ -5,7 +5,7 @@
 <meta name="description" content="We can use python to do some calc operations like a calculator. It will be power than many calculators if you know enough python. And some calculators have embedded python. Casio FX 9860 GIII is an example.">
 <meta name="keywords" content="python,idle,hacker,program,free,easy,start">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -67,33 +67,33 @@
     <p>We can use python to do some calc operations like a calculator. It will be power than many calculators if you know enough python. And some calculators have embedded python. Casio FX 9860 GIII is an example.</p>
 <h3 id="the-number">The Number</h3>
 <p>In <a href="https://www.bxtkezhan.xyz/widle/">WIDLE</a>(WIDLE is a python ide run in a web browser), you can input expressions and click the <code>run</code> button to get answers. Use the <code>print</code> function to show the answers. The grammar of these expressions is so direct. Some symbols like <code>+, -, *, /</code> just like in calculator. And by the brackets like <code>()</code> can deal with the priority. An example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">6</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">7</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>)
+print(<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>)
+print(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">6</span>)
+print(<span style="color:#ae81ff">7</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>)
+print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>3
+<pre tabindex="0"><code>3
 -1
 30
 0.875
 0.19999999999999996
 </code></pre><p>Integer like these 2, 4, 20 is <code>int</code> type, float like these 5.0, 1.6 is <code>float</code> type.</p>
 <p>Do divide using the symbol <code>/</code> will return a float value, but <code>//</code> will return an integer value. Use <code>%</code> to do modulo operation.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">3</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">10</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>)
+print(<span style="color:#ae81ff">10</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">3</span>)
+print(<span style="color:#ae81ff">10</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>3.3333333333333335
+<pre tabindex="0"><code>3.3333333333333335
 3
 1
 </code></pre><p>The equal symbol <code>=</code> is used to assign the variable. The python variable is like the variable in math, and we can use a python variable to refer to a value. <code>A = B</code> is assigned a value <code>B</code> to a variable <code>A</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">width <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">width <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 height <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
 area <span style="color:#f92672">=</span> width <span style="color:#f92672">*</span> height
-<span style="color:#66d9ef">print</span>(area)
+print(area)
 </code></pre></div><p>The operation result:</p>
-<pre><code>100
+<pre tabindex="0"><code>100
 </code></pre><p>The variable in the python program is case-sensitive. Some recommend formats of the variable are below.</p>
 <ol>
 <li>Put letters or underscore to first;</li>
@@ -101,66 +101,66 @@ area <span style="color:#f92672">=</span> width <span style="color:#f92672">*</s
 </ol>
 <h3 id="the-string">The String</h3>
 <p>In addition to the number, there is the string in python. The string format of python is multiple, for example, single quotation marks <code>'...'</code> and double quotation marks <code>&quot;...&quot;</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Hi! kk.&#39;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Hi! jojo.&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;Hi! kk.&#39;</span>)
+print(<span style="color:#e6db74">&#34;Hi! jojo.&#34;</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>Hi! kk.
+<pre tabindex="0"><code>Hi! kk.
 Hi! jojo.
 </code></pre><p>Convert some characters to special characters by a backslash symbol <code>\</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">3&#39;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">3&#39;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">3&#39;</span>)
+print(<span style="color:#e6db74">&#39;0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">3&#39;</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>0	1	2	3
+<pre tabindex="0"><code>0	1	2	3
 0
 1
 2
 3
 </code></pre><p>We can new lines in a string when using triple quotation marks. If you want it not to be a new line, add a backslash symbol <code>\</code> at the end of the previous line. Below is an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">Usage: thingy [OPTIONS]
 </span><span style="color:#e6db74">     -h                        Display this usage message
 </span><span style="color:#e6db74">     -H hostname               Hostname to connect to
 </span><span style="color:#e6db74">&#34;&#34;&#34;</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>Usage: thingy [OPTIONS]
+<pre tabindex="0"><code>Usage: thingy [OPTIONS]
      -h                        Display this usage message
      -H hostname               Hostname to connect to
 </code></pre><p>Concatenation strings using <code>+</code>, using <code>*</code> to repeat it:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;123&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;456&#39;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;abc&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;123&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;456&#39;</span>)
+print(<span style="color:#e6db74">&#39;abc&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
 </code></pre></div><p>The operation result:</p>
-<pre><code>123456
+<pre tabindex="0"><code>123456
 abcabcabc
 </code></pre><p>We can use the <code>len</code> function to calculate string length</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numbers <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1234567890&#39;</span>
-<span style="color:#66d9ef">print</span>(len(numbers))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">numbers <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1234567890&#39;</span>
+print(len(numbers))
 </code></pre></div><p>The operation result:</p>
-<pre><code>10
+<pre tabindex="0"><code>10
 </code></pre><h3 id="the-types">The Types</h3>
 <p>Use <code>type</code> function to print type name of objects:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
-<span style="color:#66d9ef">print</span>(type(a))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
+print(type(a))
 b <span style="color:#f92672">=</span> <span style="color:#ae81ff">123.321</span>
-<span style="color:#66d9ef">print</span>(type(b))
+print(type(b))
 c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;123.321&#34;</span>
-<span style="color:#66d9ef">print</span>(type(c))
+print(type(c))
 </code></pre></div><p>The operation result:</p>
-<pre><code>&lt;class 'int'&gt;
+<pre tabindex="0"><code>&lt;class 'int'&gt;
 &lt;class 'float'&gt;
 &lt;class 'str'&gt;
 </code></pre><p>We can use <code>int</code>, <code>float</code>, <code>str</code> functions to do type converting:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
-<span style="color:#66d9ef">print</span>(a, type(a))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span>
+print(a, type(a))
 b <span style="color:#f92672">=</span> float(a)
-<span style="color:#66d9ef">print</span>(b, type(b))
+print(b, type(b))
 c <span style="color:#f92672">=</span> str(b)
-<span style="color:#66d9ef">print</span>(c, type(c))
+print(c, type(c))
 e <span style="color:#f92672">=</span> float(c)
-<span style="color:#66d9ef">print</span>(e, type(e))
+print(e, type(e))
 f <span style="color:#f92672">=</span> int(e)
-<span style="color:#66d9ef">print</span>(f, type(f))
+print(f, type(f))
 </code></pre></div><p>The operation result:</p>
-<pre><code>123 &lt;class 'int'&gt;
+<pre tabindex="0"><code>123 &lt;class 'int'&gt;
 123.0 &lt;class 'float'&gt;
 123.0 &lt;class 'str'&gt;
 123.0 &lt;class 'float'&gt;

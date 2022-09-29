@@ -5,7 +5,7 @@
 <meta name="description" content="下面我们来让程序语言支持While语句，这会使得**bkcalclang**能够解决一些依赖循环结构处理的问题。">
 <meta name="keywords" content="词法分析,语法分析,循环表达式,LL分析器,编程,编译原理,golang">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -73,7 +73,7 @@
 <p>同样，直接放出<a href="#%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%95">代码清单</a>有点劝退，先进行内容讲解。</p>
 <p><a href="-"></a></p>
 <h4 id="定义while节点的结构体">定义While节点的结构体</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">While</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">While</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">condition</span> <span style="color:#a6e22e">Node</span>
     <span style="color:#a6e22e">then</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Block</span>
 }
@@ -84,7 +84,7 @@
 </code></pre></div><p><code>While</code>结构当中<code>condition</code>存储判断表达式节点，<code>then</code>存储代码块，使用<code>NewWhile</code>函数实例化。</p>
 <p><a href="-"></a></p>
 <h4 id="定义while节点的运行方法">定义While节点的运行方法</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">while</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">While</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">while</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">While</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
     <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">while</span>.<span style="color:#a6e22e">condition</span>.<span style="color:#a6e22e">Eval</span>() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
         <span style="color:#a6e22e">while</span>.<span style="color:#a6e22e">then</span>.<span style="color:#a6e22e">Eval</span>();
     }
@@ -93,7 +93,7 @@
 </code></pre></div><p>在循环结构中如果<code>While</code>的<code>condition</code>运行后的值不为0则始终运行代码块<code>then</code>，否则中断循环并返回0。</p>
 <p><a href="-"></a></p>
 <h4 id="处理while语句的解析">处理While语句的解析</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;WHILE&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;WHILE&#34;</span> {
         <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#a6e22e">condition</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">condition</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span>) {
@@ -112,7 +112,7 @@
 </code></pre></div><p>我们在<code>parse_statement</code>函数中编写处理While语句的内容。</p>
 <p><a href="-"></a></p>
 <p>如果检测到<code>token.Name</code>为<code>WHILE</code>则尝试进行<code>While</code>语法解析，先跳过当前<code>token</code>然后进行表达式解析，若解析成功则将其作为<code>While</code>结构的<code>condition</code>成员:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;WHILE&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;WHILE&#34;</span> {
         <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#a6e22e">condition</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">condition</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span>) {
@@ -120,7 +120,7 @@
         }
 </code></pre></div><p><a href="-"></a></p>
 <p>接下来取出下一个<code>token</code>判断如果为<code>THEN</code>就进行代码块解析，否则返回<code>nil</code>，在返回<code>NewWhile</code>前，我们需要设定<code>isBlockEnd</code>为<code>false</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;THEN&#34;</span> {
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
         }
@@ -132,7 +132,7 @@
         <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">NewWhile</span>(<span style="color:#a6e22e">condition</span>, <span style="color:#a6e22e">then</span>)
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="定义词法解析器规则">定义词法解析器规则</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;NAME&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
@@ -154,7 +154,7 @@
 <p><a href="-"></a></p>
 <h4 id="使用一段测试脚本进行测试">使用一段测试脚本进行测试</h4>
 <p>测试内容【斐波那契数列】:</p>
-<pre><code>set n = 15
+<pre tabindex="0"><code>set n = 15
 set a = 0
 set b = 1
 
@@ -166,7 +166,7 @@ while n then
 end
 </code></pre><p><a href="-"></a></p>
 <p>运行结果:</p>
-<pre><code>➜ go calc.go 
+<pre tabindex="0"><code>➜ go calc.go 
 
 := 1
 := 1
@@ -185,7 +185,7 @@ end
 := 610
 </code></pre><p><a href="-"></a></p>
 <h4 id="代码清单">代码清单</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
     <span style="color:#e6db74">&#34;fmt&#34;</span>

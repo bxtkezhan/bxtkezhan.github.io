@@ -5,7 +5,7 @@
 <meta name="description" content="在了解了一些基本的图像处理操作后，我们开始着手实现图像隐写术。">
 <meta name="keywords" content="python,隐写术,steganography,image,pillow,numpy,array">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -74,11 +74,11 @@
 <p>准备一张用需要被隐藏的图像「使用黑白色的文字内容」:</p>
 <p><img src="/img/python.jpg" alt=""></p>
 <p>在Python中载入它们:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;container.jpg&#39;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;container.jpg&#39;</span>)
 fg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;python.jpg&#39;</span>)
 </code></pre></div><h3 id="对载体图像进行预处理">对载体图像进行预处理</h3>
 <p>我们需要预处理载体图像为即将被隐藏的内容图像腾出一点点空间。在这里我们将载体图像中的每一个不为偶数的像素值减去一:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">preprocess</span>(frame:Image<span style="color:#f92672">.</span>Image):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">preprocess</span>(frame:Image<span style="color:#f92672">.</span>Image):
     image <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>)
     array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(image)
     array <span style="color:#f92672">-=</span> array <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
@@ -88,7 +88,7 @@ container <span style="color:#f92672">=</span> preprocess(bg)
 </code></pre></div><p><code>frame.convert('RGB')</code>用于确保输入图像的色彩模式为RGB通道模式。</p>
 <h3 id="对内容图像进行二值化">对内容图像进行二值化</h3>
 <p>我们将色彩简单的内容图像进行二值化，使之成为像素值仅为0与1的图像:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_binary</span>(frame:Image<span style="color:#f92672">.</span>Image, threshold:int<span style="color:#f92672">=</span><span style="color:#ae81ff">127</span>):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_binary</span>(frame:Image<span style="color:#f92672">.</span>Image, threshold:int<span style="color:#f92672">=</span><span style="color:#ae81ff">127</span>):
     gray   <span style="color:#f92672">=</span> frame<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>)
     array  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(gray)
     binary <span style="color:#f92672">=</span> (array <span style="color:#f92672">&gt;</span> threshold)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
@@ -98,12 +98,12 @@ binary <span style="color:#f92672">=</span> to_binary(fg)
 </code></pre></div><p><code>frame.convert('L')</code>用于将输入图像转换为灰度图像。</p>
 <h3 id="将二值化后的内容载入到载体图像中">将二值化后的内容载入到载体图像中</h3>
 <p>在得到处理过的载体图像以及二值化的内容图像后，我们可以将其相加得到最终图像并保存到本地:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">merge_image</span>(container:np<span style="color:#f92672">.</span>ndarray, binary:np<span style="color:#f92672">.</span>ndarray):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">merge_image</span>(container:np<span style="color:#f92672">.</span>ndarray, binary:np<span style="color:#f92672">.</span>ndarray):
     r1, c1 <span style="color:#f92672">=</span> container<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], container<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
     r2, c2 <span style="color:#f92672">=</span> binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
     r, c <span style="color:#f92672">=</span> min(r1, r2), min(c1, c2)
     final <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(container)
-    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, None]
+    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, <span style="color:#66d9ef">None</span>]
     <span style="color:#66d9ef">return</span> final
 
 final <span style="color:#f92672">=</span> merge_image(container, binary)
@@ -112,7 +112,7 @@ final_img<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#
 </code></pre></div><p>使用png格式存储图像，能够确保图像在被压缩时，隐藏的内容信息不会被抹除，且最终得到的图像文件也不会太大。</p>
 <h3 id="尝试从融合后的图像中解析出内容">尝试从融合后的图像中解析出内容</h3>
 <p>在完成融合操作后，我们还得通过解析内容来确认操作是否成功:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_binary</span>(frame:Image<span style="color:#f92672">.</span>Image):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_binary</span>(frame:Image<span style="color:#f92672">.</span>Image):
     array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(frame)
     array <span style="color:#f92672">%=</span> <span style="color:#ae81ff">2</span>
     array <span style="color:#f92672">*=</span> <span style="color:#ae81ff">255</span>
@@ -123,8 +123,8 @@ merged <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</
 _binary <span style="color:#f92672">=</span> get_binary(merged)
 _binary<span style="color:#f92672">.</span>show()
 </code></pre></div><h3 id="代码清单">代码清单</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">preprocess</span>(frame:Image<span style="color:#f92672">.</span>Image):
@@ -144,7 +144,7 @@ _binary<span style="color:#f92672">.</span>show()
     r2, c2 <span style="color:#f92672">=</span> binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>], binary<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
     r, c <span style="color:#f92672">=</span> min(r1, r2), min(c1, c2)
     final <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>copy(container)
-    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, None]
+    final[:r, :c, :] <span style="color:#f92672">+=</span> binary[:r, :c, <span style="color:#66d9ef">None</span>]
     <span style="color:#66d9ef">return</span> final
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_binary</span>(frame:Image<span style="color:#f92672">.</span>Image):

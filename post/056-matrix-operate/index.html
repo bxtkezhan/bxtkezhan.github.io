@@ -5,7 +5,7 @@
 <meta name="description" content="由于本章的后部分内容需要使用到一点关于矩阵运算的基础操作，所以我们在这里先了解一下。">
 <meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -68,46 +68,46 @@
 <p><a href="/post/055-data-process/">上篇 数据分析・资料的载入与导出</a></p>
 <p>由于本章的后部分内容需要使用到一点关于矩阵运算的基础操作，所以我们在这里先了解一下。</p>
 <h3 id="创建矩阵">创建矩阵</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
 
 m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ])
-<span style="color:#66d9ef">print</span>(m)
+print(m)
 </code></pre></div><p>使用<code>np.matrix</code>函数可以创建一个numpy矩阵，该函数可以像<code>np.array</code>一样接收python的列表对象来设置矩阵的值。</p>
 <p>除了从python列表创建矩阵，还可以从python数组以及矩阵中创建矩阵，正如下面这样:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix(np<span style="color:#f92672">.</span>array([
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix(np<span style="color:#f92672">.</span>array([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ]))
-<span style="color:#66d9ef">print</span>(m2)
+print(m2)
 
 m3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix(np<span style="color:#f92672">.</span>matrix([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ]))
-<span style="color:#66d9ef">print</span>(m3)
+print(m3)
 </code></pre></div><p>另外，<code>np.matrix</code>还具有一种参数形式:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m4 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix(<span style="color:#e6db74">&#39;1 2 3; 4 5 6; 7 8 9&#39;</span>)
-<span style="color:#66d9ef">print</span>(m4)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m4 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix(<span style="color:#e6db74">&#39;1 2 3; 4 5 6; 7 8 9&#39;</span>)
+print(m4)
 </code></pre></div><p>用一个字符串初始矩阵的元素值，每一行元素之间用<code>;</code>进行分隔，每行的各个元素用空格进行分隔，类似matlab或octave的矩阵创建形式。</p>
 <h3 id="矩阵转置">矩阵转置</h3>
 <p>可以使用矩阵转置的方法将矩阵的行和列的关系对调，在numpy当中可以通过矩阵的属性<code>Matrix.T</code>实现:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ])
-<span style="color:#66d9ef">print</span>(m)
+print(m)
 
 mT <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>T
-<span style="color:#66d9ef">print</span>(mT)
+print(mT)
 </code></pre></div><p>运行后输出结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
  [<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>]
  [<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span>]]
 [[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">7</span>]
@@ -115,18 +115,18 @@ mT <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>T
  [<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">9</span>]]
 </code></pre></div><h3 id="加法减法除法运算">加法减法除法运算</h3>
 <p>直接使用运算符<code>+</code>、<code>-</code>、<code>/</code>进行的运算都是对应元素间两两运算后的结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ])
-<span style="color:#66d9ef">print</span>(m)
+print(m)
 
-<span style="color:#66d9ef">print</span>(m <span style="color:#f92672">+</span> m)
-<span style="color:#66d9ef">print</span>(m <span style="color:#f92672">-</span> m)
-<span style="color:#66d9ef">print</span>(m <span style="color:#f92672">/</span> m)
+print(m <span style="color:#f92672">+</span> m)
+print(m <span style="color:#f92672">-</span> m)
+print(m <span style="color:#f92672">/</span> m)
 </code></pre></div><p>运行后输出结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
  [<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>]
  [<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span>]]
 [[ <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">6</span>]
@@ -142,17 +142,17 @@ mT <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>T
 <p>直接使用运算符<code>*</code>会对matrix对象调用numpy的矩阵乘法，矩阵乘法的规则如下图所示:</p>
 <p><img src="/img/matmul.png" alt="matmul.png"></p>
 <p>如果想要计算对应元素相乘后的结果可以调用函数<code>np.multiply</code>进行计算:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>matrix([
     [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
     [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
     [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>],
     ])
-<span style="color:#66d9ef">print</span>(m)
+print(m)
 
-<span style="color:#66d9ef">print</span>(m <span style="color:#f92672">*</span> m)
-<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>multiply(m, m))
+print(m <span style="color:#f92672">*</span> m)
+print(np<span style="color:#f92672">.</span>multiply(m, m))
 </code></pre></div><p>运行后输出结果:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>]
  [<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>]
  [<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span>]]
 [[ <span style="color:#ae81ff">30</span>  <span style="color:#ae81ff">36</span>  <span style="color:#ae81ff">42</span>]
@@ -164,11 +164,11 @@ mT <span style="color:#f92672">=</span> m<span style="color:#f92672">.</span>T
 </code></pre></div><h3 id="矩阵的索引">矩阵的索引</h3>
 <p>numpy的矩阵对象和数组对象一样可以进行索引。</p>
 <p>获取矩阵的某行或某几行:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(m[<span style="color:#ae81ff">0</span>])
-<span style="color:#66d9ef">print</span>(m[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>])
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(m[<span style="color:#ae81ff">0</span>])
+print(m[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>])
 </code></pre></div><p>获取矩阵的某列或某几列:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(m[:, <span style="color:#ae81ff">0</span>])
-<span style="color:#66d9ef">print</span>(m[:, <span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>])
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(m[:, <span style="color:#ae81ff">0</span>])
+print(m[:, <span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>])
 </code></pre></div><p>其它复杂的索引可以参考对numpy数组对象的索引方式。</p>
 <p><a href="/post/060-least-squares/">下篇 数据分析・最小二乘拟合</a></p>
 

@@ -5,7 +5,7 @@
 <meta name="description" content="下面我们来让计算器程序支持变量的使用，使得程序可以设置和获取变量的值。从现在开始我将不掩藏我们要实现的是一个程序语言，因为出自计算器所以命名为 **bkcalclang**">
 <meta name="keywords" content="词法分析,语法分析,变量,LL分析器,编程,编译原理,golang">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -71,7 +71,7 @@
 <p>这次的代码以上一篇<a href="https://www.bxtkezhan.xyz/post/004-block/">《使计算器支持语句块》</a>的代码为基础编写，如果发现不熟悉当下的内容可以回顾一下之前的篇章。</p>
 <p><a href="-"></a></p>
 <h4 id="代码清单go语言为例">代码清单【go语言为例】</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
     <span style="color:#e6db74">&#34;fmt&#34;</span>
@@ -331,7 +331,7 @@
 }
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="引入需要使用的包">引入需要使用的包</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> (
     <span style="color:#e6db74">&#34;fmt&#34;</span>
     <span style="color:#e6db74">&#34;strconv&#34;</span>
     <span style="color:#e6db74">&#34;io/ioutil&#34;</span>
@@ -345,11 +345,11 @@
 </ul>
 <p><a href="-"></a></p>
 <h4 id="声明用于存储变量值的字典">声明用于存储变量值的字典</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ValueDict</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">float64</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ValueDict</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">float64</span>
 </code></pre></div><p>我们会使用一个<code>map</code>类型的对象来存取值，并以此实现变量赋值和取值的操作。</p>
 <p><a href="-"></a></p>
 <h4 id="定义命名节点结构体">定义命名节点结构体</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
 }
 
@@ -359,7 +359,7 @@
 </code></pre></div><p><code>Name</code>结构体用于变量取值相关操作，函数<code>NewName</code>接收参数<code>*BKLexer.Token</code>并实例化<code>Name</code>。</p>
 <p><a href="-"></a></p>
 <h4 id="定义命名节点的运行方法">定义命名节点的运行方法</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">name</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Name</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">name</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Name</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ValueDict</span>[<span style="color:#a6e22e">name</span>.<span style="color:#a6e22e">name</span>]; <span style="color:#a6e22e">found</span> {
         <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">value</span>;
     }
@@ -368,7 +368,7 @@
 </code></pre></div><p>原本<code>Node</code>的<code>GetValue</code>方法改名为<code>Eval</code>，这一点同样作用于其它相关结构体，需要注意。<code>Name</code>的<code>Eval</code>方法会查找<code>ValueDict</code>中的对应值并返回，如果不存在则返回0。</p>
 <p><a href="-"></a></p>
 <h4 id="定义赋值节点结构体">定义赋值节点结构体</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Assign</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Assign</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
     <span style="color:#a6e22e">value</span> <span style="color:#a6e22e">Node</span>
 }
@@ -379,7 +379,7 @@
 </code></pre></div><p>定义<code>Assign</code>结构用于存放赋值语句信息，<code>name</code>为变量名，<code>value</code>为对应值的节点结构。使用<code>NewAssign</code>函数可以实例化<code>Assign</code>结构。</p>
 <p><a href="-"></a></p>
 <h4 id="定义赋值节点的运行方法">定义赋值节点的运行方法</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">assign</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Assign</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">assign</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Assign</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
     <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">assign</span>.<span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Eval</span>()
     <span style="color:#a6e22e">ValueDict</span>[<span style="color:#a6e22e">assign</span>.<span style="color:#a6e22e">name</span>] = <span style="color:#a6e22e">value</span>
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">value</span>
@@ -387,7 +387,7 @@
 </code></pre></div><p>该方法在执行时会将成员<code>value</code>的执行结果存入到<code>ValueDict</code>中然后返回该值。</p>
 <p><a href="-"></a></p>
 <h4 id="定义输出节点的结构">定义输出节点的结构</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Echo</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Echo</span> <span style="color:#66d9ef">struct</span> {
     <span style="color:#a6e22e">value</span> <span style="color:#a6e22e">Node</span>
 }
 
@@ -397,7 +397,7 @@
 </code></pre></div><p><code>Echo</code>结构存储一个类型为<code>Node</code>的成员<code>value</code>，我们使用<code>NewEcho</code>实例化它。</p>
 <p><a href="-"></a></p>
 <h4 id="定义输出节点的运行方法">定义输出节点的运行方法</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">echo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Echo</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">echo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Echo</span>) <span style="color:#a6e22e">Eval</span>() <span style="color:#66d9ef">float64</span> {
     <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">echo</span>.<span style="color:#a6e22e">value</span>.<span style="color:#a6e22e">Eval</span>()
     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;:=&#34;</span>, <span style="color:#a6e22e">value</span>)
     <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">value</span>
@@ -406,14 +406,14 @@
 <p><a href="-"></a></p>
 <h4 id="增加一个函数用于专门处理语句">增加一个函数用于专门处理语句</h4>
 <p>由于我们使用<code>parse_statement</code>函数作为处理语句的函数，所以我们在某些地方需要做出相应的修改，如语法解析的入口<code>parse</code>函数:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
         <span style="color:#a6e22e">statement</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_statement</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>;
         }
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="我们定义如下函数处理语句">我们定义如下函数处理语句</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_statement</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_statement</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
     <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;SET&#34;</span> {
         <span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
@@ -442,7 +442,7 @@
 }
 </code></pre></div><p><a href="-"></a></p>
 <p>如果发现起头的<code>token</code>名称为<code>SET</code>则判断为赋值操作，取下一个<code>token</code>作为变量名，再取下一个判断是否为赋值符号，如果都成功则解析后面的内容并以此构建赋值节点。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;SET&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;SET&#34;</span> {
         <span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">name</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;NAME&#34;</span> {
             <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
@@ -459,7 +459,7 @@
         <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">NewAssign</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">value</span>)
 </code></pre></div><p><a href="-"></a></p>
 <p>如果当前<code>token</code>名称为<code>ECHO</code>则判断为打印输出，需要跳过当前<code>token</code>并进行表达式解析。如果成功解析则用解析结果构建打印输出节点并返回，否则函数返回<code>nil</code>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;ECHO&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;ECHO&#34;</span> {
         <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
         <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">value</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span>) {
@@ -470,16 +470,16 @@
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="增加变量取值的解析">增加变量取值的解析</h4>
 <p>将之前的<code>parse_number</code>函数改名为<code>factor</code>【这并不是必要操作】:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">factor</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">factor</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
 </code></pre></div><p>我们在<code>factor</code>函数中添加变量名解析代码:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NAME&#34;</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NAME&#34;</span> {
         <span style="color:#a6e22e">name</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewName</span>(<span style="color:#a6e22e">token</span>)
         <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
         <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">name</span>
     }
 </code></pre></div><p><a href="-"></a></p>
 <h4 id="定义词法解析器规则">定义词法解析器规则</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;[\\p{L}\\d_]+&#34;</span>, <span style="color:#e6db74">&#34;NAME&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
 <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;MINUS&#34;</span>)
@@ -495,7 +495,7 @@
 </code></pre></div><p>这里我们需要添加变量名规则、赋值符号规则以及增加<code>set</code>、<code>echo</code>这两个保留字。</p>
 <p><a href="-"></a></p>
 <h4 id="读取文件进行解析计算">读取文件进行解析计算</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">bytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;../test.txt&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">bytes</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;../test.txt&#34;</span>)
 <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;read faild&#34;</span>)
     <span style="color:#66d9ef">return</span>
@@ -513,7 +513,7 @@
 <p><a href="-"></a></p>
 <h4 id="使用一段测试脚本进行测试">使用一段测试脚本进行测试</h4>
 <p>测试内容:</p>
-<pre><code>echo 1 + 2 # plus
+<pre tabindex="0"><code>echo 1 + 2 # plus
 echo 3 - 4
 
 # here is a comment
@@ -528,7 +528,7 @@ set r = 5
 echo 2 * pi * r * r
 </code></pre><p><a href="-"></a></p>
 <p>运行结果:</p>
-<pre><code>➜ go run calc.go 
+<pre tabindex="0"><code>➜ go run calc.go 
 := 3
 := -1
 := 30

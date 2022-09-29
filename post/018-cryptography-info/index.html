@@ -5,7 +5,7 @@
 <meta name="description" content="密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。">
 <meta name="keywords" content="python,密码学,凯撒密码,替换式密码,黑客,简单,入门">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -73,32 +73,32 @@
 <table>
 <thead>
 <tr>
-<th align="center">A</th>
-<th align="center">B</th>
-<th align="center">C</th>
-<th align="center">D</th>
-<th align="center">&hellip;</th>
-<th align="center">X</th>
-<th align="center">Y</th>
-<th align="center">Z</th>
+<th style="text-align:center">A</th>
+<th style="text-align:center">B</th>
+<th style="text-align:center">C</th>
+<th style="text-align:center">D</th>
+<th style="text-align:center">&hellip;</th>
+<th style="text-align:center">X</th>
+<th style="text-align:center">Y</th>
+<th style="text-align:center">Z</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">D</td>
-<td align="center">E</td>
-<td align="center">F</td>
-<td align="center">G</td>
-<td align="center">&hellip;</td>
-<td align="center">A</td>
-<td align="center">B</td>
-<td align="center">C</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">&hellip;</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">C</td>
 </tr>
 </tbody>
 </table>
 <p>根据上述表格所示的规则，我们可以将<strong>明文</strong>&ldquo;HELLO WORLD&quot;加密成<strong>密文</strong>&ldquo;KHOOR ZRUOG&rdquo;。</p>
 <p>使用Python实现凯撒加密:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
 <span style="color:#75715e"># 取出string模块内置的大写英文字母</span>
 case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
 length <span style="color:#f92672">=</span> len(case)
@@ -117,9 +117,9 @@ dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;<
         <span style="color:#75715e"># 如果找到了，就通过转换得到偏移后的位置j</span>
         j <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> bias) <span style="color:#f92672">%</span> length
         dst <span style="color:#f92672">+=</span> case[j] <span style="color:#75715e"># 将偏移后的字母拼接到dst</span>
-<span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
+print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
 </code></pre></div><p>运行效果:</p>
-<pre><code>偏移: 3
+<pre tabindex="0"><code>偏移: 3
 文本: hello world
 HELLO WORLD -&gt; KHOOR ZRUOG
 </code></pre><p>凯撒密码破译难度非常低，一旦被人识破所使用的加密方式为凯撒加密，破解者只需要进行少量的排查就能完成密码破译工作。</p>
@@ -130,15 +130,15 @@ HELLO WORLD -&gt; KHOOR ZRUOG
 密文字母表 ZEBRASCDFGHIJKLMNOPQTUVWXY</p>
 <p>对&quot;flee at once. we are discovered!&ldquo;进行加密得到结果&quot;SIAA ZQ LKBA. VA ZOA RFPBLUAOAR!&quot;。</p>
 <p>使用Python实现简易替换密码:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
 
 p_case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
 c_case <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;单词: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
 <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> p_case:
     <span style="color:#66d9ef">if</span> c <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> c_case:
         c_case <span style="color:#f92672">+=</span> c
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;明文字母表:&#39;</span>, p_case)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;密文字母表:&#39;</span>, c_case)
+print(<span style="color:#e6db74">&#39;明文字母表:&#39;</span>, p_case)
+print(<span style="color:#e6db74">&#39;密文字母表:&#39;</span>, c_case)
 
 src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
 dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
@@ -148,10 +148,10 @@ dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;<
         dst <span style="color:#f92672">+=</span> c
     <span style="color:#66d9ef">else</span>:
         dst <span style="color:#f92672">+=</span> c_case[i]
-<span style="color:#66d9ef">print</span>(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
-<span style="color:#66d9ef">print</span>(dst)
+print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
+print(dst)
 </code></pre></div><p>运行效果:</p>
-<pre><code>单词: zebras
+<pre tabindex="0"><code>单词: zebras
 明文字母表: ABCDEFGHIJKLMNOPQRSTUVWXYZ
 密文字母表: ZEBRASCDFGHIJKLMNOPQTUVWXY
 文本: flee at once. we are discovered!

@@ -5,7 +5,7 @@
 <meta name="description" content="在了解lightning的基本使用方式后，我们再来了解如何在lightning中调用c函数。">
 <meta name="keywords" content="汇编,编译,连接,编程,asm,JIT,linux">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -66,7 +66,7 @@
   <section class="body" itemprop="articleBody">
     <p>在了解lightning的基本使用方式后，我们再来了解如何在lightning中调用c函数。</p>
 <p>我们以调用c程序中的<code>printf</code>函数为例，这里先列出完整代码:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">static</span> jit_state_t <span style="color:#f92672">*</span>_jit;
@@ -107,30 +107,30 @@
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div><h3 id="标记注释">标记注释</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">start <span style="color:#f92672">=</span> jit_note(__FILE__, __LINE__);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">start <span style="color:#f92672">=</span> jit_note(__FILE__, __LINE__);
 <span style="color:#75715e">/* ... ... */</span>
 end <span style="color:#f92672">=</span> jit_note(__FILE__, __LINE__);
 </code></pre></div><p>这两条指令调用了<code>jit_note</code>宏，它在<code>jit</code>代码中创建了一个注释；<code>jit_note</code>的参数通常是文件名字符串和行号整数，但如果只需要在代码中创建一个简单的标记，则使用<code>NULL</code>作为字符串参数是完全有效的。</p>
 <h3 id="处理可变参量">处理可变参量</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_ellipsis();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_ellipsis();
 </code></pre></div><p>由于函数<code>printf</code>是个可变参函数，所以需要调用<code>jit_ellipsis()</code>。</p>
 <h3 id="字符串参数处理">字符串参数处理</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_pushargi((jit_word_t)<span style="color:#e6db74">&#34;generated %d bytes</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_pushargi((jit_word_t)<span style="color:#e6db74">&#34;generated %d bytes</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 </code></pre></div><p>使用<code>jit_word_t</code>做字符串参数的类型转换。</p>
 <h3 id="引入并调用c函数">引入并调用c函数</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_prepare();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_prepare();
 <span style="color:#75715e">/* ... ...*/</span>
 jit_finishi(printf);
 </code></pre></div><p>在jit中调用<code>printf</code>函数，需要在装填参数前先执行<code>jit_prepare()</code>函数，在完成参数装填后需要执行<code>jit_finishi(printf)</code>。</p>
 <h3 id="显式的写入结语">显式的写入结语</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_epilog();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_epilog();
 </code></pre></div><p>lightning可以自己处理代码段截止内容，但是有的时候为了能准确的标记代码段的地址需要我们调用<code>jit_epilog()</code>来显式的处理。</p>
 <h3 id="通过调用函数执行jit代码">通过调用函数执行jit代码</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">myFunction((<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)jit_address(end) <span style="color:#f92672">-</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)jit_address(start));
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">myFunction((<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)jit_address(end) <span style="color:#f92672">-</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)jit_address(start));
 jit_clear_state();
 </code></pre></div><p>调用<code>jit_address</code>获取字节地址需要使用到jit state中的信息，因此应当放在<code>jit_clear_state()</code>前执行。</p>
 <h3 id="标准输出">标准输出</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_disassemble();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_disassemble();
 </code></pre></div><p><code>disassemble</code>会将生成的代码转储到标准输出，除非lightning是在禁用反汇编程序的情况下构建的，在这种情况下不会显示任何输出。</p>
 
   </section>

@@ -5,7 +5,7 @@
 <meta name="description" content="在有操作系统的情况下使用纯汇编开发程序的情况非常少，即便是不得不用汇编的场景也常常是使用汇编结合高级编程语言的方式进行开发。下面我们来了解一下如何在汇编之中调用C程序以及在C程序中调用汇编。">
 <meta name="keywords" content="汇编,编译,连接,编程,asm,nasm,linux">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -67,7 +67,7 @@
     <p>在有操作系统的情况下使用纯汇编开发程序的情况非常少，即便是不得不用汇编的场景也常常是使用汇编结合高级编程语言的方式进行开发。下面我们来了解一下如何在汇编之中调用C程序以及在C程序中调用汇编。</p>
 <h3 id="在汇编中调用c">在汇编中调用C</h3>
 <p>我们借助gcc也可以替代ld完成连接。除此之外，我们还可以在汇编代码中调用C标准函数:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#75715e">; filename: callc.asm</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#75715e">; filename: callc.asm</span>
 
 <span style="color:#66d9ef">global</span> main
 <span style="color:#66d9ef">extern</span> puts
@@ -82,7 +82,7 @@ main:
 message:
     <span style="color:#66d9ef">db</span> <span style="color:#e6db74">&#34;Hello, World&#34;</span>, <span style="color:#ae81ff">0</span>
 </code></pre></div><p>这是由之前的示例代码修改而成的调用C标准函数<code>puts</code>打印输出的代码，它的编译连接方法如下:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -felf64 callc.asm <span style="color:#75715e"># 首先生成目标文件</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -felf64 callc.asm <span style="color:#75715e"># 首先生成目标文件</span>
 gcc -no-pie callc.o <span style="color:#75715e"># 对目标文件进行连接操作</span>
 </code></pre></div><p>当我们在64位的Linux操作系统下编写这类调用C标准库的汇编程序时应该注意到一些函数调用的规范。关于详细的信息可以从<a href="https://en.wikipedia.org/wiki/X86_calling_conventions#x86-64_Calling_Conventions">维基百科</a>中获得。这里主要列出最重要的几点:</p>
 <ul>
@@ -100,7 +100,7 @@ gcc -no-pie callc.o <span style="color:#75715e"># 对目标文件进行连接操
 <li>整数返回值存放在rax或者rdx:rax中，浮点数返回值存放在xmm0或者xmm1:xmm0中。</li>
 </ul>
 <p>下列代码是上述规范的示例:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> main
 <span style="color:#66d9ef">extern</span> printf
 
 <span style="color:#66d9ef">section</span> .text
@@ -121,7 +121,7 @@ format:
     <span style="color:#66d9ef">db</span> <span style="color:#e6db74">&#34;%ld + %ld = %ld&#34;</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0</span>
 </code></pre></div><h3 id="在c语言中调用汇编程序">在C语言中调用汇编程序</h3>
 <p>我们先来用汇编写一个int64类型max函数，用于返回两个int64类型的参数中最大的数值:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> maxi64
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nasm" data-lang="nasm"><span style="color:#66d9ef">global</span> maxi64
 
 <span style="color:#66d9ef">section</span> .text
 
@@ -135,10 +135,10 @@ maxi64:
     <span style="color:#a6e22e">cmovl</span> rax, rsi
     <span style="color:#a6e22e">ret</span>
 </code></pre></div><p>接下来我们编写C语言程序调用它:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;inttypes.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-int64_t <span style="color:#a6e22e">maxi64</span>(int64_t, int64_t);
+<span style="color:#66d9ef">int64_t</span> <span style="color:#a6e22e">maxi64</span>(<span style="color:#66d9ef">int64_t</span>, <span style="color:#66d9ef">int64_t</span>);
 
 <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
     printf(<span style="color:#e6db74">&#34;%ld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, maxi64(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7</span>));
@@ -148,7 +148,7 @@ int64_t <span style="color:#a6e22e">maxi64</span>(int64_t, int64_t);
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div><p>假定汇编文件名为<code>maxi64.asm</code>；C程序文件名为<code>test_maxi64.c</code>。我们使用如下命令进行编译与运行:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -felf64 maxi64.asm
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nasm -felf64 maxi64.asm
 gcc test_maxi64.c maxi64.o
 ./a.out
 </code></pre></div>

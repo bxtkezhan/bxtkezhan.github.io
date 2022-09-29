@@ -5,10 +5,6 @@
     <link>http://bxtkezhan.xyz/tags/</link>
     <description>Recent content in Tags on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    
-	<atom:link href="http://bxtkezhan.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>zh-cn</language><atom:link href="http://bxtkezhan.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

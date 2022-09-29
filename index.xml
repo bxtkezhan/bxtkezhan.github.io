@@ -6,10 +6,15 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 26 Sep 2022 15:02:00 +0800</lastBuildDate>
-    
-	<atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Thu, 29 Sep 2022 13:48:49 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>人工神经网络・Softmax多分类</title>
+      <link>http://bxtkezhan.xyz/post/064-softmax-clf/</link>
+      <pubDate>Thu, 29 Sep 2022 13:48:49 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/064-softmax-clf/</guid>
+      <description>逻辑回归常用于处理二分类问题的，虽然也可以通过〚联合〛的方式处理多分类问题「有超过两个以上的类别」但这样比较麻烦。在处理多分类问题的时候我们可以使用softmax替代逻辑回归里的sigmoid激活函数，这样可以实现多分类操作。</description>
+    </item>
     
     <item>
       <title>人工神经网络・逻辑回归</title>

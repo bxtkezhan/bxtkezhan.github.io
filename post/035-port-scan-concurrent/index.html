@@ -5,7 +5,7 @@
 <meta name="description" content="上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。">
 <meta name="keywords" content="python,scanner,端口扫描,并发,多线程,网络安全,测试">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -70,7 +70,7 @@
 <h3 id="批量扫描">批量扫描</h3>
 <p>虽然端口扫描属于IO密集型操作，但是由于我们的测试目标是本机，所以有必要对线程切换导致的效率损失问题进行处理。在这里我们使用批量分配任务到每一个线程的方法来进行处理。</p>
 <p>我们首先定义一个批量处理函数:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
 <span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Thread
 
 
@@ -79,10 +79,10 @@
         s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
         s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((host, port)):
-            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;Opened Port: {port}&#39;</span>)
+            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Opened Port: </span><span style="color:#e6db74">{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
 </code></pre></div><h3 id="分批并发配">分批并发配</h3>
 <p>将任务进行等分「近似」并分发给每一个线程:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_ports</span>(host:str, ports:range, thread_num:int):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_ports</span>(host:str, ports:range, thread_num:int):
     count <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop <span style="color:#f92672">-</span> ports<span style="color:#f92672">.</span>start
     batchsize <span style="color:#f92672">=</span> count <span style="color:#f92672">//</span> thread_num
     works <span style="color:#f92672">=</span> []
@@ -98,7 +98,7 @@
         work<span style="color:#f92672">.</span>join()
 </code></pre></div><h3 id="程序入口">程序入口</h3>
 <p>根据用户输入设置函数参数并运行程序:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
     <span style="color:#f92672">import</span> sys
 
     host       <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]

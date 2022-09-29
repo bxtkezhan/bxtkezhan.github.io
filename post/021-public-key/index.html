@@ -5,7 +5,7 @@
 <meta name="description" content="维基百科: 公开密钥密码学（英语：Public-key cryptography）也称非对称式密码学（英语：Asymmetric cryptography）是密码学的一种算法，它需要两个密钥，一个是公开密钥，另一个是私有密钥；公钥用作加密，私钥则用作解密。使用公钥把明文加密后所得的密文，只能用相对应的私钥才能解密并得到原本的明文，最初用来加密的公钥不能用作解密。">
 <meta name="keywords" content="python,密码学,公开密钥加密,rsa,费马小定理,黑客,入门">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -154,19 +154,19 @@ $$
 <li>解密密文$R=9$得到明文$9^{33} \equiv 14 (mod \ 55) \Rightarrow A = 14$；</li>
 </ol>
 <p>使用Python代码进行测试:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p, q <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">11</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p, q <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">11</span>
 N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
 Phi <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
 e <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span>
 x, y <span style="color:#f92672">=</span> <span style="color:#ae81ff">33</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">14</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;ex + Phi(N)y =&#39;</span>, e <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> Phi <span style="color:#f92672">*</span> y)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;公钥:&#39;</span>, (N, e), <span style="color:#e6db74">&#39;私钥:&#39;</span>, (N, x))
+print(<span style="color:#e6db74">&#39;ex + Phi(N)y =&#39;</span>, e <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> Phi <span style="color:#f92672">*</span> y)
+print(<span style="color:#e6db74">&#39;公钥:&#39;</span>, (N, e), <span style="color:#e6db74">&#39;私钥:&#39;</span>, (N, x))
 A <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;明文: &#39;</span>)<span style="color:#f92672">.</span>strip())
 R <span style="color:#f92672">=</span> A<span style="color:#f92672">**</span>e <span style="color:#f92672">%</span> N
 _A <span style="color:#f92672">=</span> R<span style="color:#f92672">**</span>x <span style="color:#f92672">%</span> N
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;加密&amp;解密: {} -&gt; {} -&gt; {}&#39;</span><span style="color:#f92672">.</span>format(A, R, _A))
+print(<span style="color:#e6db74">&#39;加密&amp;解密: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> -&gt; </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> -&gt; </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(A, R, _A))
 </code></pre></div><p>运行效果:</p>
-<pre><code>ex + Phi(N)y = 1
+<pre tabindex="0"><code>ex + Phi(N)y = 1
 公钥: (55, 17) 私钥: (55, 33)
 明文: 14
 加密&amp;解密: 14 -&gt; 9 -&gt; 14

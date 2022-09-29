@@ -5,7 +5,7 @@
 <meta name="description" content="HTTP是一种能够获取如HTML这样的网络资源的protocol(通讯协议)。它是在Web上进行数据交换的基础，是一种client-server协议，也就是说，请求通常是由像浏览器这样的接受方发起的。一个完整的Web文档通常是由不同的子文档拼接而成的，像是文本、布局描述、图片、视频、脚本等等。">
 <meta name="keywords" content="python,http,http协议,urlopen,get,post,headers">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -72,7 +72,7 @@
 <p><img src="https://mdn.mozillademos.org/files/13673/HTTP%20&amp;%20layers.png" alt=""></p>
 <h3 id="作为客户端与http服务交互">作为客户端与HTTP服务交互</h3>
 <p>对于简单的操作，通常可以使用<code>urllib.request</code>模块。例如发送一个简单的HTTP/HTTPS请求，获取远程服务上的一张图像:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request
 
 url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://www.python.org/static/img/python-logo.png&#39;</span>
 
@@ -83,7 +83,7 @@ resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</
 <p><img src="https://www.python.org/static/img/python-logo.png" alt=""></p>
 <h3 id="使用get方法传递参数">使用GET方法传递参数</h3>
 <p>如果需要在GET方法中传递参数可以这样:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
 
 <span style="color:#75715e"># 设置基础URL</span>
 url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/get&#39;</span>
@@ -100,9 +100,9 @@ querystring <span style="color:#f92672">=</span> parse<span style="color:#f92672
 <span style="color:#75715e"># 构造GET请求</span>
 resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(url<span style="color:#f92672">+</span><span style="color:#e6db74">&#39;?&#39;</span> <span style="color:#f92672">+</span> querystring)
 data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
-<span style="color:#66d9ef">print</span>(data)
+print(data)
 </code></pre></div><p>运行结果:</p>
-<pre><code>{
+<pre tabindex="0"><code>{
   &quot;args&quot;: {
     &quot;name1&quot;: &quot;value1&quot;, 
     &quot;name2&quot;: &quot;value2&quot;
@@ -114,7 +114,7 @@ data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</spa
   ... 省略 ...
 </code></pre><h3 id="使用post方法传递参数">使用POST方法传递参数</h3>
 <p>如果需要使用POST方法在请求主体中发送查询参数，可以将参数编码后作为可选参数提供给<code>urlopen</code>函数:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
 
 url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/post&#39;</span>
 
@@ -128,9 +128,9 @@ querystring <span style="color:#f92672">=</span> parse<span style="color:#f92672
 <span style="color:#75715e"># 设置POST参数，构造POST请求</span>
 resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(url, querystring<span style="color:#f92672">.</span>encode())
 data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
-<span style="color:#66d9ef">print</span>(data)
+print(data)
 </code></pre></div><p>运行结果:</p>
-<pre><code>{
+<pre tabindex="0"><code>{
   &quot;args&quot;: {}, 
   &quot;data&quot;: &quot;&quot;, 
   &quot;files&quot;: {}, 
@@ -146,7 +146,7 @@ data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</spa
   ... 省略 ...
 </code></pre><h3 id="自定义http请求headers">自定义HTTP请求Headers</h3>
 <p>如果需要在发出的请求中提供一些自定义的HTTP头，例如修改<code>user-agent</code>字段,可以创建一个包含字段值的字典，并创建一个Request实例然后将其传给<code>urlopen</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> urllib <span style="color:#f92672">import</span> request, parse
 
 url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://httpbin.org/post&#39;</span>
 
@@ -166,9 +166,9 @@ headers <span style="color:#f92672">=</span> {
 req <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>Request(url, querystring<span style="color:#f92672">.</span>encode(), headers<span style="color:#f92672">=</span>headers)
 resp <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>urlopen(req)
 data <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>decode()
-<span style="color:#66d9ef">print</span>(data)
+print(data)
 </code></pre></div><p>运行结果:</p>
-<pre><code>{
+<pre tabindex="0"><code>{
   &quot;args&quot;: {}, 
   &quot;data&quot;: &quot;&quot;, 
   &quot;files&quot;: {}, 

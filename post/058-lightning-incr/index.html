@@ -5,7 +5,7 @@
 <meta name="description" content="在上一篇文章中我们简单地介绍了一下GNU/Lightning，现在我们来讲解上一篇文章中测试用的示例。">
 <meta name="keywords" content="汇编,编译,连接,编程,asm,JIT,linux">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -65,7 +65,7 @@
   <h1 class="headline" itemprop="headline">JIT・Lightning 示例「incr」</h1>
   <section class="body" itemprop="articleBody">
     <p>在上一篇文章中我们简单地介绍了一下GNU/Lightning，现在我们来讲解上一篇文章中测试用的示例。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">static</span> jit_state_t <span style="color:#f92672">*</span>_jit;
@@ -97,50 +97,50 @@
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div><h3 id="引入头文件">引入头文件</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
 </span></code></pre></div><p>想要成功使用lightning中的一系列函数与变量，我们需要引入头文件<code>lightning.h</code>。</p>
 <h3 id="声明jit_state_t结构指针">声明<code>jit_state_t</code>结构指针</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> jit_state_t <span style="color:#f92672">*</span>_jit;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> jit_state_t <span style="color:#f92672">*</span>_jit;
 </code></pre></div><p><code>jit_state_t</code>结构用于存储jit代码声明信息，<code>_jit</code>这个变量名在lightning中有特殊意义，所以通常情况下我们应该直接使用<code>_jit</code>，或者用<code>#define _jit &lt;其它名称&gt;</code>来定义。</p>
 <h3 id="定义一个函数类型">定义一个函数类型</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span> (<span style="color:#f92672">*</span>pifi)(<span style="color:#66d9ef">int</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span> (<span style="color:#f92672">*</span>pifi)(<span style="color:#66d9ef">int</span>);
 </code></pre></div><p>为了方便我们后续使用jit生成的函数，我们定义一个函数类型与之对应。该类型的函数接收一个int整型返回一个int整型。</p>
 <h3 id="声明一个变量用来获取函数参数">声明一个变量用来获取函数参数</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_node_t  <span style="color:#f92672">*</span>in;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_node_t  <span style="color:#f92672">*</span>in;
 </code></pre></div><p>使用<code>jit_node_t</code>声明的指针<code>in</code>可以用于在jit代码中获取函数的变量。</p>
 <h3 id="声明函数指针变量">声明函数指针变量</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pifi         incr;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pifi         incr;
 </code></pre></div><h3 id="全局初始化jit">全局初始化jit</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">init_jit(argv[<span style="color:#ae81ff">0</span>]);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">init_jit(argv[<span style="color:#ae81ff">0</span>]);
 </code></pre></div><p>必须在创建<code>jit_state_t</code>对象之前调用此函数。该函数会进行全局状态初始化，可能需要检测CPU或操作系统特性。如果在配置时启用了反汇编，它会接收一个字符串参数，该参数稍后用于使用GNU binutils从共享对象中读取符号。如果不执行反汇编，则可以使用NULL指针作为参数。</p>
 <h3 id="创建state">创建state</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">_jit <span style="color:#f92672">=</span> jit_new_state();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">_jit <span style="color:#f92672">=</span> jit_new_state();
 </code></pre></div><h3 id="准备书写jit代码">准备书写jit代码</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_prolog();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_prolog();
 </code></pre></div><p>在此函数调用后我们就可以开始书写jit代码了。</p>
 <h3 id="获取函数输入">获取函数输入</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">in <span style="color:#f92672">=</span> jit_arg();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">in <span style="color:#f92672">=</span> jit_arg();
 jit_getarg(JIT_R0, in);
 </code></pre></div><p>使用<code>in = jit_arg()</code>从函数中获取参数「这里说的函数当前还没有实现，等到相关的代码书写完后会将这个函数赋值给<code>incr</code>」；调用<code>jit_getarg</code>函数将得到的参数<code>in</code>的值传递给寄存器<code>JIT_R0</code>。</p>
 <h3 id="实现加一操作">实现加一操作</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_addi(JIT_R0, JIT_R0, <span style="color:#ae81ff">1</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_addi(JIT_R0, JIT_R0, <span style="color:#ae81ff">1</span>);
 </code></pre></div><p><code>jit_addi</code>可实现寄存器整数相加赋值的操作，将第2、3个参数的寄存器值或数值相加并赋值给第1个参数的寄存器。</p>
 <h3 id="返回寄存器的值">返回寄存器的值</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_retr(JIT_R0);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_retr(JIT_R0);
 </code></pre></div><p>类似C程序中函数的返回语句<code>return</code>，此处使用<code>jit_retr</code>返回了寄存器<code>JIT_R0</code>的值。</p>
 <h3 id="生成机器码">生成机器码</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">incr <span style="color:#f92672">=</span> jit_emit();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">incr <span style="color:#f92672">=</span> jit_emit();
 </code></pre></div><p>该函数会将之前书写的jit代码转换为机器码，然后封装成一个函数指针，我们使用<code>incr</code>接收它。</p>
 <h3 id="清除state">清除state</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_clear_state();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_clear_state();
 </code></pre></div><p>得到<code>incr</code>函数后我们清理掉state中的一些不必要的内容。</p>
 <h3 id="调用并观察incr">调用并观察<code>incr</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;%d + 1 = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">5</span>, incr(<span style="color:#ae81ff">5</span>));
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;%d + 1 = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">5</span>, incr(<span style="color:#ae81ff">5</span>));
 </code></pre></div><h3 id="释放内存中的state信息">释放内存中的state信息</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_destroy_state();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">jit_destroy_state();
 </code></pre></div><p>确定不会再使用jit生成的函数后，我们可以释放并销毁内存中的state信息。</p>
 <h3 id="结束jit">结束jit</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">finish_jit();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">finish_jit();
 </code></pre></div><p>最后我们再清除全局的jit state信息。</p>
 
   </section>

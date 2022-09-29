@@ -5,7 +5,7 @@
 <meta name="description" content="影像处理免不了读取视频和调用摄像头，在OpenCV中可以使用`VideoCapture`工具快速完成视频读取以及摄像头调用。">
 <meta name="keywords" content="python,opencv,cv,目标检测,人脸识别,video,camera">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.68.3" />
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,12 +69,12 @@
 <p>影像处理免不了读取视频和调用摄像头，在OpenCV中可以使用<code>VideoCapture</code>工具快速完成视频读取以及摄像头调用。</p>
 <h3 id="读取并播放视频">读取并播放视频</h3>
 <p>调用<code>VideoCapture</code>的时候如果传入一个视频文件的路径作为参数则可以读取该视频文件:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#f92672">as</span> cv
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
 
 video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#e6db74">&#39;/home/kk/影片/mytest.mp4&#39;</span>)
 <span style="color:#66d9ef">while</span> video<span style="color:#f92672">.</span>isOpened():
     ret, frame <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>read()
-    <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">==</span> True:
+    <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>:
         cv<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;My Video&#39;</span>, frame)
         <span style="color:#66d9ef">if</span> cv<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">100</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span> <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;q&#39;</span>):
             <span style="color:#66d9ef">break</span>
@@ -91,12 +91,12 @@ cv<span style="color:#f92672">.</span>destroyAllWindows()
 </ul>
 <h3 id="打开并读取摄像头">打开并读取摄像头</h3>
 <p>调用<code>VideoCapture</code>的时候如果传入一个整数0则可以读取电脑默认摄像头:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#f92672">as</span> cv
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
 
 video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#ae81ff">0</span>)
 <span style="color:#66d9ef">while</span> video<span style="color:#f92672">.</span>isOpened():
     ret, frame <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>read()
-    <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">==</span> True:
+    <span style="color:#66d9ef">if</span> ret <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>:
         cv<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;My Video&#39;</span>, frame)
         <span style="color:#66d9ef">if</span> cv<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">100</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span> <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;q&#39;</span>):
             <span style="color:#66d9ef">break</span>
