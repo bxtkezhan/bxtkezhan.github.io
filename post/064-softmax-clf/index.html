@@ -182,6 +182,58 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;C
 plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
 plt<span style="color:#f92672">.</span>show()
 </code></pre></div><p><img src="/img/softmax_fit_loss.png" alt="softmax_fit_loss.png"></p>
+<h3 id="完整代码">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">import</span> torch
+torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">7</span>)
+
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+
+
+X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(X <span style="color:#f92672">@</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+print(<span style="color:#e6db74">&#39;index:&#39;</span>)
+print(index)
+
+T <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(index, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32)
+print(<span style="color:#e6db74">&#39;one hot:&#39;</span>)
+print(T)
+
+W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+
+steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+losses <span style="color:#f92672">=</span> []
+print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(steps):
+    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(A, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(P, T)
+
+    losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+    i <span style="color:#f92672">=</span> step <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;step: </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>steps<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>losses[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+
+    loss<span style="color:#f92672">.</span>backward()
+    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        W <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> W<span style="color:#f92672">.</span>grad
+        b <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> b<span style="color:#f92672">.</span>grad
+        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+
+print(<span style="color:#e6db74">&#39;probabilities:&#39;</span>)
+print(P<span style="color:#f92672">.</span>detach())
+print(<span style="color:#e6db74">&#39;true:&#39;</span>, index)
+<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+    print(<span style="color:#e6db74">&#39;pred:&#39;</span>, torch<span style="color:#f92672">.</span>argmax(P, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Step&#39;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;CrossEntropyLoss&#39;</span>)
+plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><a href="/post/065-multilayer-perceptron/">下篇 人工神经网络・多层感知器</a></p>
 
   </section>
 </article>

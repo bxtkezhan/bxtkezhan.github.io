@@ -202,6 +202,59 @@ tensor([[<span style="color:#ae81ff">0.2789</span>],
         [<span style="color:#ae81ff">0.</span>],
         [<span style="color:#ae81ff">1.</span>],
         [<span style="color:#ae81ff">1.</span>]])
+</code></pre></div><h3 id="完整代码">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+
+
+X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+
+T <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+
+
+W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+
+
+<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    <span style="color:#75715e"># forward</span>
+    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+
+    loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> (T <span style="color:#f92672">-</span> P)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+    print(<span style="color:#e6db74">&#39;step:&#39;</span>, step, <span style="color:#e6db74">&#39;loss =&#39;</span>, loss<span style="color:#f92672">.</span>item())
+
+    <span style="color:#75715e"># backward</span>
+    loss<span style="color:#f92672">.</span>backward()
+
+    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        W <span style="color:#f92672">-=</span> W<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+        b <span style="color:#f92672">-=</span> b<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+
+print(<span style="color:#e6db74">&#39;params weight:&#39;</span>)
+print(W<span style="color:#f92672">.</span>detach())
+print(<span style="color:#e6db74">&#39;params bias:&#39;</span>)
+print(b<span style="color:#f92672">.</span>detach())
+<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+    A <span style="color:#f92672">=</span> X[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]] <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+    print(<span style="color:#e6db74">&#39;predict:&#39;</span>)
+    print(P)
+print(torch<span style="color:#f92672">.</span>round(P))
 </code></pre></div><p><a href="/post/064-softmax-clf/">下篇 人工神经网络・Softmax多分类</a></p>
 
   </section>
