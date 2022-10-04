@@ -8,12 +8,21 @@
     <language>zh-cn</language>
     <lastBuildDate>Mon, 03 Oct 2022 19:48:53 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>068 Batch Normalization</title>
+      <title>人工神经网络・批量标准化</title>
       <link>http://bxtkezhan.xyz/post/068-batch-normalization/</link>
       <pubDate>Mon, 03 Oct 2022 19:48:53 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/068-batch-normalization/</guid>
-      <description></description>
+      <description>返回教程主页
+上篇 人工神经网络・卷积神经网络
+在数据处理中常常使用标准化技术对数据进行处理，一般来说标准化处理有利于提升模型对数据的拟合效果。我们也可以使用标准化技术对神经网络模型进行升级。
+批量标准化 使用批量标准化BatchNormalization方法，我们可以对神经网络模型进行优化。批量标准化的数学公式如下:
+$$ y = \frac{x - E[x]}{\sqrt{Var(x) + \epsilon}} \ast \gamma + \beta $$
+公式当中的 $\epsilon$ 通常会是一个非常小的正数，用于防止程序出现除0错误，故此公式可以看成:
+$$ y = \frac{x - E[x]}{\sqrt{Var(x)}} \ast \gamma + \beta $$
+即: $x$ 减去 $x$ 的期望 $E[x]$ 然后除以方差 $Var(x)$ 的开根，再乘上参数 $\gamma$ 最后加上参数 $\beta$ 。其中参数 $\gamma , \beta$ 是需要训练更新的值，在PyTorch中，初始情况下 $\gamma$ 的元素值被设置为1而 $\beta$ 的元素值被设置为0。
+优化代码 我们对之前的卷积神经网络进行优化，先前的模型结构如下:
+cnn = nn.Sequential( nn.Conv2d(1, 10, 5), nn.ReLU(inplace=True), nn.MaxPool2d(2), nn.Conv2d(10, 20, 3), nn.ReLU(inplace=True), nn.MaxPool2d(2), nn.Flatten(), nn.</description>
     </item>
     
     <item>
