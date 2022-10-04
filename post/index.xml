@@ -6,7 +6,34 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 02 Oct 2022 22:29:29 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Oct 2022 19:48:53 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>068 Batch Normalization</title>
+      <link>http://bxtkezhan.xyz/post/068-batch-normalization/</link>
+      <pubDate>Mon, 03 Oct 2022 19:48:53 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/068-batch-normalization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>067 Convolutional Neural Network</title>
+      <link>http://bxtkezhan.xyz/post/067-convolutional-neural-network/</link>
+      <pubDate>Mon, 03 Oct 2022 19:48:23 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/067-convolutional-neural-network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>人工神经网络・ReLU激活函数</title>
+      <link>http://bxtkezhan.xyz/post/066-relu/</link>
+      <pubDate>Mon, 03 Oct 2022 19:47:10 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/066-relu/</guid>
+      <description>上一节中我们实现了一个多层感知器神经网络用来处理图像分类问题。然而那个神经网络模型还是比较「稚嫩」，我们可以对其稍加修改，实现一定程度上的提升。</description>
+    </item>
+    
     <item>
       <title>人工神经网络・多层感知器</title>
       <link>http://bxtkezhan.xyz/post/065-multilayer-perceptron/</link>

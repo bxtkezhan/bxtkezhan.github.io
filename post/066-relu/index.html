@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="上一节中我们实现了一个多层感知器神经网络用来处理图像分类问题。然而那个神经网络模型还是比较「稚嫩」，我们可以对其稍加修改，实现一定程度上的提升。">
+<meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>人工神经网络・ReLU激活函数 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-10-03">October 03, 2022</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/python">Python</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">人工神经网络・ReLU激活函数</h1>
+  <section class="body" itemprop="articleBody">
+    <p><a href="/post/tutorial_001/">返回教程主页</a></p>
+<p><a href="/post/064-softmax-clf/">上篇 人工神经网络・Softmax多分类</a></p>
+<p>上一节中我们实现了一个多层感知器神经网络用来处理图像分类问题。然而那个神经网络模型还是比较「稚嫩」，我们可以对其稍加修改，实现一定程度上的提升。</p>
+<p>原本的神经网络结构如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Flatten(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
+    nn<span style="color:#f92672">.</span>Sigmoid(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>我们看到该神经网络中间有一个Sigmoid层，该层网络作为线性层Linear的激活函数，用在多层感知器内时会出现一个问题: 由于sigmoid函数会让输出数值落在0到1之间，因此其后的计算免不了乘上一个小于1的正数，这不利于数值在神经网络中进行传递。</p>
+<p>为了处理sigmoid激活函数带来的问题，我们将引入一个新的激活函数relu。</p>
+<h3 id="relu激活函数">ReLU激活函数</h3>
+<p>relu激活函数的数学公式如下:</p>
+<p>$$
+y = \begin{cases}
+x, &amp; \text{if}\quad x &gt; 0 \\
+0, &amp; \text{if}\quad x \leq 0
+\end{cases}
+$$</p>
+<p>当输入数值大于0时relu输出数值本身，当输入数值不大于0时relu输出数值0。</p>
+<h3 id="修改神经网络">修改神经网络</h3>
+<p>我们将原本的神经网络模型修改成如下结构:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Flatten(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>使用<code>nn.ReLU(inplace=True)</code>替代先前的<code>nn.Sigmoid()</code>，参数设置<code>inplace=True</code>会复用上一层网络的输出，通常来说有利于节省存储空间。</p>
+<h3 id="重新运行代码训练模型">重新运行代码训练模型</h3>
+<p>我们在同之前一样的条件下重新训练这个新的多层感知器。</p>
+<p>通过10轮的训练，我们的新模型在测试集上的表现如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">testing<span style="color:#f92672">...</span>
+loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4900871847249284</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9725</span>
+</code></pre></div><p>其中损失率<code>loss</code>为1.49008左右，准确率达到97.25%。</p>
+<p>在训练过程中可以发现神经网络的拟合能力有了很大的改善，当模型训练到一半的时候就能达到先前的最终效果，而训练完毕后的模型在测试集上的准确率也有了明显提高。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2022 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
