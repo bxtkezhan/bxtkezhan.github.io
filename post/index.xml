@@ -17,12 +17,24 @@
     </item>
     
     <item>
-      <title>067 Convolutional Neural Network</title>
+      <title>人工神经网络・卷积神经网络</title>
       <link>http://bxtkezhan.xyz/post/067-convolutional-neural-network/</link>
       <pubDate>Mon, 03 Oct 2022 19:48:23 +0800</pubDate>
       
       <guid>http://bxtkezhan.xyz/post/067-convolutional-neural-network/</guid>
-      <description></description>
+      <description>返回教程主页
+上篇 人工神经网络・ReLU激活函数
+我们之前构建的神经网络都是靠普通的线性网络层Linear进行拟合，然而在处理图像数据的时候我们其实可以用效果更好的卷积网络层。将卷积网络层加入到我们的神经网络就可以在一定程度上提升模型的准确率，而由于此种神经网络的结构中包含卷积网络层，因此，也常被叫做卷积神经网络。
+卷积 卷积是一种常被用在信号处理领域的计算方式，而在处理如图像这种类型的数据时常常会用到二维卷积，二维卷积的计算方式如下:
+动画演示左侧的矩阵为输入，右侧的矩阵为输出，中间的是卷积核，卷积核的概念类似线性计算中的权重Weight，我们可以将卷积操作写成如下公式:
+$$ Y = X \ast k $$
+假设输入X是一个5x5的矩阵，而卷积核k是一个3x3的矩阵，那么输出的Y是一个$(5 - 3 + 1)$x$(5 - 3 + 1)$的矩阵及3x3的矩阵。计算方法是: 输出Y的维度 = 输入X的维度 - 卷积核k的维度 + 1。
+池化 池化操作常常与卷积操作一同使用，它可以让数据变得「精炼」:
+以上动画演示的是最大池化操作，它会输出数个相邻格子中最大的值。当它的检测窗口大小为2x2时「正如动画中所示」，它可以将原本输入的4x4的矩阵转变为2x2的矩阵输出。
+了解了卷积和池化操作，我们再来看看如何应用到神经网络。
+卷积神经网络 上一节中，我们的神经网络结构如下:
+mlp = nn.Sequential( nn.Flatten(), nn.Linear(28 * 28 * 1, 256), nn.ReLU(inplace=True), nn.Linear(256, 10), nn.Softmax(dim=1)) 我们将其进行修改:
+cnn = nn.Sequential( nn.Conv2d(1, 10, 5), nn.ReLU(inplace=True), nn.MaxPool2d(2), nn.Conv2d(10, 20, 3), nn.ReLU(inplace=True), nn.MaxPool2d(2), nn.Flatten(), nn.Linear(20 * 5 * 5, 10), nn.</description>
     </item>
     
     <item>
