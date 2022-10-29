@@ -6,7 +6,16 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 03 Oct 2022 19:48:53 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Oct 2022 23:05:31 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>创客一点灵・从挂钩开始的学习</title>
+      <link>http://bxtkezhan.xyz/post/069-maker-one-dot-zero/</link>
+      <pubDate>Sat, 29 Oct 2022 23:05:31 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/069-maker-one-dot-zero/</guid>
+      <description>为了贯彻宅的信念，我们需要能够自己在家「生产」一些实用的工具。而要实现在家生产，我们就需要掌握一些相关领域的知识与技能。</description>
+    </item>
+    
     <item>
       <title>人工神经网络・批量标准化</title>
       <link>http://bxtkezhan.xyz/post/068-batch-normalization/</link>
