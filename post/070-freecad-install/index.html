@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="“**FreeCAD** 是一款通用参数化三维计算机辅助设计建模器和支持有限元方法的建筑信息建模软件应用程序。”我们将使用它来进行三维模型的绘制。">
+<meta name="keywords" content="maker,创客,3D,cad,freecad,printer,3d,printer,modeling,geek">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>创客一点灵・安装FreeCAD - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-11-09">November 09, 2022</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/maker">Maker</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">创客一点灵・安装FreeCAD</h1>
+  <section class="body" itemprop="articleBody">
+    <p>“<strong>FreeCAD</strong> 是一款通用参数化三维计算机辅助设计建模器和支持有限元方法的建筑信息建模软件应用程序。”我们将使用它来进行三维模型的绘制。</p>
+<p>首先我们去到FreeCAD的项目主页：https://www.freecadweb.org/</p>
+<iframe src="https://www.freecadweb.org/" width="100%" height="480" allowfullscreen></iframe>
+
+<p>通过浏览主页我们大致可以了解FreeCAD可以用来做机构模型设计，部件装配测试，建筑设计以及有限元分析。</p>
+<p>由于我们当前的教程仅对FreeCAD三维建模的部分做初步讲解，因此，如果有朋友想要对FreeCAD有更加深层次的了解，可以去到官方文档进行学习：https://wiki.freecadweb.org/</p>
+<iframe src="https://wiki.freecadweb.org/" width="100%" height="480" allowfullscreen></iframe>
+
+<h3 id="下载与安装">下载与安装</h3>
+<p>我们可以进入官方下载页面，下载官方最新推荐的版本到本地进行安装：https://www.freecadweb.org/downloads.php</p>
+<iframe src="https://www.freecadweb.org/downloads.php" width="100%" height="480" allowfullscreen></iframe>
+
+<p><strong>Note!</strong> 请根据自己的操作系统版本进行下载：如果你是微软Windows系统用户请下载对应的Windows版本；如果你是苹果Mac OS系统用户请下载对应的Mac版本；如果你是Linux发行版用户请下载对应的Linux版本。</p>
+<p>Mac版本与Linux版本下载后可以向打开普通的本地软件一样点击运行，Windows版本则可以双击进行安装，然后打开运行。</p>
+<h3 id="基本设置">基本设置</h3>
+<p>在这次的项目设计中我们会使用到FreeCAD的部件设计布尔运算功能，我们可以在部件设计工作台模型下设置并启用它。</p>
+<p>首先，我们启动FreeCAD，然后会默认进入开始工作台「Start」:</p>
+<p><img src="/img/freecad_set01.png" alt="freecad_set01.png"></p>
+<p>我们点击按钮Start并切换到部件设计「Part Design」工作台模式：</p>
+<p><img src="/img/freecad_set02.png" alt="freecad_set02.png"></p>
+<p><img src="/img/freecad_set03.png" alt="freecad_set03.png"></p>
+<p>然后点击菜单栏的Edit，点击其子菜单Preferences，在弹出的设置框左侧选中Part Design，然后勾选建模设置「Model settings」下的三个选项:</p>
+<p><img src="/img/freecad_set04.png" alt="freecad_set04.png"></p>
+<p>接下来点击设置框底部按钮应用「Apply」最后点击按钮OK完成并退出设置。</p>
+<h3 id="按键风格">按键风格</h3>
+<p>我们在FreeCAD的右下方可以找到设置按键风格的按钮，如果你这边不是使用Blender按键风格，建议你点击该按钮并将其设置成Blender按键风格:</p>
+<p><img src="/img/freecad_set05.png" alt="freecad_set05.png"></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2022 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
