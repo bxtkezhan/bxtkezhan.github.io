@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="我们使用FreeCAD设计模型时会用到FreeCAD中的草图（sketch），一般来说，我们要设计某个三维模型部件会需要先绘制该部件的二维平面草图，然后按照需求将草图转换为三维空间中的物体，接下来再在这个三维物体的基础上绘制二维平面的草图然后对这个三维物体进行修改，重复这个步骤直到模型设计完毕。具体的操作细节我们会在之后的章节中学习，现在我们来学习一下绘制草图并生成三维物体的这个最基础的操作。">
+<meta name="keywords" content="maker,创客,3D,cad,freecad,printer,3d,printer,modeling,geek">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>创客一点灵・草图 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-11-26">November 26, 2022</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/maker">Maker</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">创客一点灵・草图</h1>
+  <section class="body" itemprop="articleBody">
+    <p>我们使用FreeCAD设计模型时会用到FreeCAD中的草图（sketch），一般来说，我们要设计某个三维模型部件会需要先绘制该部件的二维平面草图，然后按照需求将草图转换为三维空间中的物体，接下来再在这个三维物体的基础上绘制二维平面的草图然后对这个三维物体进行修改，重复这个步骤直到模型设计完毕。具体的操作细节我们会在之后的章节中学习，现在我们来学习一下绘制草图并生成三维物体的这个最基础的操作。</p>
+<h3 id="为模型部件创建草图">为模型部件创建草图</h3>
+<p>如果我们要在FreeCAD中设计某个三维模型部件，我们的常用操作流程是:</p>
+<ol>
+<li>打开FreeCAD，然后点击菜单栏的File，然后点击选项New「这个操作可以使用快捷方式<code>Ctr+N</code>完成」;</li>
+<li>接下来我们切换工作台从<code>Start</code>到<code>Part Design</code>;</li>
+<li>然后点击按钮<code>Create sketch</code>创建草图；</li>
+<li>接下来我们需要为该草图选择平面「下图示范中使用X-Y平面」，然后点击按钮OK；</li>
+</ol>
+<p><img src="/img/071/1.png" alt=""></p>
+<p><img src="/img/071/2.png" alt=""></p>
+<p><img src="/img/071/3.png" alt=""></p>
+<p>完成上述操作后，我们将进入草图编辑器工作台<code>Sketcher</code>:</p>
+<p><img src="/img/071/4.png" alt=""></p>
+<h3 id="绘制草图">绘制草图</h3>
+<p>我们选择矩形工具，然后在场景中进行绘制，绘制的方法是先点击场景中的某个位置，然后移动鼠标到另一个位置再次点击:</p>
+<p><img src="/img/071/5.png" alt=""></p>
+<p>我们需要为这个矩形设置具体的大小和座标，拥有确定座标和大小的图形才可以用于后续的工程开发，这种精确没有歧义的图形可以被叫做“完全图”。</p>
+<p>首先，我们来确定一下矩形的高度大小，我们点击矩形中的一条侧边「左右都行」，然后按键盘字母键“i”则会弹出对话框，我们设置尺寸为50mm并点击按钮OK:</p>
+<p><img src="/img/071/6.png" alt=""></p>
+<p>然后，我们确定一下矩形的宽度大小，我们点击矩形中的一条水平边「上下都行」，然后按键盘字母键“l“则会弹出对话框，我们设置尺寸为60mm并点击按钮OK:</p>
+<p><img src="/img/071/7.png" alt=""></p>
+<p>接下来，我们确定一下矩形的位置，我们点击矩形的左下角的顶尖，然后点击十字座标的中心原点，当这两个点都高亮激活后，我们按键盘字母键“c”，这样它们就会进行对齐，此时我们就得到了一个位置的大小、形状都确定的“完全图”:</p>
+<p><img src="/img/071/8.png" alt=""></p>
+<p><img src="/img/071/10.png" alt=""></p>
+<p>点击按钮Close退出草图编辑器:</p>
+<p><img src="/img/071/11.png" alt=""></p>
+<h3 id="生成三维图形">生成三维图形</h3>
+<p>在退出草图编辑工作台后，会自动来到部件设计工作台，这时我们点击按钮Pad，将我们刚刚绘制的草图转换为三维模型:</p>
+<p><img src="/img/071/12.png" alt=""></p>
+<p>我们把厚度设置为15mm，然后点击按钮OK完成三维模型的生成:</p>
+<p><img src="/img/071/13.png" alt=""></p>
+<p>至此我们的草图绘制并生成三维图像的基础操作就完毕了，我们可以按快捷键<code>Ctrl+S</code>将其进行保存到本地文件。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2022 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
