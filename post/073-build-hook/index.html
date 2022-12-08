@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="今天我们来完成挂钩中钩子部分的绘制，并且今天的操作需要基于上一节中学习到的基础知识，建议没有看过上一节内容的朋友先去到上一节进行了解，然后再来学习今天的操作。">
+<meta name="keywords" content="maker,创客,3D,cad,freecad,printer,3d,printer,modeling,geek">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>创客一点灵・绘制钩子 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2022-12-09">December 09, 2022</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/maker">Maker</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">创客一点灵・绘制钩子</h1>
+  <section class="body" itemprop="articleBody">
+    <p>今天我们来完成挂钩中钩子部分的绘制，并且今天的操作需要基于上一节中学习到的基础知识，建议没有看过上一节内容的朋友先去到上一节进行了解，然后再来学习今天的操作。</p>
+<h3 id="准备工作">准备工作</h3>
+<p>我们先进入部件设计工作台「Part Design」，然后点击按钮「Create sketch」创建一张草图，我们选择x-z平面进行绘制:</p>
+<p><img src="/img/073/01.png" alt=""></p>
+<h3 id="polyline工具">Polyline工具</h3>
+<p>在创建草图后，FreeCAD会自动为我们打开草图工作台「Sketcher」，我们点击按钮「Create polyline」启用Polyline绘制工具:</p>
+<p><img src="/img/073/02.png" alt=""></p>
+<p>启用Polyline工具后，我们可以通过在绘图区域按鼠标左键点击不同的位置来绘制复杂的图形，并且我们可以使用键盘字母键“M”来切换线条模式，在绘制完毕后可以按键盘Esc键退出Polyline工具。</p>
+<p>我们要绘制的钩子的形态大致如下:</p>
+<p><img src="/img/073/03.png" alt=""></p>
+<p>我再绘制该图形的各点的位置顺序，从1到7「其中第1点与第7点重合」，显示如下:</p>
+<p><img src="/img/073/04.png" alt=""></p>
+<p>该图形绘制过程中需在第2、4、6点处按键盘字母键“M”来切换线条模式，大家可以逐个尝试判断出适合的线条模式。</p>
+<h3 id="调整图形">调整图形</h3>
+<p>我们需要将第1、2点之间的线与第3、4点之间的线设置为水平，我们可以点击其中一条，然后按键盘字母键“H”将其设置为水平:</p>
+<p><img src="/img/073/05.png" alt=""></p>
+<p>点4点5之间的圆弧与点6点7之间的圆弧，它们的圆形要重合，我们可以框选它们然后按键盘字母键“C”将它们合并:</p>
+<p><img src="/img/073/06.png" alt=""></p>
+<p>将点5点6之间的直线设置为竖直，点选该直线，然后按键盘字母键“V“将其设置竖直:</p>
+<p><img src="/img/073/06.png" alt=""></p>
+<p>将点4与点1设置为竖直对齐，点选点4与点1并按键盘字母键“V”将其设置竖直对齐:</p>
+<p><img src="/img/073/07.png" alt=""></p>
+<h3 id="确定图形位置">确定图形位置</h3>
+<p>我们将图形的点1与座标轴原点设置重合，点选点1与座标原点并按键盘字母键“C”将其设置重合:</p>
+<p><img src="/img/073/08.png" alt=""></p>
+<h3 id="确定图形尺寸">确定图形尺寸</h3>
+<p>我们大致只需确定点1与点2的水平距离，点5与点6的竖直距离，点5与点4的竖直距离就可以了。两点间确定竖直距离，我们可以点选这两点，然后按键盘字母键“I”进行设置；两点间确定水平距离，我们可以点选这两点，然后按键盘字母键“L”进行设置，完成设置后我们的效果大致一个如下:</p>
+<p><img src="/img/073/09.png" alt=""></p>
+<h3 id="生成立体图形">生成立体图形</h3>
+<p>我们在绘制完平面图形后，点击按钮Close结束绘制并回到部件设计工作台，然后点击按钮「Pad」生成一个有厚度的三维图形:</p>
+<p><img src="/img/073/10.png" alt=""></p>
+<p>我们启用选项「Symmetric to plane」将三维图形设置为关于平面对称的样式，最后点击按钮OK结束绘制:</p>
+<p><img src="/img/073/11.png" alt=""></p>
+<p>至此，我们完成了挂钩钩子部分的三维图形绘制。</p>
+<p><img src="/img/073/12.png" alt=""></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2022 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

@@ -6,7 +6,16 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 29 Nov 2022 15:44:14 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Dec 2022 01:43:56 +0800</lastBuildDate><atom:link href="http://bxtkezhan.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>创客一点灵・绘制钩子</title>
+      <link>http://bxtkezhan.xyz/post/073-build-hook/</link>
+      <pubDate>Fri, 09 Dec 2022 01:43:56 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.xyz/post/073-build-hook/</guid>
+      <description>今天我们来完成挂钩中钩子部分的绘制，并且今天的操作需要基于上一节中学习到的基础知识，建议没有看过上一节内容的朋友先去到上一节进行了解，然后再来学习今天的操作。</description>
+    </item>
+    
     <item>
       <title>盘点一下小弟用得比较多的编程语言</title>
       <link>http://bxtkezhan.xyz/post/072-empty-string/</link>
