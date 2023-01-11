@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="我们已经学习过了挂钩主体的3D绘制，今天我们就来完成一个完整的挂钩绘制。">
+<meta name="keywords" content="maker,创客,3D,cad,freecad,printer,3d,printer,modeling,geek">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>创客一点灵・绘制完整挂钩 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2023-01-11">January 11, 2023</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/maker">Maker</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">创客一点灵・绘制完整挂钩</h1>
+  <section class="body" itemprop="articleBody">
+    <p>我们已经学习过了挂钩主体的3D绘制，今天我们就来完成一个完整的挂钩绘制。</p>
+<h3 id="绘制平板">绘制平板</h3>
+<p>我们的挂钩与墙体粘贴的部分是一个有着些许厚度的平板，我们先来绘制一下这个平板。</p>
+<p>我们在X-Y平面绘制一个长、宽都是60mm的正方形，并让其居中:</p>
+<p><img src="/img/074/01.png" alt=""></p>
+<p>当其成为完全图后，我们点击按钮Close，退回物件设计工作台模式，然后使用Pad工具生成厚度为2.5mm的平板:</p>
+<p><img src="/img/074/02.png" alt=""></p>
+<h3 id="绘制钩子">绘制钩子</h3>
+<p>有了平板后，我们就可以开始绘制钩子，但是再次之前我们需要检查一下FreeCAD的布尔运算配置。</p>
+<p>我们在Edit菜单栏中的Preferences设置中的Part Design选项里勾选下列内容并点击Apply按钮，然后点击OK按钮保存并退出:</p>
+<p><img src="/img/074/03.png" alt=""></p>
+<p>在完成上述配置后，我们建模时相接的部分才会自动变为一个整体。</p>
+<p>完成准备工作后我们在X-Z平面绘制一个钩子，钩子的绘制方法可以参考上一节的内容，这里不做过多赘述:</p>
+<p><img src="/img/074/04.png" alt=""></p>
+<p>需要注意的是: 我们的平板厚度为2.5mm因此为了确保钩子与平板接合，钩子离水平轴的距离应该小于2.5mm，我这里设置为2.4mm。</p>
+<p>接下来我们点击Close按钮退回到物件设计工作台模式，使用Pad工具将钩子的厚度做出来，厚度我这边设置为10mm。此外，我们还需要勾选平面对齐的选项来确保钩子的位置正确:</p>
+<p><img src="/img/074/05.png" alt=""></p>
+<p>确认无误后点击OK按钮完成编辑。</p>
+<h3 id="绘制凹陷平面">绘制凹陷平面</h3>
+<p>为了方便打胶，我们可以在挂钩平板的背后制作一个凹陷的平面。</p>
+<p>我们使用鼠标中键可以旋转物件，我们先将其旋转到背面，然后用鼠标左键点选背面，这时再按Create sketch按钮则可以在该平面绘制草图:</p>
+<p><img src="/img/074/06.png" alt=""></p>
+<p><img src="/img/074/07.png" alt=""></p>
+<p>我们绘制一个对齐居中的长、宽都是56mm的正方形作为完全图并点击Close按钮退回:</p>
+<p><img src="/img/074/08.png" alt=""></p>
+<p>我们使用Pocket工具在这个地方挖一个1mm深度的平面:</p>
+<p><img src="/img/074/09.png" alt=""></p>
+<p>需要注意的是由于默认Pocket挖取的深度超过了平板的厚度，可能会导致在点击Pocket工具的使用出现图形显示问题，这时只需要设置好正确的深度数值就可以正常显示图像了。</p>
+<p>在确定无误后我们点击OK按钮完成绘制，这时我们就得到了一个完整的挂钩:</p>
+<p><img src="/img/074/10.png" alt=""></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
