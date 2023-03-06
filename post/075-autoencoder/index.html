@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="今天我们使用Python编程语言和PyTorch深度学习库实现一个用于图像有损压缩的自动编码器模型，针对MNIST数据集进行讲解。">
+<meta name="keywords" content="ai,人工智能,pytorch,chatgpt,图像生成,自动编码器,变分编码器,扩散模型">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>图像生成模型基础・自动编码器 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.xyz/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2023-03-06">March 06, 2023</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/aigc">AIGC</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">图像生成模型基础・自动编码器</h1>
+  <section class="body" itemprop="articleBody">
+    <p>今天我们使用Python编程语言和PyTorch深度学习库实现一个用于图像有损压缩的自动编码器模型，针对MNIST数据集进行讲解。</p>
+<h3 id="什么是自动编码器">什么是自动编码器？</h3>
+<p>自动编码器是一种无监督学习算法，它可以用来学习输入数据的低维表示。自动编码器包含一个编码器和一个解码器，编码器将输入数据映射到低维空间，解码器将低维表示映射回原始空间。自动编码器的目标是通过最小化重构误差来学习这些映射，使得解码器能够生成与原始输入相似的输出。</p>
+<h3 id="mnist数据集">MNIST数据集</h3>
+<p>MNIST数据集是一个手写数字数据集，包含60,000个训练样本和10,000个测试样本。每个样本是一个28x28像素的灰度图像，标签是0到9之间的数字。我们将使用MNIST数据集来训练自动编码器，以学习输入数据的低维表示。</p>
+<h3 id="自动编码器的实现">自动编码器的实现</h3>
+<p>我们将使用PyTorch来实现自动编码器。以下是自动编码器的实现步骤：</p>
+<p>1 .导入必要的库和数据集。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+<span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
+<span style="color:#f92672">from</span> torchvision <span style="color:#f92672">import</span> datasets, transforms
+
+<span style="color:#75715e"># 加载MNIST数据集</span>
+train_dataset <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>MNIST(
+    root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.&#34;</span>,
+    train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor(),
+)
+
+test_dataset <span style="color:#f92672">=</span> datasets<span style="color:#f92672">.</span>MNIST(
+    root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.&#34;</span>,
+    train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+    download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor(),
+)
+
+<span style="color:#75715e"># 创建数据加载器</span>
+train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(
+    train_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+)
+test_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(
+    test_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+)
+</code></pre></div><p>2 .定义自动编码器的结构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Autoencoder</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self):
+        super(Autoencoder, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>encoder <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">784</span>, <span style="color:#ae81ff">128</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">64</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">16</span>),
+        )
+        self<span style="color:#f92672">.</span>decoder <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">64</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">128</span>),
+            nn<span style="color:#f92672">.</span>ReLU(),
+            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">784</span>),
+            nn<span style="color:#f92672">.</span>Sigmoid(),
+        )
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+		x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>flatten(<span style="color:#ae81ff">1</span>)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder(x)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decoder(x)
+        <span style="color:#66d9ef">return</span> x
+</code></pre></div><p>这个自动编码器有三个隐藏层，分别是128、64和16个神经元。编码器和解码器都使用ReLU激活函数，输出层使用Sigmoid激活函数。</p>
+<p>3 .训练自动编码器。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#34;cuda&#34;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;cpu&#34;</span>)
+
+model <span style="color:#f92672">=</span> Autoencoder()<span style="color:#f92672">.</span>to(device)
+criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BCELoss()
+optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-3</span>)
+
+num_epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+
+<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(num_epochs):
+    train_loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">for</span> data <span style="color:#f92672">in</span> train_loader:
+        img, _ <span style="color:#f92672">=</span> data
+        img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>to(device)
+
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+
+        recon <span style="color:#f92672">=</span> model(img)
+        loss <span style="color:#f92672">=</span> criterion(recon, img<span style="color:#f92672">.</span>flatten(<span style="color:#ae81ff">1</span>))
+
+        loss<span style="color:#f92672">.</span>backward()
+        optimizer<span style="color:#f92672">.</span>step()
+
+        train_loss <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+
+    print(<span style="color:#e6db74">&#34;Epoch [</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">], Loss: </span><span style="color:#e6db74">{:.4f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(epoch <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, num_epochs, train_loss <span style="color:#f92672">/</span> len(train_loader)))
+
+torch<span style="color:#f92672">.</span>save(model<span style="color:#f92672">.</span>state_dict(), <span style="color:#e6db74">&#34;autoencoder.pt&#34;</span>)
+</code></pre></div><p>我们使用BCE损失函数和Adam优化器来训练自动编码器。在每个训练周期中，我们遍历整个训练数据集，并更新模型参数。最后，我们保存训练好的自动编码器模型。</p>
+<p>4 .测试自动编码器。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>load_state_dict(torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;autoencoder.pt&#34;</span>))
+
+test_loss <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+    <span style="color:#66d9ef">for</span> data <span style="color:#f92672">in</span> test_loader:
+        img, _ <span style="color:#f92672">=</span> data
+        img <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>to(device)
+
+        recon <span style="color:#f92672">=</span> model(img)
+        loss <span style="color:#f92672">=</span> criterion(recon, img)
+
+        test_loss <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+
+print(<span style="color:#e6db74">&#34;Test Loss: </span><span style="color:#e6db74">{:.4f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(test_loss <span style="color:#f92672">/</span> len(test_loader)))
+</code></pre></div><p>在测试集上，我们计算自动编码器的重构误差。如果我们的自动编码器学习了数据的有效低维表示，那么重构误差应该比较小。</p>
+<p>5 .使用自动编码器进行图像重构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+
+n_images <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+image_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">28</span>
+
+fig, axes <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(nrows<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, ncols<span style="color:#f92672">=</span>n_images, sharex<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, sharey<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">4</span>))
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_images):
+    test_image, _ <span style="color:#f92672">=</span> test_dataset[i]
+    test_image <span style="color:#f92672">=</span> test_image<span style="color:#f92672">.</span>to(device)
+
+    <span style="color:#75715e"># 原始图像</span>
+    axes[<span style="color:#ae81ff">0</span>][i]<span style="color:#f92672">.</span>imshow(test_image<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy()<span style="color:#f92672">.</span>reshape(image_size, image_size), cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+    axes[<span style="color:#ae81ff">0</span>][i]<span style="color:#f92672">.</span>get_xaxis()<span style="color:#f92672">.</span>set_visible(<span style="color:#66d9ef">False</span>)
+    axes[<span style="color:#ae81ff">0</span>][i]<span style="color:#f92672">.</span>get_yaxis()<span style="color:#f92672">.</span>set_visible(<span style="color:#66d9ef">False</span>)
+
+    <span style="color:#75715e"># 重构图像</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        outputs <span style="color:#f92672">=</span> model(test_image<span style="color:#f92672">.</span>unsqueeze(<span style="color:#ae81ff">0</span>))
+    reconstructed_image <span style="color:#f92672">=</span> outputs<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy()<span style="color:#f92672">.</span>reshape(image_size, image_size)
+    axes[<span style="color:#ae81ff">1</span>][i]<span style="color:#f92672">.</span>imshow(reconstructed_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+    axes[<span style="color:#ae81ff">1</span>][i]<span style="color:#f92672">.</span>get_xaxis()<span style="color:#f92672">.</span>set_visible(<span style="color:#66d9ef">False</span>)
+    axes[<span style="color:#ae81ff">1</span>][i]<span style="color:#f92672">.</span>get_yaxis()<span style="color:#f92672">.</span>set_visible(<span style="color:#66d9ef">False</span>)
+
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>我们可以使用训练好的自动编码器对图像进行重构。上面的代码将显示原始图像和重构图像。如果我们的自动编码器学习了数据的有效低维表示，那么重构图像应该与原始图像相似。</p>
+<p>以下为重构效果演示，第一行为原始图像，第二行为对应的重构图像:</p>
+<p><img src="/img/075/Figure_1.png" alt=""></p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们使用Python和PyTorch实现了一个自动编码器，并使用MNIST数据集进行训练和测试。我们还展示了如何使用训练好的自动编码器进行图像重构。自动编码器是深度学习中的一个重要概念，</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
