@@ -6,7 +6,16 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 06 Mar 2023 23:05:15 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Mar 2023 22:47:50 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot开发・安装Godot4</title>
+      <link>http://bxtkezhan.github.io/post/076-install-godot4/</link>
+      <pubDate>Wed, 29 Mar 2023 22:47:50 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.github.io/post/076-install-godot4/</guid>
+      <description>前不久我在浏览几个游戏开发引擎的时候发现了这些支持3D游戏开发的引擎除了有提供游戏开发功能外还专门标识了可以用于工业仿真，例如：机械臂、车间流水线。正好我其实也对这些东西比较感兴趣，所以我决定尝试使用Godot游戏引擎来实现一个机械仿真工具，便于我之后研究自己的3D打印机、CNC、机械臂。</description>
+    </item>
+    
     <item>
       <title>图像生成模型基础・自动编码器</title>
       <link>http://bxtkezhan.github.io/post/075-autoencoder/</link>

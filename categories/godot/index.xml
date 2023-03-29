@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Godot on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.github.io/categories/godot/</link>
+    <description>Recent content in Godot on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 29 Mar 2023 22:47:50 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/categories/godot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot开发・安装Godot4</title>
+      <link>http://bxtkezhan.github.io/post/076-install-godot4/</link>
+      <pubDate>Wed, 29 Mar 2023 22:47:50 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.github.io/post/076-install-godot4/</guid>
+      <description>前不久我在浏览几个游戏开发引擎的时候发现了这些支持3D游戏开发的引擎除了有提供游戏开发功能外还专门标识了可以用于工业仿真，例如：机械臂、车间流水线。正好我其实也对这些东西比较感兴趣，所以我决定尝试使用Godot游戏引擎来实现一个机械仿真工具，便于我之后研究自己的3D打印机、CNC、机械臂。</description>
+    </item>
+    
+  </channel>
+</rss>
