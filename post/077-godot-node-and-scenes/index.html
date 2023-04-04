@@ -2,15 +2,15 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="欢迎来到 `bxtkezhan`, 一个独立、开放的知识分享小站。">
-<meta name="keywords" content="计算机,编程,数据分析,人工智能,python,golang,c语言">
+<meta name="description" content="在使用Godot开发项目时，我们会用到节点「Node」来构建和处理我们需要的场景、角色、灯光、相机、播放器等物件。另外，我们可以在不同场景「Scene」中布置不同的节点结构来实现不同的游戏场景。">
+<meta name="keywords" content="3D,Game,Game,Engine,godot,robotic,arm,cnc,robotic,machine">
 <meta name="author" content="bxtkezhan@kk">
 <meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
-<title>Godot - bxtkezhan@kk</title>
+<title>Godot开发・节点与场景 - bxtkezhan@kk</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -44,39 +44,40 @@
 <div class="container">
 
 
-<main role="main" class="article-list">
-  <h1 class="list-title">Godot</h1>
+<main role="main" class="article">
   
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/077-godot-node-and-scenes/">Godot开发・节点与场景</a></h2>
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
   <div class="meta">
 
     <span class="key">published on</span>
     <span class="val"><time itemprop="datePublished" datetime="2023-04-04">April 04, 2023</time></span>
 
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/godot">Godot</a>
+
+    </span>
+
+
   </div>
-  <section class="summary">
-    在使用Godot开发项目时，我们会用到节点「Node」来构建和处理我们需要的场景、角色、灯光、相机、播放器等物件。另外，我们可以在不同场景「Scene」中布置不同的节点结构来实现不同的游戏场景。 
+  <h1 class="headline" itemprop="headline">Godot开发・节点与场景</h1>
+  <section class="body" itemprop="articleBody">
+    <p>在使用Godot开发项目时，我们会用到节点「Node」来构建和处理我们需要的场景、角色、灯光、相机、播放器等物件。另外，我们可以在不同场景「Scene」中布置不同的节点结构来实现不同的游戏场景。</p>
+<h3 id="创建第一个场景">创建第一个场景</h3>
+<p>打开Godot，进入新创建的项目时，会看到侧栏场景面板中提示创建一个根节点「Root Node」，这时我们可以选择其中一个节点类型并创建一个根节点，然后我们将得到一个新的场景，而该场景的根节点为我们选择节点。</p>
+<p><img src="/img/077/01.png" alt=""></p>
+<p>这里我们从其它节点「Other Node」中搜索“Node”，并选择它进行创建。这样我将的到一个元节点为根节点的场景，之后我们可以在它底下创建其它类型的节点，例如：3D类型的节点，2D类型的节点或是处理UI的节点……</p>
+<p><img src="/img/077/02.png" alt=""></p>
+<p>接下来，我们鼠标双击该节点进行重命名。我们将其命名为“Main”，然后使用快捷键<code>Ctrl+S</code>保存场景:</p>
+<p><img src="/img/077/03.png" alt=""></p>
+<p>之后我们就可以在该场景的基础上添加、制作我们需要的物件节点。</p>
+
   </section>
 </article>
 
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/076-install-godot4/">Godot开发・安装Godot4</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2023-03-29">March 29, 2023</time></span>
-
-  </div>
-  <section class="summary">
-    前不久我在浏览几个游戏开发引擎的时候发现了这些支持3D游戏开发的引擎除了有提供游戏开发功能外还专门标识了可以用于工业仿真，例如：机械臂、车间流水线。正好我其实也对这些东西比较感兴趣，所以我决定尝试使用Godot游戏引擎来实现一个机械仿真工具，便于我之后研究自己的3D打印机、CNC、机械臂。 
-  </section>
-</article>
-
-  
 </main>
-
 
 </div>
 
