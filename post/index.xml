@@ -6,7 +6,16 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 May 2023 02:20:46 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jun 2023 22:31:45 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用计算机视觉技术进行PCB图像连接线检测</title>
+      <link>http://bxtkezhan.github.io/post/080-pcb-detect-link/</link>
+      <pubDate>Mon, 12 Jun 2023 22:31:45 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.github.io/post/080-pcb-detect-link/</guid>
+      <description>我们会使用 matplotlib 进行绘图，并使用 numpy 处理数组相关的数值计算，以及使用 opencv 提供的计算机视觉工具，请确保工作环境可以正确引入并使用它们。</description>
+    </item>
+    
     <item>
       <title>使用计算机视觉技术进行PCB图像焊点检测</title>
       <link>http://bxtkezhan.github.io/post/079-pcb-detect-dots/</link>
