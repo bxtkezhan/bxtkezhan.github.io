@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="做语音识别前常常需要先对音频文件做预编码处理，然后将处理后的数据送入模型做进一步的推理或者训练。">
+<meta name="keywords" content="asr,python,mfcc,librosa,audio,speech,voice">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>语音识别・MFCC特征 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2023-08-28">August 28, 2023</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/asr">ASR</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">语音识别・MFCC特征</h1>
+  <section class="body" itemprop="articleBody">
+    <p>做语音识别前常常需要先对音频文件做预编码处理，然后将处理后的数据送入模型做进一步的推理或者训练。</p>
+<p>一般来说音频这种时讯数据可以使用傅里叶变换来取得特征，对于时长比较长的音频数据可以做短时傅里叶变换，及先将较长的时讯数据按照时长进行分段，对每一个小段单独做傅里叶变换，然后整合起来。</p>
+<p>短时傅里叶变换仍旧有其表征上的不足，一般来说工业界倾向于使用梅尔频率倒谱系数「Mel Frequency Cepstrum Coefficient，MFCC」来做语音识别的音频预编码。</p>
+<p>关于MFCC的具体细节可以参考资料: <a href="http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs">http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs</a></p>
+<p>在Python当中可以借用<code>librosa</code>快速实现MFCC操作，代码示例如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">import</span> librosa
+
+audio_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;your_audio.mp3&#39;</span>
+
+audio, sr <span style="color:#f92672">=</span> librosa<span style="color:#f92672">.</span>load(audio_path, sr<span style="color:#f92672">=</span><span style="color:#ae81ff">32000</span>)
+print(audio<span style="color:#f92672">.</span>shape, sr)
+librosa<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>waveshow(audio, sr<span style="color:#f92672">=</span>sr)
+plt<span style="color:#f92672">.</span>show()
+
+mfccs <span style="color:#f92672">=</span> librosa<span style="color:#f92672">.</span>feature<span style="color:#f92672">.</span>mfcc(y<span style="color:#f92672">=</span>audio, sr<span style="color:#f92672">=</span>sr, n_mfcc<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>)
+print(mfccs<span style="color:#f92672">.</span>shape, mfccs<span style="color:#f92672">.</span>dtype, mfccs<span style="color:#f92672">.</span>min(), mfccs<span style="color:#f92672">.</span>max())
+librosa<span style="color:#f92672">.</span>display<span style="color:#f92672">.</span>specshow(mfccs, sr<span style="color:#f92672">=</span>sr, x_axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;time&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>使用<code>librosa.load</code>可以从路径载入音频，一般来说可以指定采样率sr。librosa提供了可视化工具<code>librosa.display.waveshow</code>，可以帮助我们显示载入后的音频波形。</p>
+<p><img src="/img/081/Figure_1.png" alt=""></p>
+<p><code>librosa.feature.mfcc</code>可以从音频数据中提取MFCC特征，我们需要指定采样率sr，默认情况下会返回nxm的数组，n默认为20，可以使用<code>n_mfcc</code>参数进行指定，m对应时间轴方向。我们可以通过可视化工具<code>librosa.display.specshow</code>来进行观察。</p>
+<p><img src="/img/081/Figure_2.png" alt=""></p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
