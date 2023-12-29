@@ -5,16 +5,6 @@
         
             {
                 "id": 0,
-                "href": "https://bxtkezhan.github.io/video-post-view/",
-                "title": "Video Post View",
-                "section": "posts",
-                "date" : "2022.07.09",
-                "body": "This is a video post view example.\nDo you, like me, find yourself stuck at home these days and are looking to learn something new? Then come with me to learn 3D modeling with Solidworks. While you learn 3D modeling, I learn how to record and edit small video tutorials. As you can see, it is still an equal exchange. To record the screen I am using OBS and to edit the videos I am familiarazing with DaVinci Resolve.\nMy tutorials are far from perfect and for this reason I would like your criticisms to be also harsh but sincere. I therefore ask you to report any errors or unclear concepts in the comments and I will do my best to improve in the next round.\nIn this series of 5 videos we model a support for a tree consisting of two parts:\nthe lower support the upper shell In the first video we model the lower support and you will learn how to use the 2D Sketch tools and the Extrude and Hole Wizard functions; In the second we model the upper support that I call the shell you will reinforce the use of the tools of the first video.\nIn the third video we will compose the assembly to check if there is any interference between the pieces. In the fourth and fifth video we will prepare the individual pieces on the table. We will learn how to use the Smart Dimension tool, fill in the Title Block and produce the printable sheet in PDF.\nTo follow the first tutorial on Solidworks I suggest you download PDF drawing I created for you. Follow this link and start the exercise:\nDownload\nFile (.pdf)\n1.3 MB\nFollow the next posts to make the other tutorials.\n"
-            }
-    
-        ,
-            {
-                "id": 1,
                 "href": "https://bxtkezhan.github.io/portfolio/lorem-ipsum/",
                 "title": "What is Lorem Ipsum?",
                 "section": "portfolio",
@@ -24,7 +14,7 @@
     
         ,
             {
-                "id": 2,
+                "id": 1,
                 "href": "https://bxtkezhan.github.io/about/",
                 "title": "About Me",
                 "section": "",
@@ -34,37 +24,7 @@
     
         ,
             {
-                "id": 3,
-                "href": "https://bxtkezhan.github.io/post-without-sidebar/",
-                "title": "Post without sidebar",
-                "section": "posts",
-                "date" : "2022.04.26",
-                "body": "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\u0026rsquo;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it?\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \u0026lsquo;Content here, content here\u0026rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \u0026rsquo;lorem ipsum\u0026rsquo; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\nWhere does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \u0026ldquo;de Finibus Bonorum et Malorum\u0026rdquo; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \u0026ldquo;Lorem ipsum dolor sit amet..\u0026rdquo;, comes from a line in section 1.10.32.\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \u0026ldquo;de Finibus Bonorum et Malorum\u0026rdquo; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.\nWhy do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \u0026lsquo;Content here, content here\u0026rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \u0026rsquo;lorem ipsum\u0026rsquo; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\nWhere can I get some? There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\u0026rsquo;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\u0026rsquo;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\nTo follow along, you can download the code and other resources by clicking the link below:\nGet Source Code: Click here to get the code project as well as snapshots of the individual steps followed in this tutorial.\n"
-            }
-    
-        ,
-            {
-                "id": 4,
-                "href": "https://bxtkezhan.github.io/post-with-sidebar/",
-                "title": "Post with sidebar",
-                "section": "posts",
-                "date" : "2020.10.15",
-                "body": "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\u0026rsquo;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it?\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \u0026lsquo;Content here, content here\u0026rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \u0026rsquo;lorem ipsum\u0026rsquo; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\nWhere does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \u0026ldquo;de Finibus Bonorum et Malorum\u0026rdquo; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \u0026ldquo;Lorem ipsum dolor sit amet..\u0026rdquo;, comes from a line in section 1.10.32.\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \u0026ldquo;de Finibus Bonorum et Malorum\u0026rdquo; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.\nWhy do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \u0026lsquo;Content here, content here\u0026rsquo;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \u0026rsquo;lorem ipsum\u0026rsquo; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\nWhere can I get some? There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\u0026rsquo;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\u0026rsquo;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\nTo follow along, you can download the code and other resources by clicking the link below:\nGet Source Code: Click here to get the code project as well as snapshots of the individual steps followed in this tutorial.\n"
-            }
-    
-        ,
-            {
-                "id": 5,
-                "href": "https://bxtkezhan.github.io/start-here/",
-                "title": "Start Here",
-                "section": "posts",
-                "date" : "2020.10.15",
-                "body": "Arberia Theme is a theme for the Hugo for tech blogger with 4 single post layout and 2 list layout!\nFeatures Responsive layout 3 Single post view: Post view with sidebar Post view without sidebar Post view with cover image Video post view 2 List post view: List posts Grid posts Landing page List Cathegory/Tag view Icon colored submenu Table of Contents Search supported by Flexbox.js Google Analytics supported Disqus comment system Social-Media Share buttons on posts Multilingual support. (not yet implemented!) Uses Hugo\u0026rsquo;s asset generator with pipelining, fingerprinting, bundling and minification by default (No webpack, nodejs and other dependencies are required to edit the theme. Installation/updating Before starting, please be sure that you have installed Hugo and created a new site. After that, you are ready to install Arberia.\nThere are two mode:\na) Simple mode: Download as Zip from Github Page and extract in your themes directory or\nb) Or you can add it as a git submodule via the following command:\n$ cd themes $ git submodule add https://github.com/antedoro/arberia.git arberia Next, open config.toml in the base of the Hugo site and ensure the theme option is set to arberia:\ntheme = \u0026#34;arberia\u0026#34; To update theme installed in b mode:\ncd themes/arberia git pull Configuration Config.toml example title = \u0026#34;Arberia Theme\u0026#34; baseURL = \u0026#34;https://arberiatheme.netlify.app/\u0026#34; relativeURLs = \u0026#34;True\u0026#34; languageCode = \u0026#34;en-us\u0026#34; defaultContentLanguage = \u0026#39;en\u0026#39; theme = \u0026#34;arberia\u0026#34; Front Matter example --- title: \u0026#34;Insert title here\u0026#34; subtitle: \u0026#34;Insert a subtitle here\u0026#34; date: 2020-10-15T20:58:53+02:00 lastmod: 2020-10-15T20:58:53+02:00 draft: true type: # Use standard-view on nothing for default or courses - video - landingpage null for list view weight: null featured: false sidebar: false # Works only with standard-view toc: true # Works only with standard-view math: enable: false # Actualy not implemented lightgallery: false # Actualy not implemented license: \u0026#34;\u0026#34; slug: # slug exemple: solidworks-2020-tutorial hiddenFromHomePage: false hiddenFromSearch: false # da implementare author: \u0026#34;author\u0026#34; avatar: /img/me.jpg # link to avatar file authorLink: \u0026#34;\u0026#34; description: \u0026#34;Descrizione da rivedere se è un doppione subtitle\u0026#34; tags: - tag1 - tag2 - tag3 - tag4 categories: - category # resources: # - name: featured-image # src: featured-image.png resources: - name: \u0026#34;featured-image\u0026#34; src: \u0026#34;Real-Python-Learning-Paths_Watermarked.webp\u0026#34; - name: \u0026#34;featured-image-preview\u0026#34; src: \u0026#34;Real-Python-Learning-Paths_Watermarked.webp\u0026#34; # If its a video post compile below video: title: \u0026#34;YouTube Video Title\u0026#34; link: # YouTube Video Link for example: https://www.youtube.com/embed/taxItkTlY_0 duration: # Example 14:16 playlist: item: - title: \u0026#34;YouTube Video Title\u0026#34; icon: fa fa-fw fa-play link: # YouTube Video Link for example: https://www.youtube.com/embed/taxItkTlY_0 duration: # Example 14:16 - title: \u0026#34;YouTube Video Title\u0026#34; icon: far fa-circle link: # YouTube Video Link for example: https://www.youtube.com/embed/taxItkTlY_0 duration: # Example 4:42 --- For more information about all available standard front matter variables, please read Hugo Front Matter.\nContributing Have you found a bug or got an idea for a new feature? Feel free to use the issue tracker to let me know. Or make directly a pull request.\nLicense This theme is released under the GPLv2 license.\nFAQs / How To\u0026rsquo;s Guide Read Wiki For More Details =\u0026gt; Arberia-FAQs\nRelease Changelog Release ChangeLog has info about stuff added: Releases\nSpecial Thanks flexsearch.js mark.js All Contributors and Supporters "
-            }
-    
-        ,
-            {
-                "id": 6,
+                "id": 2,
                 "href": "https://bxtkezhan.github.io/portfolio/why-do-we-use-it/",
                 "title": "Why do we use it?",
                 "section": "portfolio",
@@ -74,7 +34,7 @@
     
         ,
             {
-                "id": 7,
+                "id": 3,
                 "href": "https://bxtkezhan.github.io/portfolio/where-can-i-get-some/",
                 "title": "Where can I get some?",
                 "section": "portfolio",
@@ -84,7 +44,7 @@
     
         ,
             {
-                "id": 8,
+                "id": 4,
                 "href": "https://bxtkezhan.github.io/portfolio/where-does-it-come-from/",
                 "title": "Where does it come from?",
                 "section": "portfolio",
@@ -94,17 +54,7 @@
     
         ,
             {
-                "id": 9,
-                "href": "https://bxtkezhan.github.io/markdown-syntax/",
-                "title": "Markdown Syntax",
-                "section": "posts",
-                "date" : "2019.12.01",
-                "body": "This article offers a sample of basic Markdown syntax that can be used in Hugo content files.\nThis article is a shameful copy of the great Grav original page. Let\u0026rsquo;s face it: Writing content for the Web is tiresome. WYSIWYG editors help alleviate this task, but they generally result in horrible code, or worse yet, ugly web pages.\nMarkdown is a better way to write HTML, without all the complexities and ugliness that usually accompanies it.\nSome of the key benefits are:\nMarkdown is simple to learn, with minimal extra characters, so it\u0026rsquo;s also quicker to write content. Less chance of errors when writing in Markdown. Produces valid XHTML output. Keeps the content and the visual display separate, so you cannot mess up the look of your site. Write in any text editor or Markdown application you like. Markdown is a joy to use! John Gruber, the author of Markdown, puts it like this:\nThe overriding design goal for Markdown’s formatting syntax is to make it as readable as possible. The idea is that a Markdown-formatted document should be publishable as-is, as plain text, without looking like it’s been marked up with tags or formatting instructions. While Markdown’s syntax has been influenced by several existing text-to-HTML filters, the single biggest source of inspiration for Markdown’s syntax is the format of plain text email.\nWithout further delay, let us go over the main elements of Markdown and what the resulting HTML looks like!\n:(far fa-bookmark fa-fw): Bookmark this page for easy future reference! 1 Headings Headings from h2 through h6 are constructed with a # for each level:\n## h2 Heading ### h3 Heading #### h4 Heading ##### h5 Heading ###### h6 Heading The HTML looks like this:\n\u0026lt;h2\u0026gt;h2 Heading\u0026lt;/h2\u0026gt; \u0026lt;h3\u0026gt;h3 Heading\u0026lt;/h3\u0026gt; \u0026lt;h4\u0026gt;h4 Heading\u0026lt;/h4\u0026gt; \u0026lt;h5\u0026gt;h5 Heading\u0026lt;/h5\u0026gt; \u0026lt;h6\u0026gt;h6 Heading\u0026lt;/h6\u0026gt; Heading IDs To add a custom heading ID, enclose the custom ID in curly braces on the same line as the heading:\n### A Great Heading {#custom-id} The HTML looks like this:\n\u0026lt;h3 id=\u0026#34;custom-id\u0026#34;\u0026gt;A Great Heading\u0026lt;/h3\u0026gt; 2 Comments Comments should be HTML compatible.\n\u0026lt;!-- This is a comment --\u0026gt; Comment below should NOT be seen:\n3 Horizontal Rules The HTML \u0026lt;hr\u0026gt; element is for creating a \u0026ldquo;thematic break\u0026rdquo; between paragraph-level elements. In Markdown, you can create a \u0026lt;hr\u0026gt; with any of the following:\n___: three consecutive underscores ---: three consecutive dashes ***: three consecutive asterisks The rendered output looks like this:\n4 Body Copy Body copy written as normal, plain text will be wrapped with \u0026lt;p\u0026gt;\u0026lt;/p\u0026gt; tags in the rendered HTML.\nSo this body copy:\nLorem ipsum dolor sit amet, graecis denique ei vel, at duo primis mandamus. Et legere ocurreret pri, animal tacimates complectitur ad cum. Cu eum inermis inimicus efficiendi. Labore officiis his ex, soluta officiis concludaturque ei qui, vide sensibus vim ad. The HTML looks like this:\n\u0026lt;p\u0026gt;Lorem ipsum dolor sit amet, graecis denique ei vel, at duo primis mandamus. Et legere ocurreret pri, animal tacimates complectitur ad cum. Cu eum inermis inimicus efficiendi. Labore officiis his ex, soluta officiis concludaturque ei qui, vide sensibus vim ad.\u0026lt;/p\u0026gt; A line break can be done with one blank line.\n5 Inline HTML If you need a certain HTML tag (with a class) you can simply use HTML:\nParagraph in Markdown. \u0026lt;div class=\u0026#34;class\u0026#34;\u0026gt; This is \u0026lt;b\u0026gt;HTML\u0026lt;/b\u0026gt; \u0026lt;/div\u0026gt; Paragraph in Markdown. 6 Emphasis Bold For emphasizing a snippet of text with a heavier font-weight.\nThe following snippet of text is rendered as bold text.\n**rendered as bold text** __rendered as bold text__ The HTML looks like this:\n\u0026lt;strong\u0026gt;rendered as bold text\u0026lt;/strong\u0026gt; Italics For emphasizing a snippet of text with italics.\nThe following snippet of text is rendered as italicized text.\n*rendered as italicized text* _rendered as italicized text_ The HTML looks like this:\n\u0026lt;em\u0026gt;rendered as italicized text\u0026lt;/em\u0026gt; Strikethrough In [GFM]^(GitHub flavored Markdown) you can do strikethroughs.\n~~Strike through this text.~~ The rendered output looks like this:\nStrike through this text.\nThe HTML looks like this:\n\u0026lt;del\u0026gt;Strike through this text.\u0026lt;/del\u0026gt; Combination Bold, italics, and strikethrough can be used in combination.\n***bold and italics*** ~~**strikethrough and bold**~~ ~~*strikethrough and italics*~~ ~~***bold, italics and strikethrough***~~ The rendered output looks like this:\nbold and italics\nstrikethrough and bold\nstrikethrough and italics\nbold, italics and strikethrough\nThe HTML looks like this:\n\u0026lt;em\u0026gt;\u0026lt;strong\u0026gt;bold and italics\u0026lt;/strong\u0026gt;\u0026lt;/em\u0026gt; \u0026lt;del\u0026gt;\u0026lt;strong\u0026gt;strikethrough and bold\u0026lt;/strong\u0026gt;\u0026lt;/del\u0026gt; \u0026lt;del\u0026gt;\u0026lt;em\u0026gt;strikethrough and italics\u0026lt;/em\u0026gt;\u0026lt;/del\u0026gt; \u0026lt;del\u0026gt;\u0026lt;em\u0026gt;\u0026lt;strong\u0026gt;bold, italics and strikethrough\u0026lt;/strong\u0026gt;\u0026lt;/em\u0026gt;\u0026lt;/del\u0026gt; 7 Blockquotes For quoting blocks of content from another source within your document.\nAdd \u0026gt; before any text you want to quote:\n\u0026gt; **Fusion Drive** combines a hard drive with a flash storage (solid-state drive) and presents it as a single logical volume with the space of both drives combined. The rendered output looks like this:\nFusion Drive combines a hard drive with a flash storage (solid-state drive) and presents it as a single logical volume with the space of both drives combined.\nThe HTML looks like this:\n\u0026lt;blockquote\u0026gt; \u0026lt;p\u0026gt; \u0026lt;strong\u0026gt;Fusion Drive\u0026lt;/strong\u0026gt; combines a hard drive with a flash storage (solid-state drive) and presents it as a single logical volume with the space of both drives combined. \u0026lt;/p\u0026gt; \u0026lt;/blockquote\u0026gt; Blockquotes can also be nested:\n\u0026gt; Donec massa lacus, ultricies a ullamcorper in, fermentum sed augue. Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi. \u0026gt;\u0026gt; Sed adipiscing elit vitae augue consectetur a gravida nunc vehicula. Donec auctor odio non est accumsan facilisis. Aliquam id turpis in dolor tincidunt mollis ac eu diam. The rendered output looks like this:\nDonec massa lacus, ultricies a ullamcorper in, fermentum sed augue. Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi.\nSed adipiscing elit vitae augue consectetur a gravida nunc vehicula. Donec auctor odio non est accumsan facilisis. Aliquam id turpis in dolor tincidunt mollis ac eu diam.\n8 Lists Unordered A list of items in which the order of the items does not explicitly matter.\nYou may use any of the following symbols to denote bullets for each list item:\n* valid bullet - valid bullet + valid bullet For example:\n* Lorem ipsum dolor sit amet * Consectetur adipiscing elit * Integer molestie lorem at massa * Facilisis in pretium nisl aliquet * Nulla volutpat aliquam velit * Phasellus iaculis neque * Purus sodales ultricies * Vestibulum laoreet porttitor sem * Ac tristique libero volutpat at * Faucibus porta lacus fringilla vel * Aenean sit amet erat nunc * Eget porttitor lorem The rendered output looks like this:\nLorem ipsum dolor sit amet Consectetur adipiscing elit Integer molestie lorem at massa Facilisis in pretium nisl aliquet Nulla volutpat aliquam velit Phasellus iaculis neque Purus sodales ultricies Vestibulum laoreet porttitor sem Ac tristique libero volutpat at Faucibus porta lacus fringilla vel Aenean sit amet erat nunc Eget porttitor lorem The HTML looks like this:\n\u0026lt;ul\u0026gt; \u0026lt;li\u0026gt;Lorem ipsum dolor sit amet\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Consectetur adipiscing elit\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Integer molestie lorem at massa\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Facilisis in pretium nisl aliquet\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Nulla volutpat aliquam velit \u0026lt;ul\u0026gt; \u0026lt;li\u0026gt;Phasellus iaculis neque\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Purus sodales ultricies\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Vestibulum laoreet porttitor sem\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Ac tristique libero volutpat at\u0026lt;/li\u0026gt; \u0026lt;/ul\u0026gt; \u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Faucibus porta lacus fringilla vel\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Aenean sit amet erat nunc\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Eget porttitor lorem\u0026lt;/li\u0026gt; \u0026lt;/ul\u0026gt; Ordered A list of items in which the order of items does explicitly matter.\n1. Lorem ipsum dolor sit amet 2. Consectetur adipiscing elit 3. Integer molestie lorem at massa 4. Facilisis in pretium nisl aliquet 5. Nulla volutpat aliquam velit 6. Faucibus porta lacus fringilla vel 7. Aenean sit amet erat nunc 8. Eget porttitor lorem The rendered output looks like this:\nLorem ipsum dolor sit amet Consectetur adipiscing elit Integer molestie lorem at massa Facilisis in pretium nisl aliquet Nulla volutpat aliquam velit Faucibus porta lacus fringilla vel Aenean sit amet erat nunc Eget porttitor lorem The HTML looks like this:\n\u0026lt;ol\u0026gt; \u0026lt;li\u0026gt;Lorem ipsum dolor sit amet\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Consectetur adipiscing elit\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Integer molestie lorem at massa\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Facilisis in pretium nisl aliquet\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Nulla volutpat aliquam velit\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Faucibus porta lacus fringilla vel\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Aenean sit amet erat nunc\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;Eget porttitor lorem\u0026lt;/li\u0026gt; \u0026lt;/ol\u0026gt; If you just use 1. for each number, Markdown will automatically number each item. For example:\n1. Lorem ipsum dolor sit amet 1. Consectetur adipiscing elit 1. Integer molestie lorem at massa 1. Facilisis in pretium nisl aliquet 1. Nulla volutpat aliquam velit 1. Faucibus porta lacus fringilla vel 1. Aenean sit amet erat nunc 1. Eget porttitor lorem The rendered output looks like this:\nLorem ipsum dolor sit amet Consectetur adipiscing elit Integer molestie lorem at massa Facilisis in pretium nisl aliquet Nulla volutpat aliquam velit Faucibus porta lacus fringilla vel Aenean sit amet erat nunc Eget porttitor lorem Task Lists Task lists allow you to create a list of items with checkboxes. To create a task list, add dashes (-) and brackets with a space ([ ]) before task list items. To select a checkbox, add an x in between the brackets ([x]).\n- [x] Write the press release - [ ] Update the website - [ ] Contact the media The rendered output looks like this:\nWrite the press release Update the website Contact the media 9 Code Inline Code Wrap inline snippets of code with `.\nIn this example, `\u0026lt;section\u0026gt;\u0026lt;/section\u0026gt;` should be wrapped as **code**. The rendered output looks like this:\nIn this example, \u0026lt;section\u0026gt;\u0026lt;/section\u0026gt; should be wrapped as code.\nThe HTML looks like this:\n\u0026lt;p\u0026gt; In this example, \u0026lt;code\u0026gt;\u0026amp;lt;section\u0026amp;gt;\u0026amp;lt;/section\u0026amp;gt;\u0026lt;/code\u0026gt; should be wrapped with \u0026lt;strong\u0026gt;code\u0026lt;/strong\u0026gt;. \u0026lt;/p\u0026gt; Indented Code Or indent several lines of code by at least four spaces, as in:\n// Some comments line 1 of code line 2 of code line 3 of code The rendered output looks like this:\n// Some comments line 1 of code line 2 of code line 3 of code The HTML looks like this:\n\u0026lt;pre\u0026gt; \u0026lt;code\u0026gt; // Some comments line 1 of code line 2 of code line 3 of code \u0026lt;/code\u0026gt; \u0026lt;/pre\u0026gt; Block Fenced Code Use \u0026ldquo;fences\u0026rdquo; ``` to block in multiple lines of code with a language attribute.\n```markdown Sample text here... ``` The HTML looks like this:\n\u0026lt;pre language-html\u0026gt; \u0026lt;code\u0026gt;Sample text here...\u0026lt;/code\u0026gt; \u0026lt;/pre\u0026gt; Syntax Highlighting [GFM]^(GitHub Flavored Markdown) also supports syntax highlighting.\nTo activate it, simply add the file extension of the language you want to use directly after the first code \u0026ldquo;fence\u0026rdquo;, ```js, and syntax highlighting will automatically be applied in the rendered HTML.\nFor example, to apply syntax highlighting to JavaScript code:\n```js grunt.initConfig({ assemble: { options: { assets: \u0026#39;docs/assets\u0026#39;, data: \u0026#39;src/data/*.{json,yml}\u0026#39;, helpers: \u0026#39;src/custom-helpers.js\u0026#39;, partials: [\u0026#39;src/partials/**/*.{hbs,md}\u0026#39;] }, pages: { options: { layout: \u0026#39;default.hbs\u0026#39; }, files: { \u0026#39;./\u0026#39;: [\u0026#39;src/templates/pages/index.hbs\u0026#39;] } } } }; ``` The rendered output looks like this:\ngrunt.initConfig({ assemble: { options: { assets: \u0026#39;docs/assets\u0026#39;, data: \u0026#39;src/data/*.{json,yml}\u0026#39;, helpers: \u0026#39;src/custom-helpers.js\u0026#39;, partials: [\u0026#39;src/partials/**/*.{hbs,md}\u0026#39;] }, pages: { options: { layout: \u0026#39;default.hbs\u0026#39; }, files: { \u0026#39;./\u0026#39;: [\u0026#39;src/templates/pages/index.hbs\u0026#39;] } } } }; Syntax highlighting page in Hugo Docs introduces more about syntax highlighting, including highlight shortcode. 10 Tables Tables are created by adding pipes as dividers between each cell, and by adding a line of dashes (also separated by bars) beneath the header. Note that the pipes do not need to be vertically aligned.\n| Option | Description | | ------ | ------------------------------------------------------------------------- | | data | path to data files to supply the data that will be passed into templates. | | engine | engine to be used for processing templates. Handlebars is the default. | | ext | extension to be used for dest files. | The rendered output looks like this:\nOption Description data path to data files to supply the data that will be passed into templates. engine engine to be used for processing templates. Handlebars is the default. ext extension to be used for dest files. The HTML looks like this:\n\u0026lt;table\u0026gt; \u0026lt;thead\u0026gt; \u0026lt;tr\u0026gt; \u0026lt;th\u0026gt;Option\u0026lt;/th\u0026gt; \u0026lt;th\u0026gt;Description\u0026lt;/th\u0026gt; \u0026lt;/tr\u0026gt; \u0026lt;/thead\u0026gt; \u0026lt;tbody\u0026gt; \u0026lt;tr\u0026gt; \u0026lt;td\u0026gt;data\u0026lt;/td\u0026gt; \u0026lt;td\u0026gt;path to data files to supply the data that will be passed into templates.\u0026lt;/td\u0026gt; \u0026lt;/tr\u0026gt; \u0026lt;tr\u0026gt; \u0026lt;td\u0026gt;engine\u0026lt;/td\u0026gt; \u0026lt;td\u0026gt;engine to be used for processing templates. Handlebars is the default.\u0026lt;/td\u0026gt; \u0026lt;/tr\u0026gt; \u0026lt;tr\u0026gt; \u0026lt;td\u0026gt;ext\u0026lt;/td\u0026gt; \u0026lt;td\u0026gt;extension to be used for dest files.\u0026lt;/td\u0026gt; \u0026lt;/tr\u0026gt; \u0026lt;/tbody\u0026gt; \u0026lt;/table\u0026gt; Right or center aligned text Adding a colon on the right side of the dashes below any heading will right align text for that column.\nAdding colons on both sides of the dashes below any heading will center align text for that column.\n| Option | Description | | :----: | ------------------------------------------------------------------------: | | data | path to data files to supply the data that will be passed into templates. | | engine | engine to be used for processing templates. Handlebars is the default. | | ext | extension to be used for dest files. | The rendered output looks like this:\nOption Description data path to data files to supply the data that will be passed into templates. engine engine to be used for processing templates. Handlebars is the default. ext extension to be used for dest files. 11 Links Basic Link \u0026lt;https://assemble.io\u0026gt; \u0026lt;contact@revolunet.com\u0026gt; [Assemble](https://assemble.io) The rendered output looks like this (hover over the link, there is no tooltip):\nhttps://assemble.io\ncontact@revolunet.com\nAssemble\nThe HTML looks like this:\n\u0026lt;a href=\u0026#34;https://assemble.io\u0026#34;\u0026gt;https://assemble.io\u0026lt;/a\u0026gt; \u0026lt;a href=\u0026#34;mailto:contact@revolunet.com\u0026#34;\u0026gt;contact@revolunet.com\u0026lt;/a\u0026gt; \u0026lt;a href=\u0026#34;https://assemble.io\u0026#34;\u0026gt;Assemble\u0026lt;/a\u0026gt; Add a Title [Upstage](https://github.com/upstage/ \u0026#34;Visit Upstage!\u0026#34;) The rendered output looks like this (hover over the link, there should be a tooltip):\nUpstage\nThe HTML looks like this:\n\u0026lt;a href=\u0026#34;https://github.com/upstage/\u0026#34; title=\u0026#34;Visit Upstage!\u0026#34;\u0026gt;Upstage\u0026lt;/a\u0026gt; Named Anchors Named anchors enable you to jump to the specified anchor point on the same page. For example, each of these chapters:\n## Table of Contents * [Chapter 1](#chapter-1) * [Chapter 2](#chapter-2) * [Chapter 3](#chapter-3) will jump to these sections:\n## Chapter 1 \u0026lt;a id=\u0026#34;chapter-1\u0026#34;\u0026gt;\u0026lt;/a\u0026gt; Content for chapter one. ## Chapter 2 \u0026lt;a id=\u0026#34;chapter-2\u0026#34;\u0026gt;\u0026lt;/a\u0026gt; Content for chapter one. ## Chapter 3 \u0026lt;a id=\u0026#34;chapter-3\u0026#34;\u0026gt;\u0026lt;/a\u0026gt; Content for chapter one. The specific placement of the anchor tag seems to be arbitrary. They are placed inline here since it seems to be unobtrusive, and it works. 12 Footnotes Footnotes allow you to add notes and references without cluttering the body of the document. When you create a footnote, a superscript number with a link appears where you added the footnote reference. Readers can click the link to jump to the content of the footnote at the bottom of the page.\nTo create a footnote reference, add a caret and an identifier inside brackets ([^1]). Identifiers can be numbers or words, but they can’t contain spaces or tabs. Identifiers only correlate the footnote reference with the footnote itself — in the output, footnotes are numbered sequentially.\nAdd the footnote using another caret and number inside brackets with a colon and text ([^1]: My footnote.). You don’t have to put footnotes at the end of the document. You can put them anywhere except inside other elements like lists, block quotes, and tables.\nThis is a digital footnote[^1]. This is a footnote with \u0026#34;label\u0026#34;[^label] [^1]: This is a digital footnote [^label]: This is a footnote with \u0026#34;label\u0026#34; This is a digital footnote1.\nThis is a footnote with \u0026ldquo;label\u0026rdquo;2\n13 Images Images have a similar syntax to links but include a preceding exclamation point.\n![Minion](https://octodex.github.com/images/minion.png) or:\n![Alt text](https://octodex.github.com/images/stormtroopocat.jpg \u0026#34;The Stormtroopocat\u0026#34;) Like links, images also have a footnote style syntax:\n![Alt text][id] With a reference later in the document defining the URL location:\n[id]: https://octodex.github.com/images/dojocat.jpg \u0026#34;The Dojocat\u0026#34; LoveIt theme has special shortcode for image, which provides more features. This is a digital footnote\u0026#160;\u0026#x21a9;\u0026#xfe0e;\nThis is a footnote with \u0026ldquo;label\u0026rdquo;\u0026#160;\u0026#x21a9;\u0026#xfe0e;\n"
-            }
-    
-        ,
-            {
-                "id": 10,
+                "id": 5,
                 "href": "https://bxtkezhan.github.io/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABmfcc%E7%89%B9%E5%BE%81/",
                 "title": "语音识别・MFCC特征",
                 "section": "posts",
@@ -114,7 +64,7 @@
     
         ,
             {
-                "id": 11,
+                "id": 6,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E6%8A%80%E6%9C%AF%E8%BF%9B%E8%A1%8Cpcb%E5%9B%BE%E5%83%8F%E8%BF%9E%E6%8E%A5%E7%BA%BF%E6%A3%80%E6%B5%8B/",
                 "title": "使用计算机视觉技术进行PCB图像连接线检测",
                 "section": "posts",
@@ -124,7 +74,7 @@
     
         ,
             {
-                "id": 12,
+                "id": 7,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E6%8A%80%E6%9C%AF%E8%BF%9B%E8%A1%8Cpcb%E5%9B%BE%E5%83%8F%E7%84%8A%E7%82%B9%E6%A3%80%E6%B5%8B/",
                 "title": "使用计算机视觉技术进行PCB图像焊点检测",
                 "section": "posts",
@@ -134,7 +84,7 @@
     
         ,
             {
-                "id": 13,
+                "id": 8,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%913d%E5%8A%A8%E4%BD%9C/",
                 "title": "Godot开发・3D动作",
                 "section": "posts",
@@ -144,7 +94,7 @@
     
         ,
             {
-                "id": 14,
+                "id": 9,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E8%8A%82%E7%82%B9%E4%B8%8E%E5%9C%BA%E6%99%AF/",
                 "title": "Godot开发・节点与场景",
                 "section": "posts",
@@ -154,7 +104,7 @@
     
         ,
             {
-                "id": 15,
+                "id": 10,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E5%AE%89%E8%A3%85godot4/",
                 "title": "Godot开发・安装Godot4",
                 "section": "posts",
@@ -164,7 +114,7 @@
     
         ,
             {
-                "id": 16,
+                "id": 11,
                 "href": "https://bxtkezhan.github.io/%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E5%99%A8/",
                 "title": "图像生成模型基础・自动编码器",
                 "section": "posts",
@@ -174,7 +124,7 @@
     
         ,
             {
-                "id": 17,
+                "id": 12,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E7%BB%98%E5%88%B6%E5%AE%8C%E6%95%B4%E6%8C%82%E9%92%A9/",
                 "title": "创客一点灵・绘制完整挂钩",
                 "section": "posts",
@@ -184,7 +134,7 @@
     
         ,
             {
-                "id": 18,
+                "id": 13,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E7%BB%98%E5%88%B6%E9%92%A9%E5%AD%90/",
                 "title": "创客一点灵・绘制钩子",
                 "section": "posts",
@@ -194,7 +144,7 @@
     
         ,
             {
-                "id": 19,
+                "id": 14,
                 "href": "https://bxtkezhan.github.io/%E7%9B%98%E7%82%B9%E4%B8%80%E4%B8%8B%E5%B0%8F%E5%BC%9F%E7%94%A8%E5%BE%97%E6%AF%94%E8%BE%83%E5%A4%9A%E7%9A%84%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/",
                 "title": "盘点一下小弟用得比较多的编程语言",
                 "section": "posts",
@@ -204,7 +154,7 @@
     
         ,
             {
-                "id": 20,
+                "id": 15,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E8%8D%89%E5%9B%BE/",
                 "title": "创客一点灵・草图",
                 "section": "posts",
@@ -214,7 +164,7 @@
     
         ,
             {
-                "id": 21,
+                "id": 16,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E5%AE%89%E8%A3%85freecad/",
                 "title": "创客一点灵・安装FreeCAD",
                 "section": "posts",
@@ -224,7 +174,7 @@
     
         ,
             {
-                "id": 22,
+                "id": 17,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E4%BB%8E%E6%8C%82%E9%92%A9%E5%BC%80%E5%A7%8B%E7%9A%84%E5%AD%A6%E4%B9%A0/",
                 "title": "创客一点灵・从挂钩开始的学习",
                 "section": "posts",
@@ -234,7 +184,7 @@
     
         ,
             {
-                "id": 23,
+                "id": 18,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%89%B9%E9%87%8F%E6%A0%87%E5%87%86%E5%8C%96/",
                 "title": "人工神经网络・批量标准化",
                 "section": "posts",
@@ -244,7 +194,7 @@
     
         ,
             {
-                "id": 24,
+                "id": 19,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/",
                 "title": "人工神经网络・卷积神经网络",
                 "section": "posts",
@@ -254,7 +204,7 @@
     
         ,
             {
-                "id": 25,
+                "id": 20,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Crelu%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/",
                 "title": "人工神经网络・ReLU激活函数",
                 "section": "posts",
@@ -264,7 +214,7 @@
     
         ,
             {
-                "id": 26,
+                "id": 21,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8/",
                 "title": "人工神经网络・多层感知器",
                 "section": "posts",
@@ -274,7 +224,7 @@
     
         ,
             {
-                "id": 27,
+                "id": 22,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Csoftmax%E5%A4%9A%E5%88%86%E7%B1%BB/",
                 "title": "人工神经网络・Softmax多分类",
                 "section": "posts",
@@ -284,7 +234,7 @@
     
         ,
             {
-                "id": 28,
+                "id": 23,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/",
                 "title": "人工神经网络・逻辑回归",
                 "section": "posts",
@@ -294,7 +244,7 @@
     
         ,
             {
-                "id": 29,
+                "id": 24,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "人工神经网络・操作环境准备",
                 "section": "posts",
@@ -304,7 +254,7 @@
     
         ,
             {
-                "id": 30,
+                "id": 25,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/",
                 "title": "数据分析・聚类分析",
                 "section": "posts",
@@ -314,7 +264,7 @@
     
         ,
             {
-                "id": 31,
+                "id": 26,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88/",
                 "title": "数据分析・最小二乘拟合",
                 "section": "posts",
@@ -324,7 +274,7 @@
     
         ,
             {
-                "id": 32,
+                "id": 27,
                 "href": "https://bxtkezhan.github.io/jitlightning-%E7%A4%BA%E4%BE%8Bprintf/",
                 "title": "JIT・Lightning 示例「printf」",
                 "section": "posts",
@@ -334,7 +284,7 @@
     
         ,
             {
-                "id": 33,
+                "id": 28,
                 "href": "https://bxtkezhan.github.io/jitlightning-%E7%A4%BA%E4%BE%8Bincr/",
                 "title": "JIT・Lightning 示例「incr」",
                 "section": "posts",
@@ -344,7 +294,7 @@
     
         ,
             {
-                "id": 34,
+                "id": 29,
                 "href": "https://bxtkezhan.github.io/jitgnu/lightning/",
                 "title": "JIT・GNU/Lightning",
                 "section": "posts",
@@ -354,7 +304,7 @@
     
         ,
             {
-                "id": 35,
+                "id": 30,
                 "href": "https://bxtkezhan.github.io/arberia-features/",
                 "title": "Arberia Features",
                 "section": "posts",
@@ -364,7 +314,7 @@
     
         ,
             {
-                "id": 36,
+                "id": 31,
                 "href": "https://bxtkezhan.github.io/arberia-installation-update/",
                 "title": "Arberia Installation | Update",
                 "section": "posts",
@@ -374,7 +324,7 @@
     
         ,
             {
-                "id": 37,
+                "id": 32,
                 "href": "https://bxtkezhan.github.io/build-in-shortcodes/",
                 "title": "Build in Shortcodes",
                 "section": "posts",
@@ -384,7 +334,7 @@
     
         ,
             {
-                "id": 38,
+                "id": 33,
                 "href": "https://bxtkezhan.github.io/post-with-cover-image/",
                 "title": "Post with Cover Image",
                 "section": "posts",
@@ -394,7 +344,7 @@
     
         ,
             {
-                "id": 39,
+                "id": 34,
                 "href": "https://bxtkezhan.github.io/code-sample/",
                 "title": "Code Sample",
                 "section": "posts",
@@ -404,7 +354,7 @@
     
         ,
             {
-                "id": 40,
+                "id": 35,
                 "href": "https://bxtkezhan.github.io/landingpage/",
                 "title": "Landingpage",
                 "section": "",
@@ -414,7 +364,7 @@
     
         ,
             {
-                "id": 41,
+                "id": 36,
                 "href": "https://bxtkezhan.github.io/policy-privacy/",
                 "title": "Policy \u0026 Privacy",
                 "section": "",
@@ -424,7 +374,7 @@
     
         ,
             {
-                "id": 42,
+                "id": 37,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9F%A9%E9%98%B5%E6%93%8D%E4%BD%9C/",
                 "title": "数据分析・矩阵操作",
                 "section": "posts",
@@ -434,7 +384,7 @@
     
         ,
             {
-                "id": 43,
+                "id": 38,
                 "href": "https://bxtkezhan.github.io/extended-shortcode/",
                 "title": "Extended Shortcode",
                 "section": "posts",
@@ -444,7 +394,7 @@
     
         ,
             {
-                "id": 44,
+                "id": 39,
                 "href": "https://bxtkezhan.github.io/contact/",
                 "title": "Contact",
                 "section": "",
@@ -454,17 +404,7 @@
     
         ,
             {
-                "id": 45,
-                "href": "https://bxtkezhan.github.io/more-on-markdown/",
-                "title": "More on Markdown",
-                "section": "posts",
-                "date" : "2022.04.26",
-                "body": "You can write regular markdown here and Hugo will automatically convert it to a nice webpage. I strongly encourage you to take 5 minutes to learn how to write in markdown - it\u0026rsquo;ll teach you how to transform regular text into bold/italics/headings/tables/etc.\nHere is some bold text\nHere is a secondary heading Here\u0026rsquo;s a useless table:\nNumber Next number Previous number Five Six Four Ten Eleven Nine Seven Eight Six Two Three One How about a yummy crepe?\nHere\u0026rsquo;s a code chunk with syntax highlighting:\nvar foo = function(x) { return(x + 5); } foo(3) "
-            }
-    
-        ,
-            {
-                "id": 46,
+                "id": 40,
                 "href": "https://bxtkezhan.github.io/%E9%A1%B9%E7%9B%AEsmartfile/",
                 "title": "项目・Smartfile",
                 "section": "posts",
@@ -474,7 +414,7 @@
     
         ,
             {
-                "id": 47,
+                "id": 41,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%96%99%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E5%AF%BC%E5%87%BA/",
                 "title": "数据分析・资料的载入与导出",
                 "section": "posts",
@@ -484,7 +424,7 @@
     
         ,
             {
-                "id": 48,
+                "id": 42,
                 "href": "https://bxtkezhan.github.io/the-beginningpython-calculator/",
                 "title": "The Beginning・Python Calculator",
                 "section": "posts",
@@ -494,7 +434,7 @@
     
         ,
             {
-                "id": 49,
+                "id": 43,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/",
                 "title": "数据分析・数据可视化",
                 "section": "posts",
@@ -504,7 +444,7 @@
     
         ,
             {
-                "id": 50,
+                "id": 44,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%80%BC%E6%93%8D%E4%BD%9C/",
                 "title": "数据分析・多维数组的数值操作",
                 "section": "posts",
@@ -514,7 +454,7 @@
     
         ,
             {
-                "id": 51,
+                "id": 45,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "数据分析・操作环境准备",
                 "section": "posts",
@@ -524,7 +464,7 @@
     
         ,
             {
-                "id": 52,
+                "id": 46,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E8%A7%86%E9%A2%91%E7%BC%96%E8%BE%91/",
                 "title": "影像处理・视频编辑",
                 "section": "posts",
@@ -534,7 +474,7 @@
     
         ,
             {
-                "id": 53,
+                "id": 47,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E8%B0%83%E7%94%A8c%E7%A8%8B%E5%BA%8F/",
                 "title": "汇编语言「Linux/x86-64」・调用C程序",
                 "section": "posts",
@@ -544,7 +484,7 @@
     
         ,
             {
-                "id": 54,
+                "id": 48,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/",
                 "title": "影像处理・人脸识别",
                 "section": "posts",
@@ -554,7 +494,7 @@
     
         ,
             {
-                "id": 55,
+                "id": 49,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/",
                 "title": "影像处理・目标检测",
                 "section": "posts",
@@ -564,7 +504,7 @@
     
         ,
             {
-                "id": 56,
+                "id": 50,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4/",
                 "title": "影像处理・网络摄像头",
                 "section": "posts",
@@ -574,7 +514,7 @@
     
         ,
             {
-                "id": 57,
+                "id": 51,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E8%B0%83%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4/",
                 "title": "影像处理・调用摄像头",
                 "section": "posts",
@@ -584,7 +524,7 @@
     
         ,
             {
-                "id": 58,
+                "id": 52,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86opencv%E7%AE%80%E4%BB%8B/",
                 "title": "影像处理・OpenCV简介",
                 "section": "posts",
@@ -594,7 +534,7 @@
     
         ,
             {
-                "id": 59,
+                "id": 53,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "影像处理・操作环境准备",
                 "section": "posts",
@@ -604,7 +544,7 @@
     
         ,
             {
-                "id": 60,
+                "id": 54,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%B0%86%E6%B8%B8%E6%88%8F%E5%AD%98%E5%85%A5%E5%9B%BE%E5%83%8F/",
                 "title": "隐写术・将游戏存入图像",
                 "section": "posts",
@@ -614,7 +554,7 @@
     
         ,
             {
-                "id": 61,
+                "id": 55,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E6%96%87%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・图文隐写术",
                 "section": "posts",
@@ -624,7 +564,7 @@
     
         ,
             {
-                "id": 62,
+                "id": 56,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AFqrcode/",
                 "title": "隐写术・QRCode",
                 "section": "posts",
@@ -634,7 +574,7 @@
     
         ,
             {
-                "id": 63,
+                "id": 57,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E5%83%8F%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・图像隐写术",
                 "section": "posts",
@@ -644,7 +584,7 @@
     
         ,
             {
-                "id": 64,
+                "id": 58,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/",
                 "title": "隐写术・图像处理",
                 "section": "posts",
@@ -654,7 +594,7 @@
     
         ,
             {
-                "id": 65,
+                "id": 59,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E6%96%87%E4%BB%B6%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・文件隐写术",
                 "section": "posts",
@@ -664,7 +604,7 @@
     
         ,
             {
-                "id": 66,
+                "id": 60,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "隐写术・操作环境准备",
                 "section": "posts",
@@ -674,7 +614,7 @@
     
         ,
             {
-                "id": 67,
+                "id": 61,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E5%B9%B6%E5%8F%91%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/",
                 "title": "网络篇・并发端口扫描",
                 "section": "posts",
@@ -684,7 +624,7 @@
     
         ,
             {
-                "id": 68,
+                "id": 62,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/",
                 "title": "网络篇・端口扫描",
                 "section": "posts",
@@ -694,7 +634,7 @@
     
         ,
             {
-                "id": 69,
+                "id": 63,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87udp%E9%80%9A%E4%BF%A1/",
                 "title": "网络篇・UDP通信",
                 "section": "posts",
@@ -704,7 +644,7 @@
     
         ,
             {
-                "id": 70,
+                "id": 64,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87tcp%E9%80%9A%E4%BF%A1/",
                 "title": "网络篇・TCP通信",
                 "section": "posts",
@@ -714,7 +654,7 @@
     
         ,
             {
-                "id": 71,
+                "id": 65,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87web%E7%88%AC%E8%99%AB/",
                 "title": "网络篇・Web爬虫",
                 "section": "posts",
@@ -724,7 +664,7 @@
     
         ,
             {
-                "id": 72,
+                "id": 66,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87http%E5%8D%8F%E8%AE%AE/",
                 "title": "网络篇・HTTP协议",
                 "section": "posts",
@@ -734,7 +674,7 @@
     
         ,
             {
-                "id": 73,
+                "id": 67,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "网络篇・操作环境准备",
                 "section": "posts",
@@ -744,7 +684,7 @@
     
         ,
             {
-                "id": 74,
+                "id": 68,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87pycryptodome%E7%A4%BA%E4%BE%8B%E6%89%A9%E5%B1%95/",
                 "title": "密码篇・PyCryptodome示例「扩展」",
                 "section": "posts",
@@ -754,7 +694,7 @@
     
         ,
             {
-                "id": 75,
+                "id": 69,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%B9%B6%E8%A1%8C%E5%AF%86%E7%A0%81%E7%8C%9C%E8%A7%A3/",
                 "title": "密码篇・并行密码猜解",
                 "section": "posts",
@@ -764,7 +704,7 @@
     
         ,
             {
-                "id": 76,
+                "id": 70,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/",
                 "title": "汇编语言「Linux/x86-64」・代码解析",
                 "section": "posts",
@@ -774,7 +714,7 @@
     
         ,
             {
-                "id": 77,
+                "id": 71,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%86%E7%A0%81%E7%8C%9C%E8%A7%A3/",
                 "title": "密码篇・密码猜解",
                 "section": "posts",
@@ -784,7 +724,7 @@
     
         ,
             {
-                "id": 78,
+                "id": 72,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/",
                 "title": "密码篇・实际应用",
                 "section": "posts",
@@ -794,7 +734,7 @@
     
         ,
             {
-                "id": 79,
+                "id": 73,
                 "href": "https://bxtkezhan.github.io/%E6%87%92%E6%83%B0%E4%BA%BA%E5%93%AA%E4%BD%A0%E8%A6%81%E7%9D%A1%E5%88%B0%E5%87%A0%E6%97%B6%E5%91%A2/",
                 "title": "懒惰人哪，你要睡到几时呢？",
                 "section": "posts",
@@ -804,7 +744,7 @@
     
         ,
             {
-                "id": 80,
+                "id": 74,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E7%AC%AC%E4%B8%80%E6%AD%A5/",
                 "title": "汇编语言「Linux/x86-64」・第一步",
                 "section": "posts",
@@ -814,7 +754,7 @@
     
         ,
             {
-                "id": 81,
+                "id": 75,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86/",
                 "title": "密码篇・公开密钥加密",
                 "section": "posts",
@@ -824,7 +764,7 @@
     
         ,
             {
-                "id": 82,
+                "id": 76,
                 "href": "https://bxtkezhan.github.io/%E4%BF%9D%E5%AE%88%E5%85%AC%E4%B9%89%E7%9A%84%E5%BF%83%E8%A1%8C%E8%B5%B0%E6%AD%A3%E7%9B%B4%E7%9A%84%E8%B7%AF/",
                 "title": "保守公义的心，行走正直的路",
                 "section": "posts",
@@ -834,7 +774,7 @@
     
         ,
             {
-                "id": 83,
+                "id": 77,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%B9%E7%A7%B0%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86/",
                 "title": "密码篇・对称密钥加密",
                 "section": "posts",
@@ -844,7 +784,7 @@
     
         ,
             {
-                "id": 84,
+                "id": 78,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%86%E7%A0%81%E5%AD%A6%E7%AE%80%E4%BB%8B/",
                 "title": "密码篇・密码学简介",
                 "section": "posts",
@@ -854,7 +794,7 @@
     
         ,
             {
-                "id": 85,
+                "id": 79,
                 "href": "https://bxtkezhan.github.io/%E4%BD%A0%E7%9A%84%E6%B3%89%E6%BA%90%E5%B2%82%E5%8F%AF%E6%B6%A8%E6%BA%A2%E5%9C%A8%E5%A4%96/",
                 "title": "你的泉源岂可涨溢在外？",
                 "section": "posts",
@@ -864,7 +804,7 @@
     
         ,
             {
-                "id": 86,
+                "id": 80,
                 "href": "https://bxtkezhan.github.io/%E6%8E%A8%E8%8D%90%E5%87%A0%E6%9C%ACc/c-%E4%B9%A6%E7%B1%8D%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD/",
                 "title": "推荐几本C/C++书籍【免费下载】",
                 "section": "posts",
@@ -874,7 +814,7 @@
     
         ,
             {
-                "id": 87,
+                "id": 81,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "密码篇・操作环境准备",
                 "section": "posts",
@@ -884,7 +824,7 @@
     
         ,
             {
-                "id": 88,
+                "id": 82,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E7%8C%9C%E5%AD%97%E6%B8%B8%E6%88%8F%E9%98%B6%E6%AE%B5%E7%BB%83%E4%B9%A0/",
                 "title": "初学篇・猜字游戏「阶段练习」",
                 "section": "posts",
@@ -894,7 +834,7 @@
     
         ,
             {
-                "id": 89,
+                "id": 83,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/",
                 "title": "初学篇・面向对象\u0026数据结构",
                 "section": "posts",
@@ -904,7 +844,7 @@
     
         ,
             {
-                "id": 90,
+                "id": 84,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%B0%83%E7%94%A8/",
                 "title": "初学篇・函数的定义与调用",
                 "section": "posts",
@@ -914,7 +854,7 @@
     
         ,
             {
-                "id": 91,
+                "id": 85,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/",
                 "title": "初学篇・循环控制语句",
                 "section": "posts",
@@ -924,7 +864,7 @@
     
         ,
             {
-                "id": 92,
+                "id": 86,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/",
                 "title": "初学篇・条件控制语句",
                 "section": "posts",
@@ -934,7 +874,7 @@
     
         ,
             {
-                "id": 93,
+                "id": 87,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97/",
                 "title": "初学篇・逻辑运算\u0026比较运算",
                 "section": "posts",
@@ -944,7 +884,7 @@
     
         ,
             {
-                "id": 94,
+                "id": 88,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87python%E8%AE%A1%E7%AE%97%E5%99%A8/",
                 "title": "初学篇・Python计算器",
                 "section": "posts",
@@ -954,7 +894,7 @@
     
         ,
             {
-                "id": 95,
+                "id": 89,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E7%AC%AC%E4%B8%80%E6%AD%A5%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/",
                 "title": "初学篇・第一步“你好世界”",
                 "section": "posts",
@@ -964,7 +904,7 @@
     
         ,
             {
-                "id": 96,
+                "id": 90,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AF%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/",
                 "title": "黑客之路・编译原理",
                 "section": "posts",
@@ -974,7 +914,7 @@
     
         ,
             {
-                "id": 97,
+                "id": 91,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AFc/c-%E7%AF%87/",
                 "title": "黑客之路・C/C++篇",
                 "section": "posts",
@@ -984,7 +924,7 @@
     
         ,
             {
-                "id": 98,
+                "id": 92,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AFpython%E7%AF%87/",
                 "title": "黑客之路・Python篇",
                 "section": "posts",
@@ -994,7 +934,7 @@
     
         ,
             {
-                "id": 99,
+                "id": 93,
                 "href": "https://bxtkezhan.github.io/%E6%94%AF%E6%8C%81while%E8%AF%AD%E5%8F%A5/",
                 "title": "支持While语句",
                 "section": "posts",
@@ -1004,7 +944,7 @@
     
         ,
             {
-                "id": 100,
+                "id": 94,
                 "href": "https://bxtkezhan.github.io/%E6%8E%A8%E8%8D%90%E5%87%A0%E6%9C%ACpython%E4%B9%A6%E7%B1%8D%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD/",
                 "title": "推荐几本Python书籍【免费下载】",
                 "section": "posts",
@@ -1014,7 +954,7 @@
     
         ,
             {
-                "id": 101,
+                "id": 95,
                 "href": "https://bxtkezhan.github.io/%E6%94%AF%E6%8C%81if%E8%AF%AD%E5%8F%A5/",
                 "title": "支持If语句",
                 "section": "posts",
@@ -1024,7 +964,7 @@
     
         ,
             {
-                "id": 102,
+                "id": 96,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81%E5%8F%98%E9%87%8F/",
                 "title": "使程序语言支持变量",
                 "section": "posts",
@@ -1034,7 +974,7 @@
     
         ,
             {
-                "id": 103,
+                "id": 97,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E8%AE%A1%E7%AE%97%E5%99%A8%E6%94%AF%E6%8C%81%E8%AF%AD%E5%8F%A5%E5%9D%97/",
                 "title": "使计算器支持语句块",
                 "section": "posts",
@@ -1044,7 +984,7 @@
     
         ,
             {
-                "id": 104,
+                "id": 98,
                 "href": "https://bxtkezhan.github.io/%E9%80%92%E5%BD%92%E5%90%91%E4%B8%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0calc/",
                 "title": "递归向下算法实现Calc",
                 "section": "posts",
@@ -1054,7 +994,7 @@
     
         ,
             {
-                "id": 105,
+                "id": 99,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8bklexer%E8%BF%9B%E8%A1%8C%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/",
                 "title": "使用BKLexer进行词法分析",
                 "section": "posts",
@@ -1064,7 +1004,7 @@
     
         ,
             {
-                "id": 106,
+                "id": 100,
                 "href": "https://bxtkezhan.github.io/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/",
                 "title": "词法分析器",
                 "section": "posts",
