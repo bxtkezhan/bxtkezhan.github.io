@@ -55,6 +55,16 @@
         ,
             {
                 "id": 5,
+                "href": "https://bxtkezhan.github.io/%E8%B0%88%E8%B0%88%E6%88%91%E5%AF%B9%E5%A5%B3%E6%80%A7%E6%85%95%E5%BC%BA%E7%8E%B0%E8%B1%A1%E7%9A%84%E7%9C%8B%E6%B3%95/",
+                "title": "谈谈我对「女性慕强」现象的看法",
+                "section": "posts",
+                "date" : "2024.01.02",
+                "body": "最近有刷到对「女性慕强」现象批评的文章和视频，觉得挺有意思。正好，我也有点想写些关于技术以外的内容的文章。\n「女性慕强」的定义 由于我主要看到的文章讲的「女性慕强」指的都是女性崇尚和追求比自身优秀强大的男性的现象，所以我这里姑且定义「女性慕强」为：\n女性崇尚以及追求比自身显著优秀和强大的男性的行为现象。\n有了明确的定义后，就可以来谈谈作为男性的我，对于该现象的个人看法。首先我觉得作为男性，即便不认可也最好不要公开且明显的反对这一现象，不然很可能会暴露自己是个弱鸡的……\n首先，从我有限的理性和情感上考虑，我都不反对「女性慕强」，毕竟这好像也没有什么明显不合理的地方。为了能够更加客观理性的论述，我还是在网上找了一些所谓专家的分析视频。\n基本上专家们的说法大致都是：「女性慕强，是刻录在女性基因里的天性，是女性不够独立自主的一个表现。」。我这边暂且不讨论一个所谓刻录在基因里的天性和不够独立自主人格有啥必然联系，我这里、我现在、我只想说的是：这也太无聊了，以至于我在构思文章的中途就决定要更换写作主题了。来，下面我们进入一个新的主题。\n使用huggingface上的模型构建离线翻译系统 语言翻译是个常见的应用需求，由于某些因素，我们不可以调用效果较好的商用翻译api，这时就需要我们构建自己的离线翻译工具。使用huggingface上的模型就可以快速构建较为理想的离线语言翻译系统。\n使用如下Python代码可以简单构建中文与英文的翻译系统：\nfrom transformers import pipeline translation_zh_en = pipeline( \u0026#39;translation\u0026#39;, model=\u0026#39;Helsinki-NLP/opus-mt-zh-en\u0026#39;, device=\u0026#39;cpu\u0026#39;) print(translation_zh_en(\u0026#39;你手若有行善的力量，不可推辞，就当向那应得的人施行。\u0026#39;)) translation_en_zh = pipeline( \u0026#39;translation\u0026#39;, model=\u0026#39;Helsinki-NLP/opus-mt-en-zh\u0026#39;, device=\u0026#39;cpu\u0026#39;) print(translation_en_zh(\u0026#39;My son, let not them depart from thine eyes; keep sound wisdom and discretion;\u0026#39;)) 运行后输出为:\n[{\u0026#39;translation_text\u0026#39;: \u0026#39;And if your hand has the power to do good, then do it to those who deserve it.\u0026#39;}] [{\u0026#39;translation_text\u0026#39;: \u0026#39;我的儿子啊!你不要让他们离开你的眼睛,你应当保持周全的智慧和谨慎。\u0026#39;}] 真的非常非常简单实用。下面说一下构建该系统需要的环境依赖。\n一、Python3运行环境 你需要准备一下Python3的运行环境，使用当前主流的版本就可以了。\n二、安装transformers包 需要安装transfomers包才可以很轻松的使用huggingface上的模型。\n安装方法类似其它的Python包的安装方法，一般来说可以直接使用pip工具。\npip install \u0026#39;transformers[torch]\u0026#39; 详细内容可以参考官方文档 DOC-LINK。\n三、下载模型文件 初次运行上述代码会自动进行模型文件的下载，可能比较耗时，需要耐心等待。\n能不能自己写模型做翻译系统 如果你需要造轮子，答案肯定是可以！不过代码篇幅会比较大，我一时半会儿也不想写文章。如果实在感兴趣，或者需要开发，可以进行商业咨询。\n"
+            }
+    
+        ,
+            {
+                "id": 6,
                 "href": "https://bxtkezhan.github.io/%E5%85%B3%E4%BA%8E%E5%9C%A3%E7%BB%8F%E9%98%85%E8%AF%BB%E6%96%B9%E6%B3%95%E7%9A%84%E9%97%AE%E9%A2%98/",
                 "title": "关于圣经阅读方法的问题",
                 "section": "posts",
@@ -64,7 +74,7 @@
     
         ,
             {
-                "id": 6,
+                "id": 7,
                 "href": "https://bxtkezhan.github.io/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABmfcc%E7%89%B9%E5%BE%81/",
                 "title": "语音识别・MFCC特征",
                 "section": "posts",
@@ -74,7 +84,7 @@
     
         ,
             {
-                "id": 7,
+                "id": 8,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E6%8A%80%E6%9C%AF%E8%BF%9B%E8%A1%8Cpcb%E5%9B%BE%E5%83%8F%E8%BF%9E%E6%8E%A5%E7%BA%BF%E6%A3%80%E6%B5%8B/",
                 "title": "使用计算机视觉技术进行PCB图像连接线检测",
                 "section": "posts",
@@ -84,7 +94,7 @@
     
         ,
             {
-                "id": 8,
+                "id": 9,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E6%8A%80%E6%9C%AF%E8%BF%9B%E8%A1%8Cpcb%E5%9B%BE%E5%83%8F%E7%84%8A%E7%82%B9%E6%A3%80%E6%B5%8B/",
                 "title": "使用计算机视觉技术进行PCB图像焊点检测",
                 "section": "posts",
@@ -94,7 +104,7 @@
     
         ,
             {
-                "id": 9,
+                "id": 10,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%913d%E5%8A%A8%E4%BD%9C/",
                 "title": "Godot开发・3D动作",
                 "section": "posts",
@@ -104,7 +114,7 @@
     
         ,
             {
-                "id": 10,
+                "id": 11,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E8%8A%82%E7%82%B9%E4%B8%8E%E5%9C%BA%E6%99%AF/",
                 "title": "Godot开发・节点与场景",
                 "section": "posts",
@@ -114,7 +124,7 @@
     
         ,
             {
-                "id": 11,
+                "id": 12,
                 "href": "https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E5%AE%89%E8%A3%85godot4/",
                 "title": "Godot开发・安装Godot4",
                 "section": "posts",
@@ -124,7 +134,7 @@
     
         ,
             {
-                "id": 12,
+                "id": 13,
                 "href": "https://bxtkezhan.github.io/%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E5%99%A8/",
                 "title": "图像生成模型基础・自动编码器",
                 "section": "posts",
@@ -134,7 +144,7 @@
     
         ,
             {
-                "id": 13,
+                "id": 14,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E7%BB%98%E5%88%B6%E5%AE%8C%E6%95%B4%E6%8C%82%E9%92%A9/",
                 "title": "创客一点灵・绘制完整挂钩",
                 "section": "posts",
@@ -144,7 +154,7 @@
     
         ,
             {
-                "id": 14,
+                "id": 15,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E7%BB%98%E5%88%B6%E9%92%A9%E5%AD%90/",
                 "title": "创客一点灵・绘制钩子",
                 "section": "posts",
@@ -154,7 +164,7 @@
     
         ,
             {
-                "id": 15,
+                "id": 16,
                 "href": "https://bxtkezhan.github.io/%E7%9B%98%E7%82%B9%E4%B8%80%E4%B8%8B%E5%B0%8F%E5%BC%9F%E7%94%A8%E5%BE%97%E6%AF%94%E8%BE%83%E5%A4%9A%E7%9A%84%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/",
                 "title": "盘点一下小弟用得比较多的编程语言",
                 "section": "posts",
@@ -164,7 +174,7 @@
     
         ,
             {
-                "id": 16,
+                "id": 17,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E8%8D%89%E5%9B%BE/",
                 "title": "创客一点灵・草图",
                 "section": "posts",
@@ -174,7 +184,7 @@
     
         ,
             {
-                "id": 17,
+                "id": 18,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E5%AE%89%E8%A3%85freecad/",
                 "title": "创客一点灵・安装FreeCAD",
                 "section": "posts",
@@ -184,7 +194,7 @@
     
         ,
             {
-                "id": 18,
+                "id": 19,
                 "href": "https://bxtkezhan.github.io/%E5%88%9B%E5%AE%A2%E4%B8%80%E7%82%B9%E7%81%B5%E4%BB%8E%E6%8C%82%E9%92%A9%E5%BC%80%E5%A7%8B%E7%9A%84%E5%AD%A6%E4%B9%A0/",
                 "title": "创客一点灵・从挂钩开始的学习",
                 "section": "posts",
@@ -194,7 +204,7 @@
     
         ,
             {
-                "id": 19,
+                "id": 20,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%89%B9%E9%87%8F%E6%A0%87%E5%87%86%E5%8C%96/",
                 "title": "人工神经网络・批量标准化",
                 "section": "posts",
@@ -204,7 +214,7 @@
     
         ,
             {
-                "id": 20,
+                "id": 21,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/",
                 "title": "人工神经网络・卷积神经网络",
                 "section": "posts",
@@ -214,7 +224,7 @@
     
         ,
             {
-                "id": 21,
+                "id": 22,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Crelu%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/",
                 "title": "人工神经网络・ReLU激活函数",
                 "section": "posts",
@@ -224,7 +234,7 @@
     
         ,
             {
-                "id": 22,
+                "id": 23,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8/",
                 "title": "人工神经网络・多层感知器",
                 "section": "posts",
@@ -234,7 +244,7 @@
     
         ,
             {
-                "id": 23,
+                "id": 24,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Csoftmax%E5%A4%9A%E5%88%86%E7%B1%BB/",
                 "title": "人工神经网络・Softmax多分类",
                 "section": "posts",
@@ -244,7 +254,7 @@
     
         ,
             {
-                "id": 24,
+                "id": 25,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/",
                 "title": "人工神经网络・逻辑回归",
                 "section": "posts",
@@ -254,7 +264,7 @@
     
         ,
             {
-                "id": 25,
+                "id": 26,
                 "href": "https://bxtkezhan.github.io/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "人工神经网络・操作环境准备",
                 "section": "posts",
@@ -264,7 +274,7 @@
     
         ,
             {
-                "id": 26,
+                "id": 27,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/",
                 "title": "数据分析・聚类分析",
                 "section": "posts",
@@ -274,7 +284,7 @@
     
         ,
             {
-                "id": 27,
+                "id": 28,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88/",
                 "title": "数据分析・最小二乘拟合",
                 "section": "posts",
@@ -284,7 +294,7 @@
     
         ,
             {
-                "id": 28,
+                "id": 29,
                 "href": "https://bxtkezhan.github.io/jitlightning-%E7%A4%BA%E4%BE%8Bprintf/",
                 "title": "JIT・Lightning 示例「printf」",
                 "section": "posts",
@@ -294,7 +304,7 @@
     
         ,
             {
-                "id": 29,
+                "id": 30,
                 "href": "https://bxtkezhan.github.io/jitlightning-%E7%A4%BA%E4%BE%8Bincr/",
                 "title": "JIT・Lightning 示例「incr」",
                 "section": "posts",
@@ -304,7 +314,7 @@
     
         ,
             {
-                "id": 30,
+                "id": 31,
                 "href": "https://bxtkezhan.github.io/jitgnu/lightning/",
                 "title": "JIT・GNU/Lightning",
                 "section": "posts",
@@ -314,7 +324,7 @@
     
         ,
             {
-                "id": 31,
+                "id": 32,
                 "href": "https://bxtkezhan.github.io/arberia-features/",
                 "title": "Arberia Features",
                 "section": "posts",
@@ -324,7 +334,7 @@
     
         ,
             {
-                "id": 32,
+                "id": 33,
                 "href": "https://bxtkezhan.github.io/arberia-installation-update/",
                 "title": "Arberia Installation | Update",
                 "section": "posts",
@@ -334,7 +344,7 @@
     
         ,
             {
-                "id": 33,
+                "id": 34,
                 "href": "https://bxtkezhan.github.io/build-in-shortcodes/",
                 "title": "Build in Shortcodes",
                 "section": "posts",
@@ -344,7 +354,7 @@
     
         ,
             {
-                "id": 34,
+                "id": 35,
                 "href": "https://bxtkezhan.github.io/post-with-cover-image/",
                 "title": "Post with Cover Image",
                 "section": "posts",
@@ -354,7 +364,7 @@
     
         ,
             {
-                "id": 35,
+                "id": 36,
                 "href": "https://bxtkezhan.github.io/code-sample/",
                 "title": "Code Sample",
                 "section": "posts",
@@ -364,7 +374,7 @@
     
         ,
             {
-                "id": 36,
+                "id": 37,
                 "href": "https://bxtkezhan.github.io/landingpage/",
                 "title": "Landingpage",
                 "section": "",
@@ -374,7 +384,7 @@
     
         ,
             {
-                "id": 37,
+                "id": 38,
                 "href": "https://bxtkezhan.github.io/policy-privacy/",
                 "title": "Policy \u0026 Privacy",
                 "section": "",
@@ -384,7 +394,7 @@
     
         ,
             {
-                "id": 38,
+                "id": 39,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9F%A9%E9%98%B5%E6%93%8D%E4%BD%9C/",
                 "title": "数据分析・矩阵操作",
                 "section": "posts",
@@ -394,7 +404,7 @@
     
         ,
             {
-                "id": 39,
+                "id": 40,
                 "href": "https://bxtkezhan.github.io/extended-shortcode/",
                 "title": "Extended Shortcode",
                 "section": "posts",
@@ -404,7 +414,7 @@
     
         ,
             {
-                "id": 40,
+                "id": 41,
                 "href": "https://bxtkezhan.github.io/contact/",
                 "title": "Contact",
                 "section": "",
@@ -414,7 +424,7 @@
     
         ,
             {
-                "id": 41,
+                "id": 42,
                 "href": "https://bxtkezhan.github.io/%E9%A1%B9%E7%9B%AEsmartfile/",
                 "title": "项目・Smartfile",
                 "section": "posts",
@@ -424,7 +434,7 @@
     
         ,
             {
-                "id": 42,
+                "id": 43,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%96%99%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E5%AF%BC%E5%87%BA/",
                 "title": "数据分析・资料的载入与导出",
                 "section": "posts",
@@ -434,7 +444,7 @@
     
         ,
             {
-                "id": 43,
+                "id": 44,
                 "href": "https://bxtkezhan.github.io/the-beginningpython-calculator/",
                 "title": "The Beginning・Python Calculator",
                 "section": "posts",
@@ -444,7 +454,7 @@
     
         ,
             {
-                "id": 44,
+                "id": 45,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/",
                 "title": "数据分析・数据可视化",
                 "section": "posts",
@@ -454,7 +464,7 @@
     
         ,
             {
-                "id": 45,
+                "id": 46,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%80%BC%E6%93%8D%E4%BD%9C/",
                 "title": "数据分析・多维数组的数值操作",
                 "section": "posts",
@@ -464,7 +474,7 @@
     
         ,
             {
-                "id": 46,
+                "id": 47,
                 "href": "https://bxtkezhan.github.io/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "数据分析・操作环境准备",
                 "section": "posts",
@@ -474,7 +484,7 @@
     
         ,
             {
-                "id": 47,
+                "id": 48,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E8%A7%86%E9%A2%91%E7%BC%96%E8%BE%91/",
                 "title": "影像处理・视频编辑",
                 "section": "posts",
@@ -484,7 +494,7 @@
     
         ,
             {
-                "id": 48,
+                "id": 49,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E8%B0%83%E7%94%A8c%E7%A8%8B%E5%BA%8F/",
                 "title": "汇编语言「Linux/x86-64」・调用C程序",
                 "section": "posts",
@@ -494,7 +504,7 @@
     
         ,
             {
-                "id": 49,
+                "id": 50,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/",
                 "title": "影像处理・人脸识别",
                 "section": "posts",
@@ -504,7 +514,7 @@
     
         ,
             {
-                "id": 50,
+                "id": 51,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/",
                 "title": "影像处理・目标检测",
                 "section": "posts",
@@ -514,7 +524,7 @@
     
         ,
             {
-                "id": 51,
+                "id": 52,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E7%BD%91%E7%BB%9C%E6%91%84%E5%83%8F%E5%A4%B4/",
                 "title": "影像处理・网络摄像头",
                 "section": "posts",
@@ -524,7 +534,7 @@
     
         ,
             {
-                "id": 52,
+                "id": 53,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E8%B0%83%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4/",
                 "title": "影像处理・调用摄像头",
                 "section": "posts",
@@ -534,7 +544,7 @@
     
         ,
             {
-                "id": 53,
+                "id": 54,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86opencv%E7%AE%80%E4%BB%8B/",
                 "title": "影像处理・OpenCV简介",
                 "section": "posts",
@@ -544,7 +554,7 @@
     
         ,
             {
-                "id": 54,
+                "id": 55,
                 "href": "https://bxtkezhan.github.io/%E5%BD%B1%E5%83%8F%E5%A4%84%E7%90%86%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "影像处理・操作环境准备",
                 "section": "posts",
@@ -554,7 +564,7 @@
     
         ,
             {
-                "id": 55,
+                "id": 56,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%B0%86%E6%B8%B8%E6%88%8F%E5%AD%98%E5%85%A5%E5%9B%BE%E5%83%8F/",
                 "title": "隐写术・将游戏存入图像",
                 "section": "posts",
@@ -564,7 +574,7 @@
     
         ,
             {
-                "id": 56,
+                "id": 57,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E6%96%87%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・图文隐写术",
                 "section": "posts",
@@ -574,7 +584,7 @@
     
         ,
             {
-                "id": 57,
+                "id": 58,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AFqrcode/",
                 "title": "隐写术・QRCode",
                 "section": "posts",
@@ -584,7 +594,7 @@
     
         ,
             {
-                "id": 58,
+                "id": 59,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E5%83%8F%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・图像隐写术",
                 "section": "posts",
@@ -594,7 +604,7 @@
     
         ,
             {
-                "id": 59,
+                "id": 60,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/",
                 "title": "隐写术・图像处理",
                 "section": "posts",
@@ -604,7 +614,7 @@
     
         ,
             {
-                "id": 60,
+                "id": 61,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E6%96%87%E4%BB%B6%E9%9A%90%E5%86%99%E6%9C%AF/",
                 "title": "隐写术・文件隐写术",
                 "section": "posts",
@@ -614,7 +624,7 @@
     
         ,
             {
-                "id": 61,
+                "id": 62,
                 "href": "https://bxtkezhan.github.io/%E9%9A%90%E5%86%99%E6%9C%AF%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "隐写术・操作环境准备",
                 "section": "posts",
@@ -624,7 +634,7 @@
     
         ,
             {
-                "id": 62,
+                "id": 63,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E5%B9%B6%E5%8F%91%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/",
                 "title": "网络篇・并发端口扫描",
                 "section": "posts",
@@ -634,7 +644,7 @@
     
         ,
             {
-                "id": 63,
+                "id": 64,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/",
                 "title": "网络篇・端口扫描",
                 "section": "posts",
@@ -644,7 +654,7 @@
     
         ,
             {
-                "id": 64,
+                "id": 65,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87udp%E9%80%9A%E4%BF%A1/",
                 "title": "网络篇・UDP通信",
                 "section": "posts",
@@ -654,7 +664,7 @@
     
         ,
             {
-                "id": 65,
+                "id": 66,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87tcp%E9%80%9A%E4%BF%A1/",
                 "title": "网络篇・TCP通信",
                 "section": "posts",
@@ -664,7 +674,7 @@
     
         ,
             {
-                "id": 66,
+                "id": 67,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87web%E7%88%AC%E8%99%AB/",
                 "title": "网络篇・Web爬虫",
                 "section": "posts",
@@ -674,7 +684,7 @@
     
         ,
             {
-                "id": 67,
+                "id": 68,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87http%E5%8D%8F%E8%AE%AE/",
                 "title": "网络篇・HTTP协议",
                 "section": "posts",
@@ -684,7 +694,7 @@
     
         ,
             {
-                "id": 68,
+                "id": 69,
                 "href": "https://bxtkezhan.github.io/%E7%BD%91%E7%BB%9C%E7%AF%87%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "网络篇・操作环境准备",
                 "section": "posts",
@@ -694,7 +704,7 @@
     
         ,
             {
-                "id": 69,
+                "id": 70,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87pycryptodome%E7%A4%BA%E4%BE%8B%E6%89%A9%E5%B1%95/",
                 "title": "密码篇・PyCryptodome示例「扩展」",
                 "section": "posts",
@@ -704,7 +714,7 @@
     
         ,
             {
-                "id": 70,
+                "id": 71,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%B9%B6%E8%A1%8C%E5%AF%86%E7%A0%81%E7%8C%9C%E8%A7%A3/",
                 "title": "密码篇・并行密码猜解",
                 "section": "posts",
@@ -714,7 +724,7 @@
     
         ,
             {
-                "id": 71,
+                "id": 72,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/",
                 "title": "汇编语言「Linux/x86-64」・代码解析",
                 "section": "posts",
@@ -724,7 +734,7 @@
     
         ,
             {
-                "id": 72,
+                "id": 73,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%86%E7%A0%81%E7%8C%9C%E8%A7%A3/",
                 "title": "密码篇・密码猜解",
                 "section": "posts",
@@ -734,7 +744,7 @@
     
         ,
             {
-                "id": 73,
+                "id": 74,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/",
                 "title": "密码篇・实际应用",
                 "section": "posts",
@@ -744,7 +754,7 @@
     
         ,
             {
-                "id": 74,
+                "id": 75,
                 "href": "https://bxtkezhan.github.io/%E6%87%92%E6%83%B0%E4%BA%BA%E5%93%AA%E4%BD%A0%E8%A6%81%E7%9D%A1%E5%88%B0%E5%87%A0%E6%97%B6%E5%91%A2/",
                 "title": "懒惰人哪，你要睡到几时呢？",
                 "section": "posts",
@@ -754,7 +764,7 @@
     
         ,
             {
-                "id": 75,
+                "id": 76,
                 "href": "https://bxtkezhan.github.io/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80linux/x86-64%E7%AC%AC%E4%B8%80%E6%AD%A5/",
                 "title": "汇编语言「Linux/x86-64」・第一步",
                 "section": "posts",
@@ -764,7 +774,7 @@
     
         ,
             {
-                "id": 76,
+                "id": 77,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86/",
                 "title": "密码篇・公开密钥加密",
                 "section": "posts",
@@ -774,7 +784,7 @@
     
         ,
             {
-                "id": 77,
+                "id": 78,
                 "href": "https://bxtkezhan.github.io/%E4%BF%9D%E5%AE%88%E5%85%AC%E4%B9%89%E7%9A%84%E5%BF%83%E8%A1%8C%E8%B5%B0%E6%AD%A3%E7%9B%B4%E7%9A%84%E8%B7%AF/",
                 "title": "保守公义的心，行走正直的路",
                 "section": "posts",
@@ -784,7 +794,7 @@
     
         ,
             {
-                "id": 78,
+                "id": 79,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%B9%E7%A7%B0%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86/",
                 "title": "密码篇・对称密钥加密",
                 "section": "posts",
@@ -794,7 +804,7 @@
     
         ,
             {
-                "id": 79,
+                "id": 80,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E5%AF%86%E7%A0%81%E5%AD%A6%E7%AE%80%E4%BB%8B/",
                 "title": "密码篇・密码学简介",
                 "section": "posts",
@@ -804,7 +814,7 @@
     
         ,
             {
-                "id": 80,
+                "id": 81,
                 "href": "https://bxtkezhan.github.io/%E4%BD%A0%E7%9A%84%E6%B3%89%E6%BA%90%E5%B2%82%E5%8F%AF%E6%B6%A8%E6%BA%A2%E5%9C%A8%E5%A4%96/",
                 "title": "你的泉源岂可涨溢在外？",
                 "section": "posts",
@@ -814,7 +824,7 @@
     
         ,
             {
-                "id": 81,
+                "id": 82,
                 "href": "https://bxtkezhan.github.io/%E6%8E%A8%E8%8D%90%E5%87%A0%E6%9C%ACc/c-%E4%B9%A6%E7%B1%8D%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD/",
                 "title": "推荐几本C/C++书籍【免费下载】",
                 "section": "posts",
@@ -824,7 +834,7 @@
     
         ,
             {
-                "id": 82,
+                "id": 83,
                 "href": "https://bxtkezhan.github.io/%E5%AF%86%E7%A0%81%E7%AF%87%E6%93%8D%E4%BD%9C%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/",
                 "title": "密码篇・操作环境准备",
                 "section": "posts",
@@ -834,7 +844,7 @@
     
         ,
             {
-                "id": 83,
+                "id": 84,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E7%8C%9C%E5%AD%97%E6%B8%B8%E6%88%8F%E9%98%B6%E6%AE%B5%E7%BB%83%E4%B9%A0/",
                 "title": "初学篇・猜字游戏「阶段练习」",
                 "section": "posts",
@@ -844,7 +854,7 @@
     
         ,
             {
-                "id": 84,
+                "id": 85,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/",
                 "title": "初学篇・面向对象\u0026数据结构",
                 "section": "posts",
@@ -854,7 +864,7 @@
     
         ,
             {
-                "id": 85,
+                "id": 86,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%B0%83%E7%94%A8/",
                 "title": "初学篇・函数的定义与调用",
                 "section": "posts",
@@ -864,7 +874,7 @@
     
         ,
             {
-                "id": 86,
+                "id": 87,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/",
                 "title": "初学篇・循环控制语句",
                 "section": "posts",
@@ -874,7 +884,7 @@
     
         ,
             {
-                "id": 87,
+                "id": 88,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/",
                 "title": "初学篇・条件控制语句",
                 "section": "posts",
@@ -884,7 +894,7 @@
     
         ,
             {
-                "id": 88,
+                "id": 89,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97/",
                 "title": "初学篇・逻辑运算\u0026比较运算",
                 "section": "posts",
@@ -894,7 +904,7 @@
     
         ,
             {
-                "id": 89,
+                "id": 90,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87python%E8%AE%A1%E7%AE%97%E5%99%A8/",
                 "title": "初学篇・Python计算器",
                 "section": "posts",
@@ -904,7 +914,7 @@
     
         ,
             {
-                "id": 90,
+                "id": 91,
                 "href": "https://bxtkezhan.github.io/%E5%88%9D%E5%AD%A6%E7%AF%87%E7%AC%AC%E4%B8%80%E6%AD%A5%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/",
                 "title": "初学篇・第一步“你好世界”",
                 "section": "posts",
@@ -914,7 +924,7 @@
     
         ,
             {
-                "id": 91,
+                "id": 92,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AF%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/",
                 "title": "黑客之路・编译原理",
                 "section": "posts",
@@ -924,7 +934,7 @@
     
         ,
             {
-                "id": 92,
+                "id": 93,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AFc/c-%E7%AF%87/",
                 "title": "黑客之路・C/C++篇",
                 "section": "posts",
@@ -934,7 +944,7 @@
     
         ,
             {
-                "id": 93,
+                "id": 94,
                 "href": "https://bxtkezhan.github.io/%E9%BB%91%E5%AE%A2%E4%B9%8B%E8%B7%AFpython%E7%AF%87/",
                 "title": "黑客之路・Python篇",
                 "section": "posts",
@@ -944,7 +954,7 @@
     
         ,
             {
-                "id": 94,
+                "id": 95,
                 "href": "https://bxtkezhan.github.io/%E6%94%AF%E6%8C%81while%E8%AF%AD%E5%8F%A5/",
                 "title": "支持While语句",
                 "section": "posts",
@@ -954,7 +964,7 @@
     
         ,
             {
-                "id": 95,
+                "id": 96,
                 "href": "https://bxtkezhan.github.io/%E6%8E%A8%E8%8D%90%E5%87%A0%E6%9C%ACpython%E4%B9%A6%E7%B1%8D%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD/",
                 "title": "推荐几本Python书籍【免费下载】",
                 "section": "posts",
@@ -964,7 +974,7 @@
     
         ,
             {
-                "id": 96,
+                "id": 97,
                 "href": "https://bxtkezhan.github.io/%E6%94%AF%E6%8C%81if%E8%AF%AD%E5%8F%A5/",
                 "title": "支持If语句",
                 "section": "posts",
@@ -974,7 +984,7 @@
     
         ,
             {
-                "id": 97,
+                "id": 98,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81%E5%8F%98%E9%87%8F/",
                 "title": "使程序语言支持变量",
                 "section": "posts",
@@ -984,7 +994,7 @@
     
         ,
             {
-                "id": 98,
+                "id": 99,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E8%AE%A1%E7%AE%97%E5%99%A8%E6%94%AF%E6%8C%81%E8%AF%AD%E5%8F%A5%E5%9D%97/",
                 "title": "使计算器支持语句块",
                 "section": "posts",
@@ -994,7 +1004,7 @@
     
         ,
             {
-                "id": 99,
+                "id": 100,
                 "href": "https://bxtkezhan.github.io/%E9%80%92%E5%BD%92%E5%90%91%E4%B8%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0calc/",
                 "title": "递归向下算法实现Calc",
                 "section": "posts",
@@ -1004,7 +1014,7 @@
     
         ,
             {
-                "id": 100,
+                "id": 101,
                 "href": "https://bxtkezhan.github.io/%E4%BD%BF%E7%94%A8bklexer%E8%BF%9B%E8%A1%8C%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/",
                 "title": "使用BKLexer进行词法分析",
                 "section": "posts",
@@ -1014,7 +1024,7 @@
     
         ,
             {
-                "id": 101,
+                "id": 102,
                 "href": "https://bxtkezhan.github.io/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/",
                 "title": "词法分析器",
                 "section": "posts",
