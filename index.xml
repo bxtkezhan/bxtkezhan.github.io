@@ -6,8 +6,15 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 14 Jan 2024 15:02:04 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 15 Feb 2024 17:11:07 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用go-fitz读取PDF</title>
+      <link>http://bxtkezhan.github.io/post/085-go-fitz/</link>
+      <pubDate>Thu, 15 Feb 2024 17:11:07 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/085-go-fitz/</guid>
+      <description>go-fitz 是 Go 语言的一个库，它封装了 MuPDF 的强大功能，用于处理 PDF、EPUB 和 MOBI 文档。该库允许开发者轻松提取 PDF 文档中的页面为图像（JPEG、PNG、TIFF 等）、文本、HTML 或 SVG。</description>
+    </item>
     <item>
       <title>AI助手 Google Gemini</title>
       <link>http://bxtkezhan.github.io/post/084-gemini-try/</link>
