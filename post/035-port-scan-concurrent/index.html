@@ -5,7 +5,7 @@
 <meta name="description" content="上一节我们实现了一个简单的端口扫描工具，接下来我们把它升级成为多线程版本。">
 <meta name="keywords" content="python,scanner,端口扫描,并发,多线程,网络安全,测试">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -70,43 +70,43 @@
 <h3 id="批量扫描">批量扫描</h3>
 <p>虽然端口扫描属于IO密集型操作，但是由于我们的测试目标是本机，所以有必要对线程切换导致的效率损失问题进行处理。在这里我们使用批量分配任务到每一个线程的方法来进行处理。</p>
 <p>我们首先定义一个批量处理函数:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
-<span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Thread
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">batch_test</span>(host:str, ports:range):
-    <span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
-        s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
-        s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((host, port)):
-            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Opened Port: </span><span style="color:#e6db74">{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><h3 id="分批并发配">分批并发配</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Thread
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">batch_test</span>(host:str, ports:range):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
+</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((host, port)):
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Opened Port: </span><span style="color:#e6db74">{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><h3 id="分批并发配">分批并发配</h3>
 <p>将任务进行等分「近似」并分发给每一个线程:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_ports</span>(host:str, ports:range, thread_num:int):
-    count <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop <span style="color:#f92672">-</span> ports<span style="color:#f92672">.</span>start
-    batchsize <span style="color:#f92672">=</span> count <span style="color:#f92672">//</span> thread_num
-    works <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> thread_id <span style="color:#f92672">in</span> range(thread_num):
-        start <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>start <span style="color:#f92672">+</span> thread_id <span style="color:#f92672">*</span> batchsize
-        stop <span style="color:#f92672">=</span> start <span style="color:#f92672">+</span> batchsize
-        <span style="color:#66d9ef">if</span> thread_id <span style="color:#f92672">==</span> thread_num <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
-            stop <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop
-        t <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>batch_test, args<span style="color:#f92672">=</span>(host, range(start, stop)))
-        t<span style="color:#f92672">.</span>start()
-        works<span style="color:#f92672">.</span>append(t)
-    <span style="color:#66d9ef">for</span> work <span style="color:#f92672">in</span> works:
-        work<span style="color:#f92672">.</span>join()
-</code></pre></div><h3 id="程序入口">程序入口</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_ports</span>(host:str, ports:range, thread_num:int):
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop <span style="color:#f92672">-</span> ports<span style="color:#f92672">.</span>start
+</span></span><span style="display:flex;"><span>    batchsize <span style="color:#f92672">=</span> count <span style="color:#f92672">//</span> thread_num
+</span></span><span style="display:flex;"><span>    works <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> thread_id <span style="color:#f92672">in</span> range(thread_num):
+</span></span><span style="display:flex;"><span>        start <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>start <span style="color:#f92672">+</span> thread_id <span style="color:#f92672">*</span> batchsize
+</span></span><span style="display:flex;"><span>        stop <span style="color:#f92672">=</span> start <span style="color:#f92672">+</span> batchsize
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> thread_id <span style="color:#f92672">==</span> thread_num <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            stop <span style="color:#f92672">=</span> ports<span style="color:#f92672">.</span>stop
+</span></span><span style="display:flex;"><span>        t <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>batch_test, args<span style="color:#f92672">=</span>(host, range(start, stop)))
+</span></span><span style="display:flex;"><span>        t<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>        works<span style="color:#f92672">.</span>append(t)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> work <span style="color:#f92672">in</span> works:
+</span></span><span style="display:flex;"><span>        work<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div><h3 id="程序入口">程序入口</h3>
 <p>根据用户输入设置函数参数并运行程序:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    <span style="color:#f92672">import</span> sys
-
-    host       <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
-    start      <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>])
-    stop       <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">3</span>])
-    thread_num <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">4</span>])
-    test_ports(host, range(start, stop), thread_num)
-</code></pre></div><p><a href="/post/036-steganography-dev/">下篇 隐写术・操作环境准备</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    host       <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    start      <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>    stop       <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">3</span>])
+</span></span><span style="display:flex;"><span>    thread_num <span style="color:#f92672">=</span> int(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>    test_ports(host, range(start, stop), thread_num)
+</span></span></code></pre></div><p><a href="/post/036-steganography-dev/">下篇 隐写术・操作环境准备</a></p>
 
   </section>
 </article>
@@ -125,7 +125,7 @@
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

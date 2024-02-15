@@ -5,7 +5,7 @@
 <meta name="description" content="在数据处理中常常使用标准化技术对数据进行处理，一般来说标准化处理有利于提升模型对数据的拟合效果。我们也可以使用标准化技术对神经网络模型进行升级。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -79,36 +79,36 @@ $$</p>
 <p>即: $x$ 减去 $x$ 的期望 $E[x]$ 然后除以方差 $Var(x)$ 的开根，再乘上参数 $\gamma$ 最后加上参数 $\beta$ 。其中参数 $\gamma , \beta$ 是需要训练更新的值，在PyTorch中，初始情况下 $\gamma$ 的元素值被设置为1而 $\beta$ 的元素值被设置为0。</p>
 <h3 id="优化代码">优化代码</h3>
 <p>我们对之前的卷积神经网络进行优化，先前的模型结构如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
-    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
-    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-    nn<span style="color:#f92672">.</span>Flatten(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
-    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</code></pre></div><p>经过优化后的结构如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
-    nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">10</span>),
-    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
-    nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">20</span>),
-    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-    nn<span style="color:#f92672">.</span>Flatten(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
-    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</code></pre></div><p>我们在卷积层<code>nn.Conv2d</code>后面插入批量标准化层<code>nn.BatchNorm2d</code>来实现数据标准化，需要注意的是批量标准化层的第一个参数应该被指定为卷积层输出的通道数量，例如: <code>nn.Conv2d(1, 10, 5)</code>对应<code>nn.BatchNorm2d(10)</code>；<code>nn.Conv2d(10, 20, 3)</code>对应<code>nn.BatchNorm2d(20)</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span></code></pre></div><p>经过优化后的结构如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>BatchNorm2d(<span style="color:#ae81ff">20</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span></code></pre></div><p>我们在卷积层<code>nn.Conv2d</code>后面插入批量标准化层<code>nn.BatchNorm2d</code>来实现数据标准化，需要注意的是批量标准化层的第一个参数应该被指定为卷积层输出的通道数量，例如: <code>nn.Conv2d(1, 10, 5)</code>对应<code>nn.BatchNorm2d(10)</code>；<code>nn.Conv2d(10, 20, 3)</code>对应<code>nn.BatchNorm2d(20)</code>。</p>
 <h3 id="重新运行代码训练模型">重新运行代码训练模型</h3>
 <p>接下来，我们在同之前一样的条件下重新训练这个卷积神经网络。</p>
 <p>通过10轮的训练，我们的新模型在测试集上的表现如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">testing<span style="color:#f92672">...</span>
-loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4737657746182213</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9891</span>
-</code></pre></div><p>其中损失率<code>loss</code>为1.4737657左右，准确率达到98.91%。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>testing<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4737657746182213</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9891</span>
+</span></span></code></pre></div><p>其中损失率<code>loss</code>为1.4737657左右，准确率达到98.91%。</p>
 <p>这一次改善在非常大的程度上提高了拟合效率，在训练进行到第二轮的时候测试集准确率就超过了上一代网络的最终测试集准确率，并且在完成10轮训练后，测试集的准确率直逼99%，如果我们增加几轮训练，估计达到99%的测试集准确率不是问题。</p>
 
   </section>
@@ -128,7 +128,7 @@ loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4737657746
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

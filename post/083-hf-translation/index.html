@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="最近有刷到对「女性慕强」现象批评的文章和视频，觉得挺有意思。正好，我也有点想写些关于技术以外的内容的文章。">
+<meta name="keywords" content="女性,批评,翻译,huggingface,模型">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>谈谈我对「女性慕强」现象的看法 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-01-02">January 02, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/%E6%9D%82%E8%B0%88">杂谈</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">谈谈我对「女性慕强」现象的看法</h1>
+  <section class="body" itemprop="articleBody">
+    <p>最近有刷到对「女性慕强」现象批评的文章和视频，觉得挺有意思。正好，我也有点想写些关于技术以外的内容的文章。</p>
+<h2 id="女性慕强的定义">「女性慕强」的定义</h2>
+<p>由于我主要看到的文章讲的「女性慕强」指的都是女性崇尚和追求比自身优秀强大的男性的现象，所以我这里姑且定义「女性慕强」为：</p>
+<p>女性崇尚以及追求比自身显著优秀和强大的男性的行为现象。</p>
+<p>有了明确的定义后，就可以来谈谈作为男性的我，对于该现象的个人看法。首先我觉得作为男性，即便不认可也最好不要公开且明显的反对这一现象，不然很可能会暴露自己是个弱鸡的……</p>
+<p><img src="face01.png" alt=""></p>
+<p>首先，从我有限的理性和情感上考虑，我都不反对「女性慕强」，毕竟这好像也没有什么明显不合理的地方。为了能够更加客观理性的论述，我还是在网上找了一些所谓专家的分析视频。</p>
+<p>基本上专家们的说法大致都是：「女性慕强，是刻录在女性基因里的天性，是女性不够独立自主的一个表现。」。我这边暂且不讨论一个所谓刻录在基因里的天性和不够独立自主人格有啥必然联系，我这里、我现在、我只想说的是：这也太无聊了，以至于我在构思文章的中途就决定要更换写作主题了。来，下面我们进入一个新的主题。</p>
+<h2 id="使用huggingface上的模型构建离线翻译系统">使用huggingface上的模型构建离线翻译系统</h2>
+<p>语言翻译是个常见的应用需求，由于某些因素，我们不可以调用效果较好的商用翻译api，这时就需要我们构建自己的离线翻译工具。使用huggingface上的模型就可以快速构建较为理想的离线语言翻译系统。</p>
+<p>使用如下Python代码可以简单构建中文与英文的翻译系统：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> pipeline
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>translation_zh_en <span style="color:#f92672">=</span> pipeline(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;translation&#39;</span>,
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-zh-en&#39;</span>,
+</span></span><span style="display:flex;"><span>    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(translation_zh_en(<span style="color:#e6db74">&#39;你手若有行善的力量，不可推辞，就当向那应得的人施行。&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>translation_en_zh <span style="color:#f92672">=</span> pipeline(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;translation&#39;</span>,
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-en-zh&#39;</span>,
+</span></span><span style="display:flex;"><span>    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(translation_en_zh(<span style="color:#e6db74">&#39;My son, let not them depart from thine eyes; keep sound wisdom and discretion;&#39;</span>))
+</span></span></code></pre></div><p>运行后输出为:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;And if your hand has the power to do good, then do it to those who deserve it.&#39;</span>}]
+</span></span><span style="display:flex;"><span>[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;我的儿子啊!你不要让他们离开你的眼睛,你应当保持周全的智慧和谨慎。&#39;</span>}]
+</span></span></code></pre></div><p>真的非常非常简单实用。下面说一下构建该系统需要的环境依赖。</p>
+<h3 id="一python3运行环境">一、Python3运行环境</h3>
+<p>你需要准备一下Python3的运行环境，使用当前主流的版本就可以了。</p>
+<h3 id="二安装transformers包">二、安装transformers包</h3>
+<p>需要安装<code>transfomers</code>包才可以很轻松的使用huggingface上的模型。</p>
+<p>安装方法类似其它的Python包的安装方法，一般来说可以直接使用pip工具。</p>
+<pre tabindex="0"><code>pip install &#39;transformers[torch]&#39;
+</code></pre><p>详细内容可以参考官方文档 <a href="https://huggingface.co/docs/transformers/installation">DOC-LINK</a>。</p>
+<h3 id="三下载模型文件">三、下载模型文件</h3>
+<p>初次运行上述代码会自动进行模型文件的下载，可能比较耗时，需要耐心等待。</p>
+<h2 id="能不能自己写模型做翻译系统">能不能自己写模型做翻译系统</h2>
+<p>如果你需要造轮子，答案肯定是可以！不过代码篇幅会比较大，我一时半会儿也不想写文章。如果实在感兴趣，或者需要开发，可以进行商业咨询。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

@@ -5,7 +5,7 @@
 <meta name="description" content="在之前的文章中我们了解了一点基础的汇编语法以及与C程序的混用技巧，现在我们进一步来学习使用及时编译技巧「JIT」。">
 <meta name="keywords" content="汇编,编译,连接,编程,asm,JIT,linux">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -79,55 +79,55 @@ GNU Lightning可用于复杂的代码生成任务。可用的后端涵盖 aarch6
 <h3 id="安装lightning">安装Lightning</h3>
 <p>首先需要下载Lightning，可以去到官方提供的地址<a href="http://ftp.gnu.org/gnu/lightning/">http://ftp.gnu.org/gnu/lightning/</a>，下载最新或较新的版本。</p>
 <p>下载之后进行解压，然后进入解压后的目录「例如: ~/Workspace/lightning-2.1.3」:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ~/Workspace/lightning-2.1.3
-</code></pre></div><p>根据官方文档的安装说明<a href="https://www.gnu.org/software/lightning/manual/lightning.html#Installation">https://www.gnu&hellip;&hellip;#Installation</a>，执行如下命令进行编译:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 1.</span>
-./configure
-<span style="color:#75715e"># 2.</span>
-make check
-<span style="color:#75715e"># 3.</span>
-make install <span style="color:#75715e"># 可能需要使用sudo获取权限</span>
-</code></pre></div><p>安装之后，我们可以运行命令<code>sudo ldconfig</code>刷新一下连接库。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ~/Workspace/lightning-2.1.3
+</span></span></code></pre></div><p>根据官方文档的安装说明<a href="https://www.gnu.org/software/lightning/manual/lightning.html#Installation">https://www.gnu&hellip;&hellip;#Installation</a>，执行如下命令进行编译:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 1.</span>
+</span></span><span style="display:flex;"><span>./configure
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2.</span>
+</span></span><span style="display:flex;"><span>make check
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3.</span>
+</span></span><span style="display:flex;"><span>make install <span style="color:#75715e"># 可能需要使用sudo获取权限</span>
+</span></span></code></pre></div><p>安装之后，我们可以运行命令<code>sudo ldconfig</code>刷新一下连接库。</p>
 <h3 id="编译测试官方示例">编译测试官方示例</h3>
 <p>我们使用官方示例「incr」来测试一下lightning是否成功安装。</p>
 <p>打开编辑器，然后键入如下代码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">static</span> jit_state_t <span style="color:#f92672">*</span>_jit;
-
-<span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span> (<span style="color:#f92672">*</span>pifi)(<span style="color:#66d9ef">int</span>);    <span style="color:#75715e">/* Pointer to Int Function of Int */</span>
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
-{
-  jit_node_t  <span style="color:#f92672">*</span>in;
-  pifi         incr;
-
-  init_jit(argv[<span style="color:#ae81ff">0</span>]);
-  _jit <span style="color:#f92672">=</span> jit_new_state();
-
-  jit_prolog();                    <span style="color:#75715e">/*      prolog              */</span>
-  in <span style="color:#f92672">=</span> jit_arg();                  <span style="color:#75715e">/*      in = arg            */</span>
-  jit_getarg(JIT_R0, in);          <span style="color:#75715e">/*      getarg R0           */</span>
-  jit_addi(JIT_R0, JIT_R0, <span style="color:#ae81ff">1</span>);     <span style="color:#75715e">/*      addi   R0, R0, 1    */</span>
-  jit_retr(JIT_R0);                <span style="color:#75715e">/*      retr   R0           */</span>
-
-  incr <span style="color:#f92672">=</span> jit_emit();
-  jit_clear_state();
-
-  <span style="color:#75715e">/* call the generated code, passing 5 as an argument */</span>
-  printf(<span style="color:#e6db74">&#34;%d + 1 = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">5</span>, incr(<span style="color:#ae81ff">5</span>));
-
-  jit_destroy_state();
-  finish_jit();
-  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-</code></pre></div><p>保存代码并进行编译与执行:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gcc test.c -llightning
-./a.out
-</code></pre></div><p>如果编译成功则执行后输出如下内容:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
-</code></pre></div><p>该程序会在执行过程中动态编译一个「数值增一」的子汇编程序并在之后进行调用。关于上述代码的说明与讲解会写在下一篇文章中，感兴趣的朋友们，敬请期待！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;lightning.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">jit_state_t</span> <span style="color:#f92672">*</span>_jit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span> (<span style="color:#f92672">*</span>pifi)(<span style="color:#66d9ef">int</span>);    <span style="color:#75715e">/* Pointer to Int Function of Int */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">jit_node_t</span>  <span style="color:#f92672">*</span>in;
+</span></span><span style="display:flex;"><span>  pifi         incr;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">init_jit</span>(argv[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>  _jit <span style="color:#f92672">=</span> <span style="color:#a6e22e">jit_new_state</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_prolog</span>();                    <span style="color:#75715e">/*      prolog              */</span>
+</span></span><span style="display:flex;"><span>  in <span style="color:#f92672">=</span> <span style="color:#a6e22e">jit_arg</span>();                  <span style="color:#75715e">/*      in = arg            */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_getarg</span>(JIT_R0, in);          <span style="color:#75715e">/*      getarg R0           */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_addi</span>(JIT_R0, JIT_R0, <span style="color:#ae81ff">1</span>);     <span style="color:#75715e">/*      addi   R0, R0, 1    */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_retr</span>(JIT_R0);                <span style="color:#75715e">/*      retr   R0           */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  incr <span style="color:#f92672">=</span> <span style="color:#a6e22e">jit_emit</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_clear_state</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* call the generated code, passing 5 as an argument */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d + 1 = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#a6e22e">incr</span>(<span style="color:#ae81ff">5</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">jit_destroy_state</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">finish_jit</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>保存代码并进行编译与执行:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc test.c -llightning
+</span></span><span style="display:flex;"><span>./a.out
+</span></span></code></pre></div><p>如果编译成功则执行后输出如下内容:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><p>该程序会在执行过程中动态编译一个「数值增一」的子汇编程序并在之后进行调用。关于上述代码的说明与讲解会写在下一篇文章中，感兴趣的朋友们，敬请期待！</p>
 
   </section>
 </article>
@@ -146,7 +146,7 @@ make install <span style="color:#75715e"># 可能需要使用sudo获取权限</s
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

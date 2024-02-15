@@ -5,7 +5,7 @@
 <meta name="description" content="本章介绍一些人工神经网络开发的技术，下面列出本章节会使用的一些依赖库。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,23 +69,23 @@
 <p>本章介绍一些人工神经网络开发的技术，下面列出本章节会使用的一些依赖库。</p>
 <h3 id="numpy">numpy</h3>
 <p>numpy是著名的Python数值计算库，许多的数据计算操作都依赖它实现。使用pip就能完成下载安装，命令如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install numpy
-</code></pre></div><h3 id="matplotlib">matplotlib</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install numpy
+</span></span></code></pre></div><h3 id="matplotlib">matplotlib</h3>
 <p>常用的Python绘图工具，方便进行数据可视化工作。pip的安装指令如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install matplotlib
-</code></pre></div><h3 id="pillow">Pillow</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install matplotlib
+</span></span></code></pre></div><h3 id="pillow">Pillow</h3>
 <p>Pillow是Python编程语言中免费、开源的第三方图像处理库，支持对许多不同图像文件格式的打开、编辑和保存等操作。</p>
 <p>Pillow的pip安装指令如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install Pillow
-</code></pre></div><h3 id="pytorch">PyTorch</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install Pillow
+</span></span></code></pre></div><h3 id="pytorch">PyTorch</h3>
 <p>PyTorch是一个源自Torch库的开源机器学习框架，用于计算机视觉和自然语言处理等应用程序的开发。</p>
 <p>PyTorch在linux下的cpu版本安装方式:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
-</code></pre></div><p>PyTorch在windows下的cpu版本安装方式:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip3 install torch torchvision
-</code></pre></div><p>PyTorch在mac下的cpu版本安装方式:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip3 install torch torchvision
-</code></pre></div><p>如果你想安装其它版本的PytTorch可以参看官方网站给出的建议:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+</span></span></code></pre></div><p>PyTorch在windows下的cpu版本安装方式:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install torch torchvision
+</span></span></code></pre></div><p>PyTorch在mac下的cpu版本安装方式:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip3 install torch torchvision
+</span></span></code></pre></div><p>如果你想安装其它版本的PytTorch可以参看官方网站给出的建议:</p>
 <p><a href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
 <p><a href="/post/063-logistic-regression/">下篇 人工神经网络・逻辑回归</a></p>
 
@@ -106,7 +106,7 @@
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

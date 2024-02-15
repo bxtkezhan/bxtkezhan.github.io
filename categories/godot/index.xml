@@ -1,1 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Godot on bxtkezhan@kk</title><link>https://bxtkezhan.github.io/categories/godot/</link><description>Recent content in Godot on bxtkezhan@kk</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 23 Apr 2023 23:18:36 +0800</lastBuildDate><atom:link href="https://bxtkezhan.github.io/categories/godot/index.xml" rel="self" type="application/rss+xml"/><item><title>Godot开发・3D动作</title><link>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%913d%E5%8A%A8%E4%BD%9C/</link><pubDate>Sun, 23 Apr 2023 23:18:36 +0800</pubDate><guid>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%913d%E5%8A%A8%E4%BD%9C/</guid><description>今天我们来学习使用Godot 3D模式下的物体运动操作，我们主要会使用到RigidBody3D「刚体」, StaticBody3D「静态」, Camera3D「相机」, DirectionalLight3D「定向光源」这四个节点。当然，除了这几个主要的节点，我们还会使用到处理碰撞检测的CollisionShape3D节点，Godot预置的3D模型，立方体CSGBox3D节点与圆柱体CSGCylinder3D节点。</description></item><item><title>Godot开发・节点与场景</title><link>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E8%8A%82%E7%82%B9%E4%B8%8E%E5%9C%BA%E6%99%AF/</link><pubDate>Tue, 04 Apr 2023 21:37:27 +0800</pubDate><guid>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E8%8A%82%E7%82%B9%E4%B8%8E%E5%9C%BA%E6%99%AF/</guid><description>在使用Godot开发项目时，我们会用到节点「Node」来构建和处理我们需要的场景、角色、灯光、相机、播放器等物件。另外，我们可以在不同场景「Scene」中布置不同的节点结构来实现不同的游戏场景。</description></item><item><title>Godot开发・安装Godot4</title><link>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E5%AE%89%E8%A3%85godot4/</link><pubDate>Wed, 29 Mar 2023 22:47:50 +0800</pubDate><guid>https://bxtkezhan.github.io/godot%E5%BC%80%E5%8F%91%E5%AE%89%E8%A3%85godot4/</guid><description>前不久我在浏览几个游戏开发引擎的时候发现了这些支持3D游戏开发的引擎除了有提供游戏开发功能外还专门标识了可以用于工业仿真，例如：机械臂、车间流水线。正好我其实也对这些东西比较感兴趣，所以我决定尝试使用Godot游戏引擎来实现一个机械仿真工具，便于我之后研究自己的3D打印机、CNC、机械臂。</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Godot on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.github.io/categories/godot/</link>
+    <description>Recent content in Godot on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 23 Apr 2023 23:18:36 +0800</lastBuildDate>
+    <atom:link href="http://bxtkezhan.github.io/categories/godot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot开发・3D动作</title>
+      <link>http://bxtkezhan.github.io/post/078-godot-3d-action/</link>
+      <pubDate>Sun, 23 Apr 2023 23:18:36 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/078-godot-3d-action/</guid>
+      <description>今天我们来学习使用Godot 3D模式下的物体运动操作，我们主要会使用到RigidBody3D「刚体」, StaticBody3D「静态」, Camera3D「相机」, DirectionalLight3D「定向光源」这四个节点。当然，除了这几个主要的节点，我们还会使用到处理碰撞检测的CollisionShape3D节点，Godot预置的3D模型，立方体CSGBox3D节点与圆柱体CSGCylinder3D节点。</description>
+    </item>
+    <item>
+      <title>Godot开发・节点与场景</title>
+      <link>http://bxtkezhan.github.io/post/077-godot-node-and-scenes/</link>
+      <pubDate>Tue, 04 Apr 2023 21:37:27 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/077-godot-node-and-scenes/</guid>
+      <description>在使用Godot开发项目时，我们会用到节点「Node」来构建和处理我们需要的场景、角色、灯光、相机、播放器等物件。另外，我们可以在不同场景「Scene」中布置不同的节点结构来实现不同的游戏场景。</description>
+    </item>
+    <item>
+      <title>Godot开发・安装Godot4</title>
+      <link>http://bxtkezhan.github.io/post/076-install-godot4/</link>
+      <pubDate>Wed, 29 Mar 2023 22:47:50 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/076-install-godot4/</guid>
+      <description>前不久我在浏览几个游戏开发引擎的时候发现了这些支持3D游戏开发的引擎除了有提供游戏开发功能外还专门标识了可以用于工业仿真，例如：机械臂、车间流水线。正好我其实也对这些东西比较感兴趣，所以我决定尝试使用Godot游戏引擎来实现一个机械仿真工具，便于我之后研究自己的3D打印机、CNC、机械臂。</description>
+    </item>
+  </channel>
+</rss>

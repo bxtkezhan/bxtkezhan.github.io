@@ -5,7 +5,7 @@
 <meta name="description" content="利用递归向下算法结合我们的`BKLexer`实现支持四则运算与括号优先级的计算器程序。">
 <meta name="keywords" content="词法分析,语法分析,计算器,LL分析器,编程,编译原理,golang">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,157 +69,157 @@
 <p>利用递归向下算法结合我们的<code>BKLexer</code>实现支持四则运算与括号优先级的计算器程序。</p>
 <p><a href="-"></a></p>
 <p>代码清单【Golang】</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;fmt&#34;</span>
-    <span style="color:#e6db74">&#34;os&#34;</span>
-    <span style="color:#e6db74">&#34;bufio&#34;</span>
-    <span style="color:#e6db74">&#34;strings&#34;</span>
-    <span style="color:#e6db74">&#34;strconv&#34;</span>
-    <span style="color:#e6db74">&#34;./bklexer&#34;</span>
-)
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span>
-}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Number</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">float64</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span> {
-    <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseFloat</span>(<span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Number</span>{<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>}
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">number</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>.<span style="color:#a6e22e">value</span>
-}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BinaryOpt</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">opt</span> <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>
-    <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BinaryOpt</span>{<span style="color:#a6e22e">opt</span>: <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">lhs</span>: <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>: <span style="color:#a6e22e">rhs</span>}
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">binaryOpt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
-    <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">rhs</span>
-    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">opt</span> {
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;+&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;-&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;*&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">*</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;/&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">/</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;+&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> {
-        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
-        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;/&#34;</span> {
-        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
-        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;LPAR&#34;</span> {
-        <span style="color:#a6e22e">expr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">expr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;RPAR&#34;</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">expr</span>
-    }
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NUMBER&#34;</span> {
-        <span style="color:#a6e22e">number</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span>)
-        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello My Calc.&#34;</span>)
-
-    <span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;MINUS&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\*&#34;</span>, <span style="color:#e6db74">&#34;MUL&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\(&#34;</span>, <span style="color:#e6db74">&#34;LPAR&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\)&#34;</span>, <span style="color:#e6db74">&#34;RPAR&#34;</span>)
-    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;[ \\f\\t]+&#34;</span>)
-
-    <span style="color:#a6e22e">reader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>)
-    <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">true</span> {
-        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;&gt; &#34;</span>)
-        <span style="color:#a6e22e">inputs</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">ReadString</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
-        <span style="color:#a6e22e">inputs</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Trim</span>(<span style="color:#a6e22e">inputs</span>, <span style="color:#e6db74">&#34; \f\t\n&#34;</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;quit&#34;</span> {
-            <span style="color:#66d9ef">break</span>
-        }
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
-            <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">Build</span>(<span style="color:#a6e22e">inputs</span>)
-            <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span>)
-            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-                <span style="color:#a6e22e">positon</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>().<span style="color:#a6e22e">Col</span>
-                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;error in :&#34;</span>, <span style="color:#a6e22e">positon</span>)
-                <span style="color:#66d9ef">continue</span>
-            }
-            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;out =&#34;</span>, <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">GetValue</span>())
-        }
-
-    }
-
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;bye!&#34;</span>)
-}
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;./bklexer&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Number</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">float64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseFloat</span>(<span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Number</span>{<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">number</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>.<span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BinaryOpt</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">opt</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BinaryOpt</span>{<span style="color:#a6e22e">opt</span>: <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">lhs</span>: <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>: <span style="color:#a6e22e">rhs</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">binaryOpt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">rhs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">opt</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;+&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;-&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;*&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">*</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;/&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">/</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;+&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;/&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;LPAR&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">expr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">expr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;RPAR&#34;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">expr</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NUMBER&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">number</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello My Calc.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;MINUS&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\*&#34;</span>, <span style="color:#e6db74">&#34;MUL&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\(&#34;</span>, <span style="color:#e6db74">&#34;LPAR&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\)&#34;</span>, <span style="color:#e6db74">&#34;RPAR&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;[ \\f\\t]+&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">true</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;&gt; &#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">inputs</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">ReadString</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">inputs</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Trim</span>(<span style="color:#a6e22e">inputs</span>, <span style="color:#e6db74">&#34; \f\t\n&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;quit&#34;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">Build</span>(<span style="color:#a6e22e">inputs</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">positon</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>().<span style="color:#a6e22e">Col</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;error in :&#34;</span>, <span style="color:#a6e22e">positon</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;out =&#34;</span>, <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">GetValue</span>())
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;bye!&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="-"></a></p>
 <h4 id="运行测试">运行测试</h4>
 <pre tabindex="0"><code>➜ go calc.go 
 
@@ -230,15 +230,15 @@ out = 0.19999999999999996
 bye!
 </code></pre><p><a href="-"></a></p>
 <h4 id="引入需要的包">引入需要的包</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;fmt&#34;</span>
-    <span style="color:#e6db74">&#34;os&#34;</span>
-    <span style="color:#e6db74">&#34;bufio&#34;</span>
-    <span style="color:#e6db74">&#34;strings&#34;</span>
-    <span style="color:#e6db74">&#34;strconv&#34;</span>
-    <span style="color:#e6db74">&#34;./bklexer&#34;</span>
-)
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;./bklexer&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><ul>
 <li>fmt 打印输出</li>
 <li>os + bufio 读取用户输入</li>
 <li>strings 处理字符串</li>
@@ -247,161 +247,161 @@ bye!
 </ul>
 <p><a href="-"></a></p>
 <h4 id="定义接口">定义接口</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span>
-}
-</code></pre></div><p><code>Node</code>作为接口将用于指向其它的结构，其<code>GetValue</code>方法可以获得节点的数值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Node</code>作为接口将用于指向其它的结构，其<code>GetValue</code>方法可以获得节点的数值。</p>
 <p><a href="-"></a></p>
 <h4 id="定义数字节点">定义数字节点</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Number</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">float64</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span> {
-    <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseFloat</span>(<span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#ae81ff">64</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Number</span>{<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>}
-}
-</code></pre></div><p><code>Number</code>作为数字类型的节点，有成员<code>value</code>用于存储数值，使用<code>NewNumber</code>函数可以实例它。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Number</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">float64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseFloat</span>(<span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Number</span>{<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Number</code>作为数字类型的节点，有成员<code>value</code>用于存储数值，使用<code>NewNumber</code>函数可以实例它。</p>
 <p><a href="-"></a></p>
 <h4 id="实现数字节点的接口方法">实现数字节点的接口方法</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">number</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>.<span style="color:#a6e22e">value</span>
-}
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">number</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Number</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>.<span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="-"></a></p>
 <h4 id="定义运算操作节点">定义运算操作节点</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BinaryOpt</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">opt</span> <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>
-    <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BinaryOpt</span>{<span style="color:#a6e22e">opt</span>: <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">lhs</span>: <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>: <span style="color:#a6e22e">rhs</span>}
-}
-</code></pre></div><p><code>BinaryOpt</code>作为运算操作节点，成员<code>opt</code>记录运算符号，<code>lhs</code>、<code>rhs</code>分别为表达式左、右两边的内容，如1+2中的1与2。使用<code>NewBinaryOpt</code>函数实例它。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BinaryOpt</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">opt</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Token</span>, <span style="color:#a6e22e">lhs</span> <span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#a6e22e">Node</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">BinaryOpt</span>{<span style="color:#a6e22e">opt</span>: <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">lhs</span>: <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>: <span style="color:#a6e22e">rhs</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>BinaryOpt</code>作为运算操作节点，成员<code>opt</code>记录运算符号，<code>lhs</code>、<code>rhs</code>分别为表达式左、右两边的内容，如1+2中的1与2。使用<code>NewBinaryOpt</code>函数实例它。</p>
 <p><a href="-"></a></p>
 <h4 id="实现运算节点的接口方法">实现运算节点的接口方法</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">binaryOpt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
-    <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">rhs</span>
-    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">opt</span> {
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;+&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;-&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;*&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">*</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;/&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">/</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>我们需要根据运算操作符号<code>opt</code>判断<code>lhs</code>与<code>rhs</code>的值究竟以怎样的方式进行计算。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">binaryOpt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BinaryOpt</span>) <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">float64</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">rhs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">binaryOpt</span>.<span style="color:#a6e22e">opt</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;+&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;-&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">-</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;*&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">*</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;/&#34;</span>: <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>.<span style="color:#a6e22e">GetValue</span>() <span style="color:#f92672">/</span> <span style="color:#a6e22e">rhs</span>.<span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们需要根据运算操作符号<code>opt</code>判断<code>lhs</code>与<code>rhs</code>的值究竟以怎样的方式进行计算。</p>
 <p><a href="-"></a></p>
 <h4 id="定义语法解析的入口函数">定义语法解析的入口函数</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
-}
-</code></pre></div><p>入口函数<code>parse</code>接收到<code>*BKLexer.Lexer</code>类型的参数后，立即将其发送到<code>parse_binary_add</code>中，尝试解析运算等级与加法操作相同的运算操作。最后判断当前<code>token</code>是否为结尾，若不是则返回<code>nil</code>否则返回解析结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">TType</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">TOKEN_TYPE_EOF</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>入口函数<code>parse</code>接收到<code>*BKLexer.Lexer</code>类型的参数后，立即将其发送到<code>parse_binary_add</code>中，尝试解析运算等级与加法操作相同的运算操作。最后判断当前<code>token</code>是否为结尾，若不是则返回<code>nil</code>否则返回解析结果。</p>
 <p><a href="-"></a></p>
 <h4 id="定义加法等级运算操作的解析函数">定义加法等级运算操作的解析函数</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;+&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> {
-        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
-        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
-}
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;+&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="-"></a></p>
 <p>当函数接收到参数<code>lexer</code>并运行时会先尝试解析乘法等级的运算操作，如果解析完毕并成功返回则判断当前<code>token</code>的字面量决定是否需要构建加法等级运算节点，如果需要则尝试进行另一个乘法等级的运算操作解析，解析成功则根据<code>opt</code>构建当前运算等级的节点对象。</p>
 <p><a href="-"></a></p>
 <h4 id="定义乘法等级运算操作的解析函数">定义乘法等级运算操作的解析函数</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-    }
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;/&#34;</span> {
-        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
-        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
-}
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_binary_mul</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Source</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;/&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rhs</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lhs</span> = <span style="color:#a6e22e">NewBinaryOpt</span>(<span style="color:#a6e22e">token</span>, <span style="color:#a6e22e">lhs</span>, <span style="color:#a6e22e">rhs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> = <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">lhs</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="-"></a></p>
 <p><code>parse_binary_mul</code>基本和<code>parse_binary_add</code>一样，只是在运行开始是尝试解析数字或括号表达式的内容，在判断需要构建乘法等级运算节点的时候也是尝试解析另一个数字或括号表达式的内容。</p>
 <p><a href="-"></a></p>
 <h4 id="定义数字与括号表达式的解析函数">定义数字与括号表达式的解析函数</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
-    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;LPAR&#34;</span> {
-        <span style="color:#a6e22e">expr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">expr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;RPAR&#34;</span> {
-            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-        }
-        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">expr</span>
-    }
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NUMBER&#34;</span> {
-        <span style="color:#a6e22e">number</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span>)
-        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>
-    }
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">parse_number</span>(<span style="color:#a6e22e">lexer</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">Lexer</span>) <span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;LPAR&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">expr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse_binary_add</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">expr</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">token</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;RPAR&#34;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">expr</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">token</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;NUMBER&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">number</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewNumber</span>(<span style="color:#a6e22e">token</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">NextToken</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">number</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="-"></a></p>
 <p>首先取得下一个<code>token</code>，判断是否是左括号，如果是则可能为括号表达式，需要尝试进行解析，如果解析成功还需要判断结尾是否为右括号，全部成功则返回解析的表达式节点，否则返回<code>nil</code>。若一开始的<code>token</code>不是左括号而是数字则实例一个数字节点并返回。若既不是左括号又不是数字则返回<code>nil</code>。</p>
 <p><a href="-"></a></p>
 <h4 id="定义词法分析器规则">定义词法分析器规则</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;MINUS&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\*&#34;</span>, <span style="color:#e6db74">&#34;MUL&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\(&#34;</span>, <span style="color:#e6db74">&#34;LPAR&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\)&#34;</span>, <span style="color:#e6db74">&#34;RPAR&#34;</span>)
-<span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;[ \\f\\t]+&#34;</span>)
-</code></pre></div><p><a href="-"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BKLexer</span>.<span style="color:#a6e22e">NewLexer</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\d+\\.?\\d*&#34;</span>, <span style="color:#e6db74">&#34;NUMBER&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\+&#34;</span>, <span style="color:#e6db74">&#34;PLUS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;-&#34;</span>, <span style="color:#e6db74">&#34;MINUS&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\*&#34;</span>, <span style="color:#e6db74">&#34;MUL&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\(&#34;</span>, <span style="color:#e6db74">&#34;LPAR&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddRule</span>(<span style="color:#e6db74">&#34;\\)&#34;</span>, <span style="color:#e6db74">&#34;RPAR&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">AddIgnores</span>(<span style="color:#e6db74">&#34;[ \\f\\t]+&#34;</span>)
+</span></span></code></pre></div><p><a href="-"></a></p>
 <h4 id="循环读取用户输入并解析计算">循环读取用户输入并解析计算</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">reader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>)
-<span style="color:#66d9ef">for</span> <span style="color:#66d9ef">true</span> {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;&gt; &#34;</span>)
-    <span style="color:#a6e22e">inputs</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">ReadString</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
-    <span style="color:#a6e22e">inputs</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Trim</span>(<span style="color:#a6e22e">inputs</span>, <span style="color:#e6db74">&#34; \f\t\n&#34;</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;quit&#34;</span> {
-        <span style="color:#66d9ef">break</span>
-    }
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
-        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">Build</span>(<span style="color:#a6e22e">inputs</span>)
-        <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span>)
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-            <span style="color:#a6e22e">positon</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>().<span style="color:#a6e22e">Col</span>
-            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;error in :&#34;</span>, <span style="color:#a6e22e">positon</span>)
-            <span style="color:#66d9ef">continue</span>
-        }
-        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;out =&#34;</span>, <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">GetValue</span>())
-    }
-}
-<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;bye!&#34;</span>)
-</code></pre></div><p>当解析函数<code>parse</code>返回的内容不是<code>nil</code>时可以使用<code>GetValue</code>函数计算表达式并得到结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">reader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#66d9ef">true</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;&gt; &#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">inputs</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">ReadString</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">inputs</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Trim</span>(<span style="color:#a6e22e">inputs</span>, <span style="color:#e6db74">&#34; \f\t\n&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;quit&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">Build</span>(<span style="color:#a6e22e">inputs</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">lexer</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">positon</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lexer</span>.<span style="color:#a6e22e">GetToken</span>().<span style="color:#a6e22e">Col</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;error in :&#34;</span>, <span style="color:#a6e22e">positon</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;out =&#34;</span>, <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">GetValue</span>())
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;bye!&#34;</span>)
+</span></span></code></pre></div><p>当解析函数<code>parse</code>返回的内容不是<code>nil</code>时可以使用<code>GetValue</code>函数计算表达式并得到结果。</p>
 <p><a href="/post/004-block/">下篇 使计算器支持语句块</a></p>
 
   </section>
@@ -421,7 +421,7 @@ bye!
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

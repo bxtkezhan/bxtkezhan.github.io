@@ -5,7 +5,7 @@
 <meta name="description" content="维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。">
 <meta name="keywords" content="python,port,scanner,端口扫描,port,scanner,网络安全,测试">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,15 +69,15 @@
 <p>维基百科: 端口扫描工具（Port Scanner）指用于探测服务器或主机开放端口情况的工具。常被计算机管理员用于确认安全策略，同时被攻击者用于识别目标主机上的可运作的网络服务。端口扫描定义是客户端向一定范围的服务器端口发送对应请求，以此确认可使用的端口。虽然其本身并不是恶意的网络活动，但也是网络攻击者探测目标主机服务，以利用该服务的已知漏洞的重要手段。端口扫描的主要用途仍然只是确认远程机器某个服务的可用性。</p>
 <h3 id="tcp连接测试">TCP连接测试</h3>
 <p>在实现TCP通讯的时候，我们知道可以在客户端socket中输入主机名和端口号码来连接服务器。同样的，我们也可以使用这种方法来尝试连接一定范围的服务器端口:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
-
-ports <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10000</span>)
-<span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
-    s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
-    s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((<span style="color:#e6db74">&#39;localhost&#39;</span>, port)):
-        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Opened Port: </span><span style="color:#e6db74">{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><p>我们扫描10到10000「不包含10000」的端口，使用<code>s.connect_ex</code>进行连接，如果连接成功则返回0。通过<code>if not</code>进行判别并输出主机<code>localhost</code>开放的端口，其中主机名称<code>localhost</code>可以替换成其他主机的名称或者IP地址。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> socket <span style="color:#f92672">import</span> socket, AF_INET, SOCK_STREAM
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ports <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> port <span style="color:#f92672">in</span> ports:
+</span></span><span style="display:flex;"><span>    s <span style="color:#f92672">=</span> socket(AF_INET, SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> s<span style="color:#f92672">.</span>connect_ex((<span style="color:#e6db74">&#39;localhost&#39;</span>, port)):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Opened Port: </span><span style="color:#e6db74">{</span>port<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><p>我们扫描10到10000「不包含10000」的端口，使用<code>s.connect_ex</code>进行连接，如果连接成功则返回0。通过<code>if not</code>进行判别并输出主机<code>localhost</code>开放的端口，其中主机名称<code>localhost</code>可以替换成其他主机的名称或者IP地址。</p>
 <p><a href="/post/035-port-scan-concurrent/">下篇 网络篇・并发端口扫描</a></p>
 
   </section>
@@ -97,7 +97,7 @@ ports <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">10<
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

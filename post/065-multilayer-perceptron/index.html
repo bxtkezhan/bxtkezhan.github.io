@@ -5,7 +5,7 @@
 <meta name="description" content="之前我们都是采用手工构造的数据来进行学习，这一次我们将处理一个真实场景的问题——手写数字识别。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -73,14 +73,14 @@
 <p><img src="/img/mnist_show.png" alt="mnist_show.png"></p>
 <p>这个问题要求我们的模型能够接收一个图像作为输入然后输出该图像是0-9中的哪一个数字，显然这是一个多分类问题，我们可以使用softmax。</p>
 <h3 id="引入所需的库">引入所需的库</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
-<span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-<span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
-<span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
-<span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+</span></span></code></pre></div><ul>
 <li><code>torch.nn</code>包含大量PyTorch中神经网络相关的类；</li>
 <li><code>MNIST</code>是torchvision提供的MNIST数据工具，可以帮助我们下载管理MNIST数据；</li>
 <li><code>ToTensor</code>是torchvision提供的数据转换器，可以将图像转换为PyTorch的张量对象；</li>
@@ -88,36 +88,36 @@ torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff"
 </ul>
 <h3 id="载入数据集">载入数据集</h3>
 <p>我们需要创建训练集与数据集:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-</code></pre></div><p><code>MNIST</code>的第一个参数是数据集下载后存放的路径；参数<code>train</code>为真则载入训练集，若为假则载入测试集；参数<code>download</code>为真则会从网络进行下载，反之则不下载；参数<code>transform</code>可以指定一个数据转换器应，我们设置为<code>ToTensor()</code>，这可以为我们将图像转换为张量对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+</span></span><span style="display:flex;"><span>test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+</span></span></code></pre></div><p><code>MNIST</code>的第一个参数是数据集下载后存放的路径；参数<code>train</code>为真则载入训练集，若为假则载入测试集；参数<code>download</code>为真则会从网络进行下载，反之则不下载；参数<code>transform</code>可以指定一个数据转换器应，我们设置为<code>ToTensor()</code>，这可以为我们将图像转换为张量对象。</p>
 <p>可以使用索引的方法取出数据集中的数据，例如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data, label <span style="color:#f92672">=</span> train_set[<span style="color:#ae81ff">0</span>]
-</code></pre></div><p><code>tain_set[0]</code>取出第0份数据集中的数据，包括一张图像的张量data，以及该图像的标识label。其中张量data的元素值在0到1之间，label为一个标量数字「对应图像所显示的数字」。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>data, label <span style="color:#f92672">=</span> train_set[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><p><code>tain_set[0]</code>取出第0份数据集中的数据，包括一张图像的张量data，以及该图像的标识label。其中张量data的元素值在0到1之间，label为一个标量数字「对应图像所显示的数字」。</p>
 <h3 id="构造数据加载器">构造数据加载器</h3>
 <p>我们需要对训练集与测试集分别构造数据加载器:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</code></pre></div><p><code>DataLoader</code>的第一个参数指向我们的数据集；参数设置<code>batch_size=128</code>表示每次对Dataloader进行迭代它会取128份数据；参数<code>shuffle</code>设置为真则会对数据集顺序进行打乱，反之则不会打乱顺序。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><p><code>DataLoader</code>的第一个参数指向我们的数据集；参数设置<code>batch_size=128</code>表示每次对Dataloader进行迭代它会取128份数据；参数<code>shuffle</code>设置为真则会对数据集顺序进行打乱，反之则不会打乱顺序。</p>
 <p>我们可以在for循环中用数据加载器迭代取出数据集中的数据:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> inputs, targets <span style="color:#f92672">in</span> train_loader:
-	<span style="color:#f92672">...</span>
-</code></pre></div><p>上述代码中<code>inputs</code>为128张图像的张量所组成的张量对象，我们将其作为模型的输入；<code>targets</code>为128个数字标量所组成的张量对象，我们将其作为损失函数的一个参数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> inputs, targets <span style="color:#f92672">in</span> train_loader:
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>上述代码中<code>inputs</code>为128张图像的张量所组成的张量对象，我们将其作为模型的输入；<code>targets</code>为128个数字标量所组成的张量对象，我们将其作为损失函数的一个参数。</p>
 <h3 id="构建多层感知器模型">构建多层感知器模型</h3>
 <p>我们使用<code>torch.nn</code>提供的神经网络工具进行模型的构建，这样可以极大的方便模型构建的工作:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-    nn<span style="color:#f92672">.</span>Flatten(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
-    nn<span style="color:#f92672">.</span>Sigmoid(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
-    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</code></pre></div><p><code>nn.Sequential</code>可以产生一个序列结构的模型，我们将其命名为<code>mlp</code>——多层感知器。在<code>mlp</code>中有如下被叫做神经网络层的元素:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nn<span style="color:#f92672">.</span>Flatten(),
-nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">784</span>, <span style="color:#ae81ff">256</span>),
-nn<span style="color:#f92672">.</span>Sigmoid(),
-nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
-nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</code></pre></div><p>数据在进入<code>mlp</code>模型后会按顺序经过这些层的处理并最后进行输出。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Sigmoid(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span></code></pre></div><p><code>nn.Sequential</code>可以产生一个序列结构的模型，我们将其命名为<code>mlp</code>——多层感知器。在<code>mlp</code>中有如下被叫做神经网络层的元素:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Flatten(),
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">784</span>, <span style="color:#ae81ff">256</span>),
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Sigmoid(),
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>数据在进入<code>mlp</code>模型后会按顺序经过这些层的处理并最后进行输出。</p>
 <p>数据首先经过的是<code>nn.Flatten()</code>层，最后经过<code>nn.Softmax(dim=1)</code>层进行输出。</p>
 <ol>
 <li><code>nn.Flatten()</code>将图像张量进行拉平操作，使得模型的输入编程一个nx784的张量，n为图像数量，784为每一个图像的像素数量；</li>
@@ -128,59 +128,59 @@ nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</
 </ol>
 <p>由于存在一个以上的<code>nn.Linear</code>与激活函数的组合，因此该结构可以被叫做多层感知器。</p>
 <p>该序列模型接收参数并输出的方式很简单:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">outputs <span style="color:#f92672">=</span> mlp(inputs)
-</code></pre></div><h3 id="设定优化器">设定优化器</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span></code></pre></div><h3 id="设定优化器">设定优化器</h3>
 <p>由于我们并没有像之前那样显式的定义线性变换层的权重W以及偏置b，因此，为了方便，我们直接使用PyTorch提供的优化器组建来处理权重与偏置的更新任务:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(mlp<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
-</code></pre></div><p><code>torch.optim.Adam</code>是一种常见的优化器。该优化器的第一个参数指向模型所有需要更新优化的权重与偏置，我们使用<code>mlp.parameters()</code>获取它们；参数<code>lr</code>为学习率，这里我们设置为<code>0.001</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(mlp<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
+</span></span></code></pre></div><p><code>torch.optim.Adam</code>是一种常见的优化器。该优化器的第一个参数指向模型所有需要更新优化的权重与偏置，我们使用<code>mlp.parameters()</code>获取它们；参数<code>lr</code>为学习率，这里我们设置为<code>0.001</code>。</p>
 <h3 id="训练并测试模型">训练并测试模型</h3>
 <p>我们需要在for循环中进行模型的训练与测试:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
-    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
-        outputs <span style="color:#f92672">=</span> mlp(inputs)
-        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-        optimizer<span style="color:#f92672">.</span>zero_grad()
-        loss<span style="color:#f92672">.</span>backward()
-        optimizer<span style="color:#f92672">.</span>step()
-
-        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
-            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-
-    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
-    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
-    losses <span style="color:#f92672">=</span> []
-    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
-            outputs <span style="color:#f92672">=</span> mlp(inputs)
-            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
-    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
-    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
-    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><p>首先我们看到训练部分:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
-<span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
-	outputs <span style="color:#f92672">=</span> mlp(inputs)
-	loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-	optimizer<span style="color:#f92672">.</span>zero_grad()
-	loss<span style="color:#f92672">.</span>backward()
-	optimizer<span style="color:#f92672">.</span>step()
-
-	<span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-		<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-			compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-			accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
-		print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+</span></span><span style="display:flex;"><span>    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
+</span></span><span style="display:flex;"><span>    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>    losses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
+</span></span><span style="display:flex;"><span>            outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
+</span></span><span style="display:flex;"><span>    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><p>首先我们看到训练部分:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+</span></span><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
+</span></span><span style="display:flex;"><span>	outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>	loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>	optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>	loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>	optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>			compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>			accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>		print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><ul>
 <li>我们在每一轮训练开始前将模型设置为训练模式: <code>mlp = mlp.train()</code>；</li>
 <li>运行代码<code>outputs = mlp(inputs)</code>进行正向传播；</li>
 <li>使用交叉熵损失评估函数<code>F.cross_entropy</code>计算损失率；</li>
@@ -188,21 +188,21 @@ mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>
 <li>我们每隔100步打印输出一下损失率<code>loss</code>以及准确率<code>accuracy</code>。</li>
 </ul>
 <p>接下来我们看到测试部分:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
-mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
-losses <span style="color:#f92672">=</span> []
-count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-	<span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
-		outputs <span style="color:#f92672">=</span> mlp(inputs)
-		loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-		losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-		compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-		count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
-loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
-accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
-print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
+</span></span><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>losses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
+</span></span><span style="display:flex;"><span>		outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>		loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>		losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>		compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>		count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
+</span></span><span style="display:flex;"><span>accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><ul>
 <li>我们先将模型转变为推理模式: <code>mlp = mlp.eval()</code>；</li>
 <li>由于整个测试过程我们都不进行梯度计算，所以整个测试过程都可以放在<code>with torch.no_grad():</code>语句结构内进行；</li>
 <li>我们将每一次迭代中模型计算的损失率以及预测正确的图像数量分别存储到<code>losses</code>与<code>count</code>；</li>
@@ -210,75 +210,75 @@ print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=
 </ul>
 <p>我们一共完成了10轮训练，其中每一轮训练都会完整的使用所有训练集训练模型一次，并使用完整的测试集测试模型一次。</p>
 <p>通过10轮的训练，我们的模型在测试集上的表现如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">testing<span style="color:#f92672">...</span>
-loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4986492108695115</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9661</span>
-</code></pre></div><p>其中损失率<code>loss</code>为1.49865左右，准确率达到96.61%。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>testing<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4986492108695115</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9661</span>
+</span></span></code></pre></div><p>其中损失率<code>loss</code>为1.49865左右，准确率达到96.61%。</p>
 <h3 id="保存训练后的模型">保存训练后的模型</h3>
 <p>在完成所有的训练与测试任务后，我们就可以将模型保存到磁盘，以便在未来直接使用:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>save(mlp, <span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
-mlp <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
-print(mlp)
-</code></pre></div><p>使用函数<code>torch.save</code>保存模型为本地文件；使用函数<code>torch.load</code>加载本地磁盘中的模型文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>save(mlp, <span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
+</span></span><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
+</span></span><span style="display:flex;"><span>print(mlp)
+</span></span></code></pre></div><p>使用函数<code>torch.save</code>保存模型为本地文件；使用函数<code>torch.load</code>加载本地磁盘中的模型文件。</p>
 <h3 id="完整代码">完整代码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
-<span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-<span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
-<span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
-<span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
-
-
-train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-
-train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-
-mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-    nn<span style="color:#f92672">.</span>Flatten(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
-    nn<span style="color:#f92672">.</span>Sigmoid(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
-    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-
-optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(mlp<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
-
-<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>):
-    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
-    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
-        outputs <span style="color:#f92672">=</span> mlp(inputs)
-        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-        optimizer<span style="color:#f92672">.</span>zero_grad()
-        loss<span style="color:#f92672">.</span>backward()
-        optimizer<span style="color:#f92672">.</span>step()
-
-        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
-            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-
-    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
-    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
-    losses <span style="color:#f92672">=</span> []
-    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
-            outputs <span style="color:#f92672">=</span> mlp(inputs)
-            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
-    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
-    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
-    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-
-torch<span style="color:#f92672">.</span>save(mlp, <span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
-mlp <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
-print(mlp)
-</code></pre></div><p><a href="/post/066-relu/">下篇 人工神经网络・ReLU激活函数</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+</span></span><span style="display:flex;"><span>test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Sigmoid(),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(mlp<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+</span></span><span style="display:flex;"><span>    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>train()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
+</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
+</span></span><span style="display:flex;"><span>    mlp <span style="color:#f92672">=</span> mlp<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span>    losses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
+</span></span><span style="display:flex;"><span>            outputs <span style="color:#f92672">=</span> mlp(inputs)
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+</span></span><span style="display:flex;"><span>            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+</span></span><span style="display:flex;"><span>            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
+</span></span><span style="display:flex;"><span>    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>save(mlp, <span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
+</span></span><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;mlp.pt&#39;</span>)
+</span></span><span style="display:flex;"><span>print(mlp)
+</span></span></code></pre></div><p><a href="/post/066-relu/">下篇 人工神经网络・ReLU激活函数</a></p>
 
   </section>
 </article>
@@ -297,7 +297,7 @@ print(mlp)
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 

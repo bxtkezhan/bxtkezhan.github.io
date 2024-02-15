@@ -5,7 +5,7 @@
 <meta name="description" content="逻辑回归常用于处理二分类问题的，虽然也可以通过〚联合〛的方式处理多分类问题「有超过两个以上的类别」但这样比较麻烦。在处理多分类问题的时候我们可以使用softmax替代逻辑回归里的sigmoid激活函数，这样可以实现多分类操作。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.92.2" />
+<meta name="generator" content="Hugo 0.121.1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -107,133 +107,133 @@ y = \begin{bmatrix}0.09003057 &amp; 0.24472847 &amp; 0.66524096\end{bmatrix}
 $$</p>
 <p>y的每一个元素的值会落在0到1之间，并且将y的每一个元素值相加会得到数值1，因此softmax的输出常常用于代表各个类别的概率，例如当第一个元素的值为0.09003057时代表有9.003057%的可能性为第一个类别；第二个元素的值为0.24472847代表有24.472847%的可能性为第二个类别……以此类推。</p>
 <h3 id="引入所需的模块">引入所需的模块</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-<span style="color:#f92672">import</span> torch
-torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">7</span>)
-
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-</code></pre></div><p><code>torch.manual_seed(7)</code>将pytorch的随机生成器的种子固定在7，这样可以让每一次运行的结果相同。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span></code></pre></div><p><code>torch.manual_seed(7)</code>将pytorch的随机生成器的种子固定在7，这样可以让每一次运行的结果相同。</p>
 <p>由于我们需要绘制图像，所以除了引入pytorch我们还引入了matplotlib；<code>torch.nn.functional</code>包含pytorch中大量的神经网络相关的函数，我们将用到它。</p>
 <h3 id="构建输入输出">构建输入输出</h3>
 <p>我们随机产生一个10x5的矩阵X作为输入，它的每一行为一个数据点，共计10个数据点。</p>
 <p>除此之外，我们还创建了一个索引<code>index</code>，它的生成方法是: 将矩阵X与另一个5x3的随机矩阵相乘得到一个10x3的新矩阵，然后取这个新矩阵中每一行的最大值元素的下标。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(X <span style="color:#f92672">@</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-print(<span style="color:#e6db74">&#39;index:&#39;</span>)
-print(index)
-</code></pre></div><p>我们还需要使用one-hot函数将索引<code>index</code>进行转换，让它变成一个元素值为0或1的10x3矩阵，该矩阵的每一行只有一个1，并且第n行中值为1的元素的下标等于索引<code>index</code>第n行的元素值，即有: <code>T[n, index[n]]</code>的值为1:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">T <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(index, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32)
-print(<span style="color:#e6db74">&#39;one hot:&#39;</span>)
-print(T)
-</code></pre></div><h3 id="设置需要拟合的参数">设置需要拟合的参数</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(X <span style="color:#f92672">@</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;index:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(index)
+</span></span></code></pre></div><p>我们还需要使用one-hot函数将索引<code>index</code>进行转换，让它变成一个元素值为0或1的10x3矩阵，该矩阵的每一行只有一个1，并且第n行中值为1的元素的下标等于索引<code>index</code>第n行的元素值，即有: <code>T[n, index[n]]</code>的值为1:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>T <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(index, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;one hot:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(T)
+</span></span></code></pre></div><h3 id="设置需要拟合的参数">设置需要拟合的参数</h3>
 <p>由于我们的输出是个nx3的矩阵所以权重W的维度是5x3，偏置b的维度是3:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</code></pre></div><h3 id="正向传播">正向传播</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><h3 id="正向传播">正向传播</h3>
 <p>在一个for循环中执行正向传播代码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-losses <span style="color:#f92672">=</span> []
-print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(steps):
-    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W <span style="color:#f92672">+</span> b
-    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(A, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(P, T)
-
-    losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-    i <span style="color:#f92672">=</span> step <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;step: </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>steps<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>losses[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</code></pre></div><p><code>torch.softmax(A, dim=1)</code>调用softmax激活函数需要指定维度<code>dim=1</code>这是因为矩阵A的每一行对应一个数据点，我们需要单独给每一行进行softmax。由于使用的是softmax激活函数，因此我们的损失函数需要采用交叉熵损失函数即<code>F.cross_entropy</code>，该函数的第一个参数为softmax的输出，第二个参数为正确的分类标识。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>losses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(steps):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W <span style="color:#f92672">+</span> b
+</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(A, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(P, T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> step <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;step: </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>steps<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>losses[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><p><code>torch.softmax(A, dim=1)</code>调用softmax激活函数需要指定维度<code>dim=1</code>这是因为矩阵A的每一行对应一个数据点，我们需要单独给每一行进行softmax。由于使用的是softmax激活函数，因此我们的损失函数需要采用交叉熵损失函数即<code>F.cross_entropy</code>，该函数的第一个参数为softmax的输出，第二个参数为正确的分类标识。</p>
 <p>我们使用列表<code>losses</code>存储每一轮的损失值<code>loss.item()</code>，并每10个循环打印输出一次。</p>
 <h3 id="反向传播">反向传播</h3>
 <p>调用<code>loss.backward()</code>进行反向传播用以求解W与b的梯度，然后在不计算梯度的模式下进行更新:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss<span style="color:#f92672">.</span>backward()
-lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
-<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-	W <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> W<span style="color:#f92672">.</span>grad
-	b <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> b<span style="color:#f92672">.</span>grad
-	W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-	b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-</code></pre></div><h3 id="查看拟合效果">查看拟合效果</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>	W <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> W<span style="color:#f92672">.</span>grad
+</span></span><span style="display:flex;"><span>	b <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> b<span style="color:#f92672">.</span>grad
+</span></span><span style="display:flex;"><span>	W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+</span></span><span style="display:flex;"><span>	b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+</span></span></code></pre></div><h3 id="查看拟合效果">查看拟合效果</h3>
 <p>打印输出矩阵P，矩阵P的每一行的数值处于0到1之间，代表改行所对应的数据点在某个类别上的概率。例如: P的第0行的0个元素为0.2115则表示第0个数据点属于第0个类别的概率为21.15%，我们可以调用<code>torch.argmax(P, dim=1)</code>将矩阵P转换成类似<code>index</code>的索引向量:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;probabilities:&#39;</span>)
-print(P<span style="color:#f92672">.</span>detach())
-print(<span style="color:#e6db74">&#39;true:&#39;</span>, index)
-<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-    print(<span style="color:#e6db74">&#39;pred:&#39;</span>, torch<span style="color:#f92672">.</span>argmax(P, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">probabilities:
-tensor([[<span style="color:#ae81ff">0.2115</span>, <span style="color:#ae81ff">0.7491</span>, <span style="color:#ae81ff">0.0394</span>],
-        [<span style="color:#ae81ff">0.1779</span>, <span style="color:#ae81ff">0.0743</span>, <span style="color:#ae81ff">0.7478</span>],
-        [<span style="color:#ae81ff">0.2192</span>, <span style="color:#ae81ff">0.4239</span>, <span style="color:#ae81ff">0.3569</span>],
-        [<span style="color:#ae81ff">0.0591</span>, <span style="color:#ae81ff">0.0165</span>, <span style="color:#ae81ff">0.9244</span>],
-        [<span style="color:#ae81ff">0.0901</span>, <span style="color:#ae81ff">0.7963</span>, <span style="color:#ae81ff">0.1136</span>],
-        [<span style="color:#ae81ff">0.9610</span>, <span style="color:#ae81ff">0.0273</span>, <span style="color:#ae81ff">0.0117</span>],
-        [<span style="color:#ae81ff">0.7126</span>, <span style="color:#ae81ff">0.1436</span>, <span style="color:#ae81ff">0.1438</span>],
-        [<span style="color:#ae81ff">0.9565</span>, <span style="color:#ae81ff">0.0049</span>, <span style="color:#ae81ff">0.0386</span>],
-        [<span style="color:#ae81ff">0.9441</span>, <span style="color:#ae81ff">0.0457</span>, <span style="color:#ae81ff">0.0102</span>],
-        [<span style="color:#ae81ff">0.1677</span>, <span style="color:#ae81ff">0.4086</span>, <span style="color:#ae81ff">0.4237</span>]])
-true: tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>])
-pred: tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>])
-</code></pre></div><h3 id="绘制拟合过程中的损失率">绘制拟合过程中的损失率</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;probabilities:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(P<span style="color:#f92672">.</span>detach())
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;true:&#39;</span>, index)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;pred:&#39;</span>, torch<span style="color:#f92672">.</span>argmax(P, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span></code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>probabilities:
+</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0.2115</span>, <span style="color:#ae81ff">0.7491</span>, <span style="color:#ae81ff">0.0394</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.1779</span>, <span style="color:#ae81ff">0.0743</span>, <span style="color:#ae81ff">0.7478</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.2192</span>, <span style="color:#ae81ff">0.4239</span>, <span style="color:#ae81ff">0.3569</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.0591</span>, <span style="color:#ae81ff">0.0165</span>, <span style="color:#ae81ff">0.9244</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.0901</span>, <span style="color:#ae81ff">0.7963</span>, <span style="color:#ae81ff">0.1136</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.9610</span>, <span style="color:#ae81ff">0.0273</span>, <span style="color:#ae81ff">0.0117</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.7126</span>, <span style="color:#ae81ff">0.1436</span>, <span style="color:#ae81ff">0.1438</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.9565</span>, <span style="color:#ae81ff">0.0049</span>, <span style="color:#ae81ff">0.0386</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.9441</span>, <span style="color:#ae81ff">0.0457</span>, <span style="color:#ae81ff">0.0102</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.1677</span>, <span style="color:#ae81ff">0.4086</span>, <span style="color:#ae81ff">0.4237</span>]])
+</span></span><span style="display:flex;"><span>true: tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>pred: tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>])
+</span></span></code></pre></div><h3 id="绘制拟合过程中的损失率">绘制拟合过程中的损失率</h3>
 <p>最后我们还可以可视化一下拟合过程中损失率的变化:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Step&#39;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;CrossEntropyLoss&#39;</span>)
-plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
-plt<span style="color:#f92672">.</span>show()
-</code></pre></div><p><img src="/img/softmax_fit_loss.png" alt="softmax_fit_loss.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Step&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;CrossEntropyLoss&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="/img/softmax_fit_loss.png" alt="softmax_fit_loss.png"></p>
 <h3 id="完整代码">完整代码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-<span style="color:#f92672">import</span> torch
-torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">7</span>)
-
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-
-
-X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(X <span style="color:#f92672">@</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-print(<span style="color:#e6db74">&#39;index:&#39;</span>)
-print(index)
-
-T <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(index, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32)
-print(<span style="color:#e6db74">&#39;one hot:&#39;</span>)
-print(T)
-
-W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-
-steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-losses <span style="color:#f92672">=</span> []
-print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(steps):
-    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W <span style="color:#f92672">+</span> b
-    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(A, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(P, T)
-
-    losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-    i <span style="color:#f92672">=</span> step <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;step: </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>steps<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>losses[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-
-    loss<span style="color:#f92672">.</span>backward()
-    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
-    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-        W <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> W<span style="color:#f92672">.</span>grad
-        b <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> b<span style="color:#f92672">.</span>grad
-        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-
-print(<span style="color:#e6db74">&#39;probabilities:&#39;</span>)
-print(P<span style="color:#f92672">.</span>detach())
-print(<span style="color:#e6db74">&#39;true:&#39;</span>, index)
-<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-    print(<span style="color:#e6db74">&#39;pred:&#39;</span>, torch<span style="color:#f92672">.</span>argmax(P, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Step&#39;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;CrossEntropyLoss&#39;</span>)
-plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
-plt<span style="color:#f92672">.</span>show()
-</code></pre></div><p><a href="/post/065-multilayer-perceptron/">下篇 人工神经网络・多层感知器</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(X <span style="color:#f92672">@</span> torch<span style="color:#f92672">.</span>randn((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;index:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(index)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>one_hot(index, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;one hot:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>losses <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(steps):
+</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W <span style="color:#f92672">+</span> b
+</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>softmax(A, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(P, T)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> step <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;step: </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>steps<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>losses[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>        W <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> W<span style="color:#f92672">.</span>grad
+</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">-=</span> lr <span style="color:#f92672">*</span> b<span style="color:#f92672">.</span>grad
+</span></span><span style="display:flex;"><span>        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+</span></span><span style="display:flex;"><span>        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;probabilities:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(P<span style="color:#f92672">.</span>detach())
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;true:&#39;</span>, index)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;pred:&#39;</span>, torch<span style="color:#f92672">.</span>argmax(P, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Step&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;CrossEntropyLoss&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(range(len(losses)), losses, <span style="color:#e6db74">&#39;-&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><a href="/post/065-multilayer-perceptron/">下篇 人工神经网络・多层感知器</a></p>
 
   </section>
 </article>
@@ -252,7 +252,7 @@ plt<span style="color:#f92672">.</span>show()
     
   </div>
   <div class="container">
-    <span class="copyright">&copy; 2023 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 
