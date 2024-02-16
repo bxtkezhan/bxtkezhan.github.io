@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Quantum computing on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.github.io/categories/quantum-computing/</link>
+    <description>Recent content in Quantum computing on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 16 Feb 2024 13:19:50 +0800</lastBuildDate>
+    <atom:link href="http://bxtkezhan.github.io/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子比特&amp;量子门</title>
+      <link>http://bxtkezhan.github.io/post/086-qubits-quantum-gates/</link>
+      <pubDate>Fri, 16 Feb 2024 13:19:50 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/086-qubits-quantum-gates/</guid>
+      <description>量子计算是一个令人着迷的新兴领域，有望彻底改变我们处理信息的方式。它建立在量子力学原理的基础之上，而量子力学原理与我们日常经验中熟悉的经典物理学有很大不同。为了理解量子计算，了解构成其基础的两个关键概念至关重要：量子比特和量子门。</description>
+    </item>
+  </channel>
+</rss>

@@ -3,15 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://bxtkezhan.github.io/</loc>
-    <lastmod>2024-02-15T17:11:07+08:00</lastmod>
+    <lastmod>2024-02-16T13:19:50+08:00</lastmod>
   </url><url>
     <loc>http://bxtkezhan.github.io/categories/</loc>
-    <lastmod>2024-02-15T17:11:07+08:00</lastmod>
-  </url><url>
-    <loc>http://bxtkezhan.github.io/categories/go/</loc>
-    <lastmod>2024-02-15T17:11:07+08:00</lastmod>
+    <lastmod>2024-02-16T13:19:50+08:00</lastmod>
   </url><url>
     <loc>http://bxtkezhan.github.io/post/</loc>
+    <lastmod>2024-02-16T13:19:50+08:00</lastmod>
+  </url><url>
+    <loc>http://bxtkezhan.github.io/categories/quantum-computing/</loc>
+    <lastmod>2024-02-16T13:19:50+08:00</lastmod>
+  </url><url>
+    <loc>http://bxtkezhan.github.io/post/086-qubits-quantum-gates/</loc>
+    <lastmod>2024-02-16T13:19:50+08:00</lastmod>
+  </url><url>
+    <loc>http://bxtkezhan.github.io/categories/go/</loc>
     <lastmod>2024-02-15T17:11:07+08:00</lastmod>
   </url><url>
     <loc>http://bxtkezhan.github.io/post/085-go-fitz/</loc>
