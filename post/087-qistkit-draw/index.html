@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Qiskit 是一个开源量子计算框架，提供了广泛的工具来构建、模拟和优化量子电路。绘制量子电路对于可视化和理解量子算法至关重要。本教程将介绍使用 Qiskit 绘制量子电路的基础知识。">
+<meta name="keywords" content="qubit,guantum,gate,quantum,computing,quantum,circuit">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>Qistkit 绘制量子电路 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-02-17">February 17, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/quantum-computing">Quantum computing</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Qistkit 绘制量子电路</h1>
+  <section class="body" itemprop="articleBody">
+    <p>Qiskit 是一个开源量子计算框架，提供了广泛的工具来构建、模拟和优化量子电路。绘制量子电路对于可视化和理解量子算法至关重要。本教程将介绍使用 Qiskit 绘制量子电路的基础知识。</p>
+<h3 id="绘制量子门">绘制量子门</h3>
+<p>量子门是作用于量子比特的单一操作。要绘制量子门，请使用 <code>QuantumCircuit</code> 类的 <code>gate()</code> 方法。例如，要绘制 X 门，请执行以下操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>x(<span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><p>在这个代码段中：</p>
+<ul>
+<li><code>QuantumCircuit(2, 2)</code> 创建了一个拥有2个量子的位（qubits）和2个经典位（classical bits）的量子的电路。</li>
+<li>量子的位是表示量子的比特，它们可以处于 0 或 1 的状态，也可以处于 0 和 1 叠加的状态。</li>
+<li>经典位是表示确定性比特的比特，它们只能处于 0 或 1 的状态，可以用于存储测量结果。</li>
+</ul>
+<p>因此，<code>circuit</code> 拥有2个量子的位和2个经典位。</p>
+<p>以字符形式打印输出量子电路:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(circuit)
+</span></span></code></pre></div><p>输出结果：</p>
+<pre tabindex="0"><code>     ┌───┐┌─┐
+q_0: ┤ X ├┤M├
+     └┬─┬┘└╥┘
+q_1: ─┤M├──╫─
+      └╥┘  ║
+c: 2/══╩═══╩═
+       1   0
+</code></pre><h3 id="测量量子比特">测量量子比特</h3>
+<p>测量操作将量子比特从叠加态坍缩到经典态。要绘制测量，请使用 <code>measure()</code> 方法。例如，要测量量子比特 0 和 1，请执行以下操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>measure([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+</span></span></code></pre></div><h3 id="绘制电路">绘制电路</h3>
+<p>一旦构建了量子电路，就可以使用 <code>draw()</code> 方法绘制它：</p>
+<ul>
+<li><strong>基于文本的绘图：</strong> 直接在终端中打印电路的文本表示。</li>
+<li><strong>基于 Matplotlib 的绘图：</strong> 使用 Matplotlib 库生成视觉上更好看的电路图。</li>
+</ul>
+<p>要进行基于文本的绘图，请使用 <code>output='text'</code>。要进行基于 Matplotlib 的绘图，请使用 <code>output='mpl'</code>.</p>
+<p>例如，要绘制基于 Matplotlib 的电路图，请执行以下操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>fig <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mpl&#39;</span>)
+</span></span><span style="display:flex;"><span>fig<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#39;test.png&#39;</span>)
+</span></span></code></pre></div><p><img src="/img/087/test.png" alt=""></p>
+<h3 id="模拟电路">模拟电路</h3>
+<p>绘制电路后，可以使用 Qiskit 的模拟器模拟它。模拟器运行电路并返回测量结果。要模拟电路，请使用 <code>Sampler</code> 类。例如，要模拟上面定义的电路，请执行以下操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.primitives <span style="color:#f92672">import</span> Sampler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> Sampler()<span style="color:#f92672">.</span>run(circuit)<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>print(result)
+</span></span></code></pre></div><p>输出如下结果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>SamplerResult(quasi_dists<span style="color:#f92672">=</span>[{<span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">1.0</span>}], metadata<span style="color:#f92672">=</span>[{}])
+</span></span></code></pre></div><p>{1: 1.0} 表示通过采样检测，有100%的机率会得到数值1，因为该量子电路并没有出现叠加态，且顺序位第0个量子比特被X门反转为1，所以其二进制表示变为01，故此得到数值1且概率为100%。</p>
+<h3 id="完整示例">完整示例：</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit <span style="color:#f92672">import</span> QuantumCircuit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build a quantum circuit: X gate</span>
+</span></span><span style="display:flex;"><span>circuit <span style="color:#f92672">=</span> QuantumCircuit(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>x(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>circuit<span style="color:#f92672">.</span>measure([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(circuit)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Matplotlib drawing</span>
+</span></span><span style="display:flex;"><span>fig <span style="color:#f92672">=</span> circuit<span style="color:#f92672">.</span>draw(output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mpl&#39;</span>)
+</span></span><span style="display:flex;"><span>fig<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#39;test.png&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> qiskit.primitives <span style="color:#f92672">import</span> Sampler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> Sampler()<span style="color:#f92672">.</span>run(circuit)<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>print(result)
+</span></span></code></pre></div><p><strong>结论</strong></p>
+<p>本教程介绍了使用 Qiskit 绘制量子电路的基础知识。通过结合量子门、测量和可视化，您可以轻松了解和分析量子算法。有关更多详细信息和高级绘图功能，请参阅 Qiskit 文档。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
