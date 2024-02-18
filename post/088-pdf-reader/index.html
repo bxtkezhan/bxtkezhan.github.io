@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="我们可以使用 go-fitz 很轻易的制作一款 pdf 文档阅读器，原理是使用 go-fitz 将 pdf 转换为 html 内容，然后使用 go 搭建一个 web 服务，之后再通过浏览器进行文档阅读。相比直接使用浏览器阅读 pdf 文档的好处是原本一些不支持在 pdf 文档中使用的浏览器插件变得可以使用了，我们可以很轻松在阅读 pdf 文档时使用文本翻译，文本语音合成，GPT文章总结……这些功能。">
+<meta name="keywords" content="go,mupdf,pdf,go-fitz,fitz">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>自制PDF阅读器 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-02-18">February 18, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/go">Go</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">自制PDF阅读器</h1>
+  <section class="body" itemprop="articleBody">
+    <p>我们可以使用 go-fitz 很轻易的制作一款 pdf 文档阅读器，原理是使用 go-fitz 将 pdf 转换为 html 内容，然后使用 go 搭建一个 web 服务，之后再通过浏览器进行文档阅读。相比直接使用浏览器阅读 pdf 文档的好处是原本一些不支持在 pdf 文档中使用的浏览器插件变得可以使用了，我们可以很轻松在阅读 pdf 文档时使用文本翻译，文本语音合成，GPT文章总结……这些功能。</p>
+<p><img src="/img/088/clip.png" alt=""></p>
+<p>本教程将引导你使用 Go 和 go-fitz 库构建一个 PDF 阅读器。go-fitz 是一个流行的 Go 库，它允许你操作 PDF 文档，包括将它们转换为 HTML。</p>
+<h3 id="1-导入依赖项">1. 导入依赖项</h3>
+<p>首先，你需要导入必要的依赖项：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os/signal&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gen2brain/go-fitz&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><ul>
+<li><code>flag</code>：用于处理命令行参数。</li>
+<li><code>fmt</code>：用于格式化和打印输出。</li>
+<li><code>log</code>：用于记录信息。</li>
+<li><code>net/http</code>：用于创建 Web 服务器。</li>
+<li><code>os</code>：用于处理文件。</li>
+<li><code>os/signal</code>：用于处理操作系统信号。</li>
+<li><code>strconv</code>：用于将字符串转换为其他数据类型。</li>
+<li><code>syscall</code>：用于处理系统调用。</li>
+<li><code>github.com/gen2brain/go-fitz</code>：go-fitz 库。</li>
+</ul>
+<h3 id="2-定义常量和模板">2. 定义常量和模板</h3>
+<p>接下来，定义一个 HTML 框架和一个常量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">frame</span> = <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;!DOCTYPE html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">body{background-color:slategray}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">div{position:relative;background-color:white;margin:1em auto;box-shadow:1px 1px 8px -2px black}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">div#pages{background-color:#0000;margin:0;box-shadow:none}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">p{position:absolute;white-space:pre;margin:0}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;div id=&#34;pages&#34;&gt;&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;script charset=&#34;utf-8&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">async function load_page(position, page_ix=-1) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const pages = document.querySelector(&#39;#pages&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (page_ix == -1) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if (position == &#39;beforeEnd&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            page_ix = Number(
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                pages.lastElementChild.id.substr(&#39;page&#39;.length)) + 1;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        } else if (position == &#39;afterBegin&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            page_ix = Number(
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                pages.firstElementChild.id.substr(&#39;page&#39;.length)) - 1;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const url = &#39;/page?ix=&#39; + page_ix;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const resp = await fetch(url);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (!resp.ok) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        return;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const page = await resp.text()
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    pages.insertAdjacentHTML(position, page);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (position == &#39;afterBegin&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        window.scrollTo(0, pages.firstChild.offsetHeight);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">function load_more() {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const autoload = async () =&gt; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if ((window.innerHeight + window.scrollY) &gt;= document.body.parentNode.offsetHeight) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.removeEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            console.log(&#34;loading page to end...&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            await load_page(&#39;beforeEnd&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        } else if (window.scrollY == 0) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.removeEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            console.log(&#34;loading page to begin...&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            await load_page(&#39;afterBegin&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">window.onload = async () =&gt; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const page_ix = (new URLSearchParams(location.search)).get(&#39;start&#39;) || 0;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    await load_page(&#39;beforeEnd&#39;, page_ix);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    await load_page(&#39;afterBegin&#39;, page_ix - 1);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    load_more();
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>
+</span></span></code></pre></div><ul>
+<li><code>frame</code>：这是网页的 HTML 框架。它定义了页面的布局、样式和包含 PDF 内容的容器。</li>
+<li><code>pages</code>：这是将 PDF 页面插入的 HTML 容器的 ID。</li>
+</ul>
+<h3 id="3-处理命令行参数">3. 处理命令行参数</h3>
+<p>接下来，从命令行参数获取 PDF 文件名：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">filename</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;filename&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;pdf filename&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+</span></span></code></pre></div><p>这会获取一个名为 <code>--filename</code> 的命令行参数，它表示要打开的 PDF 文件的路径。</p>
+<h3 id="4-打开-pdf-文档">4. 打开 PDF 文档</h3>
+<p>使用 go-fitz 打开 PDF 文档：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">fitz</span>.<span style="color:#a6e22e">Document</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">doc</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">fitz</span>.<span style="color:#a6e22e">New</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">filename</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这会打开给定路径的 PDF 文档并将其存储在 <code>doc</code> 变量中。</p>
+<h3 id="5-处理系统信号">5. 处理系统信号</h3>
+<p>设置一个信号通道来监听 <code>SIGINT</code> 信号（通常是按 <code>Ctrl+C</code> 触发）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">signal_chan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">signal_chan</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGINT</span>)
+</span></span></code></pre></div><p>并设置一个 goroutine 来处理信号并关闭 PDF 文档：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">signal_chan</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>}()
+</span></span></code></pre></div><p>这将确保在收到 <code>SIGINT</code> 信号时关闭 PDF 文档并退出程序。</p>
+<h3 id="6-处理页面请求">6. 处理页面请求</h3>
+<p>设置一个 HTTP 处理程序来处理 <code>/page</code> 路由，它将提供 PDF 的单个页面：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">page_handler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">values</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">page_ix</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(<span style="color:#a6e22e">values</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;ix&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;page number valid faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;page ix:&#34;</span>, <span style="color:#a6e22e">page_ix</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">page_ix</span> &lt; <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">page_ix</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">NumPage</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;load page faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusNotFound</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">html</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">HTML</span>(<span style="color:#a6e22e">page_ix</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;load page faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">html</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这会获取请求的页面索引 (<code>ix</code> 查询参数)，验证索引是否有效，然后使用 go-fitz 将页面转换为 HTML 并发送给客户端。</p>
+<h3 id="7-处理首页请求">7. 处理首页请求</h3>
+<p>设置一个 HTTP 处理程序来处理 <code>/</code> 路由，它将提供带有 PDF 内容的 HTML 框架：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">index_handler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">frame</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这会将 <code>frame</code> 框架发送给客户端，其中包含用于加载 PDF 页面的脚本。</p>
+<h3 id="8-启动-web-服务器">8. 启动 Web 服务器</h3>
+<p>最后，启动一个在端口 8000 上监听的 Web 服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/page&#34;</span>, <span style="color:#a6e22e">page_handler</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">index_handler</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8000&#34;</span>, <span style="color:#66d9ef">nil</span>))
+</span></span></code></pre></div><p>这将启动服务器并允许客户端通过浏览器访问 PDF 内容。</p>
+<h3 id="9-使用-pdf-阅读器">9. 使用 PDF 阅读器</h3>
+<p>现在，你可以通过访问 <code>http://localhost:8000</code> 在浏览器中打开 PDF 阅读器。该页面将显示 PDF 的第一页。你可以使用滚动条浏览页面，或者使用键盘快捷键（如 <code>↑</code> 和 <code>↓</code>）进行导航。你还可以使用浏览器的插件，如翻译器和语音合成，来增强阅读体验。</p>
+<h3 id="完整示例">完整示例：</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os/signal&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;syscall&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gen2brain/go-fitz&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">fitz</span>.<span style="color:#a6e22e">Document</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">frame</span> = <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;!DOCTYPE html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">body{background-color:slategray}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">div{position:relative;background-color:white;margin:1em auto;box-shadow:1px 1px 8px -2px black}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">div#pages{background-color:#0000;margin:0;box-shadow:none}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">p{position:absolute;white-space:pre;margin:0}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/style&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;div id=&#34;pages&#34;&gt;&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;script charset=&#34;utf-8&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">async function load_page(position, page_ix=-1) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const pages = document.querySelector(&#39;#pages&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (page_ix == -1) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if (position == &#39;beforeEnd&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            page_ix = Number(
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                pages.lastElementChild.id.substr(&#39;page&#39;.length)) + 1;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        } else if (position == &#39;afterBegin&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            page_ix = Number(
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                pages.firstElementChild.id.substr(&#39;page&#39;.length)) - 1;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const url = &#39;/page?ix=&#39; + page_ix;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const resp = await fetch(url);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (!resp.ok) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        return;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const page = await resp.text()
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    pages.insertAdjacentHTML(position, page);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (position == &#39;afterBegin&#39;) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        window.scrollTo(0, pages.firstChild.offsetHeight);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">function load_more() {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const autoload = async () =&gt; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if ((window.innerHeight + window.scrollY) &gt;= document.body.parentNode.offsetHeight) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.removeEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            console.log(&#34;loading page to end...&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            await load_page(&#39;beforeEnd&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        } else if (window.scrollY == 0) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.removeEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            console.log(&#34;loading page to begin...&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            await load_page(&#39;afterBegin&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    window.addEventListener(&#34;scroll&#34;, autoload);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">window.onload = async () =&gt; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    const page_ix = (new URLSearchParams(location.search)).get(&#39;start&#39;) || 0;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    await load_page(&#39;beforeEnd&#39;, page_ix);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    await load_page(&#39;afterBegin&#39;, page_ix - 1);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    load_more();
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">page_handler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">values</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">page_ix</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(<span style="color:#a6e22e">values</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;ix&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;page number valid faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;page ix:&#34;</span>, <span style="color:#a6e22e">page_ix</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">page_ix</span> &lt; <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">page_ix</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">NumPage</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;load page faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusNotFound</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">html</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">HTML</span>(<span style="color:#a6e22e">page_ix</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;load page faild&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">html</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">index_handler</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprint</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">frame</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">filename</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;filename&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;pdf filename&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">doc</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">fitz</span>.<span style="color:#a6e22e">New</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">filename</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">signal_chan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Signal</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">signal</span>.<span style="color:#a6e22e">Notify</span>(<span style="color:#a6e22e">signal_chan</span>, <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">SIGINT</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">signal_chan</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/page&#34;</span>, <span style="color:#a6e22e">page_handler</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">index_handler</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8000&#34;</span>, <span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

@@ -6,8 +6,15 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 17 Feb 2024 18:54:44 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Feb 2024 15:39:57 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自制PDF阅读器</title>
+      <link>http://bxtkezhan.github.io/post/088-pdf-reader/</link>
+      <pubDate>Sun, 18 Feb 2024 15:39:57 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/088-pdf-reader/</guid>
+      <description>我们可以使用 go-fitz 很轻易的制作一款 pdf 文档阅读器，原理是使用 go-fitz 将 pdf 转换为 html 内容，然后使用 go 搭建一个 web 服务，之后再通过浏览器进行文档阅读。相比直接使用浏览器阅读 pdf 文档的好处是原本一些不支持在 pdf 文档中使用的浏览器插件变得可以使用了，我们可以很轻松在阅读 pdf 文档时使用文本翻译，文本语音合成，GPT文章总结……这些功能。</description>
+    </item>
     <item>
       <title>Qistkit 绘制量子电路</title>
       <link>http://bxtkezhan.github.io/post/087-qistkit-draw/</link>
