@@ -6,8 +6,15 @@
     <description>Recent content in Quantum computing on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 17 Feb 2024 18:54:44 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2024 15:45:52 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子计算解密游戏</title>
+      <link>http://bxtkezhan.github.io/post/090-quantum-q/</link>
+      <pubDate>Tue, 20 Feb 2024 15:45:52 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/090-quantum-q/</guid>
+      <description>虽然研究量子计算的基本原理所需的物理学知识和数学知识要求比较高，但是如果只考虑应用层面：例如：量子编程/量子电路搭建，其实也不需要掌握什么高深的物理学和数学知识。</description>
+    </item>
     <item>
       <title>Qistkit 绘制量子电路</title>
       <link>http://bxtkezhan.github.io/post/087-qistkit-draw/</link>
