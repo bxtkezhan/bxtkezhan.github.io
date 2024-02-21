@@ -6,20 +6,20 @@
     <description>Recent content in Categories on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Feb 2024 15:45:52 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Feb 2024 14:46:37 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go</title>
+      <link>http://bxtkezhan.github.io/categories/go/</link>
+      <pubDate>Wed, 21 Feb 2024 14:46:37 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/categories/go/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Quantum computing</title>
       <link>http://bxtkezhan.github.io/categories/quantum-computing/</link>
       <pubDate>Tue, 20 Feb 2024 15:45:52 +0800</pubDate>
       <guid>http://bxtkezhan.github.io/categories/quantum-computing/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Go</title>
-      <link>http://bxtkezhan.github.io/categories/go/</link>
-      <pubDate>Mon, 19 Feb 2024 12:59:43 +0800</pubDate>
-      <guid>http://bxtkezhan.github.io/categories/go/</guid>
       <description></description>
     </item>
     <item>

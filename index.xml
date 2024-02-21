@@ -6,8 +6,15 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Feb 2024 15:45:52 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Feb 2024 14:46:37 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go语言的跨平台对话框</title>
+      <link>http://bxtkezhan.github.io/post/091-go-dialog/</link>
+      <pubDate>Wed, 21 Feb 2024 14:46:37 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/091-go-dialog/</guid>
+      <description>sqweek/dialog 是一个 Go 语言库，用于创建用户友好的命令行界面应用程序。它提供了一组用于创建对话框、提示、菜单和其他交互元素的函数。dialog 的设计旨在易于使用，同时仍然强大且可定制。</description>
+    </item>
     <item>
       <title>量子计算解密游戏</title>
       <link>http://bxtkezhan.github.io/post/090-quantum-q/</link>
