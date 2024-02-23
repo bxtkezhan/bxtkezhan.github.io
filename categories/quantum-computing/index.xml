@@ -6,8 +6,15 @@
     <description>Recent content in Quantum computing on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Feb 2024 15:45:52 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 23 Feb 2024 13:58:32 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子电路设计入门・初步了解</title>
+      <link>http://bxtkezhan.github.io/post/092-quantum-introduction/</link>
+      <pubDate>Fri, 23 Feb 2024 13:58:32 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/092-quantum-introduction/</guid>
+      <description>今天我们来初步了解一下量子电路的大致形式和运行规则，我们将使用四个简单的例子进行介绍。</description>
+    </item>
     <item>
       <title>量子计算解密游戏</title>
       <link>http://bxtkezhan.github.io/post/090-quantum-q/</link>
