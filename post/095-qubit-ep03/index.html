@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="欢迎来到 `bxtkezhan`, 一个独立、开放的知识分享小站。">
+<meta name="keywords" content="qubit,guantum,gate,quantum,computing">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>量子电路设计入门・示例三 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-02-26">February 26, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/quantum-computing">Quantum computing</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">量子电路设计入门・示例三</h1>
+  <section class="body" itemprop="articleBody">
+    <p>之前的两个示例都是在单量子位上进行的操作，接下来的这个示例将是一个关于双量子位电路的示例。</p>
+<p>The previous two examples were operations on a single qubit, the upcoming example is an example of a circuit with two qubits.</p>
+<h3 id="示例三双量子位的操作">示例三、双量子位的操作</h3>
+<p>Example 3. Two-Qubit Operation</p>
+<p><img src="/img/095/ep03_circuit.png" alt=""></p>
+<p>我们定义了 q0 和 q1 两个量子位，分别初始化 q0 为 0；初始化 q1 为 1。接下来我们使用泡利 X 门分别对这两个量子位进行反转，最后我们对反转后的量子为进行测量。</p>
+<p>We define two qubits q0 and q1, initialize q0 to 0; initialize q1 to 1. Next, we use the Pauli X gate to flip the two qubits respectively, and finally we measure the flipped qubits.</p>
+<p>需要注意的是：我们将量子位 q0 的测量结果保存到了经典位中的 c0 位，将量子位 q1 的测量结果保存到了经典位中的 c1 位。</p>
+<p>Note that: we save the measurement result of qubit q0 to the classical bit c0, and the measurement result of qubit q1 to the classical bit c1.</p>
+<p><img src="/img/095/ep03_distribution.png" alt=""></p>
+<p>通过对这个量子电路的采样测量，我们将有 100% 的机率取得二进制数值 0 1。因为虽然我们将 q0 与 q1 分别初始化为 0 与 1，但是在之后我们对它们分别使用泡利 X 门进行了反转。</p>
+<p>By sampling the measurement of this quantum circuit, we will have a 100% probability of getting binary value 0 1. Because although we initialize q0 and q1 to 0 and 1 respectively, we then use Pauli X gates to flip them respectively.</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
