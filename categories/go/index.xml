@@ -6,8 +6,15 @@
     <description>Recent content in Go on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 21 Feb 2024 14:46:37 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Feb 2024 17:28:54 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自制PDF阅读器・翻译与朗读</title>
+      <link>http://bxtkezhan.github.io/post/094-pdf-webview/</link>
+      <pubDate>Mon, 26 Feb 2024 17:28:54 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/094-pdf-webview/</guid>
+      <description>之前我的 pdf 阅读器上使用的是浏览器的翻译插件，但是我现在突然想让阅读器本身自带翻译和朗读功能。</description>
+    </item>
     <item>
       <title>Go语言的跨平台对话框</title>
       <link>http://bxtkezhan.github.io/post/091-go-dialog/</link>
