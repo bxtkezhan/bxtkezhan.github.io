@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="可以用布络赫球「Bloch-Sphere」模型来可视化单个量子比特，今天我们来推导一下单量子比特的布络赫球模型数学式。">
+<meta name="keywords" content="bloch,sphere,qubit,guantum,gate,quantum,computing">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>量子电路设计入门・布络赫球模型 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-03-12">March 12, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/quantum-computing">Quantum computing</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">量子电路设计入门・布络赫球模型</h1>
+  <section class="body" itemprop="articleBody">
+    <p>可以用布络赫球「Bloch-Sphere」模型来可视化单个量子比特，今天我们来推导一下单量子位元的布络赫球模型数学式。</p>
+<h3 id="布络赫球模型">布络赫球模型</h3>
+<p>如下图所示，有一个绘制在三维空间中的球体，球面上的每一个点到球心的距离都是单位长度1。另外有一个经过球心的单位向量用以描述量子态$|\psi\rangle$，该向量与$z$轴的夹角为$\theta$，在$(x,y)$平面上的投影与$x$轴的夹角为$\phi$：</p>
+<p><img src="/img/097/Bloch_sphere.svg" alt=""></p>
+<p>布洛赫球模型在$x,y,z$上的分量：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+x &= \sinθ\cos\phi \\
+y &= \sinθ\sin\phi \\
+z &= \cosθ
+\end{align}
+$$
+
+</div>
+
+<h3 id="开始公式推导">开始公式推导</h3>
+<p>以如下方式对单一量子位元进行描述：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ = α|0⟩ + β|1⟩
+$$
+
+</div>
+
+<p>其中，α和β是复数，由于$|\psi\rangle$表示量子位元，因此满足归一化条件：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|α|² + |β|² = 1
+$$
+
+</div>
+
+<p>将量子位元的状态表示为复向量：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+    \begin{bmatrix}
+    α \\
+    β
+    \end{bmatrix} =
+	\begin{bmatrix}
+	x_0 + x_1i \\
+	x_2 + x_3i
+	\end{bmatrix}
+$$
+
+</div>
+
+<p>引入球坐标系$(θ, \phi)$来表示复向量：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{bmatrix}
+	x_0 + x_1i \\
+	x_2 + x_3i
+\end{bmatrix} =
+\begin{bmatrix}
+	r_0(\cos\phi_0 + i\sin\phi_0) \\
+	r_1(\cos\phi_1 + i\sin\phi_1)
+\end{bmatrix}
+$$
+
+</div>
+
+<p>由归一化条件 $|\alpha|^2 + |\beta|^2 = 1$ 可以得到：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+r_0^2(\cos^2\phi_0 + \sin^2\phi_0) + r_1^2(\cos^2\phi_1 + \sin^2\phi_1) = 1 \\
+\Rightarrow r_0^2 + r_1^2 = 1
+\end{align}
+$$
+
+</div>
+
+<p>因此，我们也可以将$r_0$与$r_1$写作如下形式：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+r_0 = \cos\frac\theta 2 \\
+r_1 = \sin\frac\theta 2
+\end{align}
+$$
+
+</div>
+
+<p>其中$\theta \in [0, \pi]$。</p>
+<p>使用球座标系重新书写复向量：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+    \begin{bmatrix}
+	\cos\frac\theta 2(\cos\phi_0 + i\sin\phi_0) \\
+	\sin\frac\theta 2(\cos\phi_1 + i\sin\phi_1)
+    \end{bmatrix}
+$$
+
+</div>
+
+<p>根据欧拉公式我们还可以将其写作如下形式：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+    \begin{bmatrix}
+	\cos\frac\theta 2e^{i\phi_0} \\
+	\sin\frac\theta 2e^{i\phi_1}
+    \end{bmatrix}
+$$
+
+</div>
+
+<p>在描述单个量子状态时，我们可以通过标准化方法来简化复向量，我们将$|\psi\rangle$除上一个$e^{i\phi_0}$，并让 $\phi = \phi_1 - \phi_0$：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+	\begin{bmatrix}
+	\cos\frac\theta 2 \\
+	\sin\frac\theta 2e^{i(\phi_1 - \phi_0)}
+	\end{bmatrix} = 
+	\begin{bmatrix}
+	\cos\frac\theta 2 \\
+	\sin\frac\theta 2e^{i\phi}
+	\end{bmatrix}
+$$
+
+</div>
+
+<p>由于我们描述的是单个独立的量子位元的状态，因此上述标准化操作仅会影响到参照系描述而并不会对量子状态本身造成改变。</p>
+<p>此时，我们可以再次使用欧拉公式将复向量进行展开：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+	\begin{bmatrix}
+	\cos\frac\theta 2 \\
+	\sin\frac\theta 2e^{i\phi}
+	\end{bmatrix} =
+	\begin{bmatrix}
+	\cos\frac\theta 2 \\
+	\sin\frac\theta 2\cos\phi + i\sin\frac\theta 2\sin\phi
+	\end{bmatrix}
+$$
+
+</div>
+
+<p>对照之前的复向量定义：</p>
+<div style="overflow-x:scroll;">
+
+$$
+|\psi⟩ =
+	\begin{bmatrix}
+	x_0 + x_1i \\
+	x_2 + x_3i
+	\end{bmatrix}
+$$
+
+</div>
+
+<p>我们将$x_0,x_1,x_2,x_3$几个分量做如下设定：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+x_0 &= \cos\frac\theta 2 \\
+x_1 &= 0 \\
+x_2 &= \sin\frac\theta 2\cos\phi \\
+x_3 &= \sin\frac\theta 2\sin\phi
+\end{align}
+$$
+
+</div>
+
+<p>转换复向量$|\psi\rangle$得到布络赫球的分量$x$：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+2x_0 x_2 &= 2\cos\frac\theta 2\sin\frac\theta 2\cos\phi \\
+	&= \sin\theta\cos\phi \\
+	&= x
+\end{align}
+$$
+
+</div>
+
+<p>转换复向量$|\psi\rangle$得到布络赫球的分量$y$：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+2x_0 x_3 &= 2\cos\frac\theta 2\sin\frac\theta 2\sin\phi \\
+	&= \sin\theta\sin\phi \\
+	&= y
+\end{align}
+$$
+
+</div>
+
+<p>转换复向量$|\psi\rangle$得到布络赫球的分量$z$：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+x_0^2 - (x_2^2 + x_3^2) &= \cos^2\frac\theta 2 - \sin^2\frac\theta 2(\cos^2\phi + \sin^2\phi) \\
+	&= \cos\theta \\
+	&= z
+\end{align}
+$$
+
+</div>
+
+<p>至此，我们已经转换并得到了复向量$|\psi\rangle$在布洛赫球模型中的$x,y,z$分量：</p>
+<div style="overflow-x:scroll;">
+
+$$
+\begin{align}
+x &= \sinθ\cos\phi \\
+y &= \sinθ\sin\phi \\
+z &= \cosθ
+\end{align}
+$$
+
+</div>
+
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

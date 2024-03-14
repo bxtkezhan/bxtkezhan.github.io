@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="238" height="252">
+  <defs>
+    <marker id="dot" overflow="visible">
+      <circle r="2.5"/>
+    </marker>
+    <marker id="arrow" orient="auto" overflow="visible">
+      <path d="M-4 4.5q3-4.5 0-9L8 0z"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke="#000">
+    <circle cx="103" cy="133" r="100" stroke-width="2"/>
+    <ellipse cx="103" cy="133" rx="100" ry="25" stroke-dasharray="4.9,4.9" stroke-dashoffset="4" stroke-linecap="round" stroke-width="1.6"/>
+  </g>
+  <g stroke="#000" marker-end="url(#arrow)">
+    <path d="m103 133-35 35"/>
+    <path d="M103 133V9"/>
+    <path d="M103 133h124"/>
+  </g>
+  <path d="m103 133 35 15V58" stroke="#000" stroke-dasharray="2,2" fill="none"/>
+  <path d="m103 133 35-75" stroke="#000" marker-end="url(#dot)"/>
+  <g fill="none" stroke="#000">
+    <path d="M103 88a24 45 0 0 1 16 10"/>
+    <path d="M118.5 140a32 16 0 0 1-22.5 0"/>
+  </g>
+  <g font-size="12" font-family="Bitstream Vera Sans" font-weight="400" font-style="italic">
+    <text x="70" y="183">x</text>
+    <text x="230" y="147">y</text>
+    <text x="110" y="16">z</text>
+    <text x="106" y="151" font-size="14">φ</text>
+    <text x="110" y="87" font-size="14">θ</text>
+  </g>
+  <g fill="#fff" stroke="#000" stroke-width="1.5">
+    <circle cx="103" cy="33" r="4.5"/>
+    <circle cx="103" cy="233" r="4.5"/>
+  </g>
+  <path d="M110 239v12m12 0 3-6-3-6" fill="none" stroke="#000"/>
+  <text x="113" y="249" font-size="12" font-family="Bitstream Vera Sans" font-weight="400">1</text>
+  <path d="M83 15v12m12 0 3-6-3-6" fill="none" stroke="#000"/>
+  <text x="86" y="25" font-size="12" font-family="Bitstream Vera Sans" font-weight="400">0</text>
+  <path d="M145 60v12m12 0 3-6-3-6" fill="none" stroke="#000"/>
+  <text x="147" y="68" font-size="12" font-family="Bitstream Vera Serif" font-weight="400" font-style="italic">ψ</text>
+</svg>
