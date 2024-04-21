@@ -6,8 +6,15 @@
     <description>Recent content in Quantum computing on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 12 Mar 2024 20:58:24 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2024 18:57:27 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/categories/quantum-computing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子电路设计入门・示例五</title>
+      <link>http://bxtkezhan.github.io/post/098-qubit-control-ep05/</link>
+      <pubDate>Sun, 21 Apr 2024 18:57:27 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/098-qubit-control-ep05/</guid>
+      <description>在这个示例中，我们将引入一个新的量子操作——受控门，它也是量子计算中最常用的操作之一。</description>
+    </item>
     <item>
       <title>量子电路设计入门・布络赫球模型</title>
       <link>http://bxtkezhan.github.io/post/097-qubit-bloch-sphere/</link>

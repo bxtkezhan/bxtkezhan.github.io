@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="在这个示例中，我们将引入一个新的量子操作——受控门，它也是量子计算中最常用的操作之一。">
+<meta name="keywords" content="qubit,guantum,gate,quantum,computing">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>量子电路设计入门・示例五 - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2024-04-21">April 21, 2024</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/quantum-computing">Quantum computing</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">量子电路设计入门・示例五</h1>
+  <section class="body" itemprop="articleBody">
+    <p>在这个示例中，我们将引入一个新的量子操作——受控门，它也是量子计算中最常用的操作之一。</p>
+<p>In this example, we introduce a new quantum operation, the controlled gate, which is also one of the most frequently used operations in quantum computing.</p>
+<h3 id="示例五受控非门">示例五、受控非门</h3>
+<p>Example 5. Controlled not gate</p>
+<p><img src="/img/098/ep05_circuit.png" alt=""></p>
+<p>在这个量子电路中，我们创建了 q0 和 q1 两个量子位元，一开始我们分别把它们初始化为 1 和 0。</p>
+<p>In this quantum circuit, we have two qubits, q0 and q1, which are initialized to 1 and 0 respectively.</p>
+<p>然后，我们对它们使用了一个 受控非门，受控非门 会根据 控制位元 q0 来决定是否对 目标位元 q1 进行取反操作，如果 控制位元 q0 的值为 1 则将对 目标位元 q1 进行取反操作，反之则不进行取反操作。</p>
+<p>We then apply a Controlled-NOT gate which flips the target qubit q1 if the control qubit q0 is 1, and does nothing otherwise.</p>
+<p>最后我们再测量这两个量子位元，并将测量结果保存到 经典位元 c0 和 c1 中。</p>
+<p>Finally, we measure both qubits, storing the results in classical bits c0 and c1.</p>
+<p><img src="/img/098/ep05_distribution.png" alt=""></p>
+<p>经过对该量子电路的采样测量，我们将以 100% 的机率得到二进制数值 1 1。这是因为 受控非门 的 控制位元 q0 等于 1，所以会 受控非门 对 目标位元 q1 进行反转，将其从 0 反转为 1。</p>
+<p>By sampling the measurement of the quantum circuit, we will get binary value 1 1 with 100% possibility. This is because the control qubit q0 of the Controlled-NOT gate is 1, so the Controlled-NOT gate will flip the target qubit q1, turning it over from 0 to 1.</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2024 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
