@@ -6,8 +6,15 @@
     <description>Recent content in Posts on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 21 Apr 2024 18:57:27 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Apr 2024 21:17:25 +0800</lastBuildDate>
     <atom:link href="http://bxtkezhan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>量子电路设计入门・示例六</title>
+      <link>http://bxtkezhan.github.io/post/099-qubit-control-ep06/</link>
+      <pubDate>Tue, 23 Apr 2024 21:17:25 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/099-qubit-control-ep06/</guid>
+      <description>在这个示例中，我们将看到 受控非门 与 泡利-X门 的混合使用。&#xA;In this example we will see a hybrid use of controlled-NOT gates and Pauli-X gates.&#xA;示例六、受控非门 和 泡利-X门 Example 6. Controlled-NOT gate and Pauli-X gate&#xA;在这个量子电路中，我们创建了 q0 和 q1 两个量子位元并分别初始化为 0 和 1。&#xA;In this quantum circuit, we create two qubits, q0 and q1, and initialize them to 0 and 1 respectively.&#xA;接着，我们使用泡利-X门将 q0 反转。然后我们使用受控非门作用于 q0 和 q1，其中 q0 作为控制位元，q1 作为目标位元。在受控非门结束后，我们再使用泡利-X门将 q0 进行反转。&#xA;Next, we apply a Pauli-X gate to q0, flipping it.</description>
+    </item>
     <item>
       <title>量子电路设计入门・示例五</title>
       <link>http://bxtkezhan.github.io/post/098-qubit-control-ep05/</link>
