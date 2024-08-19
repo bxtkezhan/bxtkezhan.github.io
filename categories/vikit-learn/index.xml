@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vikit-learn on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.github.io/categories/vikit-learn/</link>
+    <description>Recent content in vikit-learn on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 19 Aug 2024 13:46:56 +0800</lastBuildDate>
+    <atom:link href="http://bxtkezhan.github.io/categories/vikit-learn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vikit-learn 介绍</title>
+      <link>http://bxtkezhan.github.io/post/100-vikit-learn-readme/</link>
+      <pubDate>Mon, 19 Aug 2024 13:46:56 +0800</pubDate>
+      <guid>http://bxtkezhan.github.io/post/100-vikit-learn-readme/</guid>
+      <description>&lt;strong&gt;vikit-learn&lt;/strong&gt; 是一个基于深度学习技术，使用 Python 开发的计算机视觉处理工具包。</description>
+    </item>
+  </channel>
+</rss>
