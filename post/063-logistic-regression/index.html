@@ -5,7 +5,7 @@
 <meta name="description" content="先前我们在最小二乘拟合那一节中了解到如何使用最小二乘的方法拟合多项式方程，那么今天我们再来学习一种「拟合」方程的方法——逻辑回归。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -124,138 +124,138 @@ $$</p>
 <p>了解了这些后我们开始编写代码。</p>
 <h3 id="准备输入输出">准备输入输出</h3>
 <p>在确保安装了pytorch后我们在代码中引入它:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span></code></pre></div><p><code>torch.tensor</code>类似numpy中的<code>numpy.array</code>，我们可以使用它创建张量「包括标量，向量，矩阵……」。在这里，我们使用张量存储方程的输入X与输出T。X为4x2的矩阵而T为4x1的矩阵，它们的每一行按顺序互相对应:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-</span></span></code></pre></div><p>这里需要注意的是我们大多数情况会使用32位的浮点数值<code>torch.float32</code>，这样做既能满足精度的需要又避免过多的运算。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+</code></pre></div><p><code>torch.tensor</code>类似numpy中的<code>numpy.array</code>，我们可以使用它创建张量「包括标量，向量，矩阵……」。在这里，我们使用张量存储方程的输入X与输出T。X为4x2的矩阵而T为4x1的矩阵，它们的每一行按顺序互相对应:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+
+T <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+</code></pre></div><p>这里需要注意的是我们大多数情况会使用32位的浮点数值<code>torch.float32</code>，这样做既能满足精度的需要又避免过多的运算。</p>
 <h3 id="准备需要拟合的参数">准备需要拟合的参数</h3>
 <p>公式 $y = \sigma(XW + b)$ 中的W「常常称作权重Weights」与b「常常称作偏置bias」是我们需要拟合的参数:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span></code></pre></div><p>我们将权重初始化为元素都是1的矩阵，而偏置则初始化为0。另外，由于我们需要求解权重和偏置的梯度，所以我们需要设置参数<code>requires_grad=True</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</code></pre></div><p>我们将权重初始化为元素都是1的矩阵，而偏置则初始化为0。另外，由于我们需要求解权重和偏置的梯度，所以我们需要设置参数<code>requires_grad=True</code>。</p>
 <h3 id="正向传播">正向传播</h3>
 <p>我们在一个for循环中编写正向传播的代码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># forward</span>
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W
-</span></span><span style="display:flex;"><span>    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
-</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
-</span></span></code></pre></div><p>代码是根据公式 $y = \sigma(XW + b)$ 编写的，经由sigmoid函数处理后的输出P就对应公式中的输出y。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    <span style="color:#75715e"># forward</span>
+    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+</code></pre></div><p>代码是根据公式 $y = \sigma(XW + b)$ 编写的，经由sigmoid函数处理后的输出P就对应公式中的输出y。</p>
 <h3 id="计算损失函数">计算损失函数</h3>
 <p>我们根据如下公式编写损失函数:</p>
 <p>$$
 loss = \sum_{i=1}^n\frac{1}{2}(t_i - p_i)^2
 $$</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> (T <span style="color:#f92672">-</span> P)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;step:&#39;</span>, step, <span style="color:#e6db74">&#39;loss =&#39;</span>, loss<span style="color:#f92672">.</span>item())
-</span></span></code></pre></div><h3 id="反向传播">反向传播</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> (T <span style="color:#f92672">-</span> P)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+print(<span style="color:#e6db74">&#39;step:&#39;</span>, step, <span style="color:#e6db74">&#39;loss =&#39;</span>, loss<span style="color:#f92672">.</span>item())
+</code></pre></div><h3 id="反向传播">反向传播</h3>
 <p>调用<code>loss.backward</code>方法，对支持梯度求解的张量对象<code>loss</code>进行梯度求解:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># backward</span>
-</span></span><span style="display:flex;"><span>loss<span style="color:#f92672">.</span>backward()
-</span></span></code></pre></div><p>在执行完反向传播操作后，我们可以得到权重的梯度<code>W.grad</code>以及偏置的梯度<code>b.grad</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># backward</span>
+loss<span style="color:#f92672">.</span>backward()
+</code></pre></div><p>在执行完反向传播操作后，我们可以得到权重的梯度<code>W.grad</code>以及偏置的梯度<code>b.grad</code>。</p>
 <h3 id="更新梯度">更新梯度</h3>
 <p>由于我们使用的是梯度下降优化方案所以在更新权重和偏置的时候需要减去梯度。但是如果直接减去梯度则可能步长过大，所以通常会将梯度乘上一个小于1大于0的值<code>lr</code>，然后用当前权重减去它，正如下方那样:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>	W <span style="color:#f92672">-=</span> W<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
-</span></span><span style="display:flex;"><span>	b <span style="color:#f92672">-=</span> b<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
-</span></span><span style="display:flex;"><span>	W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-</span></span><span style="display:flex;"><span>	b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-</span></span></code></pre></div><p>在pytorch中，更新带有梯度的参数时，我们需要在不计算梯度的模式下<code>with torch.no_grad():</code>进行；而在更新梯度后，我们需要使用<code>tensor.grad.data.zero_()</code>方法清零当前的梯度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+	W <span style="color:#f92672">-=</span> W<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+	b <span style="color:#f92672">-=</span> b<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+	W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+	b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+</code></pre></div><p>在pytorch中，更新带有梯度的参数时，我们需要在不计算梯度的模式下<code>with torch.no_grad():</code>进行；而在更新梯度后，我们需要使用<code>tensor.grad.data.zero_()</code>方法清零当前的梯度。</p>
 <h3 id="查看拟合后的参数">查看拟合后的参数</h3>
 <p>完成100轮上述的权重与偏置的更新后我们打印输出一下权重和偏置:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;params weight:&#39;</span>)
-</span></span><span style="display:flex;"><span>print(W<span style="color:#f92672">.</span>detach())
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;params bias:&#39;</span>)
-</span></span><span style="display:flex;"><span>print(b<span style="color:#f92672">.</span>detach())
-</span></span></code></pre></div><p><code>tensor.detach()</code>方法用于将普通tensor从带梯度的tensor中分离，此处使用仅为了打印输出的美观。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#e6db74">&#39;params weight:&#39;</span>)
+print(W<span style="color:#f92672">.</span>detach())
+print(<span style="color:#e6db74">&#39;params bias:&#39;</span>)
+print(b<span style="color:#f92672">.</span>detach())
+</code></pre></div><p><code>tensor.detach()</code>方法用于将普通tensor从带梯度的tensor中分离，此处使用仅为了打印输出的美观。</p>
 <h3 id="测试拟合效果">测试拟合效果</h3>
 <p>我们在不计算梯度的模式下测试一下拟合后的方程。在这里我们使用pytorch张量对象的列表索引<code>X[[0, 2, 1, 3]]</code>改变了一下矩阵X的行顺序，那么对应的输出P则应该趋近于$\begin{bmatrix}0 \\ 0 \\ 1 \\ 1\end{bmatrix}$:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]] <span style="color:#f92672">@</span> W
-</span></span><span style="display:flex;"><span>    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
-</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;predict:&#39;</span>)
-</span></span><span style="display:flex;"><span>    print(P)
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>predict:
-</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0.2789</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.3257</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.7348</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.7759</span>]])
-</span></span></code></pre></div><p>我们发现输出的头两行元素小于0.5趋近0，后两行元素大于0.5趋近1，基本符合我们的预期，这时我们可以使用<code>torch.round</code>进行四舍五入将其严格转换为$\begin{bmatrix}0 \\ 0 \\ 1 \\ 1\end{bmatrix}$的结构:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>round(P))
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">0.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>]])
-</span></span></code></pre></div><h3 id="完整代码">完整代码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># forward</span>
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W
-</span></span><span style="display:flex;"><span>    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
-</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> (T <span style="color:#f92672">-</span> P)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;step:&#39;</span>, step, <span style="color:#e6db74">&#39;loss =&#39;</span>, loss<span style="color:#f92672">.</span>item())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># backward</span>
-</span></span><span style="display:flex;"><span>    loss<span style="color:#f92672">.</span>backward()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>        W <span style="color:#f92672">-=</span> W<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
-</span></span><span style="display:flex;"><span>        b <span style="color:#f92672">-=</span> b<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
-</span></span><span style="display:flex;"><span>        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-</span></span><span style="display:flex;"><span>        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;params weight:&#39;</span>)
-</span></span><span style="display:flex;"><span>print(W<span style="color:#f92672">.</span>detach())
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;params bias:&#39;</span>)
-</span></span><span style="display:flex;"><span>print(b<span style="color:#f92672">.</span>detach())
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>    A <span style="color:#f92672">=</span> X[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]] <span style="color:#f92672">@</span> W
-</span></span><span style="display:flex;"><span>    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
-</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;predict:&#39;</span>)
-</span></span><span style="display:flex;"><span>    print(P)
-</span></span><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>round(P))
-</span></span></code></pre></div><p><a href="/post/064-softmax-clf/">下篇 人工神经网络・Softmax多分类</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+    A <span style="color:#f92672">=</span> X[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]] <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+    print(<span style="color:#e6db74">&#39;predict:&#39;</span>)
+    print(P)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">predict:
+tensor([[<span style="color:#ae81ff">0.2789</span>],
+        [<span style="color:#ae81ff">0.3257</span>],
+        [<span style="color:#ae81ff">0.7348</span>],
+        [<span style="color:#ae81ff">0.7759</span>]])
+</code></pre></div><p>我们发现输出的头两行元素小于0.5趋近0，后两行元素大于0.5趋近1，基本符合我们的预期，这时我们可以使用<code>torch.round</code>进行四舍五入将其严格转换为$\begin{bmatrix}0 \\ 0 \\ 1 \\ 1\end{bmatrix}$的结构:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(torch<span style="color:#f92672">.</span>round(P))
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tensor([[<span style="color:#ae81ff">0.</span>],
+        [<span style="color:#ae81ff">0.</span>],
+        [<span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">1.</span>]])
+</code></pre></div><h3 id="完整代码">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+
+
+X <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+
+T <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>],
+    [<span style="color:#ae81ff">0</span>],
+    [<span style="color:#ae81ff">1</span>]
+], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+
+
+W <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">1</span>, ), dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+
+
+<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    <span style="color:#75715e"># forward</span>
+    A <span style="color:#f92672">=</span> X <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+
+    loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> (T <span style="color:#f92672">-</span> P)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)
+    print(<span style="color:#e6db74">&#39;step:&#39;</span>, step, <span style="color:#e6db74">&#39;loss =&#39;</span>, loss<span style="color:#f92672">.</span>item())
+
+    <span style="color:#75715e"># backward</span>
+    loss<span style="color:#f92672">.</span>backward()
+
+    lr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        W <span style="color:#f92672">-=</span> W<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+        b <span style="color:#f92672">-=</span> b<span style="color:#f92672">.</span>grad <span style="color:#f92672">*</span> lr
+        W<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+        b<span style="color:#f92672">.</span>grad<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>zero_()
+
+print(<span style="color:#e6db74">&#39;params weight:&#39;</span>)
+print(W<span style="color:#f92672">.</span>detach())
+print(<span style="color:#e6db74">&#39;params bias:&#39;</span>)
+print(b<span style="color:#f92672">.</span>detach())
+<span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+    A <span style="color:#f92672">=</span> X[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>]] <span style="color:#f92672">@</span> W
+    H <span style="color:#f92672">=</span> A <span style="color:#f92672">+</span> b
+    P <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sigmoid(H)
+    print(<span style="color:#e6db74">&#39;predict:&#39;</span>)
+    print(P)
+print(torch<span style="color:#f92672">.</span>round(P))
+</code></pre></div><p><a href="/post/064-softmax-clf/">下篇 人工神经网络・Softmax多分类</a></p>
 
   </section>
 </article>

@@ -5,7 +5,7 @@
 <meta name="description" content="上一节中介绍了最小二乘法，本节将介绍另一个数据分析方法——聚类分析。该方法常用于处理具备几何特征关系的数据点，我们以最基础的k均值聚类为例进行说明。">
 <meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -81,58 +81,58 @@
 </ol>
 <h3 id="代码实现数据准备">代码实现・数据准备</h3>
 <p>首先我们构造一下数据点:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pts <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>pts[:<span style="color:#ae81ff">10</span>] <span style="color:#f92672">+=</span> [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>pts[<span style="color:#ae81ff">10</span>:] <span style="color:#f92672">+=</span> [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>]
-</span></span></code></pre></div><p>我们随机初始了20个标准正态分布的二维座标点<code>pts</code>，然后将前10个点和后10个点的座标分别加上$(0.5, 1)$，$(5, 10)$使这两组数据点的均值分别趋近于$(0.5, 1)$，$(5, 10)$「当然，我们并不会把均值点调整的这个信息告诉后面的k均值算法」。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+
+pts <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">2</span>)
+pts[:<span style="color:#ae81ff">10</span>] <span style="color:#f92672">+=</span> [<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1</span>]
+pts[<span style="color:#ae81ff">10</span>:] <span style="color:#f92672">+=</span> [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>]
+</code></pre></div><p>我们随机初始了20个标准正态分布的二维座标点<code>pts</code>，然后将前10个点和后10个点的座标分别加上$(0.5, 1)$，$(5, 10)$使这两组数据点的均值分别趋近于$(0.5, 1)$，$(5, 10)$「当然，我们并不会把均值点调整的这个信息告诉后面的k均值算法」。</p>
 <p>我们用<code>numpy.random.permutation</code>生成一个随机索引序列用来打乱原本<code>pts</code>中的顺序，算是给实验增加一点点挑战:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(len(pts))
-</span></span><span style="display:flex;"><span>pts <span style="color:#f92672">=</span> pts[idx]
-</span></span></code></pre></div><h3 id="代码实现步骤一">代码实现・步骤一</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step1</span>(k<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>    centroids <span style="color:#f92672">=</span> pts[np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(len(pts), k, replace<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)]
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> centroids
-</span></span></code></pre></div><p>使用<code>numpy.random.choice</code>生成k个不重复的索引下标，参数设定<code>replace=False</code>确保不重复。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>permutation(len(pts))
+pts <span style="color:#f92672">=</span> pts[idx]
+</code></pre></div><h3 id="代码实现步骤一">代码实现・步骤一</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step1</span>(k<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>):
+    centroids <span style="color:#f92672">=</span> pts[np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(len(pts), k, replace<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)]
+    <span style="color:#66d9ef">return</span> centroids
+</code></pre></div><p>使用<code>numpy.random.choice</code>生成k个不重复的索引下标，参数设定<code>replace=False</code>确保不重复。</p>
 <h3 id="代码实现步骤二">代码实现・步骤二</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step2</span>(centroids):
-</span></span><span style="display:flex;"><span>    clusters <span style="color:#f92672">=</span> {i: [] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(centroids))}
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> point <span style="color:#f92672">in</span> pts:
-</span></span><span style="display:flex;"><span>        c_id <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(np<span style="color:#f92672">.</span>sum((centroids <span style="color:#f92672">-</span> point)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</span></span><span style="display:flex;"><span>        clusters[c_id]<span style="color:#f92672">.</span>append(point)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> clusters
-</span></span></code></pre></div><p>我们使用迭代的方法遍历每一个点，用各个点同均值点<code>centroids</code>做欧氏几何距离评估来判断当前点<code>point</code>属于哪一个族群<code>cluster</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step2</span>(centroids):
+    clusters <span style="color:#f92672">=</span> {i: [] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(centroids))}
+    <span style="color:#66d9ef">for</span> point <span style="color:#f92672">in</span> pts:
+        c_id <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(np<span style="color:#f92672">.</span>sum((centroids <span style="color:#f92672">-</span> point)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+        clusters[c_id]<span style="color:#f92672">.</span>append(point)
+    <span style="color:#66d9ef">return</span> clusters
+</code></pre></div><p>我们使用迭代的方法遍历每一个点，用各个点同均值点<code>centroids</code>做欧氏几何距离评估来判断当前点<code>point</code>属于哪一个族群<code>cluster</code>。</p>
 <p>欧氏几何距离计算的公式为 $d(p,q) = \sqrt{\sum_{i=1}^{n} (p_i - q_i)^2}$，由于我们只需要获取极小值所以不必计算最外层的开方，于是有 $\hat{d}(p,q) = \sum_{i=1}^{n} (p_i - q_i)^2$，代码的表现形式如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>c_id <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(np<span style="color:#f92672">.</span>sum((centroids <span style="color:#f92672">-</span> point)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</span></span></code></pre></div><p>函数<code>numpy.argmin</code>取出数组最小值所在的下标。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">c_id <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(np<span style="color:#f92672">.</span>sum((centroids <span style="color:#f92672">-</span> point)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>函数<code>numpy.argmin</code>取出数组最小值所在的下标。</p>
 <h3 id="代码实现步骤三">代码实现・步骤三</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step3</span>(clusters):
-</span></span><span style="display:flex;"><span>    centroids <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((len(clusters), <span style="color:#ae81ff">2</span>))
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, c_pts <span style="color:#f92672">in</span> clusters<span style="color:#f92672">.</span>items():
-</span></span><span style="display:flex;"><span>        centroids[i] <span style="color:#f92672">=</span> sum(c_pts) <span style="color:#f92672">/</span> len(c_pts)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> centroids
-</span></span></code></pre></div><p>在步骤三的函数中我们将每一个族群的数据点相加然后除以族群中数据点的数目，这样得到的均值会作为新的均值点。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kmeans_step3</span>(clusters):
+    centroids <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((len(clusters), <span style="color:#ae81ff">2</span>))
+    <span style="color:#66d9ef">for</span> i, c_pts <span style="color:#f92672">in</span> clusters<span style="color:#f92672">.</span>items():
+        centroids[i] <span style="color:#f92672">=</span> sum(c_pts) <span style="color:#f92672">/</span> len(c_pts)
+    <span style="color:#66d9ef">return</span> centroids
+</code></pre></div><p>在步骤三的函数中我们将每一个族群的数据点相加然后除以族群中数据点的数目，这样得到的均值会作为新的均值点。</p>
 <h3 id="代码实现算法总成">代码实现・算法总成</h3>
 <p>最后，我们来看一下所有步骤的执行过程:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 步骤一</span>
-</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>centroids <span style="color:#f92672">=</span> kmeans_step1(k)
-</span></span><span style="display:flex;"><span>print(centroids)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重复3次「步骤二，步骤三」</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 步骤二</span>
-</span></span><span style="display:flex;"><span>    clusters <span style="color:#f92672">=</span> kmeans_step2(centroids)
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 步骤三</span>
-</span></span><span style="display:flex;"><span>    centroids <span style="color:#f92672">=</span> kmeans_step3(clusters)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(centroids)
-</span></span></code></pre></div><p>如果愿意我们也可以绘制出最终的结果:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(pts[:, <span style="color:#ae81ff">0</span>], pts[:, <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#39;o&#39;</span>, centroids[:, <span style="color:#ae81ff">0</span>], centroids[:, <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#39;x&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/kmeans_2.png" alt="kmeans-2.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 步骤一</span>
+k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+centroids <span style="color:#f92672">=</span> kmeans_step1(k)
+print(centroids)
+
+<span style="color:#75715e"># 重复3次「步骤二，步骤三」</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+    <span style="color:#75715e"># 步骤二</span>
+    clusters <span style="color:#f92672">=</span> kmeans_step2(centroids)
+    <span style="color:#75715e"># 步骤三</span>
+    centroids <span style="color:#f92672">=</span> kmeans_step3(clusters)
+
+print(centroids)
+</code></pre></div><p>如果愿意我们也可以绘制出最终的结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(pts[:, <span style="color:#ae81ff">0</span>], pts[:, <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#39;o&#39;</span>, centroids[:, <span style="color:#ae81ff">0</span>], centroids[:, <span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#39;x&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/kmeans_2.png" alt="kmeans-2.png"></p>
 <p><a href="/post/062-artificial-neural-network-env/">下篇 人工神经网络・操作环境准备</a></p>
 
   </section>

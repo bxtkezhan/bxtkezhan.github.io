@@ -6,14 +6,15 @@
     <description>Recent content in AIGC on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 06 Mar 2023 23:05:15 +0800</lastBuildDate>
-    <atom:link href="http://bxtkezhan.github.io/categories/aigc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Mar 2023 23:05:15 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/categories/aigc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>图像生成模型基础・自动编码器</title>
       <link>http://bxtkezhan.github.io/post/075-autoencoder/</link>
       <pubDate>Mon, 06 Mar 2023 23:05:15 +0800</pubDate>
+      
       <guid>http://bxtkezhan.github.io/post/075-autoencoder/</guid>
       <description>今天我们使用Python编程语言和PyTorch深度学习库实现一个用于图像有损压缩的自动编码器模型，针对MNIST数据集进行讲解。</description>
     </item>
+    
   </channel>
 </rss>

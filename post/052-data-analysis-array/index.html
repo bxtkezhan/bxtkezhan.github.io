@@ -5,7 +5,7 @@
 <meta name="description" content="数组结构可以快速有序的处理一系列的数据。因此，在处理数据的时候常常要用到数组或多维数组，一个常用的例子就是在处理Excel表格数据的时候将其表示为二维数组。">
 <meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -138,99 +138,99 @@
 </tbody>
 </table>
 <p>使用numpy数组来存储它:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>	[<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
-</span></span><span style="display:flex;"><span>	[<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
-</span></span><span style="display:flex;"><span>	[<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
-</span></span><span style="display:flex;"><span>	[<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
-</span></span><span style="display:flex;"><span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>array2d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(data)
-</span></span><span style="display:flex;"><span>print(array2d<span style="color:#f92672">.</span>shape, array2d<span style="color:#f92672">.</span>dtype)
-</span></span><span style="display:flex;"><span>print(array2d)
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>4, 3<span style="color:#f92672">)</span> float64
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[[</span>1.1 2.1 3.1<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span> <span style="color:#f92672">[</span>1.2 2.2 3.2<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span> <span style="color:#f92672">[</span>1.3 2.3 3.3<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span> <span style="color:#f92672">[</span>1.4 2.4 3.4<span style="color:#f92672">]]</span>
-</span></span></code></pre></div><p>在上述代码中我们将一个“二维”的序列结构「例如: list, tuple」转换成了numpy的二维数组。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+
+data <span style="color:#f92672">=</span> [
+	[<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
+	[<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
+	[<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
+	[<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
+]
+
+array2d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(data)
+print(array2d<span style="color:#f92672">.</span>shape, array2d<span style="color:#f92672">.</span>dtype)
+print(array2d)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span>4, 3<span style="color:#f92672">)</span> float64
+<span style="color:#f92672">[[</span>1.1 2.1 3.1<span style="color:#f92672">]</span>
+ <span style="color:#f92672">[</span>1.2 2.2 3.2<span style="color:#f92672">]</span>
+ <span style="color:#f92672">[</span>1.3 2.3 3.3<span style="color:#f92672">]</span>
+ <span style="color:#f92672">[</span>1.4 2.4 3.4<span style="color:#f92672">]]</span>
+</code></pre></div><p>在上述代码中我们将一个“二维”的序列结构「例如: list, tuple」转换成了numpy的二维数组。</p>
 <p>使用numpy数组的<code>.shape</code>属性可以查看数组的维度信息，从运行输出可以看出这是一个4行3列的numpy数组；使用numpy数组的<code>.dtype</code>属性可以查看数组的类型信息，从运行结果可以看出numpy数组的元素数值类型为64位浮点型。</p>
 <p>用类似的方法我们也可以创建其它维度的numpy数组，例如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dim1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-</span></span><span style="display:flex;"><span>print(dim1<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>dim3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>print(dim3<span style="color:#f92672">.</span>shape)
-</span></span></code></pre></div><p>除了将list，tuple这类序列结构转换为numpy数组的创建方法，我们还可以直接初始化一个numpy数组。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dim1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+print(dim1<span style="color:#f92672">.</span>shape)
+dim3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+print(dim3<span style="color:#f92672">.</span>shape)
+</code></pre></div><p>除了将list，tuple这类序列结构转换为numpy数组的创建方法，我们还可以直接初始化一个numpy数组。</p>
 <p>初始化一个3行4列的numpy数组，其中的每一个元素的值都为0，且值的类型为float:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>zeros <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>), dtype<span style="color:#f92672">=</span>float)
-</span></span></code></pre></div><p>初始化一个3行4列的numpy数组，其中的每一个元素的值都为1，且值的类型为int:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ones <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>), dtype<span style="color:#f92672">=</span>int)
-</span></span></code></pre></div><h3 id="numpy数组的索引">numpy数组的索引</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">zeros <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>), dtype<span style="color:#f92672">=</span>float)
+</code></pre></div><p>初始化一个3行4列的numpy数组，其中的每一个元素的值都为1，且值的类型为int:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ones <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>), dtype<span style="color:#f92672">=</span>int)
+</code></pre></div><h3 id="numpy数组的索引">numpy数组的索引</h3>
 <p>numpy数组可以直接在多个维度上进行索引操作，例如<code>arr[0, 1, 2]</code>表示先取出arr的第0个子数组A「假定为A」，然后取A的第1个子数组B「假定为B」，最后取出B的第2个子数组。</p>
 <p>为了方便理解，我们举个例子。现在假设二维数组就是表格，那么三维数组则代表一组表格。现在我们有一组表格G，<code>G[0]</code>表示该组的第0张表格；<code>G[0, 1]</code>表示第0张表格的第1行；<code>G[0, 1, 2]</code>表示第0张表格的第1行的第2列。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>G <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
-</span></span><span style="display:flex;"><span>]] <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>)
-</span></span><span style="display:flex;"><span>print(G<span style="color:#f92672">.</span>shape)
-</span></span><span style="display:flex;"><span>print(G[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>5, 4, 3<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>3.2
-</span></span></code></pre></div><p>通过索引我们可以对数组进行批量计算和赋值:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>G <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
-</span></span><span style="display:flex;"><span>]] <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>)
-</span></span><span style="display:flex;"><span>G[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>G[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>print(G[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-</span></span><span style="display:flex;"><span>print(G[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-</span></span><span style="display:flex;"><span>print(G[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>3.2
-</span></span><span style="display:flex;"><span>4.2
-</span></span><span style="display:flex;"><span>5.2
-</span></span></code></pre></div><p>冒号<code>:</code>作为索引号表示某维度的全体成员，例如<code>G[0, 1, 2]</code>表示0号表格第1行第2列而<code>G[0, :, 2]</code>表示0号表格每一行的第2列。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">G <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[
+    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
+    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
+    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
+    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
+]] <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>)
+print(G<span style="color:#f92672">.</span>shape)
+print(G[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span>5, 4, 3<span style="color:#f92672">)</span>
+3.2
+</code></pre></div><p>通过索引我们可以对数组进行批量计算和赋值:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">G <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[
+    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
+    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
+    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
+    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
+]] <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>)
+G[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+G[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">2</span>
+print(G[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+print(G[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+print(G[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">3.2
+4.2
+5.2
+</code></pre></div><p>冒号<code>:</code>作为索引号表示某维度的全体成员，例如<code>G[0, 1, 2]</code>表示0号表格第1行第2列而<code>G[0, :, 2]</code>表示0号表格每一行的第2列。</p>
 <h3 id="求和求平均">求和、求平均</h3>
 <p>下面介绍一下如何在numpy数组中求和、求平均。</p>
 <p>我们使用如下二维数组来做示范:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>table <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
-</span></span><span style="display:flex;"><span>])
-</span></span></code></pre></div><p>求和:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>_sum <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>sum()
-</span></span><span style="display:flex;"><span>print(_sum)
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>26.999999999999996
-</span></span></code></pre></div><p>先索引，然后求和，如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(table[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>sum())
-</span></span><span style="display:flex;"><span>print(table[:, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>sum())
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>6.300000000000001
-</span></span><span style="display:flex;"><span>5.0
-</span></span></code></pre></div><p>求平均:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>mean <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>mean()
-</span></span><span style="display:flex;"><span>print(mean)
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2.2499999999999996
-</span></span></code></pre></div><p>先索引，然后求平均，如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(table[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>mean())
-</span></span><span style="display:flex;"><span>print(table[:, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>mean())
-</span></span></code></pre></div><p>运行后输出:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2.1
-</span></span><span style="display:flex;"><span>1.25
-</span></span></code></pre></div><p><a href="/post/053-matplotlib/">下篇 数据分析・数据可视化</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">table <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([
+    [<span style="color:#ae81ff">1.1</span>, <span style="color:#ae81ff">2.1</span>, <span style="color:#ae81ff">3.1</span>],
+    [<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">2.2</span>, <span style="color:#ae81ff">3.2</span>],
+    [<span style="color:#ae81ff">1.3</span>, <span style="color:#ae81ff">2.3</span>, <span style="color:#ae81ff">3.3</span>],
+    [<span style="color:#ae81ff">1.4</span>, <span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">3.4</span>],
+])
+</code></pre></div><p>求和:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_sum <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>sum()
+print(_sum)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">26.999999999999996
+</code></pre></div><p>先索引，然后求和，如:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(table[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>sum())
+print(table[:, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>sum())
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">6.300000000000001
+5.0
+</code></pre></div><p>求平均:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mean <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>mean()
+print(mean)
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">2.2499999999999996
+</code></pre></div><p>先索引，然后求平均，如:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(table[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>mean())
+print(table[:, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>mean())
+</code></pre></div><p>运行后输出:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">2.1
+1.25
+</code></pre></div><p><a href="/post/053-matplotlib/">下篇 数据分析・数据可视化</a></p>
 
   </section>
 </article>

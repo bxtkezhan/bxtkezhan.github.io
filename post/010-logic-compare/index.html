@@ -5,7 +5,7 @@
 <meta name="description" content="Python当中可以用`and`、`or`、`not`关键字来进行与、或、非逻辑运算，而`True`、`False`则用于表示布尔值中的真与假；Python当中可以使用`&gt;`、`&gt;=`、`==`、`&lt;=`、`&lt;`、`!=`符号来进行值的比较。">
 <meta name="keywords" content="python,idle,黑客,程序设计,免费,简单,入门">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -70,17 +70,17 @@
 
 <h3 id="逻辑运算">逻辑运算</h3>
 <p>Python当中可以用<code>and</code>、<code>or</code>、<code>not</code>关键字来进行与、或、非逻辑运算，而<code>True</code>、<code>False</code>则用于表示布尔值中的真与假:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>f <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-</span></span><span style="display:flex;"><span>print(t <span style="color:#f92672">and</span> t)
-</span></span><span style="display:flex;"><span>print(t <span style="color:#f92672">and</span> f)
-</span></span><span style="display:flex;"><span>print(f <span style="color:#f92672">and</span> f)
-</span></span><span style="display:flex;"><span>print(t <span style="color:#f92672">or</span> t)
-</span></span><span style="display:flex;"><span>print(t <span style="color:#f92672">or</span> f)
-</span></span><span style="display:flex;"><span>print(f <span style="color:#f92672">or</span> f)
-</span></span><span style="display:flex;"><span>print(<span style="color:#f92672">not</span> t)
-</span></span><span style="display:flex;"><span>print(<span style="color:#f92672">not</span> f)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+print(t <span style="color:#f92672">and</span> t)
+print(t <span style="color:#f92672">and</span> f)
+print(f <span style="color:#f92672">and</span> f)
+print(t <span style="color:#f92672">or</span> t)
+print(t <span style="color:#f92672">or</span> f)
+print(f <span style="color:#f92672">or</span> f)
+print(<span style="color:#f92672">not</span> t)
+print(<span style="color:#f92672">not</span> f)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>True
 False
 False
@@ -90,25 +90,25 @@ False
 False
 True
 </code></pre><p>除了<code>True</code>、<code>False</code>外，其它类型的值也可以转换为对应的布尔值，通常数字中0为假，非0为真，字符串中空字符串为假，非空字符串为真，使用<code>bool</code>函数可以进行转换:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>number_100 <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>number_0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>print(bool(number_100))
-</span></span><span style="display:flex;"><span>print(bool(number_0))
-</span></span><span style="display:flex;"><span>string_text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nice to meet you&#34;</span>
-</span></span><span style="display:flex;"><span>string_empty <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>print(bool(string_text))
-</span></span><span style="display:flex;"><span>print(bool(string_empty))
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">number_100 <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+number_0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+print(bool(number_100))
+print(bool(number_0))
+string_text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nice to meet you&#34;</span>
+string_empty <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+print(bool(string_text))
+print(bool(string_empty))
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>True
 False
 True
 False
 </code></pre><p>由于很多类型都可以转换成布尔型，这意味着并非只有<code>True</code>、<code>False</code>可以进行逻辑运算:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">and</span> <span style="color:#ae81ff">100</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">100</span>)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">and</span> <span style="color:#ae81ff">100</span>)
+print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span>)
+print(<span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">0</span>)
+print(<span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">100</span>)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>100
 0
 0
@@ -123,25 +123,25 @@ False
 <li><code>A &lt; B</code> : 若A小于B则返回真否则返回假</li>
 <li><code>A != B</code> : 若A不等于B则返回真否则返回假</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;world&#34;</span>)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">100</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>)
+print(<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>)
+print(<span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;world&#34;</span>)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>True
 True
 True
 </code></pre><h3 id="优先级">优先级</h3>
 <p>Python当中的表达式具备优先级别，计算表达式中<code>* / %</code>优先于<code>+ -</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>-5
 </code></pre><p>计算表达式则整体优先于比较表达式:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>True
 </code></pre><p>比较表达式则整体优先于逻辑表达式:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>)
-</span></span></code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(<span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>)
+</code></pre></div><p>运行结果:</p>
 <pre tabindex="0"><code>1
 </code></pre><p><a href="/post/011-if/">下篇 初学篇・条件控制语句</a></p>
 

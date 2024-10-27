@@ -6,14 +6,15 @@
     <description>Recent content in GPT on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 14 Jan 2024 15:02:04 +0800</lastBuildDate>
-    <atom:link href="http://bxtkezhan.github.io/categories/gpt/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Jan 2024 15:02:04 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/categories/gpt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI助手 Google Gemini</title>
       <link>http://bxtkezhan.github.io/post/084-gemini-try/</link>
       <pubDate>Sun, 14 Jan 2024 15:02:04 +0800</pubDate>
+      
       <guid>http://bxtkezhan.github.io/post/084-gemini-try/</guid>
       <description>随着GPT系列的对话生成语言模型的推出和发展，我们可以比较轻松的借助这些工具搭建出AI助手服务。可以说，GPT系列的语言模型就是搭建个人助手服务的一个要素。</description>
     </item>
+    
   </channel>
 </rss>

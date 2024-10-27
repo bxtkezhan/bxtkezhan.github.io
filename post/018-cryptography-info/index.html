@@ -5,7 +5,7 @@
 <meta name="description" content="密码学（英语：Cryptography）可分为古典密码学和现代密码学。古典密码学主要关注信息的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注信息保密问题，还同时涉及信息完整性验证（消息验证码）、信息发布的不可抵赖性（数字签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。">
 <meta name="keywords" content="python,密码学,凯撒密码,替换式密码,黑客,简单,入门">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -98,27 +98,27 @@
 </table>
 <p>根据上述表格所示的规则，我们可以将<strong>明文</strong>&ldquo;HELLO WORLD&quot;加密成<strong>密文</strong>&ldquo;KHOOR ZRUOG&rdquo;。</p>
 <p>使用Python实现凯撒加密:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> string
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 取出string模块内置的大写英文字母</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
-</span></span><span style="display:flex;"><span>length <span style="color:#f92672">=</span> len(<span style="color:#66d9ef">case</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>bias <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;偏移: &#39;</span>)<span style="color:#f92672">.</span>strip())
-</span></span><span style="display:flex;"><span>src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper() <span style="color:#75715e"># upper方法转换字母为大写</span>
-</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 使用字符串的find方法找出字符c在字符串case中的位置</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如果没有找到将返回-1，否则返回所在位置的下标</span>
-</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> <span style="color:#66d9ef">case</span><span style="color:#f92672">.</span>find(c)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 如果没有找到就直接将字符拼接到dst</span>
-</span></span><span style="display:flex;"><span>        dst <span style="color:#f92672">+=</span> c
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 如果找到了，就通过转换得到偏移后的位置j</span>
-</span></span><span style="display:flex;"><span>        j <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> bias) <span style="color:#f92672">%</span> length
-</span></span><span style="display:flex;"><span>        dst <span style="color:#f92672">+=</span> <span style="color:#66d9ef">case</span>[j] <span style="color:#75715e"># 将偏移后的字母拼接到dst</span>
-</span></span><span style="display:flex;"><span>print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
-</span></span></code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<span style="color:#75715e"># 取出string模块内置的大写英文字母</span>
+case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
+length <span style="color:#f92672">=</span> len(case)
+
+bias <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#39;偏移: &#39;</span>)<span style="color:#f92672">.</span>strip())
+src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper() <span style="color:#75715e"># upper方法转换字母为大写</span>
+dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
+    <span style="color:#75715e"># 使用字符串的find方法找出字符c在字符串case中的位置</span>
+    <span style="color:#75715e"># 如果没有找到将返回-1，否则返回所在位置的下标</span>
+    i <span style="color:#f92672">=</span> case<span style="color:#f92672">.</span>find(c)
+    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#75715e"># 如果没有找到就直接将字符拼接到dst</span>
+        dst <span style="color:#f92672">+=</span> c
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#75715e"># 如果找到了，就通过转换得到偏移后的位置j</span>
+        j <span style="color:#f92672">=</span> (i <span style="color:#f92672">+</span> bias) <span style="color:#f92672">%</span> length
+        dst <span style="color:#f92672">+=</span> case[j] <span style="color:#75715e"># 将偏移后的字母拼接到dst</span>
+print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>, dst)
+</code></pre></div><p>运行效果:</p>
 <pre tabindex="0"><code>偏移: 3
 文本: hello world
 HELLO WORLD -&gt; KHOOR ZRUOG
@@ -130,27 +130,27 @@ HELLO WORLD -&gt; KHOOR ZRUOG
 密文字母表 ZEBRASCDFGHIJKLMNOPQTUVWXY</p>
 <p>对&quot;flee at once. we are discovered!&ldquo;进行加密得到结果&quot;SIAA ZQ LKBA. VA ZOA RFPBLUAOAR!&quot;。</p>
 <p>使用Python实现简易替换密码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> string
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p_case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
-</span></span><span style="display:flex;"><span>c_case <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;单词: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> p_case:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> c <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> c_case:
-</span></span><span style="display:flex;"><span>        c_case <span style="color:#f92672">+=</span> c
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;明文字母表:&#39;</span>, p_case)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;密文字母表:&#39;</span>, c_case)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
-</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
-</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> p_case<span style="color:#f92672">.</span>find(c)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>        dst <span style="color:#f92672">+=</span> c
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>        dst <span style="color:#f92672">+=</span> c_case[i]
-</span></span><span style="display:flex;"><span>print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
-</span></span><span style="display:flex;"><span>print(dst)
-</span></span></code></pre></div><p>运行效果:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+
+p_case <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_uppercase
+c_case <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;单词: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> p_case:
+    <span style="color:#66d9ef">if</span> c <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> c_case:
+        c_case <span style="color:#f92672">+=</span> c
+print(<span style="color:#e6db74">&#39;明文字母表:&#39;</span>, p_case)
+print(<span style="color:#e6db74">&#39;密文字母表:&#39;</span>, c_case)
+
+src <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#39;文本: &#39;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+dst <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> src:
+    i <span style="color:#f92672">=</span> p_case<span style="color:#f92672">.</span>find(c)
+    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+        dst <span style="color:#f92672">+=</span> c
+    <span style="color:#66d9ef">else</span>:
+        dst <span style="color:#f92672">+=</span> c_case[i]
+print(src, <span style="color:#e6db74">&#39;-&gt;&#39;</span>)
+print(dst)
+</code></pre></div><p>运行效果:</p>
 <pre tabindex="0"><code>单词: zebras
 明文字母表: ABCDEFGHIJKLMNOPQRSTUVWXYZ
 密文字母表: ZEBRASCDFGHIJKLMNOPQTUVWXY

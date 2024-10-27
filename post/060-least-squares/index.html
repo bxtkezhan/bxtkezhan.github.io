@@ -5,7 +5,7 @@
 <meta name="description" content="下面我们使用最小二乘拟合的方法去拟合一系列的数据点，该操作常用于在一组数据点中窥见变化趋势。">
 <meta name="keywords" content="python,数据分析,numpy,matplotlib,scipy,最小二乘,kmeans">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -69,21 +69,21 @@
 <p>下面我们使用最小二乘拟合的方法去拟合一系列的数据点，该操作常用于在一组数据点中窥见变化趋势。</p>
 <h3 id="构造数据集">构造数据集</h3>
 <p>我们先在 $[-5, 5]$ 范围内容对函数 $y = x^2 + 2x$ 进行均匀随机采样，获得100个数据点:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random((<span style="color:#ae81ff">100</span>,)) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>print(x<span style="color:#f92672">.</span>max(), x<span style="color:#f92672">.</span>min())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sort(x)
-</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> x
-</span></span></code></pre></div><p><code>x</code>为该组数据点的横座标值，<code>y</code>为对应的纵座标值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random((<span style="color:#ae81ff">100</span>,)) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+print(x<span style="color:#f92672">.</span>max(), x<span style="color:#f92672">.</span>min())
+
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sort(x)
+y <span style="color:#f92672">=</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> x
+</code></pre></div><p><code>x</code>为该组数据点的横座标值，<code>y</code>为对应的纵座标值。</p>
 <p>我们给该组数据添加一点随机扰动，让它至少不完全落在函数 $y = x^2 + 2x$ 上:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>y <span style="color:#f92672">+=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random(y<span style="color:#f92672">.</span>shape) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
-</span></span></code></pre></div><p>可以使用matplotlib可视化一下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, y)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p>至此，我们得到了一系列数据点。当然，如果手头正好有适合的数据也可以考虑用它来替代刚刚生成的数据点。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y <span style="color:#f92672">+=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random(y<span style="color:#f92672">.</span>shape) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</code></pre></div><p>可以使用matplotlib可视化一下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(x, y)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>至此，我们得到了一系列数据点。当然，如果手头正好有适合的数据也可以考虑用它来替代刚刚生成的数据点。</p>
 <h3 id="拟合多项式">拟合多项式</h3>
 <p>现在我们构造数据集，然后用将这些点拟合成一个二次多项式: $y = ax^2 + bx$，我们需要求解系数a与b的值。</p>
 <p>$$
@@ -94,17 +94,17 @@ y = ax^2 + bx \tag 1 \\
 \end{align}
 $$</p>
 <p>首先我们构造由$x^2$与$x$组成的矩阵$A$:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate([x, x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>])<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
-</span></span></code></pre></div><p>矩阵$A$的第0列为$x$，第1列为$x^2$。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate([x, x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>])<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>T
+</code></pre></div><p>矩阵$A$的第0列为$x$，第1列为$x^2$。</p>
 <p>我们使用公式 $(A^TA)^{-1}A^Ty = \hat{c}$ 求解系数 $\hat{c} = \begin{vmatrix} b \\ a \end{vmatrix}$:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>b, a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>inv(A<span style="color:#f92672">.</span>T <span style="color:#f92672">@</span> A) <span style="color:#f92672">@</span> A<span style="color:#f92672">.</span>T <span style="color:#f92672">@</span> y
-</span></span><span style="display:flex;"><span>print(a, b)
-</span></span></code></pre></div><p><strong>Note:</strong> 此处的$(A^TA)^{-1}$指的是求$A^TA$的逆矩阵，可用numpy的<code>linalg.inv</code>函数计算；另外由于使用的是numpy数组对象所以需要使用运算符<code>@</code>执行矩阵乘法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">b, a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>inv(A<span style="color:#f92672">.</span>T <span style="color:#f92672">@</span> A) <span style="color:#f92672">@</span> A<span style="color:#f92672">.</span>T <span style="color:#f92672">@</span> y
+print(a, b)
+</code></pre></div><p><strong>Note:</strong> 此处的$(A^TA)^{-1}$指的是求$A^TA$的逆矩阵，可用numpy的<code>linalg.inv</code>函数计算；另外由于使用的是numpy数组对象所以需要使用运算符<code>@</code>执行矩阵乘法。</p>
 <p>现在我们可以使用系数<code>a</code>与<code>b</code>重新生成对应的纵座标<code>_y</code>，并进行可视化:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>_y <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> b <span style="color:#f92672">*</span> x
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, y, <span style="color:#e6db74">&#39;o&#39;</span>, x, _y, <span style="color:#e6db74">&#39;-&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/least_squares.png" alt="least\_squares.png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_y <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> b <span style="color:#f92672">*</span> x
+plt<span style="color:#f92672">.</span>plot(x, y, <span style="color:#e6db74">&#39;o&#39;</span>, x, _y, <span style="color:#e6db74">&#39;-&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/least_squares.png" alt="least\_squares.png"></p>
 <p><a href="/post/061-cluster-analysis/">下篇 数据分析・聚类分析</a></p>
 
   </section>

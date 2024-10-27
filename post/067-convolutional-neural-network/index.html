@@ -5,7 +5,7 @@
 <meta name="description" content="我们之前构建的神经网络都是靠普通的线性网络层Linear进行拟合，然而在处理图像数据的时候我们其实可以用效果更好的卷积网络层。将卷积网络层加入到我们的神经网络就可以在一定程度上提升模型的准确率，而由于此种神经网络的结构中包含卷积网络层，因此，也常被叫做卷积神经网络。">
 <meta name="keywords" content="python,神经网络,人工智能,pytorch,tensor,ai,mnist,softmax,cnn">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -82,24 +82,24 @@ $$</p>
 <p>了解了卷积和池化操作，我们再来看看如何应用到神经网络。</p>
 <h3 id="卷积神经网络">卷积神经网络</h3>
 <p>上一节中，我们的神经网络结构如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</span></span></code></pre></div><p>我们将其进行修改:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</span></span></code></pre></div><p>调用<code>nn.Conv2d(1, 10, 5)</code>构建一个卷积层，它的输入为1，对应图像的通道数，输出通道数为10，卷积核的大小为5x5；调用<code>nn.MaxPool2d(2)</code>构建一个最大池化层，它的检测窗口大小为2x2……</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mlp <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Flatten(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">28</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">256</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>我们将其进行修改:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+    nn<span style="color:#f92672">.</span>Flatten(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>调用<code>nn.Conv2d(1, 10, 5)</code>构建一个卷积层，它的输入为1，对应图像的通道数，输出通道数为10，卷积核的大小为5x5；调用<code>nn.MaxPool2d(2)</code>构建一个最大池化层，它的检测窗口大小为2x2……</p>
 <ol>
 <li>我们输入数据的维度是: nx1x28x28「batch size x 图像通道数 x 图像像素高度 x 图像像素宽度；</li>
 <li>经过神经网络第一层<code>nn.Conv2d(1, 10, 5)</code>输出: nx10x24x24；</li>
@@ -113,74 +113,74 @@ $$</p>
 <h3 id="重新运行代码训练模型">重新运行代码训练模型</h3>
 <p>我们在同之前一样的条件下训练这个卷积神经网络。</p>
 <p>通过10轮的训练，我们的新模型在测试集上的表现如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>testing<span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span>loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4784890896157374</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9838</span>
-</span></span></code></pre></div><p>其中损失率<code>loss</code>为1.478489左右，准确率达到98.38%。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">testing<span style="color:#f92672">...</span>
+loss<span style="color:#f92672">=</span><span style="color:#ae81ff">1.4784890896157374</span>, accuracy<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9838</span>
+</code></pre></div><p>其中损失率<code>loss</code>为1.478489左右，准确率达到98.38%。</p>
 <p>这一次修改使得模型无论在拟合效果还是最终测试准确率上都有显著提升。</p>
 <h3 id="完整代码">完整代码</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-</span></span><span style="display:flex;"><span>test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Flatten(),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(cnn<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
-</span></span><span style="display:flex;"><span>    cnn <span style="color:#f92672">=</span> cnn<span style="color:#f92672">.</span>train()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
-</span></span><span style="display:flex;"><span>        outputs <span style="color:#f92672">=</span> cnn(inputs)
-</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
-</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-</span></span><span style="display:flex;"><span>                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
-</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
-</span></span><span style="display:flex;"><span>    cnn <span style="color:#f92672">=</span> cnn<span style="color:#f92672">.</span>eval()
-</span></span><span style="display:flex;"><span>    losses <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
-</span></span><span style="display:flex;"><span>            outputs <span style="color:#f92672">=</span> cnn(inputs)
-</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
-</span></span><span style="display:flex;"><span>            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
-</span></span><span style="display:flex;"><span>            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
-</span></span><span style="display:flex;"><span>            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
-</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
-</span></span><span style="display:flex;"><span>    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>save(cnn, <span style="color:#e6db74">&#39;cnn.pt&#39;</span>)
-</span></span><span style="display:flex;"><span>cnn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;cnn.pt&#39;</span>)
-</span></span><span style="display:flex;"><span>print(cnn)
-</span></span></code></pre></div><p><a href="/post/068-batch-normalization/">下篇 人工神经网络・批量标准化</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+torch<span style="color:#f92672">.</span>manual_seed(<span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+<span style="color:#f92672">from</span> torchvision.datasets <span style="color:#f92672">import</span> MNIST
+<span style="color:#f92672">from</span> torchvision.transforms <span style="color:#f92672">import</span> ToTensor
+<span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+
+
+train_set    <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+test_set     <span style="color:#f92672">=</span> MNIST(<span style="color:#e6db74">&#39;.&#39;</span>, train<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, transform<span style="color:#f92672">=</span>ToTensor())
+
+train_loader <span style="color:#f92672">=</span> DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+test_loader  <span style="color:#f92672">=</span> DataLoader(test_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+
+cnn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+    nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>),
+    nn<span style="color:#f92672">.</span>ReLU(inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+    nn<span style="color:#f92672">.</span>MaxPool2d(<span style="color:#ae81ff">2</span>),
+    nn<span style="color:#f92672">.</span>Flatten(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+
+optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(cnn<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.001</span>)
+
+<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    print(<span style="color:#e6db74">&#39;training...&#39;</span>)
+    cnn <span style="color:#f92672">=</span> cnn<span style="color:#f92672">.</span>train()
+    <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(train_loader):
+        outputs <span style="color:#f92672">=</span> cnn(inputs)
+        loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+        loss<span style="color:#f92672">.</span>backward()
+        optimizer<span style="color:#f92672">.</span>step()
+
+        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+                compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+                accuracy <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>mean(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>float32))<span style="color:#f92672">.</span>item()
+            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>step<span style="color:#e6db74">}</span><span style="color:#e6db74">, loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+
+    print(<span style="color:#e6db74">&#39;testing...&#39;</span>)
+    cnn <span style="color:#f92672">=</span> cnn<span style="color:#f92672">.</span>eval()
+    losses <span style="color:#f92672">=</span> []
+    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        <span style="color:#66d9ef">for</span> step, (inputs, targets) <span style="color:#f92672">in</span> enumerate(test_loader):
+            outputs <span style="color:#f92672">=</span> cnn(inputs)
+            loss <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cross_entropy(outputs, targets)
+            losses<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>item())
+            compares <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(outputs, dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> targets
+            count <span style="color:#f92672">+=</span> torch<span style="color:#f92672">.</span>sum(compares<span style="color:#f92672">.</span>type(torch<span style="color:#f92672">.</span>long))<span style="color:#f92672">.</span>item()
+    loss <span style="color:#f92672">=</span> sum(losses) <span style="color:#f92672">/</span> len(losses)
+    accuracy <span style="color:#f92672">=</span> count <span style="color:#f92672">/</span> len(test_set)
+    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;loss=</span><span style="color:#e6db74">{</span>loss<span style="color:#e6db74">}</span><span style="color:#e6db74">, accuracy=</span><span style="color:#e6db74">{</span>accuracy<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+
+torch<span style="color:#f92672">.</span>save(cnn, <span style="color:#e6db74">&#39;cnn.pt&#39;</span>)
+cnn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;cnn.pt&#39;</span>)
+print(cnn)
+</code></pre></div><p><a href="/post/068-batch-normalization/">下篇 人工神经网络・批量标准化</a></p>
 
   </section>
 </article>

@@ -5,7 +5,7 @@
 <meta name="description" content="今天我们来学习使用Godot 3D模式下的物体运动操作，我们主要会使用到RigidBody3D「刚体」, StaticBody3D「静态」, Camera3D「相机」, DirectionalLight3D「定向光源」这四个节点。当然，除了这几个主要的节点，我们还会使用到处理碰撞检测的CollisionShape3D节点，Godot预置的3D模型，立方体CSGBox3D节点与圆柱体CSGCylinder3D节点。">
 <meta name="keywords" content="3D,Game,Game,Engine,godot,robotic,arm,cnc,robotic,machine">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -103,29 +103,29 @@
 <p><img src="/img/078/07.png" alt=""></p>
 <h3 id="插入控制脚本">插入控制脚本</h3>
 <p>我们右键节点RigidBody3D，点击Attach Script选项，为其添加脚本，并把如下内容写入脚本:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>extends RigidBody3D
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Called when the node enters the scene tree for the first time.</span>
-</span></span><span style="display:flex;"><span>func _ready():
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">pass</span> <span style="color:#75715e"># Replace with function body.</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Called every frame. &#39;delta&#39; is the elapsed time since the previous frame.</span>
-</span></span><span style="display:flex;"><span>func _physics_process(delta):
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_left&#34;</span>):
-</span></span><span style="display:flex;"><span>		linear_velocity<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_right&#34;</span>):
-</span></span><span style="display:flex;"><span>		linear_velocity<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_up&#34;</span>):
-</span></span><span style="display:flex;"><span>		linear_velocity<span style="color:#f92672">.</span>z <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_down&#34;</span>):
-</span></span><span style="display:flex;"><span>		linear_velocity<span style="color:#f92672">.</span>z <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-</span></span></code></pre></div><p>一般来说我们在函数<code>_physics_process</code>中控制物体的物理运动。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">extends RigidBody3D
+
+
+<span style="color:#75715e"># Called when the node enters the scene tree for the first time.</span>
+func _ready():
+	<span style="color:#66d9ef">pass</span> <span style="color:#75715e"># Replace with function body.</span>
+
+
+<span style="color:#75715e"># Called every frame. &#39;delta&#39; is the elapsed time since the previous frame.</span>
+func _physics_process(delta):
+	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_left&#34;</span>):
+		linear_velocity<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
+	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_right&#34;</span>):
+		linear_velocity<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_up&#34;</span>):
+		linear_velocity<span style="color:#f92672">.</span>z <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>
+	<span style="color:#66d9ef">if</span> Input<span style="color:#f92672">.</span>is_action_pressed(<span style="color:#e6db74">&#34;ui_down&#34;</span>):
+		linear_velocity<span style="color:#f92672">.</span>z <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+</code></pre></div><p>一般来说我们在函数<code>_physics_process</code>中控制物体的物理运动。</p>
 <p>我们可以使用方法<code>Input.is_action_pressed</code>来获取键盘方向键输入，<code>ui_left</code>, <code>ui_right</code>, <code>ui_up</code>, <code>ui_down</code>分别对应键盘方向键左，右，上，下。</p>
 <p><code>linear_velocity</code>用于设置刚体的运动速度，我们这里只处理x和z方向。</p>
 <p>例如，当键盘方向键左被按住时触发:</p>
-<pre tabindex="0"><code>if Input.is_action_pressed(&#34;ui_left&#34;):
+<pre tabindex="0"><code>if Input.is_action_pressed(&quot;ui_left&quot;):
 	linear_velocity.x = -3
 </code></pre><p>我们将x方向的速度设置为-3。</p>
 <p>保存后，再次运行场景，我们就可以使用键盘方向键来操作我们的物体进行运动了:</p>

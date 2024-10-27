@@ -6,21 +6,24 @@
     <description>Recent content in 书籍 on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Apr 2021 14:25:24 +0800</lastBuildDate>
-    <atom:link href="http://bxtkezhan.github.io/categories/%E4%B9%A6%E7%B1%8D/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Apr 2021 14:25:24 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/categories/%E4%B9%A6%E7%B1%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>推荐几本C/C&#43;&#43;书籍【免费下载】</title>
       <link>http://bxtkezhan.github.io/post/books_002/</link>
       <pubDate>Fri, 09 Apr 2021 14:25:24 +0800</pubDate>
+      
       <guid>http://bxtkezhan.github.io/post/books_002/</guid>
       <description>根据之前的投票结果，C/C++也是票数非常多的选项，那么这里也推荐几本C/C++书籍。</description>
     </item>
+    
     <item>
       <title>推荐几本Python书籍【免费下载】</title>
       <link>http://bxtkezhan.github.io/post/books_001/</link>
       <pubDate>Mon, 29 Mar 2021 20:26:01 +0800</pubDate>
+      
       <guid>http://bxtkezhan.github.io/post/books_001/</guid>
       <description>根据投票结果，Python为票数最多的选项，那么这里推荐几本Python书籍。</description>
     </item>
+    
   </channel>
 </rss>

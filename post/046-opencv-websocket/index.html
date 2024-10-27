@@ -5,7 +5,7 @@
 <meta name="description" content="了解到如何使用OpenCV调用摄像头并显示视频内容后，我们可以尝试实现支持远程客户端的网络摄像头。我们将使用到OpenCV以及WebSockets。">
 <meta name="keywords" content="python,opencv,cv,目标检测,人脸识别,video,camera">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -68,34 +68,34 @@
 <p><a href="/post/045-opencv-video/">上篇 影像处理・调用摄像头</a></p>
 <p>了解到如何使用OpenCV调用摄像头并显示视频内容后，我们可以尝试实现支持远程客户端的网络摄像头。我们将使用到OpenCV以及WebSockets。</p>
 <p>WebSockets的安装方法记载如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install websockets
-</span></span></code></pre></div><h3 id="服务器程序">服务器程序</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install websockets
+</code></pre></div><h3 id="服务器程序">服务器程序</h3>
 <p>我们在服务器上打开摄像头，然后分享给“遥远”的客户端:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> asyncio
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> websockets
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">capture</span>(websocket, path):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> video<span style="color:#f92672">.</span>isOpened():
-</span></span><span style="display:flex;"><span>        ret, frame <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>read()
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ret: <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>        _, buf <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imencode(<span style="color:#e6db74">&#39;.jpeg&#39;</span>, frame)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> websocket<span style="color:#f92672">.</span>send(buf<span style="color:#f92672">.</span>tobytes())
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.05</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> websockets<span style="color:#f92672">.</span>serve(capture, <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">5678</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>Future()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>    asyncio<span style="color:#f92672">.</span>run(main())
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> video<span style="color:#f92672">.</span>isOpened():
-</span></span><span style="display:flex;"><span>        video<span style="color:#f92672">.</span>release()
-</span></span></code></pre></div><p>有几个地方需要说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> asyncio
+
+<span style="color:#f92672">import</span> websockets
+<span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
+
+
+<span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">capture</span>(websocket, path):
+    <span style="color:#66d9ef">while</span> video<span style="color:#f92672">.</span>isOpened():
+        ret, frame <span style="color:#f92672">=</span> video<span style="color:#f92672">.</span>read()
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ret: <span style="color:#66d9ef">continue</span>
+        _, buf <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imencode(<span style="color:#e6db74">&#39;.jpeg&#39;</span>, frame)
+        <span style="color:#66d9ef">await</span> websocket<span style="color:#f92672">.</span>send(buf<span style="color:#f92672">.</span>tobytes())
+        <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.05</span>)
+
+<span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">with</span> websockets<span style="color:#f92672">.</span>serve(capture, <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#ae81ff">5678</span>):
+        <span style="color:#66d9ef">await</span> asyncio<span style="color:#f92672">.</span>Future()
+
+video <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>VideoCapture(<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">try</span>:
+    asyncio<span style="color:#f92672">.</span>run(main())
+<span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
+    <span style="color:#66d9ef">if</span> video<span style="color:#f92672">.</span>isOpened():
+        video<span style="color:#f92672">.</span>release()
+</code></pre></div><p>有几个地方需要说明：</p>
 <ul>
 <li><code>import asyncio</code> 我们需要引入这个异步模块来帮助处理异步问题</li>
 <li><code>import websockets</code> 需要的WebSocket模块</li>
@@ -109,27 +109,27 @@
 <p>有关WebSockets的更多内容可以去往项目文档网站进行了解: <a href="https://websockets.readthedocs.io/en/stable/index.html">https://websockets.readthedocs.io/en/stable/index.html</a></p>
 <h3 id="客户端html">客户端HTML</h3>
 <p>可以创建一个名为index.html的文本文件「注意.html是扩展名」，复制粘贴以下代码并保存:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">title</span>&gt;OpenCV<span style="color:#960050;background-color:#1e0010">&amp;</span>WebSocket&lt;/<span style="color:#f92672">title</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">head</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;img&#34;</span>/&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">body</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ws</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebSocket</span>(<span style="color:#e6db74">`ws://</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">hostname</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:5678/`</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">image</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#img&#39;</span>);
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ws</span>.<span style="color:#a6e22e">onmessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">createObjectURL</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">data</span>);
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
-</span></span></code></pre></div><h3 id="运行测试">运行测试</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+    &lt;<span style="color:#f92672">head</span>&gt;
+        &lt;<span style="color:#f92672">title</span>&gt;OpenCV<span style="color:#960050;background-color:#1e0010">&amp;</span>WebSocket&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;/<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">body</span>&gt;
+        &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;img&#34;</span>/&gt;
+    &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ws</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebSocket</span>(<span style="color:#e6db74">`ws://</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">hostname</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:5678/`</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">image</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#img&#39;</span>);
+<span style="color:#a6e22e">ws</span>.<span style="color:#a6e22e">onmessage</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>) {
+    <span style="color:#a6e22e">image</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">createObjectURL</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">data</span>);
+};
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><h3 id="运行测试">运行测试</h3>
 <p>首先，我们运行服务端程序，这与之前的代码的运行没有不同，因此不做具体说明。</p>
 <p>然后，我们在HTML文件所在的目录下开启一个静态文件服务器，例如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m http.server
-</span></span></code></pre></div><p>这时用浏览器访问<code>http://&lt;你的局域网IP地址&gt;:8000</code>，如果不出意外，你将看到浏览器中正在显示你电脑摄像头所拍摄的影像。如果你的手机与你的电脑在同一个局域网下「例如都连接家里的路由器」，那么你可以尝试用手机浏览器进行访问。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 -m http.server
+</code></pre></div><p>这时用浏览器访问<code>http://&lt;你的局域网IP地址&gt;:8000</code>，如果不出意外，你将看到浏览器中正在显示你电脑摄像头所拍摄的影像。如果你的手机与你的电脑在同一个局域网下「例如都连接家里的路由器」，那么你可以尝试用手机浏览器进行访问。</p>
 <p><a href="/post/047-find-object/">下篇 影像处理・目标检测</a></p>
 
   </section>

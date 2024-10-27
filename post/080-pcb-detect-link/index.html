@@ -5,7 +5,7 @@
 <meta name="description" content="我们会使用 matplotlib 进行绘图，并使用 numpy 处理数组相关的数值计算，以及使用 opencv 提供的计算机视觉工具，请确保工作环境可以正确引入并使用它们。">
 <meta name="keywords" content="pcb,opencv,numpy,matplotlib,python">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -67,78 +67,78 @@
     <p><a href="/post/079-pcb-detect-dots/">上篇 使用计算机视觉技术进行PCB图像焊点检测</a></p>
 <h3 id="引入需要的工具包">引入需要的工具包</h3>
 <p>我们会使用 matplotlib 进行绘图，并使用 numpy 处理数组相关的数值计算，以及使用 opencv 提供的计算机视觉工具，请确保工作环境可以正确引入并使用它们。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span></code></pre></div><h3 id="载入并缩放图像">载入并缩放图像</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</code></pre></div><h3 id="载入并缩放图像">载入并缩放图像</h3>
 <p>读取一张图像，将其进行缩放，使最长边对齐<code>image_max_side</code>的值，该值的设置可以根据经验，实际处理的图像和任务来做调整。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>image_max_side <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./samples/10.JPG&#39;</span>)
-</span></span><span style="display:flex;"><span>scale <span style="color:#f92672">=</span> image_max_side <span style="color:#f92672">/</span> max(source_image<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>])
-</span></span><span style="display:flex;"><span>source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>resize(source_image, <span style="color:#66d9ef">None</span>, fx<span style="color:#f92672">=</span>scale, fy<span style="color:#f92672">=</span>scale, interpolation<span style="color:#f92672">=</span>cv<span style="color:#f92672">.</span>INTER_AREA)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(source_image)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/080/01.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image_max_side <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./samples/10.JPG&#39;</span>)
+scale <span style="color:#f92672">=</span> image_max_side <span style="color:#f92672">/</span> max(source_image<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>])
+source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>resize(source_image, <span style="color:#66d9ef">None</span>, fx<span style="color:#f92672">=</span>scale, fy<span style="color:#f92672">=</span>scale, interpolation<span style="color:#f92672">=</span>cv<span style="color:#f92672">.</span>INTER_AREA)
+plt<span style="color:#f92672">.</span>imshow(source_image)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/080/01.png" alt="png"></p>
 <h3 id="引入核心函数">引入核心函数</h3>
 <p>我们会需要使用到<code>segmentation_dots</code>以及<code>segmentation_links</code>这两个核心功能函数。后者负责连线检测，前者则是对上一节中焊点检测的封装，之所以需要使用到焊点检测，主要是因为连线检测函数需要使用到焊点检测的结果。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> utils <span style="color:#f92672">import</span> segmentation_dots
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> utils <span style="color:#f92672">import</span> segmentation_links
-</span></span></code></pre></div><p>焊点检测函数如下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">segmentation_dots</span>(image:np<span style="color:#f92672">.</span>ndarray, main_channel:int<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>ndarray:
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># convert to single channel</span>
-</span></span><span style="display:flex;"><span>    frame <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>copy()
-</span></span><span style="display:flex;"><span>    frame[<span style="color:#f92672">...</span>, main_channel] <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
-</span></span><span style="display:flex;"><span>    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_RGB2GRAY)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># binarization</span>
-</span></span><span style="display:flex;"><span>    normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>    blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7</span>), <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>    ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># morphology closing</span>
-</span></span><span style="display:flex;"><span>    kernel <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>    closing <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(thresh, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># redundancy edges</span>
-</span></span><span style="display:flex;"><span>    edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>Canny(closing, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">200</span>)
-</span></span><span style="display:flex;"><span>    edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(edges, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># composition</span>
-</span></span><span style="display:flex;"><span>    final <span style="color:#f92672">=</span> closing <span style="color:#f92672">*</span> (edges <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> final
-</span></span></code></pre></div><p>连线检测函数如下，如果觉得不熟悉，可以结合上一节中的内容对比焊点检测函数进行具体的了解:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">segmentation_links</span>(image:np<span style="color:#f92672">.</span>ndarray, dots_mask:np<span style="color:#f92672">.</span>ndarray, main_channel:int<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>ndarray:
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># copy main channel</span>
-</span></span><span style="display:flex;"><span>    gray <span style="color:#f92672">=</span> image[<span style="color:#f92672">...</span>, main_channel]<span style="color:#f92672">.</span>copy()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># binarization</span>
-</span></span><span style="display:flex;"><span>    normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>    blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>    ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(<span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># dilate mask of dots</span>
-</span></span><span style="display:flex;"><span>    kernel <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>getStructuringElement(cv<span style="color:#f92672">.</span>MORPH_ELLIPSE, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>    dilated <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(dots_mask, cv<span style="color:#f92672">.</span>MORPH_DILATE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># composition</span>
-</span></span><span style="display:flex;"><span>    final <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> thresh <span style="color:#f92672">*</span> (dilated <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> final
-</span></span></code></pre></div><h3 id="结合焊点检测结果实现连线检测">结合焊点检测结果实现连线检测</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> utils <span style="color:#f92672">import</span> segmentation_dots
+<span style="color:#f92672">from</span> utils <span style="color:#f92672">import</span> segmentation_links
+</code></pre></div><p>焊点检测函数如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">segmentation_dots</span>(image:np<span style="color:#f92672">.</span>ndarray, main_channel:int<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>ndarray:
+    <span style="color:#75715e"># convert to single channel</span>
+    frame <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>copy()
+    frame[<span style="color:#f92672">...</span>, main_channel] <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
+    gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_RGB2GRAY)
+
+    <span style="color:#75715e"># binarization</span>
+    normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7</span>), <span style="color:#ae81ff">0</span>)
+    ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
+
+    <span style="color:#75715e"># morphology closing</span>
+    kernel <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), np<span style="color:#f92672">.</span>uint8)
+    closing <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(thresh, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+    <span style="color:#75715e"># redundancy edges</span>
+    edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>Canny(closing, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">200</span>)
+    edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(edges, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+
+    <span style="color:#75715e"># composition</span>
+    final <span style="color:#f92672">=</span> closing <span style="color:#f92672">*</span> (edges <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    <span style="color:#66d9ef">return</span> final
+</code></pre></div><p>连线检测函数如下，如果觉得不熟悉，可以结合上一节中的内容对比焊点检测函数进行具体的了解:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">segmentation_links</span>(image:np<span style="color:#f92672">.</span>ndarray, dots_mask:np<span style="color:#f92672">.</span>ndarray, main_channel:int<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">-&gt;</span> np<span style="color:#f92672">.</span>ndarray:
+    <span style="color:#75715e"># copy main channel</span>
+    gray <span style="color:#f92672">=</span> image[<span style="color:#f92672">...</span>, main_channel]<span style="color:#f92672">.</span>copy()
+
+    <span style="color:#75715e"># binarization</span>
+    normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), <span style="color:#ae81ff">0</span>)
+    ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(<span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
+
+    <span style="color:#75715e"># dilate mask of dots</span>
+    kernel <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>getStructuringElement(cv<span style="color:#f92672">.</span>MORPH_ELLIPSE, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))
+    dilated <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(dots_mask, cv<span style="color:#f92672">.</span>MORPH_DILATE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+    <span style="color:#75715e"># composition</span>
+    final <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> thresh <span style="color:#f92672">*</span> (dilated <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    <span style="color:#66d9ef">return</span> final
+</code></pre></div><h3 id="结合焊点检测结果实现连线检测">结合焊点检测结果实现连线检测</h3>
 <p>简单调用两个函数完成检测:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dots_mask <span style="color:#f92672">=</span> segmentation_dots(source_image)
-</span></span><span style="display:flex;"><span>final <span style="color:#f92672">=</span> segmentation_links(source_image, dots_mask)
-</span></span></code></pre></div><p>对检测结果进行可视化:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">10</span>))
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">131</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(dots_mask, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">132</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(final, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">133</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(source_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/080/02.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dots_mask <span style="color:#f92672">=</span> segmentation_dots(source_image)
+final <span style="color:#f92672">=</span> segmentation_links(source_image, dots_mask)
+</code></pre></div><p>对检测结果进行可视化:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">10</span>))
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">131</span>)
+plt<span style="color:#f92672">.</span>imshow(dots_mask, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">132</span>)
+plt<span style="color:#f92672">.</span>imshow(final, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">133</span>)
+plt<span style="color:#f92672">.</span>imshow(source_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/080/02.png" alt="png"></p>
 
   </section>
 </article>

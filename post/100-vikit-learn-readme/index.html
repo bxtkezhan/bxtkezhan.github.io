@@ -5,7 +5,7 @@
 <meta name="description" content="**vikit-learn** 是一个基于深度学习技术，使用 Python 开发的计算机视觉处理工具包。">
 <meta name="keywords" content="computer,vision,deep,learning,classification,detection,segmentation">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -81,86 +81,86 @@
 <li>opencv-python&gt;=4.10.0</li>
 </ul>
 <h3 id="使用-pip-工具进行在线安装">使用 pip 工具进行在线安装</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install git+https://github.com/bxt-kk/vikit-learn.git
-</span></span></code></pre></div><h2 id="vikit-learn-的使用">vikit-learn 的使用</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install git+https://github.com/bxt-kk/vikit-learn.git
+</code></pre></div><h2 id="vikit-learn-的使用">vikit-learn 的使用</h2>
 <h3 id="训练自己的模型">训练自己的模型</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import `pytorch` and `vklearn`</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.trainer.trainer <span style="color:#f92672">import</span> Trainer
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.trainer.tasks <span style="color:#f92672">import</span> Detection
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.models.trimnetdet <span style="color:#f92672">import</span> TrimNetDet <span style="color:#66d9ef">as</span> Model
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.datasets.oxford_iiit_pet <span style="color:#f92672">import</span> OxfordIIITPet
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>dataset_root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/kaggle/working/OxfordIIITPet&#39;</span>
-</span></span><span style="display:flex;"><span>dataset_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;detection&#39;</span>
-</span></span><span style="display:flex;"><span>device       <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda&#39;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;cpu&#39;</span>)
-</span></span><span style="display:flex;"><span>batch_size   <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
-</span></span><span style="display:flex;"><span>lr           <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>
-</span></span><span style="display:flex;"><span>lrf          <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get default transforms from TRBNetX</span>
-</span></span><span style="display:flex;"><span>train_transforms, test_transforms <span style="color:#f92672">=</span> Model<span style="color:#f92672">.</span>get_transforms(<span style="color:#e6db74">&#39;cocox448&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create datasets</span>
-</span></span><span style="display:flex;"><span>train_data <span style="color:#f92672">=</span> OxfordIIITPet(
-</span></span><span style="display:flex;"><span>    dataset_root,
-</span></span><span style="display:flex;"><span>    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
-</span></span><span style="display:flex;"><span>    target_types<span style="color:#f92672">=</span>dataset_type,
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">=</span>train_transforms)
-</span></span><span style="display:flex;"><span>test_data <span style="color:#f92672">=</span> OxfordIIITPet(
-</span></span><span style="display:flex;"><span>    dataset_root,
-</span></span><span style="display:flex;"><span>    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
-</span></span><span style="display:flex;"><span>    target_types<span style="color:#f92672">=</span>dataset_type,
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">=</span>test_transforms)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create model TrbnetX</span>
-</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> Model(
-</span></span><span style="display:flex;"><span>    categories<span style="color:#f92672">=</span>train_data<span style="color:#f92672">.</span>bin_classes,
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create DataLoader</span>
-</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(
-</span></span><span style="display:flex;"><span>    train_data, batch_size,
-</span></span><span style="display:flex;"><span>    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    collate_fn<span style="color:#f92672">=</span>model<span style="color:#f92672">.</span>collate_fn,
-</span></span><span style="display:flex;"><span>    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>test_loader <span style="color:#f92672">=</span> DataLoader(
-</span></span><span style="display:flex;"><span>    test_data, batch_size,
-</span></span><span style="display:flex;"><span>    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
-</span></span><span style="display:flex;"><span>    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    collate_fn<span style="color:#f92672">=</span>model<span style="color:#f92672">.</span>collate_fn,
-</span></span><span style="display:flex;"><span>    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(len(train_loader))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build object detection task</span>
-</span></span><span style="display:flex;"><span>task <span style="color:#f92672">=</span> Detection(
-</span></span><span style="display:flex;"><span>    model, device, metric_options<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;conf_thresh&#39;</span>: <span style="color:#ae81ff">0.05</span>},
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Build a trainer by specifying the training task and setting up trainer parameters</span>
-</span></span><span style="display:flex;"><span>trainer <span style="color:#f92672">=</span> Trainer(
-</span></span><span style="display:flex;"><span>    task,
-</span></span><span style="display:flex;"><span>    output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/kaggle/working/catdog&#39;</span>,
-</span></span><span style="display:flex;"><span>    checkpoint<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
-</span></span><span style="display:flex;"><span>    train_loader<span style="color:#f92672">=</span>train_loader,
-</span></span><span style="display:flex;"><span>    test_loader<span style="color:#f92672">=</span>test_loader,
-</span></span><span style="display:flex;"><span>    epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
-</span></span><span style="display:flex;"><span>    lr<span style="color:#f92672">=</span>lr,
-</span></span><span style="display:flex;"><span>    lrf<span style="color:#f92672">=</span>lrf,
-</span></span><span style="display:flex;"><span>    show_step<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,
-</span></span><span style="display:flex;"><span>    drop_optim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    drop_lr_scheduler<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    save_epoch<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Initialize the trainer, then perform training.</span>
-</span></span><span style="display:flex;"><span>trainer<span style="color:#f92672">.</span>initialize()
-</span></span><span style="display:flex;"><span>trainer<span style="color:#f92672">.</span>fit()
-</span></span></code></pre></div><p>训练完成后，将在 <code>/kaggle/working/logs/</code> 目录中生成模型训练结果的可视化图像。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Import `pytorch` and `vklearn`</span>
+<span style="color:#f92672">import</span> torch
+<span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+
+<span style="color:#f92672">from</span> vklearn.trainer.trainer <span style="color:#f92672">import</span> Trainer
+<span style="color:#f92672">from</span> vklearn.trainer.tasks <span style="color:#f92672">import</span> Detection
+<span style="color:#f92672">from</span> vklearn.models.trimnetdet <span style="color:#f92672">import</span> TrimNetDet <span style="color:#66d9ef">as</span> Model
+<span style="color:#f92672">from</span> vklearn.datasets.oxford_iiit_pet <span style="color:#f92672">import</span> OxfordIIITPet
+
+
+dataset_root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/kaggle/working/OxfordIIITPet&#39;</span>
+dataset_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;detection&#39;</span>
+device       <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda&#39;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;cpu&#39;</span>)
+batch_size   <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
+lr           <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>
+lrf          <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
+
+<span style="color:#75715e"># Get default transforms from TRBNetX</span>
+train_transforms, test_transforms <span style="color:#f92672">=</span> Model<span style="color:#f92672">.</span>get_transforms(<span style="color:#e6db74">&#39;cocox448&#39;</span>)
+
+<span style="color:#75715e"># Create datasets</span>
+train_data <span style="color:#f92672">=</span> OxfordIIITPet(
+    dataset_root,
+    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
+    target_types<span style="color:#f92672">=</span>dataset_type,
+    transforms<span style="color:#f92672">=</span>train_transforms)
+test_data <span style="color:#f92672">=</span> OxfordIIITPet(
+    dataset_root,
+    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
+    target_types<span style="color:#f92672">=</span>dataset_type,
+    transforms<span style="color:#f92672">=</span>test_transforms)
+
+<span style="color:#75715e"># Create model TrbnetX</span>
+model <span style="color:#f92672">=</span> Model(
+    categories<span style="color:#f92672">=</span>train_data<span style="color:#f92672">.</span>bin_classes,
+)
+
+<span style="color:#75715e"># Create DataLoader</span>
+train_loader <span style="color:#f92672">=</span> DataLoader(
+    train_data, batch_size,
+    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    collate_fn<span style="color:#f92672">=</span>model<span style="color:#f92672">.</span>collate_fn,
+    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+test_loader <span style="color:#f92672">=</span> DataLoader(
+    test_data, batch_size,
+    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    collate_fn<span style="color:#f92672">=</span>model<span style="color:#f92672">.</span>collate_fn,
+    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+
+print(len(train_loader))
+
+<span style="color:#75715e"># Build object detection task</span>
+task <span style="color:#f92672">=</span> Detection(
+    model, device, metric_options<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;conf_thresh&#39;</span>: <span style="color:#ae81ff">0.05</span>},
+)
+
+<span style="color:#75715e"># Build a trainer by specifying the training task and setting up trainer parameters</span>
+trainer <span style="color:#f92672">=</span> Trainer(
+    task,
+    output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/kaggle/working/catdog&#39;</span>,
+    checkpoint<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+    train_loader<span style="color:#f92672">=</span>train_loader,
+    test_loader<span style="color:#f92672">=</span>test_loader,
+    epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
+    lr<span style="color:#f92672">=</span>lr,
+    lrf<span style="color:#f92672">=</span>lrf,
+    show_step<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,
+    drop_optim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    drop_lr_scheduler<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    save_epoch<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+
+<span style="color:#75715e"># Initialize the trainer, then perform training.</span>
+trainer<span style="color:#f92672">.</span>initialize()
+trainer<span style="color:#f92672">.</span>fit()
+</code></pre></div><p>训练完成后，将在 <code>/kaggle/working/logs/</code> 目录中生成模型训练结果的可视化图像。</p>
 <p><img src="/img/100/CATDOG-LOG-240818-15:22:23_loss.png" alt="">
 <img src="/img/100/CATDOG-LOG-240818-15:22:23_conf_f1.png" alt="">
 <img src="/img/100/CATDOG-LOG-240818-15:22:23_iou_score.png" alt="">
@@ -169,24 +169,24 @@
 <p>我设计的 focal-boost 损失函数，使得模型能够成功地训练于正样本比例极低的任务。</p>
 <h2 id="使用训练好的模型">使用训练好的模型</h2>
 <p>我们可以通过以下方式调用训练好的目标检测模型：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import `vklearn`</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.models.trimnetdet <span style="color:#f92672">import</span> TrimNetDet <span style="color:#66d9ef">as</span> Model
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.pipelines.detector <span style="color:#f92672">import</span> Detector <span style="color:#66d9ef">as</span> Pipeline
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pipeline <span style="color:#f92672">=</span> Pipeline<span style="color:#f92672">.</span>load_from_state(Model, <span style="color:#e6db74">&#39;/kaggle/working/catdog-best.pt&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;??YOUR IMAGE PATH??&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Detect and display results</span>
-</span></span><span style="display:flex;"><span>objs <span style="color:#f92672">=</span> pipeline(img, align_size<span style="color:#f92672">=</span><span style="color:#ae81ff">448</span>)
-</span></span><span style="display:flex;"><span>print(len(objs), objs)
-</span></span><span style="display:flex;"><span>fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-</span></span><span style="display:flex;"><span>pipeline<span style="color:#f92672">.</span>plot_result(img, objs, fig)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p>这里是一些示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Import `vklearn`</span>
+<span style="color:#f92672">from</span> vklearn.models.trimnetdet <span style="color:#f92672">import</span> TrimNetDet <span style="color:#66d9ef">as</span> Model
+<span style="color:#f92672">from</span> vklearn.pipelines.detector <span style="color:#f92672">import</span> Detector <span style="color:#66d9ef">as</span> Pipeline
+
+
+pipeline <span style="color:#f92672">=</span> Pipeline<span style="color:#f92672">.</span>load_from_state(Model, <span style="color:#e6db74">&#39;/kaggle/working/catdog-best.pt&#39;</span>)
+
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;??YOUR IMAGE PATH??&#39;</span>)
+<span style="color:#75715e"># Detect and display results</span>
+objs <span style="color:#f92672">=</span> pipeline(img, align_size<span style="color:#f92672">=</span><span style="color:#ae81ff">448</span>)
+print(len(objs), objs)
+fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+pipeline<span style="color:#f92672">.</span>plot_result(img, objs, fig)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>这里是一些示例：</p>
 <p><img src="/img/100/Figure_01.png" alt="">
 <img src="/img/100/Figure_02.png" alt="">
 <img src="/img/100/Figure_03.png" alt="">

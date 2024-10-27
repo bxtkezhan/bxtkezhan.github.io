@@ -5,7 +5,7 @@
 <meta name="description" content="**vikit-learn** 是一个基于深度学习技术，使用 Python 开发的计算机视觉处理工具包。">
 <meta name="keywords" content="computer,vision,deep,learning,classification,detection,segmentation">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -68,77 +68,77 @@
 <p><img src="/img/101/Figure_1.png" alt=""></p>
 <h2 id="安装-vikit-learn-工具">安装 vikit-learn 工具</h2>
 <p>我们可以使用<code>pip</code>工具从 github 上在线下载并安装 vikit-learn：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install git+https://github.com/bxt-kk/vikit-learn.git
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install git+https://github.com/bxt-kk/vikit-learn.git
+</code></pre></div><hr>
 <h2 id="编写训练脚本">编写训练脚本</h2>
 <p>我们需要编写一点脚本代码来训练我们的模型。</p>
 <h3 id="1-引入-vikit-learn-和-pytorch-相关的包">1. 引入 vikit-learn 和 pytorch 相关的包</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.trainer.trainer <span style="color:#f92672">import</span> Trainer
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.trainer.tasks <span style="color:#f92672">import</span> Classification <span style="color:#66d9ef">as</span> Task
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.models.trimnetclf <span style="color:#f92672">import</span> TrimNetClf <span style="color:#66d9ef">as</span> Model
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.datasets.oxford_iiit_pet <span style="color:#f92672">import</span> OxfordIIITPet
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+
+<span style="color:#f92672">from</span> vklearn.trainer.trainer <span style="color:#f92672">import</span> Trainer
+<span style="color:#f92672">from</span> vklearn.trainer.tasks <span style="color:#f92672">import</span> Classification <span style="color:#66d9ef">as</span> Task
+<span style="color:#f92672">from</span> vklearn.models.trimnetclf <span style="color:#f92672">import</span> TrimNetClf <span style="color:#66d9ef">as</span> Model
+<span style="color:#f92672">from</span> vklearn.datasets.oxford_iiit_pet <span style="color:#f92672">import</span> OxfordIIITPet
+</code></pre></div><ul>
 <li>Trainer: 一个通用的训练器工具，用于设定训练参数和执行训练过程；</li>
 <li>Classification：指定分类任务相关的训练参数；</li>
 <li>TrimNetClf：vikit-learn 内置的分类器模型；</li>
 <li>OxfordIIITPet：vikit-learn 内置的数据集工具；</li>
 </ul>
 <h3 id="2-准备训练数据">2. 准备训练数据</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dataset_root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/kaggle/working/OxfordIIITPet&#39;</span>
-</span></span><span style="display:flex;"><span>dataset_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;binary-category&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_transforms, test_transforms <span style="color:#f92672">=</span> Model<span style="color:#f92672">.</span>get_transforms()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_data <span style="color:#f92672">=</span> OxfordIIITPet(
-</span></span><span style="display:flex;"><span>    dataset_root,
-</span></span><span style="display:flex;"><span>    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
-</span></span><span style="display:flex;"><span>    target_types<span style="color:#f92672">=</span>dataset_type,
-</span></span><span style="display:flex;"><span>	download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">=</span>train_transforms)
-</span></span><span style="display:flex;"><span>test_data <span style="color:#f92672">=</span> OxfordIIITPet(
-</span></span><span style="display:flex;"><span>    dataset_root,
-</span></span><span style="display:flex;"><span>    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span>,
-</span></span><span style="display:flex;"><span>    target_types<span style="color:#f92672">=</span>dataset_type,
-</span></span><span style="display:flex;"><span>    transforms<span style="color:#f92672">=</span>test_transforms)
-</span></span></code></pre></div><p>首先，我们需要指定数据的存放位置<code>dataset_root</code>；然后，我们指定数据的类型<code>dataset_type = 'binary-category'</code>，这表示猫狗图像的二分类数据；另外，我们将数据分割成训练集<code>split='trainval'</code>和测试集<code>split='test'</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset_root <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/kaggle/working/OxfordIIITPet&#39;</span>
+dataset_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;binary-category&#39;</span>
+
+train_transforms, test_transforms <span style="color:#f92672">=</span> Model<span style="color:#f92672">.</span>get_transforms()
+
+train_data <span style="color:#f92672">=</span> OxfordIIITPet(
+    dataset_root,
+    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;trainval&#39;</span>,
+    target_types<span style="color:#f92672">=</span>dataset_type,
+	download<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+    transforms<span style="color:#f92672">=</span>train_transforms)
+test_data <span style="color:#f92672">=</span> OxfordIIITPet(
+    dataset_root,
+    split<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;test&#39;</span>,
+    target_types<span style="color:#f92672">=</span>dataset_type,
+    transforms<span style="color:#f92672">=</span>test_transforms)
+</code></pre></div><p>首先，我们需要指定数据的存放位置<code>dataset_root</code>；然后，我们指定数据的类型<code>dataset_type = 'binary-category'</code>，这表示猫狗图像的二分类数据；另外，我们将数据分割成训练集<code>split='trainval'</code>和测试集<code>split='test'</code>。</p>
 <p><strong>注意！如果本地目录中没有数据，那么我们需要把<code>download</code>设置为<code>True</code>以从网络上下载数据。</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>train_loader <span style="color:#f92672">=</span> DataLoader(
-</span></span><span style="display:flex;"><span>    train_data, batch_size,
-</span></span><span style="display:flex;"><span>    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>test_loader <span style="color:#f92672">=</span> DataLoader(
-</span></span><span style="display:flex;"><span>    test_data, batch_size,
-</span></span><span style="display:flex;"><span>    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
-</span></span><span style="display:flex;"><span>    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
-</span></span><span style="display:flex;"><span>    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(len(train_loader))
-</span></span></code></pre></div><p>我们使用 pytorch 提供的数据加载工具<code>DataLoader</code>实现数据加载，这里我们设置<code>batch_size = 128</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
+
+train_loader <span style="color:#f92672">=</span> DataLoader(
+    train_data, batch_size,
+    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+test_loader <span style="color:#f92672">=</span> DataLoader(
+    test_data, batch_size,
+    shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+    drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+    num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+
+print(len(train_loader))
+</code></pre></div><p>我们使用 pytorch 提供的数据加载工具<code>DataLoader</code>实现数据加载，这里我们设置<code>batch_size = 128</code>。</p>
 <h3 id="3-创建模型和创建训练任务">3. 创建模型和创建训练任务</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda&#39;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;cpu&#39;</span>)
-</span></span><span style="display:flex;"><span>model  <span style="color:#f92672">=</span> Model(categories<span style="color:#f92672">=</span>train_data<span style="color:#f92672">.</span>bin_classes)
-</span></span><span style="display:flex;"><span>task   <span style="color:#f92672">=</span> Task(model, device)
-</span></span></code></pre></div><p>我们使用<code>TrimNetClf</code>类创建了一个模型。这里，我们需要为模型指定分类类别的数量以及类别的名称，为此，我们将<code>train_data.bin_classes</code>的值作为模型的<code>categories</code>参数值。接着，我们使用模型对象<code>model</code>和计算装置对象<code>device</code>创建训练任务对象<code>task = Task(model, device)</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda&#39;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;cpu&#39;</span>)
+model  <span style="color:#f92672">=</span> Model(categories<span style="color:#f92672">=</span>train_data<span style="color:#f92672">.</span>bin_classes)
+task   <span style="color:#f92672">=</span> Task(model, device)
+</code></pre></div><p>我们使用<code>TrimNetClf</code>类创建了一个模型。这里，我们需要为模型指定分类类别的数量以及类别的名称，为此，我们将<code>train_data.bin_classes</code>的值作为模型的<code>categories</code>参数值。接着，我们使用模型对象<code>model</code>和计算装置对象<code>device</code>创建训练任务对象<code>task = Task(model, device)</code>。</p>
 <h3 id="4-初始化训练器">4. 初始化训练器</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trainer <span style="color:#f92672">=</span> Trainer(
-</span></span><span style="display:flex;"><span>    task,
-</span></span><span style="display:flex;"><span>    output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/kaggle/working/catdog-clf&#39;</span>,
-</span></span><span style="display:flex;"><span>    train_loader<span style="color:#f92672">=</span>train_loader,
-</span></span><span style="display:flex;"><span>    test_loader<span style="color:#f92672">=</span>test_loader,
-</span></span><span style="display:flex;"><span>    epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>,
-</span></span><span style="display:flex;"><span>    lr<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-3</span>,
-</span></span><span style="display:flex;"><span>    lrf<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>,
-</span></span><span style="display:flex;"><span>    show_step<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,
-</span></span><span style="display:flex;"><span>    save_epoch<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>trainer<span style="color:#f92672">.</span>initialize()
-</span></span></code></pre></div><p>通过设置训练器参数，我们可以创建一个用于模型训练的训练器，在创建训练器对象后，需要执行<code>trainer.initialize()</code>方法进行初始化。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">trainer <span style="color:#f92672">=</span> Trainer(
+    task,
+    output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/kaggle/working/catdog-clf&#39;</span>,
+    train_loader<span style="color:#f92672">=</span>train_loader,
+    test_loader<span style="color:#f92672">=</span>test_loader,
+    epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>,
+    lr<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-3</span>,
+    lrf<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>,
+    show_step<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>,
+    save_epoch<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+
+trainer<span style="color:#f92672">.</span>initialize()
+</code></pre></div><p>通过设置训练器参数，我们可以创建一个用于模型训练的训练器，在创建训练器对象后，需要执行<code>trainer.initialize()</code>方法进行初始化。</p>
 <p>我们对该训练器进行了如下参数设定：</p>
 <ul>
 <li><code>task</code>：指定训练任务；</li>
@@ -153,42 +153,42 @@
 </ul>
 <h3 id="5-执行训练任务">5. 执行训练任务</h3>
 <p>最后我们通过如下代码，开始模型训练：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>trainer<span style="color:#f92672">.</span>fit()
-</span></span></code></pre></div><p>当模型训练结束后，我们会在训练器输出路径同级目录下的 logs 子目录中看到训练日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">trainer<span style="color:#f92672">.</span>fit()
+</code></pre></div><p>当模型训练结束后，我们会在训练器输出路径同级目录下的 logs 子目录中看到训练日志：</p>
 <p><img src="/img/101/results_6_1.png" alt="">
 <img src="/img/101/results_6_2.png" alt="">
 <img src="/img/101/results_6_3.png" alt="">
 <img src="/img/101/results_6_4.png" alt="">
 <img src="/img/101/results_6_5.png" alt=""></p>
 <p>除了日志，我们还会看到如下 checkpoint 文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>- catdog-clf-4.pt
-</span></span><span style="display:flex;"><span>- catdog-clf-9.pt
-</span></span><span style="display:flex;"><span>- catdog-clf-14.pt
-</span></span><span style="display:flex;"><span>- catdog-clf-19.pt
-</span></span><span style="display:flex;"><span>- catdog-clf-best.pt
-</span></span></code></pre></div><p>一般来说，我们挑选<code>best.pt</code>结尾的进行使用，因为这是在测试集评估指标中得分最高的<code>checkpoint</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- catdog-clf-4.pt
+- catdog-clf-9.pt
+- catdog-clf-14.pt
+- catdog-clf-19.pt
+- catdog-clf-best.pt
+</code></pre></div><p>一般来说，我们挑选<code>best.pt</code>结尾的进行使用，因为这是在测试集评估指标中得分最高的<code>checkpoint</code>。</p>
 <hr>
 <h2 id="图像分类器的使用">图像分类器的使用</h2>
 <p>在完成图像分类器训练后，我们就可以使用训练好的分类器来对图像进行自动分类了。</p>
 <h3 id="1-首先我们引入所需的包">1. 首先我们引入所需的包</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.models.trimnetclf <span style="color:#f92672">import</span> TrimNetClf <span style="color:#66d9ef">as</span> Model
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> vklearn.pipelines.classifier <span style="color:#f92672">import</span> Classifier <span style="color:#66d9ef">as</span> Pipeline
-</span></span></code></pre></div><p><code>from vklearn.pipelines.classifier import Classifier</code>将引入流水线工具<code>Classifier</code>，该工具极大简化了模型的调用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+<span style="color:#f92672">from</span> vklearn.models.trimnetclf <span style="color:#f92672">import</span> TrimNetClf <span style="color:#66d9ef">as</span> Model
+<span style="color:#f92672">from</span> vklearn.pipelines.classifier <span style="color:#f92672">import</span> Classifier <span style="color:#66d9ef">as</span> Pipeline
+</code></pre></div><p><code>from vklearn.pipelines.classifier import Classifier</code>将引入流水线工具<code>Classifier</code>，该工具极大简化了模型的调用。</p>
 <h3 id="2-指定模型类别和模型参数文件生成分类器">2. 指定模型类别和模型参数文件生成分类器</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pipeline <span style="color:#f92672">=</span> Pipeline<span style="color:#f92672">.</span>load_from_state(
-</span></span><span style="display:flex;"><span>    Model, <span style="color:#e6db74">&#39;???/catdog-clf-best.pt&#39;</span>)
-</span></span></code></pre></div><p><strong>注意！记得将<code>'???/catdog-clf-best.pt'</code>替换为你电脑中 checkpoint 文件的真实路径。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pipeline <span style="color:#f92672">=</span> Pipeline<span style="color:#f92672">.</span>load_from_state(
+    Model, <span style="color:#e6db74">&#39;???/catdog-clf-best.pt&#39;</span>)
+</code></pre></div><p><strong>注意！记得将<code>'???/catdog-clf-best.pt'</code>替换为你电脑中 checkpoint 文件的真实路径。</strong></p>
 <h3 id="3-打开模型进行分类预测并可视化结果">3. 打开模型进行分类预测并可视化结果</h3>
 <p>在完成之前一系列的准备工作后，我们就可以使用如下代码进行分类操作了：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;??your image path??&#39;</span>)
-</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> pipeline(img)
-</span></span><span style="display:flex;"><span>fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-</span></span><span style="display:flex;"><span>pipeline<span style="color:#f92672">.</span>plot_result(img, result, fig)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p>我们使用上述代码打开了一张图像<code>img = Image.open('??your image path??')</code>进行分类预测<code>result = pipeline(img)</code>，并可视化了预测结果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;??your image path??&#39;</span>)
+result <span style="color:#f92672">=</span> pipeline(img)
+fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+pipeline<span style="color:#f92672">.</span>plot_result(img, result, fig)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>我们使用上述代码打开了一张图像<code>img = Image.open('??your image path??')</code>进行分类预测<code>result = pipeline(img)</code>，并可视化了预测结果：</p>
 <p><img src="/img/101/Figure_1.png" alt=""></p>
 
   </section>

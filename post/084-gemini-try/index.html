@@ -5,7 +5,7 @@
 <meta name="description" content="随着GPT系列的对话生成语言模型的推出和发展，我们可以比较轻松的借助这些工具搭建出AI助手服务。可以说，GPT系列的语言模型就是搭建个人助手服务的一个要素。">
 <meta name="keywords" content="gpt,gemini,语言模型,ai">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -72,73 +72,73 @@
 <p>通过科学的上网方式，我们可以有效地从<a href="https://ai.google.dev/">ai.google.dev</a>获取所需的Gemini-Pro API Key。</p>
 <h2 id="安装依赖">安装依赖</h2>
 <p>使用Python来做尝试，官方文档推荐了对应的SDK，我们可以安装一下:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -q -U google-generativeai
-</span></span></code></pre></div><h2 id="通过sdk启用模型">通过SDK启用模型</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install -q -U google-generativeai
+</code></pre></div><h2 id="通过sdk启用模型">通过SDK启用模型</h2>
 <p>我们先引入SDK:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> google.generativeai <span style="color:#66d9ef">as</span> genai
-</span></span></code></pre></div><p>接下来配置API Key:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>genai<span style="color:#f92672">.</span>configure(api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;你的API Key&#39;</span>)
-</span></span></code></pre></div><p>可以看一下有哪些内容生成类型的模型:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> m <span style="color:#f92672">in</span> genai<span style="color:#f92672">.</span>list_models():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;generateContent&#39;</span> <span style="color:#f92672">in</span> m<span style="color:#f92672">.</span>supported_generation_methods:
-</span></span><span style="display:flex;"><span>        print(m<span style="color:#f92672">.</span>name)
-</span></span></code></pre></div><p>目前来说有两个生成类型的模型:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> google.generativeai <span style="color:#66d9ef">as</span> genai
+</code></pre></div><p>接下来配置API Key:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">genai<span style="color:#f92672">.</span>configure(api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;你的API Key&#39;</span>)
+</code></pre></div><p>可以看一下有哪些内容生成类型的模型:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> m <span style="color:#f92672">in</span> genai<span style="color:#f92672">.</span>list_models():
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;generateContent&#39;</span> <span style="color:#f92672">in</span> m<span style="color:#f92672">.</span>supported_generation_methods:
+        print(m<span style="color:#f92672">.</span>name)
+</code></pre></div><p>目前来说有两个生成类型的模型:</p>
 <ul>
 <li>&lsquo;gemini-pro&rsquo;: 文本对话模型</li>
 <li>&lsquo;gemini-pro-vision&rsquo;: 具有视觉理解的文本对话模型</li>
 </ul>
 <p>选择并启用文本对话模型:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> genai<span style="color:#f92672">.</span>GenerativeModel(<span style="color:#e6db74">&#39;gemini-pro&#39;</span>)
-</span></span></code></pre></div><h2 id="尝试对话">尝试对话</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model <span style="color:#f92672">=</span> genai<span style="color:#f92672">.</span>GenerativeModel(<span style="color:#e6db74">&#39;gemini-pro&#39;</span>)
+</code></pre></div><h2 id="尝试对话">尝试对话</h2>
 <p>现在，我们可以发送一段文本指令，让其返回一段内容:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>response <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate_content(<span style="color:#e6db74">&#39;写一首七言律诗，描述冬日萧瑟的田间景色。&#39;</span>)
-</span></span></code></pre></div><p><code>generate_content</code>方法会返回<code>response</code>对象，我们可以通过它的<code>text</code>属性查看模型生成的内容:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>text)
-</span></span></code></pre></div><p>上述代码的打印输出「一般不会相同」:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>寒风萧萧冷气侵，
-</span></span><span style="display:flex;"><span>枯草败叶满目陈。
-</span></span><span style="display:flex;"><span>农田寂静无人迹，
-</span></span><span style="display:flex;"><span>唯有寒鸦绕树鸣。
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>沟渠冰封水尽涸，
-</span></span><span style="display:flex;"><span>枝头衰柳苦伶仃。
-</span></span><span style="display:flex;"><span>落日西沉归山去，
-</span></span><span style="display:flex;"><span>田间萧瑟倍凄清。
-</span></span></code></pre></div><p>我们再让它回答一个编程问题:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>response <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate_content(<span style="color:#e6db74">&#39;使用golang编写一个简单的http文件服务器。&#39;</span>)
-</span></span><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>text)
-</span></span></code></pre></div><p>上述代码的打印输出「一般不会相同」:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;log&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/http&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Specify the directory that you want to serve files from
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dir</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;static&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create a new HTTP file server
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Dir</span>(<span style="color:#a6e22e">dir</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create a new HTTP server
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">server</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Addr</span>:    <span style="color:#e6db74">&#34;:8080&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Handler</span>: <span style="color:#a6e22e">fs</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Start the HTTP server
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Listening on port :8080&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">ListenAndServe</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Handle the error
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">response <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate_content(<span style="color:#e6db74">&#39;写一首七言律诗，描述冬日萧瑟的田间景色。&#39;</span>)
+</code></pre></div><p><code>generate_content</code>方法会返回<code>response</code>对象，我们可以通过它的<code>text</code>属性查看模型生成的内容:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">print(response<span style="color:#f92672">.</span>text)
+</code></pre></div><p>上述代码的打印输出「一般不会相同」:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">寒风萧萧冷气侵，
+枯草败叶满目陈。
+农田寂静无人迹，
+唯有寒鸦绕树鸣。
+
+沟渠冰封水尽涸，
+枝头衰柳苦伶仃。
+落日西沉归山去，
+田间萧瑟倍凄清。
+</code></pre></div><p>我们再让它回答一个编程问题:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">response <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate_content(<span style="color:#e6db74">&#39;使用golang编写一个简单的http文件服务器。&#39;</span>)
+print(response<span style="color:#f92672">.</span>text)
+</code></pre></div><p>上述代码的打印输出「一般不会相同」:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">// Specify the directory that you want to serve files from
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dir</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;static&#34;</span>
+
+	<span style="color:#75715e">// Create a new HTTP file server
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Dir</span>(<span style="color:#a6e22e">dir</span>))
+
+	<span style="color:#75715e">// Create a new HTTP server
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">server</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
+		<span style="color:#a6e22e">Addr</span>:    <span style="color:#e6db74">&#34;:8080&#34;</span>,
+		<span style="color:#a6e22e">Handler</span>: <span style="color:#a6e22e">fs</span>,
+	}
+
+	<span style="color:#75715e">// Start the HTTP server
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Listening on port :8080&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">ListenAndServe</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#75715e">// Handle the error
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+		<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+	}
+}
+</code></pre></div><ol>
 <li>
 <p><code>package main</code>: This line indicates that this is the main Go source file for the program.</p>
 </li>
@@ -178,17 +178,17 @@
 </ol>
 <h2 id="多轮对话模式">多轮对话模式</h2>
 <p>除了这种单次内容生成，SDK还支持多轮对话:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> genai<span style="color:#f92672">.</span>GenerativeModel(<span style="color:#e6db74">&#39;gemini-pro&#39;</span>)
-</span></span><span style="display:flex;"><span>chat <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>start_chat(history<span style="color:#f92672">=</span>[])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>send_message(
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Pretend you</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">re a snowman and stay in character for each response.&#34;</span>)
-</span></span><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>text)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>send_message(
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;What</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s your favorite season of the year?&#34;</span>)
-</span></span><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>text)
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model <span style="color:#f92672">=</span> genai<span style="color:#f92672">.</span>GenerativeModel(<span style="color:#e6db74">&#39;gemini-pro&#39;</span>)
+chat <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>start_chat(history<span style="color:#f92672">=</span>[])
+
+response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>send_message(
+    <span style="color:#e6db74">&#34;Pretend you</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">re a snowman and stay in character for each response.&#34;</span>)
+print(response<span style="color:#f92672">.</span>text)
+
+response <span style="color:#f92672">=</span> chat<span style="color:#f92672">.</span>send_message(
+    <span style="color:#e6db74">&#34;What</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s your favorite season of the year?&#34;</span>)
+print(response<span style="color:#f92672">.</span>text)
+</code></pre></div><hr>
 <p>今天我们简单的了解了一下Gemini AI的开发使用，如果你对更多Gemini相关的内容感兴趣，可以翻看一下它的<a href="https://ai.google.dev/tutorials">官方文档</a>做进一步的学习。</p>
 
   </section>

@@ -5,7 +5,7 @@
 <meta name="description" content="最近有刷到对「女性慕强」现象批评的文章和视频，觉得挺有意思。正好，我也有点想写些关于技术以外的内容的文章。">
 <meta name="keywords" content="女性,批评,翻译,huggingface,模型">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -75,32 +75,32 @@
 <h2 id="使用huggingface上的模型构建离线翻译系统">使用huggingface上的模型构建离线翻译系统</h2>
 <p>语言翻译是个常见的应用需求，由于某些因素，我们不可以调用效果较好的商用翻译api，这时就需要我们构建自己的离线翻译工具。使用huggingface上的模型就可以快速构建较为理想的离线语言翻译系统。</p>
 <p>使用如下Python代码可以简单构建中文与英文的翻译系统：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> pipeline
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>translation_zh_en <span style="color:#f92672">=</span> pipeline(
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;translation&#39;</span>,
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-zh-en&#39;</span>,
-</span></span><span style="display:flex;"><span>    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(translation_zh_en(<span style="color:#e6db74">&#39;你手若有行善的力量，不可推辞，就当向那应得的人施行。&#39;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>translation_en_zh <span style="color:#f92672">=</span> pipeline(
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;translation&#39;</span>,
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-en-zh&#39;</span>,
-</span></span><span style="display:flex;"><span>    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(translation_en_zh(<span style="color:#e6db74">&#39;My son, let not them depart from thine eyes; keep sound wisdom and discretion;&#39;</span>))
-</span></span></code></pre></div><p>运行后输出为:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;And if your hand has the power to do good, then do it to those who deserve it.&#39;</span>}]
-</span></span><span style="display:flex;"><span>[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;我的儿子啊!你不要让他们离开你的眼睛,你应当保持周全的智慧和谨慎。&#39;</span>}]
-</span></span></code></pre></div><p>真的非常非常简单实用。下面说一下构建该系统需要的环境依赖。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> pipeline
+
+
+translation_zh_en <span style="color:#f92672">=</span> pipeline(
+    <span style="color:#e6db74">&#39;translation&#39;</span>,
+    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-zh-en&#39;</span>,
+    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
+
+print(translation_zh_en(<span style="color:#e6db74">&#39;你手若有行善的力量，不可推辞，就当向那应得的人施行。&#39;</span>))
+
+translation_en_zh <span style="color:#f92672">=</span> pipeline(
+    <span style="color:#e6db74">&#39;translation&#39;</span>,
+    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Helsinki-NLP/opus-mt-en-zh&#39;</span>,
+    device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cpu&#39;</span>)
+
+print(translation_en_zh(<span style="color:#e6db74">&#39;My son, let not them depart from thine eyes; keep sound wisdom and discretion;&#39;</span>))
+</code></pre></div><p>运行后输出为:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;And if your hand has the power to do good, then do it to those who deserve it.&#39;</span>}]
+[{<span style="color:#e6db74">&#39;translation_text&#39;</span>: <span style="color:#e6db74">&#39;我的儿子啊!你不要让他们离开你的眼睛,你应当保持周全的智慧和谨慎。&#39;</span>}]
+</code></pre></div><p>真的非常非常简单实用。下面说一下构建该系统需要的环境依赖。</p>
 <h3 id="一python3运行环境">一、Python3运行环境</h3>
 <p>你需要准备一下Python3的运行环境，使用当前主流的版本就可以了。</p>
 <h3 id="二安装transformers包">二、安装transformers包</h3>
 <p>需要安装<code>transfomers</code>包才可以很轻松的使用huggingface上的模型。</p>
 <p>安装方法类似其它的Python包的安装方法，一般来说可以直接使用pip工具。</p>
-<pre tabindex="0"><code>pip install &#39;transformers[torch]&#39;
+<pre tabindex="0"><code>pip install 'transformers[torch]'
 </code></pre><p>详细内容可以参考官方文档 <a href="https://huggingface.co/docs/transformers/installation">DOC-LINK</a>。</p>
 <h3 id="三下载模型文件">三、下载模型文件</h3>
 <p>初次运行上述代码会自动进行模型文件的下载，可能比较耗时，需要耐心等待。</p>

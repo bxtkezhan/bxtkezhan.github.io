@@ -5,7 +5,7 @@
 <meta name="description" content="我们会使用 matplotlib 进行绘图，并使用 numpy 处理数组相关的数值计算，以及使用 opencv 提供的计算机视觉工具，请确保工作环境可以正确引入并使用它们。">
 <meta name="keywords" content="pcb,opencv,numpy,matplotlib,python">
 <meta name="author" content="bxtkezhan@kk">
-<meta name="generator" content="Hugo 0.121.1">
+<meta name="generator" content="Hugo 0.92.2" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
@@ -66,78 +66,78 @@
   <section class="body" itemprop="articleBody">
     <h3 id="引入需要的工具包">引入需要的工具包</h3>
 <p>我们会使用 matplotlib 进行绘图，并使用 numpy 处理数组相关的数值计算，以及使用 opencv 提供的计算机视觉工具，请确保工作环境可以正确引入并使用它们。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">%</span>matplotlib inline
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span></code></pre></div><h3 id="载入并缩放图像">载入并缩放图像</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%</span>matplotlib inline
+
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2 <span style="color:#66d9ef">as</span> cv
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</code></pre></div><h3 id="载入并缩放图像">载入并缩放图像</h3>
 <p>读取一张图像，将其进行缩放，使最长边对齐<code>image_max_side</code>的值，该值的设置可以根据经验，实际处理的图像和任务来做调整。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>image_max_side <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./samples/10.JPG&#39;</span>)
-</span></span><span style="display:flex;"><span>scale <span style="color:#f92672">=</span> image_max_side <span style="color:#f92672">/</span> max(source_image<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>])
-</span></span><span style="display:flex;"><span>source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>resize(source_image, <span style="color:#66d9ef">None</span>, fx<span style="color:#f92672">=</span>scale, fy<span style="color:#f92672">=</span>scale, interpolation<span style="color:#f92672">=</span>cv<span style="color:#f92672">.</span>INTER_AREA)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(source_image)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_6_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image_max_side <span style="color:#f92672">=</span> <span style="color:#ae81ff">1024</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./samples/10.JPG&#39;</span>)
+scale <span style="color:#f92672">=</span> image_max_side <span style="color:#f92672">/</span> max(source_image<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>])
+source_image <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>resize(source_image, <span style="color:#66d9ef">None</span>, fx<span style="color:#f92672">=</span>scale, fy<span style="color:#f92672">=</span>scale, interpolation<span style="color:#f92672">=</span>cv<span style="color:#f92672">.</span>INTER_AREA)
+plt<span style="color:#f92672">.</span>imshow(source_image)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_6_0.png" alt="png"></p>
 <h3 id="色彩处理">色彩处理</h3>
 <p>PCB板感光油的常见颜色为红，绿，蓝。我们可以借助这个特性使图像中集中分布感光油色彩的颜色通道相同，以此来使得非感光油区域与感光油区域之间的差异显著化。</p>
 <p>例如：当前PCB的感光油为绿色，则我们将每一个像素中的第二个「下标为1」值设为255。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>frame <span style="color:#f92672">=</span> source_image<span style="color:#f92672">.</span>copy()
-</span></span><span style="display:flex;"><span>frame[<span style="color:#f92672">...</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
-</span></span><span style="display:flex;"><span>gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_RGB2GRAY)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(gray, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_8_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">frame <span style="color:#f92672">=</span> source_image<span style="color:#f92672">.</span>copy()
+frame[<span style="color:#f92672">...</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>
+gray <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>cvtColor(frame, cv<span style="color:#f92672">.</span>COLOR_RGB2GRAY)
+
+plt<span style="color:#f92672">.</span>imshow(gray, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_8_0.png" alt="png"></p>
 <h3 id="图像二值化特征">图像二值化特征</h3>
 <p>我们在色彩处理的基础上，首先对图像进行了归一化操作，然后使用7x7核的高斯模糊，接下来使用大律法进行图像二值化。</p>
 <p>高斯模糊可以消除一些噪声的影响，使用7x7的核是一个经验，可以根据实际情况使用不同尺寸的核进行实验比对。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7</span>), <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(thresh, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_10_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">normal <span style="color:#f92672">=</span> ((gray <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> max(<span style="color:#ae81ff">1</span>, (gray<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> gray<span style="color:#f92672">.</span>min())) <span style="color:#f92672">*</span> <span style="color:#ae81ff">255</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>GaussianBlur(normal, (<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7</span>), <span style="color:#ae81ff">0</span>)
+ret, thresh <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>threshold(blur, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">255</span>, cv<span style="color:#f92672">.</span>THRESH_OTSU)
+plt<span style="color:#f92672">.</span>imshow(thresh, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_10_0.png" alt="png"></p>
 <h3 id="形态学处理">形态学处理</h3>
 <p>我们使用形态学处理的闭合操作将个别二值化后出现破碎的焊点色块进行闭合。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>kernel <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>closing <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(thresh, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(closing, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_12_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">kernel <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), np<span style="color:#f92672">.</span>uint8)
+closing <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(thresh, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+plt<span style="color:#f92672">.</span>imshow(closing, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_12_0.png" alt="png"></p>
 <h3 id="提取拉丝线">提取“拉丝”线</h3>
 <p>使用边缘检测的方法我们可以获取各个色块的边缘线，对这些线反复进行形态学闭合操作，可以将细长的色块「即“拉丝”线的色块」有效的提取出来。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>Canny(closing, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">200</span>)
-</span></span><span style="display:flex;"><span>edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(edges, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(edges, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_14_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>Canny(closing, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">200</span>)
+edges <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>morphologyEx(edges, cv<span style="color:#f92672">.</span>MORPH_CLOSE, kernel, iterations<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+plt<span style="color:#f92672">.</span>imshow(edges, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_14_0.png" alt="png"></p>
 <h3 id="去除拉丝">去除“拉丝”</h3>
 <p>将检测到的“拉丝”色块从之前形态学处理过的二值化图像中移除，得到最终的二值化特征。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>final <span style="color:#f92672">=</span> closing <span style="color:#f92672">*</span> (edges <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>))
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(final, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(source_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_16_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">final <span style="color:#f92672">=</span> closing <span style="color:#f92672">*</span> (edges <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">127</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>))
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>)
+plt<span style="color:#f92672">.</span>imshow(final, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>)
+plt<span style="color:#f92672">.</span>imshow(source_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gray&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_16_0.png" alt="png"></p>
 <h3 id="获取色块的位置和大小信息">获取色块的位置和大小信息</h3>
 <p>我们使用 opencv 提供的<code>findContours</code>工具可以快速提取出这些焊点色块的轮廓，然后调用<code>boundingRect</code>之类的工具可以检测出焊点位置和大小等信息。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>contours, _ <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>findContours(final, cv<span style="color:#f92672">.</span>RETR_TREE, cv<span style="color:#f92672">.</span>CHAIN_APPROX_SIMPLE)
-</span></span><span style="display:flex;"><span>boxes <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> cont <span style="color:#f92672">in</span> contours:
-</span></span><span style="display:flex;"><span>    x, y, w, h <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>boundingRect(cont[:, <span style="color:#ae81ff">0</span>])
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> max(w, h) <span style="color:#f92672">&gt;</span> min(final<span style="color:#f92672">.</span>shape) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> min(w, h) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>: <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>    boxes<span style="color:#f92672">.</span>append(cv<span style="color:#f92672">.</span>boxPoints(((x <span style="color:#f92672">+</span> w <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>, y <span style="color:#f92672">+</span> h <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>), (w, h), <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int32))
-</span></span><span style="display:flex;"><span>view <span style="color:#f92672">=</span> source_image<span style="color:#f92672">.</span>copy()
-</span></span><span style="display:flex;"><span>cv<span style="color:#f92672">.</span>polylines(view, boxes, <span style="color:#66d9ef">True</span>, (<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">2</span>, cv<span style="color:#f92672">.</span>LINE_AA)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(view)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><img src="/img/079/output_18_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">contours, _ <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>findContours(final, cv<span style="color:#f92672">.</span>RETR_TREE, cv<span style="color:#f92672">.</span>CHAIN_APPROX_SIMPLE)
+boxes <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> cont <span style="color:#f92672">in</span> contours:
+    x, y, w, h <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>boundingRect(cont[:, <span style="color:#ae81ff">0</span>])
+    <span style="color:#66d9ef">if</span> max(w, h) <span style="color:#f92672">&gt;</span> min(final<span style="color:#f92672">.</span>shape) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">continue</span>
+    <span style="color:#66d9ef">if</span> min(w, h) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>: <span style="color:#66d9ef">continue</span>
+    boxes<span style="color:#f92672">.</span>append(cv<span style="color:#f92672">.</span>boxPoints(((x <span style="color:#f92672">+</span> w <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>, y <span style="color:#f92672">+</span> h <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>), (w, h), <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int32))
+view <span style="color:#f92672">=</span> source_image<span style="color:#f92672">.</span>copy()
+cv<span style="color:#f92672">.</span>polylines(view, boxes, <span style="color:#66d9ef">True</span>, (<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">2</span>, cv<span style="color:#f92672">.</span>LINE_AA)
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+plt<span style="color:#f92672">.</span>imshow(view)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p><img src="/img/079/output_18_0.png" alt="png"></p>
 <p><a href="/post/080-pcb-detect-link/">下篇 使用计算机视觉技术进行PCB图像连接线检测</a></p>
 
   </section>
