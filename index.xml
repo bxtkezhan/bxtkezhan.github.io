@@ -6,7 +6,16 @@
     <description>Recent content on bxtkezhan@kk</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 04 Sep 2024 22:46:07 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Jul 2025 18:29:05 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SimulIDE仿真・Arduino Uno・Servo</title>
+      <link>http://bxtkezhan.github.io/post/103-simulide-arduino-servo/</link>
+      <pubDate>Fri, 18 Jul 2025 18:29:05 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.github.io/post/103-simulide-arduino-servo/</guid>
+      <description>今天我们初步了解SimulIDE仿真工具，我们以Arduino Uno控制伺服电机为例进行示范。</description>
+    </item>
+    
     <item>
       <title>错误解释圣经・典型案例一</title>
       <link>http://bxtkezhan.github.io/post/102-bible-read/</link>

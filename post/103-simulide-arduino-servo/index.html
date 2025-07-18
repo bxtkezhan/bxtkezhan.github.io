@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="今天我们初步了解SimulIDE仿真工具，我们以Arduino Uno控制伺服电机为例进行示范。">
+<meta name="keywords" content="simulide,arduino,servo">
+<meta name="author" content="bxtkezhan@kk">
+<meta name="generator" content="Hugo 0.92.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="bxtkezhan@kk">
+<title>SimulIDE仿真・Arduino Uno・Servo - bxtkezhan@kk</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VMHQ286BK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7VMHQ286BK');
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>MathJax = {tex: {inlineMath: [['$', '$']]}, svg: {fontCache: 'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script src="/js/player.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://bxtkezhan.github.io/">[bxtkezhan@kk]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+      
+        <a class="path" style="color: var(--base0e)"href="/widle/">widle</a>
+      
+        <a class="path" style="color: var(--base0e)"href="/strut/">strut</a>
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2025-07-18">July 18, 2025</time></span>
+
+
+    <span class="key">in</span>
+    <span class="val">
+
+        <a href="/categories/simulide">SimulIDE</a>
+
+    </span>
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">SimulIDE仿真・Arduino Uno・Servo</h1>
+  <section class="body" itemprop="articleBody">
+    <p>Simulide 是一款功能强大、开源（免费）的电子电路仿真软件。你可以把它想象成一个虚拟的电子实验台，让你在电脑上就能设计、测试和调试各种电子电路，而无需实际购买元器件或搭建物理电路。项目的官方网站：<a href="https://simulide.com">https://simulide.com</a></p>
+<p><img src="/img/103/sc01.png" alt=""></p>
+<p>以下是 Simulide 的一些主要特点和它能做的事情：</p>
+<ol>
+<li>
+<p><strong>虚拟电路设计与搭建：</strong></p>
+<ul>
+<li>提供丰富的电子元器件库，包括电阻、电容、电感、LED、开关、按键、二极管、三极管、运算放大器、各种逻辑门（AND, OR, NOT等）、定时器（如555芯片）等。</li>
+<li>你可以通过拖放方式将元器件放置到工作区，并连接起来构建你的电路。</li>
+</ul>
+</li>
+<li>
+<p><strong>微控制器仿真（一大亮点）：</strong></p>
+<ul>
+<li>Simulide 对微控制器（MCU）的仿真支持非常出色，特别是对 <strong>Arduino (AVR)、PIC、STM32</strong> 等主流微控制器。</li>
+<li>你可以将编写好的微控制器程序（通常是 HEX 文件）加载到虚拟的微控制器中，然后观察它如何与外部电路互动，比如控制LED亮灭、读取传感器数据等。</li>
+<li>这对于学习单片机、测试代码逻辑非常有帮助，无需烧录到实际硬件。</li>
+</ul>
+</li>
+<li>
+<p><strong>实时仿真与可视化：</strong></p>
+<ul>
+<li>电路搭建完成后，你可以点击“运行”按钮，电路就会实时运行起来。</li>
+<li>你可以看到LED亮灭、电机转动（如果支持）等直观的效果。</li>
+<li>支持模拟和数字信号的仿真。</li>
+</ul>
+</li>
+<li>
+<p><strong>虚拟测量工具：</strong></p>
+<ul>
+<li>内置多种虚拟测量仪器，就像你在真实实验室里会用到的那样：
+<ul>
+<li><strong>虚拟示波器 (Oscilloscope)：</strong> 用来观察电路中各点的电压波形，分析信号的时序。</li>
+<li><strong>虚拟逻辑分析仪 (Logic Analyzer)：</strong> 用于观察多路数字信号的状态变化，特别适合调试数字电路和单片机通信。</li>
+<li><strong>虚拟万用表 (Multimeter)：</strong> 测量电压、电流、电阻等。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>应用场景：</strong></p>
+<ul>
+<li><strong>电子爱好者和学生：</strong> 学习基础电子知识，安全地进行电路实验，尝试各种电路设计。</li>
+<li><strong>单片机开发者：</strong> 在硬件搭建之前，预先测试单片机程序逻辑与外围电路的交互。</li>
+<li><strong>教育：</strong> 教师可以用它来演示电路原理和实验过程。</li>
+<li><strong>原型设计与调试：</strong> 快速验证电路想法，发现并解决设计中的问题，节省时间和成本。</li>
+</ul>
+</li>
+</ol>
+<h2 id="仿真示例">仿真示例</h2>
+<p>使用SimulIDE对Arduino Uno进行仿真，通过将编译好的Arduino固件(&lt;xxx path&gt;/Sweep.ino.hex)上传到SimulIDE中来控制仿真伺服电机。</p>
+<iframe class="player" data="q-CwM9v1tUo,BV1HAu2zgEgD" allowfullscreen></iframe>
+
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    友情分享:
+    
+    <span><a href="https://wd.bible/">微读圣经</a></span>
+    
+    <span><a href="https://cnbible.com/">网上圣经</a></span>
+    
+  </div>
+  <div class="container">
+    <span class="copyright">&copy; 2025 bxtkezhan@kk - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

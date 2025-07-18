@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SimulIDE on bxtkezhan@kk</title>
+    <link>http://bxtkezhan.github.io/categories/simulide/</link>
+    <description>Recent content in SimulIDE on bxtkezhan@kk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 18 Jul 2025 18:29:05 +0800</lastBuildDate><atom:link href="http://bxtkezhan.github.io/categories/simulide/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SimulIDE仿真・Arduino Uno・Servo</title>
+      <link>http://bxtkezhan.github.io/post/103-simulide-arduino-servo/</link>
+      <pubDate>Fri, 18 Jul 2025 18:29:05 +0800</pubDate>
+      
+      <guid>http://bxtkezhan.github.io/post/103-simulide-arduino-servo/</guid>
+      <description>今天我们初步了解SimulIDE仿真工具，我们以Arduino Uno控制伺服电机为例进行示范。</description>
+    </item>
+    
+  </channel>
+</rss>
